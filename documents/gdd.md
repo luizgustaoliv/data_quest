@@ -79,19 +79,19 @@
 
 ## 1.3. Público-alvo do Projeto (sprint 2)
 
-*Posicione aqui uma descrição justificada do público-alvo do jogo, em termos demográficos e de preferências/gostos pessoais.*
+De acordo com o nosso parceiro, nosso público abrange alunos (de 9-17 anos) e professores de escola pública.
 
 # <a name="c2"></a>2. Visão Geral do Jogo (sprint 2)
 
 ## 2.1. Objetivos do Jogo (sprint 2)
 
-*Descreva o que o jogador deve cumprir para avançar ou concluir o jogo*
+O jogo está distribuído em 5 fases. O objetivo final do jogo é fazer o protagonista chegar na sala do diretor para impedir o grupo de hackers a fazer o upload dos dados de todos. Para entrar na sala do diretor, terão 5 pedaços de uma chave que estão localizados nos pisos diferentes da escola. Para obter esses pedaços, o jogador terá que avançar nessas 5 fases e completar batalhas contra inimigos e superar outros obstáculos enquanto explora a escola.
 
 ## 2.2. Características do Jogo (sprint 2)
 
 ### 2.2.1. Gênero do Jogo (sprint 2)
 
-*simulação, RPG, corrida, estratégia, esportes, ação, aventura etc.*  
+Data Quest é um RPG com _turn-based combat_ (combate baseado em turnos).
 
 ### 2.2.2. Plataforma do Jogo (sprint 2)
 
@@ -101,11 +101,12 @@
 
 ### 2.2.3. Número de jogadores (sprint 2)
 
-*1 jogador, 2 jogadores versus, 2 jogadores cooperação, multiplayer etc.*
+É um jogo que tem suporte para apenas 1 jogador.
 
 ### 2.2.4. Títulos semelhantes e inspirações (sprint 2)
 
-*Liste e descreva títulos semelhantes e jogos que inspiram e são usados como referência do projeto*
+Pokémon: O sistema de combate por turnos do Data Quest teve como inspiração os jogos da série de Pokémon.
+Undertale: A estética visual do jogo e as animações da sprite do personagem principal tiveram o Undertale como inspiração.
 
 ### 2.2.5. Tempo estimado de jogo (sprint 5)
 
