@@ -142,7 +142,10 @@ Considerando as personagens do game, analise se estas estão alinhadas ao públi
 
 ### 3.3.1. Locações Principais e/ou Mapas (sprints 2 e 3)
 
-*Descreva o ambiente do jogo, em que locais ele ocorre. Ilustre com imagens. Se houverem mapas, posicione-os aqui, descrevendo as áreas em acordo com o enredo. Se houverem fases, descreva-as também em acordo com o enredo (pode ser um jogo de uma fase só). Utilize listas ou tabelas para organizar esta seção. Caso utilize material de terceiros em licença Creative Commons, não deixe de citar os autores/fontes.*
+- O ambiente do jogo ocorre dentro da escola e as fases diferentes vão acontecer em andares diferentes
+- Mapa geral da escola: A escola é composta por múltiplos andares cada um com uma função específica.
+
+
 
 ### 3.3.2. Navegação pelo mundo (sprints 2 e 3)
 
