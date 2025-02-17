@@ -142,10 +142,9 @@ Considerando as personagens do game, analise se estas estão alinhadas ao públi
 
 ### 3.3.1. Locações Principais e/ou Mapas (sprints 2 e 3)
 
-- O ambiente do jogo ocorre dentro da escola e as fases diferentes vão acontecer em andares diferentes
-- Mapa geral da escola: A escola é composta por múltiplos andares cada um com uma função específica.
+O jogo ocorrerá dentro da escola enquanto ela está hackeada e as fases vão todas ocorrer em andares diferentes da instituição.
 
-
+<img src="../assets/concepts/conceitos escola data quest hackeada1.png">
 
 ### 3.3.2. Navegação pelo mundo (sprints 2 e 3)
 
