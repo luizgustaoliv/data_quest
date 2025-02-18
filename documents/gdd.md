@@ -139,7 +139,14 @@ Spritesheet desenvolvida para a Sprint 1. Personagem não tinha cores definidas:
 
 ### 3.2.2. Non-Playable Characters (NPC)
 
-*\<opcional\> Se existirem coadjuvantes ou vilões, aqui é o local para descrevê-los e ilustrá-los. Utilize listas ou tabelas para organizar esta seção. Caso utilize material de terceiros em licença Creative Commons, não deixe de citar os autores/fontes. Caso não existam NPCs, remova esta seção.*
+Grupo de hackers: Grupo anônimo que planejou o ataque na escola. Seus objetivos são o ganho econômico com a venda de dados, o que custa na privacidade de suas vítimas.
+<img src ="../assets/concepts/hacker_concept.png">
+
+
+Faxineiro: Primeiro personagem que o protagonista vai interagir no jogo. Dará informações sobre o conflito e ensinará o protagonista sobre conceitos básicos das leis LGPD.
+<img src ="../assets/concepts/faxineiro_concept.png">
+
+(Terão outros personagens coadjuvantes que são aunos e professores da escola, mas esses não foram definidos ainda)
 
 ### 3.2.3. Diversidade e Representatividade dos Personagens
 
@@ -149,8 +156,9 @@ Considerando as personagens do game, analise se estas estão alinhadas ao públi
 
 ### 3.3.1. Locações Principais e/ou Mapas (sprints 2 e 3)
 
-O jogo ocorrerá dentro da escola enquanto ela está hackeada e as fases vão todas ocorrer em andares diferentes da instituição (ainda não foram mapeadas).
+O jogo ocorrerá dentro da escola enquanto ela está hackeada e as fases vão todas ocorrer nos 5 andares diferentes da instituição (que ainda não foram mapeadas exatamente).
 
+<img src="../assets/concepts/tela de início1.png">
 <img src="../assets/concepts/tela de início2.png">
 
 ### 3.3.2. Navegação pelo mundo (sprints 2 e 3)
@@ -169,9 +177,27 @@ As fases não terão tempo de limite para serem completadas, mesmo com a histór
 
 *Inclua imagens de Concept Art do jogo que ainda não foram demonstradas em outras seções deste documento. Para cada imagem, coloque legendas, como no exemplo abaixo.*
 
-<img src="../assets/concept1.jpg">
+<img src="../assets/conceitos escola data quest hackeada1.png">
+<img src="../assets/conceitos escola data quest hackeada2.png">
 
-Figura 1: detalhe da cena da partida do herói para a missão, usando sua nave
+Figuras 1 e 2: Conceitos iniciais da aparência da escola Bitshine. Figura 1 representa a escola em seu estado de normalidade e a Figura 2 representa a escola hackeada.
+
+<img src="../assets/conceitos_protagonista.png">
+
+Figura 3: Conceitos iniciais do protagonista, Connie.
+
+<img src="../assets/dialogue_concept.png">
+
+Figura 4: Conceito inicial do estilo visual do diálogo do jogo.
+
+<img src="../assets/more robot concepts.png">
+
+Figura 5: Conceitos de ataques feitos pelos inimigos robôs.
+
+<img src="../assets/robo concept.png">
+
+Figura 6: Ilustração do inimigo robô com suas cores definidas.
+
 
 ### 3.3.5. Trilha sonora (sprint 3)
 
