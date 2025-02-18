@@ -158,8 +158,8 @@ Considerando as personagens do game, analise se estas estão alinhadas ao públi
 
 O jogo ocorrerá dentro da escola enquanto ela está hackeada e as fases vão todas ocorrer nos 5 andares diferentes da instituição (que ainda não foram mapeadas exatamente).
 
-<img src="../assets/concepts/tela de início1.png">
-<img src="../assets/concepts/tela de início2.png">
+<img src="../assets/concepts/tela_de_início1.png">
+<img src="../assets/concepts/tela_de_início2.png">
 
 ### 3.3.2. Navegação pelo mundo (sprints 2 e 3)
 
