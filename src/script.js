@@ -1,5 +1,3 @@
-// teste 1
-
 function selecionarFase(fase) {
     alert("Você selecionou a Fase " + fase);
 }
