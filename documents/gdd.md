@@ -134,6 +134,7 @@ Conceitos iniciais da face do personagem.
 <img src ="../assets/concepts/protag_doodles.png">
 Desenhos de maior qualidade feitos do personagem.
 
+
 <img src ="../assets/concepts/protag_sprites_semcor.png">
 Spritesheet desenvolvida para a Sprint 1. Personagem não tinha cores definidas.
 
