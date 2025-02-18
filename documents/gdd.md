@@ -128,15 +128,14 @@ Desse ponto, o jogador, controlando Connie, vai progredir por cada andar coletan
 
 O único personagem que será controlável pelo jogador será o protagonista, que é um aluno chamado Connie, e é um estudante desajeitado que tem dificuldades com horários de chegada na escola e que não presta muita atenção nas aulas da escola. No jogo, Connie se encontrará em uma situação onde esses conhecimentos são sua arma mais poderosa.
 
+Conceitos iniciais da face do personagem:
 <img src ="../assets/concepts/protagonista_conceito2.png">
-Conceitos iniciais da face do personagem.
 
+Desenhos de maior qualidade feitos do personagem:
 <img src ="../assets/concepts/protag_doodles.png">
-Desenhos de maior qualidade feitos do personagem.
 
-
+Spritesheet desenvolvida para a Sprint 1. Personagem não tinha cores definidas:
 <img src ="../assets/concepts/protag_sprites_semcor.png">
-Spritesheet desenvolvida para a Sprint 1. Personagem não tinha cores definidas.
 
 ### 3.2.2. Non-Playable Characters (NPC)
 
