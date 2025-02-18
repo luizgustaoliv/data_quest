@@ -85,7 +85,7 @@ De acordo com o nosso parceiro, nosso público abrange alunos (de 9-17 anos) e p
 
 ## 2.1. Objetivos do Jogo (sprint 2)
 
-O jogo está distribuído em 5 fases. O objetivo final do jogo é fazer o protagonista chegar na sala do diretor para impedir o grupo de hackers a fazer o upload dos dados de todos. Para entrar na sala do diretor, terão 5 pedaços de uma chave que estão localizados nos pisos diferentes da escola. Para obter esses pedaços, o jogador terá que avançar nessas 5 fases e completar batalhas contra inimigos e superar outros obstáculos enquanto explora a escola.
+O jogo está distribuído em 5 fases. O objetivo final do jogo é fazer o protagonista chegar no Data Center da escola no quinto andar para impedir que o grupo de hackers faça o upload dos dados de todos. Para acessar esse andar, terão 5 key-cards que estão localizados nos pisos diferentes da escola e que são protegidos por robôs inimigos. Esses key-cards darão acesso aos andares diferentes no elevador da escola. Para obter esses cards, o jogador terá que avançar nessas 5 fases e completar batalhas contra inimigos e superar outros obstáculos enquanto explora a escola.
 
 ## 2.2. Características do Jogo (sprint 2)
 
