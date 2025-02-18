@@ -95,9 +95,7 @@ Data Quest é um RPG com _turn-based combat_ (combate baseado em turnos).
 
 ### 2.2.2. Plataforma do Jogo (sprint 2)
 
-*quanto ao dispositivo: desktop, smartphones, tablets, TV etc.*
-
-*quanto ao sistema: navegadores compatíveis*
+Vamos desenvolver o nosso jogo para ter compatibilidade com desktop e smartphones. Os navegadores compatíveis serão Google Chrome, Opera, Firefox, Safari e Bing.
 
 ### 2.2.3. Número de jogadores (sprint 2)
 
@@ -118,17 +116,26 @@ Undertale: A estética visual do jogo e as animações da sprite do personagem p
 
 ## 3.1. Enredo do Jogo (sprints 2 e 3)
 
-*Descreva o enredo/história do jogo, criando contexto para os personagens (seção 3.2) e o mundo do jogo (seção 3.3). Uma boa história costuma ter um arco narrativo de contexto, conflito e resolução. Utilize etapas sequenciais para descrever esta história.* 
+Em um dia de aula na escola Bitshine, um grupo de hackers que havia planejado um ataque invadem a instituição e hackeam seus sistemas, fazendo com que as portas de entrada e salas de aula contendo alunos e professores sejam trancadas. Com esses obstáculos fora do caminho, os hackers avançam até o quinto e último andar da escola para acessar o Data Center que tem os servidores que contém todas as informações de alunos, professores e da escola em si. O grupo planeja vender esses dados. E para ninguém interromper os seus planos, robôs lacaios foram desenvolvidos pelo grupo para garantir nenhuma interferência.
 
-*Caso seu jogo não possua enredo/história (ex. jogo Tetris), mencione os motivos de não existir e como o jogador pode se contextualizar com o ambiente do jogo.*
+Nosso protagonista Connie, estudante da Bitshine, perde o horário da escola e é despertado para ir para a escola. Chegando lá, não encontra opções de entrada, mas percebe uma janela que está aberta que leva até a sala do faxineiro da escola. Dentro da sala, Connie e o faxineiro tem uma conversa que contextualiza o conflito da Bitshine e ensina os básicos da LGPD para o jogador.
+
+Desse ponto, o jogador, controlando Connie, vai progredir por cada andar coletando key-cards protegidos pelos robôs que lhe dá acesso aos diferentes andares da instituição. Ao longo do enredo, o jogador vai encontrar alunos e professores diferentes que o ajudarão a enfrentar os inimigos e que ajudarão a passar conhecimentos das leis LGPD. O objetivo final do protagonista é impedir o sucesso dos planos do grupo de hackers e libertar os alunos/professores das salas trancadas.
 
 ## 3.2. Personagens (sprints 2 e 3)
 
 ### 3.2.1. Controláveis
 
-*Descreva os personagens controláveis pelo jogador. Mencione nome, objetivos, características, habilidades, diferenciais etc. Utilize figuras (character art, sprite sheets etc.) para ilustrá-los. Caso utilize material de terceiros em licença Creative Commons, não deixe de citar os autores/fontes.* 
+O único personagem que será controlável pelo jogador será o protagonista, que é um aluno chamado Connie, e é um estudante desajeitado que tem dificuldades com horários de chegada na escola e que não presta muita atenção nas aulas da escola. No jogo, Connie se encontrará em uma situação onde esses conhecimentos são sua arma mais poderosa.
 
-*Caso não existam personagens (ex. jogo Tetris), mencione os motivos de não existirem e como o jogador pode interpretar tal fato.*
+<img src ="../assets/concepts/protagonista_conceito2.png">
+Conceitos iniciais da face do personagem.
+
+<img src ="../assets/concepts/protag_doodles.png">
+Desenhos de maior qualidade feitos do personagem.
+
+<img src ="../assets/concepts/protag_sprites_semcor.png">
+Spritesheet desenvolvida para a Sprint 1. Personagem não tinha cores definidas.
 
 ### 3.2.2. Non-Playable Characters (NPC)
 
@@ -142,19 +149,21 @@ Considerando as personagens do game, analise se estas estão alinhadas ao públi
 
 ### 3.3.1. Locações Principais e/ou Mapas (sprints 2 e 3)
 
-O jogo ocorrerá dentro da escola enquanto ela está hackeada e as fases vão todas ocorrer em andares diferentes da instituição.
+O jogo ocorrerá dentro da escola enquanto ela está hackeada e as fases vão todas ocorrer em andares diferentes da instituição (ainda não foram mapeadas).
 
-<img src="../assets/concepts/conceitos escola data quest hackeada1.png">
+<img src="../assets/concepts/tela de início2.png">
 
 ### 3.3.2. Navegação pelo mundo (sprints 2 e 3)
 
-*Descreva como os personagens se movem no mundo criado e as relações entre as locações – como as áreas/fases são acessadas ou desbloqueadas, o que é necessário para serem acessadas etc. Utilize listas ou tabelas para organizar esta seção.*
+- As 5 fases do jogo vão se passar nos 5 andares diferentes da escola.
+- O protagonista explorará cada andar, entrando em salas diferentes tentando encontrar pedaços de uma chave.
+- Cada andar terá um pedaço diferente e a coleção desses fragmentos é essencial para a progressão no jogo.
+- Uma fase se encerra quando o protagonista encontrar o pedaço contido em um certo andar.
+- Assim, a próxima fase é desbloqueada.
 
 ### 3.3.3. Condições climáticas e temporais (sprints 2 e 3)
 
-*\<opcional\> Descreva diferentes condições de clima que podem afetar o mundo e as fases, se aplicável*
-
-*Caso seja relevante, descreva como o tempo passa, se ele é um fator limitante ao jogo (ex. contagem de tempo para terminar uma fase)*
+As fases não terão tempo de limite para serem completadas, mesmo com a história do jogo ocorrendo ao longo de um dia escolar. Condições do clima não são aplicáveis.
 
 ### 3.3.4. Concept Art (sprint 2)
 
