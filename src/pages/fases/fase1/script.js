@@ -50,6 +50,7 @@ function create() {
     // Criar camada de chão
     chaoLayer = map.createLayer('Camada de Blocos 1', tileset, 0, 0);
 
+    // criar teclas de movimentação 
     cursors = this.input.keyboard.createCursorKeys();
     teclaE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E); // Captura a tecla E
 
@@ -161,15 +162,9 @@ this.anims.create({
     repeat: -1
 });
 
-// Criar teclas de movimentação
-cursors = this.input.keyboard.createCursorKeys();
-
 // Configurar a câmera para seguir o jogador
 this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 this.cameras.main.startFollow(player);
-
-    // Criar teclas de movimentação
-    cursors = this.input.keyboard.createCursorKeys();
 
     // Configurar a câmera para seguir o jogador
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
