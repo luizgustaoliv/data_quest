@@ -156,7 +156,11 @@ Faxineiro: Primeiro personagem que o protagonista vai interagir no jogo. Dará i
 
 ### 3.2.3. Diversidade e Representatividade dos Personagens
 
-*Considerando as personagens do game, analise se estas estão alinhadas ao público-alvo do jogo (seção 1.3), e compare-as dentro da realidade da sociedade brasileira. Por fim, discorra sobre qual é o impacto esperado da escolha dessas personagens.*
+Alinhamento com o publico alvo
+  :  O jogo se passa no ambiente escolar e aborda da lei geral de proteção de dados (LGPD) um tema que é essencial para estudantes que crescem em um mundo digital. Além disso o protagonista principal do jogo o Connie é um aluno que enfrenta desafios comuns como atrasos e desatenção nas aulas o que faz ele ser mais fácil de se identificar para o público jovem
+  
+  diversidade dentro da realidade do Brasil e impacto esperado
+      : A escola Bitshare representa diversidade dentro da realidade do Brasil pois tem diferença de etnia, gênero e acessibilidade e o impacto esperado é que reforça a importância da inclusão na educação e no setor da tecnologia
 
 ## 3.3. Mundo do jogo (sprints 2 e 3)
 
