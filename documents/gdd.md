@@ -300,6 +300,27 @@ Os próximos passos incluem a melhoria do sistema de combate, tornando as pergun
 
 *Descreva e ilustre aqui o desenvolvimento da versão básica do jogo, explicando brevemente o que foi entregue em termos de código e jogo. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
 
+Durante o sprint 2, focamos em aprimorar o personagem principal e introduzir novos personagens, o que enriqueceu a narrativa e a jogabilidade do jogo. Os novos personagens foram integrados de forma a complementar a história, trazendo diversidade e ampliando as possibilidades de interação.
+Além disso, criamos e implementamos diálogos entre os personagens. Essa funcionalidade foi essencial para tornar a experiência do jogador mais imersiva, permitindo o desenvolvimento da trama de forma mais dinâmica. A implementação envolveu a construção de um sistema básico de diálogos, com ramificações que afetam o progresso do jogador.
+Outro ponto importante deste sprint foi o aprimoramento e a conclusão da fase 01. Foram feitos ajustes no design do cenário, correção de bugs e otimização da mecânica de jogo, garantindo uma experiência fluida e envolvente para o jogador.
+
+Dificuldades Encontradas:
+
+ - Ajuste preciso da sincronização dos diálogos com as ações dos personagens.
+ - Problemas de desempenho ao adicionar novos personagens, exigindo otimização do código.
+ - Balanceamento da dificuldade da fase 01 para manter o jogo desafiador, mas acessível.
+
+Próximos Passos:
+- Implementação da fase 02, com novos desafios e ambientes.
+- Melhoria no sistema de diálogos, incluindo opções de resposta mais complexas.
+- Testes de jogabilidade para refinar a experiência do usuário.
+
+Ilustrações do Desenvolvimento
+
+(Inserir aqui prints de tela que demonstrem os novos personagens, exemplos de diálogos e a fase 01 concluída)
+
+
+
 ## 4.3. Desenvolvimento intermediário do jogo (sprint 3)
 
 *Descreva e ilustre aqui o desenvolvimento da versão intermediária do jogo, explicando brevemente o que foi entregue em termos de código e jogo. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
