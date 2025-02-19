@@ -104,6 +104,7 @@ Vamos desenvolver o nosso jogo para ter compatibilidade com desktop e smartphone
 ### 2.2.4. Títulos semelhantes e inspirações (sprint 2)
 
 Pokémon: O sistema de combate por turnos do Data Quest teve como inspiração os jogos da série de Pokémon.
+<br>
 Undertale: A estética visual do jogo e as animações da sprite do personagem principal tiveram o Undertale como inspiração.
 
 ### 2.2.5. Tempo estimado de jogo (sprint 5)
@@ -129,72 +130,79 @@ Desse ponto, o jogador, controlando Connie, vai progredir por cada andar coletan
 O único personagem que será controlável pelo jogador será o protagonista, que é um aluno chamado Connie, e é um estudante desajeitado que tem dificuldades com horários de chegada na escola e que não presta muita atenção nas aulas da escola. No jogo, Connie se encontrará em uma situação onde esses conhecimentos são sua arma mais poderosa.
 
 Conceitos iniciais da face do personagem:
-<img src ="../assets/concepts/protagonista_conceito2.png">
+<br>
+<img src ="../assets/concepts/protagonista_conceito2.png" width="200">
 
 Desenhos de maior qualidade feitos do personagem:
-<img src ="../assets/concepts/protag_doodles.png">
+<br>
+<img src ="../assets/concepts/protag_doodles.png" width="400">
 
 Spritesheet desenvolvida para a Sprint 1. Personagem não tinha cores definidas:
+<br>
 <img src ="../assets/concepts/protag_sprites_semcor.png">
 
 ### 3.2.2. Non-Playable Characters (NPC)
 
 Grupo de hackers: Grupo anônimo que planejou o ataque na escola. Seus objetivos são o ganho econômico com a venda de dados, o que custa na privacidade de suas vítimas.
-<img src ="../assets/concepts/hacker_concept.png">
+<br>
+<img src ="../assets/concepts/hacker_concept.png" width="400">
 
 
 Faxineiro: Primeiro personagem que o protagonista vai interagir no jogo. Dará informações sobre o conflito e ensinará o protagonista sobre conceitos básicos das leis LGPD.
-<img src ="../assets/concepts/faxineiro_concept.png">
+<br>
+<img src ="../assets/concepts/faxineiro_concept.png" width="400">
 
 (Terão outros personagens coadjuvantes que são aunos e professores da escola, mas esses não foram definidos ainda)
 
 ### 3.2.3. Diversidade e Representatividade dos Personagens
 
-Considerando as personagens do game, analise se estas estão alinhadas ao público-alvo do jogo (seção 1.3), e compare-as dentro da realidade da sociedade brasileira. Por fim, discorra sobre qual é o impacto esperado da escolha dessas personagens.
+*Considerando as personagens do game, analise se estas estão alinhadas ao público-alvo do jogo (seção 1.3), e compare-as dentro da realidade da sociedade brasileira. Por fim, discorra sobre qual é o impacto esperado da escolha dessas personagens.*
 
 ## 3.3. Mundo do jogo (sprints 2 e 3)
 
 ### 3.3.1. Locações Principais e/ou Mapas (sprints 2 e 3)
 
 O jogo ocorrerá dentro da escola enquanto ela está hackeada e as fases vão todas ocorrer nos 5 andares diferentes da instituição (que ainda não foram mapeadas exatamente).
-
-<img src="../assets/concepts/tela_de_início1.png">
-<img src="../assets/concepts/tela_de_início2.png">
+<br>
+<p align="center">
+<img src="../assets/concepts/escola_normal.png" width="400">
+<img src="../assets/concepts/escola_hack.png" width="400">
+<p>
 
 ### 3.3.2. Navegação pelo mundo (sprints 2 e 3)
 
 - As 5 fases do jogo vão se passar nos 5 andares diferentes da escola.
-- O protagonista explorará cada andar, entrando em salas diferentes tentando encontrar pedaços de uma chave.
-- Cada andar terá um pedaço diferente e a coleção desses fragmentos é essencial para a progressão no jogo.
-- Uma fase se encerra quando o protagonista encontrar o pedaço contido em um certo andar.
-- Assim, a próxima fase é desbloqueada.
+- O protagonista explorará cada andar, entrando em salas diferentes tentando encontrar key-cards.
+- Cada andar terá um key-card e a coleção desses cards é essencial para a progressão no jogo.
+- Uma fase se encerra quando o protagonista encontrar o card contido em um certo andar.
+- Assim, o acesso para o próximo andar é liberado e a próxima fase é desbloqueada.
 
 ### 3.3.3. Condições climáticas e temporais (sprints 2 e 3)
 
 As fases não terão tempo de limite para serem completadas, mesmo com a história do jogo ocorrendo ao longo de um dia escolar. Condições do clima não são aplicáveis.
 
 ### 3.3.4. Concept Art (sprint 2)
+<br>
+<p align="center">
+<img src="../assets/concepts/conceitos_escola_data_quest_hackeada1.png" width="400">
+<img src="../assets/concepts/conceitos_escola_data_quest_hackeada2.png" width="400">
+<p>
 
-*Inclua imagens de Concept Art do jogo que ainda não foram demonstradas em outras seções deste documento. Para cada imagem, coloque legendas, como no exemplo abaixo.*
+Figuras 1 e 2: Conceitos iniciais da aparência externa da escola Bitshine. Figura 1 representa a escola em seu estado de normalidade e a Figura 2 representa a escola hackeada.
 
-<img src="../assets/conceitos escola data quest hackeada1.png">
-<img src="../assets/conceitos escola data quest hackeada2.png">
-
-Figuras 1 e 2: Conceitos iniciais da aparência da escola Bitshine. Figura 1 representa a escola em seu estado de normalidade e a Figura 2 representa a escola hackeada.
-
-<img src="../assets/conceitos_protagonista.png">
+<img src="../assets/concepts/conceitos_protagonista.png" width="300">
 
 Figura 3: Conceitos iniciais do protagonista, Connie.
 
-<img src="../assets/dialogue_concept.png">
+<img src="../assets/concepts/dialogue_concept.png" width="300">
 
 Figura 4: Conceito inicial do estilo visual do diálogo do jogo.
 
-<img src="../assets/more robot concepts.png">
+<img src="../assets/concepts/more_robot_concepts.png" width="300">
 
 Figura 5: Conceitos de ataques feitos pelos inimigos robôs.
 
-<img src="../assets/robo concept.png">
+<img src="../assets/concepts/robo_concept.png" width="300">
 
 Figura 6: Ilustração do inimigo robô com suas cores definidas.
 
