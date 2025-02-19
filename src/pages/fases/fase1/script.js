@@ -93,7 +93,7 @@ function create() {
 
     this.physics.add.overlap(player, npc1, jogadorPertoNpc, null, this);
 
-    // Evento de teclado para a tecla espaço
+    // Evento de teclado para a tecla "E"
     this.input.keyboard.on('keydown-E', function (event) {
         if (podeIniciarDialogo && !dialogoIniciado) {
             iniciarDialogo();
