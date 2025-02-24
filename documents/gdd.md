@@ -68,6 +68,8 @@
 
 ## 1.2. Requisitos do Projeto (sprints 1 e 2)
 
+Os requisitos do projeto descrevem as funcionalidades essenciais para o desenvolvimento do jogo, garantindo seu correto funcionamento. Eles incluem mecânicas básicas, como movimentação e interação, além de elementos específicos da jogabilidade, como o sistema de combate baseado em perguntas sobre a LGPD. Esses requisitos são fundamentais para estruturar a experiência do jogador e assegurar a coerência do jogo dentro do seu tema e objetivo educacional.
+
 \# | Requisito | Descrição  
 --- | --- | ---
 1 | O controle do personagem será realizado usando as teclas WASD para movimentação. | O jogador pode mover o personagem utilizando as teclas direcionais padrão de jogos no teclado.
@@ -79,55 +81,54 @@
 
 ## 1.3. Público-alvo do Projeto (sprint 2)
 
-De acordo com o nosso parceiro, nosso público abrange alunos (de 9-17 anos) e professores de escola pública.
+De acordo com o nosso parceiro, nosso público abrange alunos, com idades entre 9 e 17 anos, e professores de escolas públicas. Esses alunos estão em diferentes etapas do ensino fundamental e médio, podendo ter distintos níveis de familiaridade com a temática abordada pelo projeto. Já os professores atuam como facilitadores no processo de aprendizado, auxiliando na implementação das atividades e no engajamento dos estudantes. O projeto busca atender às necessidades desse público, oferecendo materiais e metodologias adequadas à sua realidade educacional.
 
 # <a name="c2"></a>2. Visão Geral do Jogo (sprint 2)
 
 ## 2.1. Objetivos do Jogo (sprint 2)
 
-O jogo está distribuído em 5 fases. O objetivo final do jogo é fazer o protagonista chegar no Data Center da escola no quinto andar para impedir que o grupo de hackers faça o upload dos dados de todos. Para acessar esse andar, terão 5 key-cards que estão localizados nos pisos diferentes da escola e que são protegidos por robôs inimigos. Esses key-cards darão acesso aos andares diferentes no elevador da escola. Para obter esses cards, o jogador terá que avançar nessas 5 fases e completar batalhas contra inimigos e superar outros obstáculos enquanto explora a escola.
+O jogo está distribuído em 5 fases. O objetivo final é levar o protagonista até o Data Center da escola, localizado no quinto andar, para impedir que um grupo de hackers faça o upload dos dados de todos. Para avançar, cada fase contém 4 keycards espalhados pelo mapa, protegidos por robôs inimigos. O jogador precisa coletar todos os keycards para desbloquear a última sala da fase, onde encontrará a chave que permite o acesso à próxima fase. Durante essa jornada, será necessário enfrentar batalhas contra inimigos e superar diversos obstáculos enquanto explora a escola.
 
 ## 2.2. Características do Jogo (sprint 2)
 
 ### 2.2.1. Gênero do Jogo (sprint 2)
 
-Data Quest é um RPG com _turn-based combat_ (combate baseado em turnos).
+O jogo Data Quest se enquadra no gênero RPG (Role-Playing Game), no qual os jogadores assumem o papel de um protagonista e avançam na história ao enfrentar desafios e interagir com o ambiente. O sistema de combate adotado é o turn-based combat (combate baseado em turnos), onde as batalhas ocorrem de forma estratégica, permitindo que o jogador escolha suas ações dentro de cada turno, considerando habilidades, recursos e a melhor abordagem para derrotar os inimigos.
 
 ### 2.2.2. Plataforma do Jogo (sprint 2)
 
-Vamos desenvolver o nosso jogo para ter compatibilidade com desktop e smartphones. Os navegadores compatíveis serão Google Chrome, Opera, Firefox, Safari e Bing.
+O jogo Data Quest será desenvolvido para garantir compatibilidade tanto com desktop quanto com dispositivos móveis, permitindo que os jogadores possam acessá-lo de forma prática e flexível. Para assegurar uma experiência fluida e acessível, o jogo será projetado para rodar diretamente em navegadores da web, sem necessidade de instalação adicional. Os navegadores compatíveis incluem Google Chrome, Opera, Firefox, Safari e Microsoft Edge, garantindo um amplo suporte para diferentes sistemas operacionais e preferências dos usuários.
 
 ### 2.2.3. Número de jogadores (sprint 2)
 
-É um jogo que tem suporte para apenas 1 jogador.
+O jogo Data Quest foi projetado para ser uma experiência single-player, oferecendo suporte exclusivo para um único jogador. Todo o desenvolvimento do jogo, incluindo mecânicas, progressão e desafios, foi pensado para proporcionar uma jornada individual imersiva, permitindo que o jogador explore a narrativa, enfrente inimigos e supere obstáculos sem a necessidade de interação com outros jogadores em tempo real.
 
 ### 2.2.4. Títulos semelhantes e inspirações (sprint 2)
 
-Pokémon: O sistema de combate por turnos do Data Quest teve como inspiração os jogos da série de Pokémon.
-<br>
-Undertale: A estética visual do jogo e as animações da sprite do personagem principal tiveram o Undertale como inspiração.
+O desenvolvimento de Data Quest foi inspirado em títulos específicos que serviram como referência tanto para a mecânica quanto para a estética do projeto. As principais influências incluem:
+
+- Pokémon: O sistema de combate por turnos de Data Quest foi inspirado na série de jogos Pokémon, adotando uma abordagem estratégica em que o jogador pode escolher suas ações dentro de cada turno, tornando as batalhas mais táticas e dinâmicas.
+- Undertale: A estética visual do jogo, incluindo o design gráfico e as animações das sprites do protagonista, foi influenciada por Undertale. Elementos como pixel art e expressões dinâmicas foram utilizados para trazer personalidade e carisma ao personagem principal, criando uma experiência visual única e envolvente.
 
 ### 2.2.5. Tempo estimado de jogo (sprint 5)
 
-*Ex. O jogo pode ser concluído em 3 horas passando por todas as fases.*
-
-*Ex. cada partida dura até 15 minutos*
+O tempo estimado para a conclusão de Data Quest é de aproximadamente 3 horas, considerando que o jogador passe por todas as fases do jogo. Esse tempo pode variar dependendo da habilidade do jogador, da exploração de áreas extras e da dificuldade das batalhas. Cada partida individual dentro do jogo tem uma duração média de até 15 minutos, o que permite que os jogadores aproveitem sessões rápidas e dinâmicas, sem a necessidade de longos períodos de tempo. A experiência de jogo foi planejada para ser tanto acessível quanto desafiadora, com a possibilidade de retorno para revisitar fases e conquistar todos os objetivos dentro de cada mapa.
 
 # <a name="c3"></a>3. Game Design (sprints 2 e 3)
 
 ## 3.1. Enredo do Jogo (sprints 2 e 3)
 
-Em um dia de aula na escola Bitshine, um grupo de hackers que havia planejado um ataque invadem a instituição e hackeam seus sistemas, fazendo com que as portas de entrada e salas de aula contendo alunos e professores sejam trancadas. Com esses obstáculos fora do caminho, os hackers avançam até o quinto e último andar da escola para acessar o Data Center que tem os servidores que contém todas as informações de alunos, professores e da escola em si. O grupo planeja vender esses dados. E para ninguém interromper os seus planos, robôs lacaios foram desenvolvidos pelo grupo para garantir nenhuma interferência.
+Em um dia comum de aula na escola Bitshine, um hacker com um plano bem elaborado invade a instituição e toma controle dos sistemas internos, trancando as portas de entrada e as salas de aula com alunos dentro. Superando esses obstáculos, ele avança até o quinto e último andar, onde se encontra o Data Center que abriga os servidores com informações sensíveis sobre alunos, professores e a própria escola. O hacker assume o controle dos professores robôs, programados para ensinar os alunos.
 
-Nosso protagonista Connie, estudante da Bitshine, perde o horário da escola e é despertado para ir para a escola. Chegando lá, não encontra opções de entrada, mas percebe uma janela que está aberta que leva até a sala do faxineiro da escola. Dentro da sala, Connie e o faxineiro tem uma conversa que contextualiza o conflito da Bitshine e ensina os básicos da LGPD para o jogador.
+Nosso protagonista, Connie, estudante da Bitshine, perde a hora e é acordado apressadamente para se dirigir à escola. Chegando lá, não encontra opções de entrada, mas percebe uma janela que está aberta que leva até a sala do faxineiro da escola. Dentro da sala, Connie e o faxineiro tem uma conversa que contextualiza o conflito da Bitshine e ensina os básicos da LGPD para o jogador.
 
-Desse ponto, o jogador, controlando Connie, vai progredir por cada andar coletando key-cards protegidos pelos robôs que lhe dá acesso aos diferentes andares da instituição. Ao longo do enredo, o jogador vai encontrar alunos e professores diferentes que o ajudarão a enfrentar os inimigos e que ajudarão a passar conhecimentos das leis LGPD. O objetivo final do protagonista é impedir o sucesso dos planos do grupo de hackers e libertar os alunos/professores das salas trancadas.
+Desse ponto, o jogador, controlando Connie, vai progredir por cada andar coletando key-cards protegidos pelos professores robôs, controlados pelo hacker, que lhe dá acesso aos diferentes andares da instituição. Ao longo do enredo, o jogador vai encontrar alunos e professores diferentes que o ajudarão a enfrentar os inimigos e que ajudarão a passar conhecimentos das leis LGPD, necessárias para a solução do problema. O objetivo final do protagonista é impedir o sucesso dos planos do hacker e libertar os alunos e professores das salas trancadas, enquanto o jogador aprende sobre a LGPD e a importância da proteção de dados pessoais.
 
 ## 3.2. Personagens (sprints 2 e 3)
 
 ### 3.2.1. Controláveis
 
-O único personagem que será controlável pelo jogador será o protagonista, que é um aluno chamado Connie, e é um estudante desajeitado que tem dificuldades com horários de chegada na escola e que não presta muita atenção nas aulas da escola. No jogo, Connie se encontrará em uma situação onde esses conhecimentos são sua arma mais poderosa.
+Os jogadores poderão escolher entre seis personagens disponíveis, que representará aluno desajeitado que enfrenta dificuldades com horários e costuma não prestar atenção nas aulas. No entanto, ao longo do jogo, essa falta de atenção se transforma em uma vantagem, pois os personagens se encontram em uma situação onde esses conhecimentos aparentemente negligenciados se tornam suas armas mais poderosas.
 
 Conceitos iniciais da face do personagem:
 <br>
@@ -143,7 +144,7 @@ Spritesheet desenvolvida para a Sprint 1. Personagem não tinha cores definidas:
 
 ### 3.2.2. Non-Playable Characters (NPC)
 
-Grupo de hackers: Grupo anônimo que planejou o ataque na escola. Seus objetivos são o ganho econômico com a venda de dados, o que custa na privacidade de suas vítimas.
+O Hacker Anônimo: Um criminoso cibernético que arquitetou o ataque na escola Bitshine. Seu principal objetivo é obter lucros substanciais por meio da venda de dados roubados, comprometendo a privacidade e a segurança das vítimas no processo.
 <br>
 <img src ="../assets/concepts/hacker_concept.png" width="400">
 
@@ -156,18 +157,17 @@ Faxineiro: Primeiro personagem que o protagonista vai interagir no jogo. Dará i
 
 ### 3.2.3. Diversidade e Representatividade dos Personagens
 
-Alinhamento com o publico alvo
-  :  O jogo se passa no ambiente escolar e aborda da lei geral de proteção de dados (LGPD) um tema que é essencial para estudantes que crescem em um mundo digital. Além disso o protagonista principal do jogo o Connie é um aluno que enfrenta desafios comuns como atrasos e desatenção nas aulas o que faz ele ser mais fácil de se identificar para o público jovem
-  
-  diversidade dentro da realidade do Brasil e impacto esperado
-      : A escola Bitshare representa diversidade dentro da realidade do Brasil pois tem diferença de etnia, gênero e acessibilidade e o impacto esperado é que reforça a importância da inclusão na educação e no setor da tecnologia
+Alinhamento com o público-alvo: O jogo se passa no ambiente escolar e aborda a Lei Geral de Proteção de Dados (LGPD), um tema essencial para estudantes que crescem em um mundo digital. Todos os personagens enfrentam desafios comuns, como atrasos e desatenção nas aulas, o que facilita a identificação do público jovem com eles.
 
+Diversidade dentro da realidade do Brasil e impacto esperado: A escola Bitshine é um reflexo da diversidade presente na realidade do Brasil, com personagens que representam diferentes etnias, gêneros e acessibilidade. O jogo oferece aos jogadores a possibilidade de escolher entre seis personagens distintos, permitindo que se identifiquem com aquele que mais se aproxima de sua própria realidade. O impacto esperado é reforçar a importância da inclusão tanto na educação quanto no setor da tecnologia.
 ## 3.3. Mundo do jogo (sprints 2 e 3)
 
 ### 3.3.1. Locações Principais e/ou Mapas (sprints 2 e 3)
 
-O jogo ocorrerá dentro da escola enquanto ela está hackeada e as fases vão todas ocorrer nos 5 andares diferentes da instituição (que ainda não foram mapeadas exatamente).
+O cenário do jogo se passa na escola Bitshine, que foi invadida e hackeada por um criminoso digital. A narrativa se desenrola ao longo de 5 andares diferentes da escola, cada um representando uma fase única. Conforme os jogadores avançam, eles exploram diferentes ambientes como salas de aula trancadas, corredores bloqueados por segurança digital e áreas secretas dentro do prédio. [O mapeamento exato dessas áreas ainda está em desenvolvimento]
+
 <br>
+
 <p align="center">
 <img src="../assets/concepts/escola_normal.png" width="400">
 <img src="../assets/concepts/escola_hack.png" width="400">
@@ -178,12 +178,14 @@ O jogo ocorrerá dentro da escola enquanto ela está hackeada e as fases vão to
 - As 5 fases do jogo vão se passar nos 5 andares diferentes da escola.
 - O protagonista explorará cada andar, entrando em salas diferentes tentando encontrar key-cards.
 - Cada andar terá um key-card e a coleção desses cards é essencial para a progressão no jogo.
-- Uma fase se encerra quando o protagonista encontrar o card contido em um certo andar.
+- Uma fase se encerra quando o protagonista encontrar a chave contida em uma certa sala.
 - Assim, o acesso para o próximo andar é liberado e a próxima fase é desbloqueada.
 
 ### 3.3.3. Condições climáticas e temporais (sprints 2 e 3)
 
-As fases não terão tempo de limite para serem completadas, mesmo com a história do jogo ocorrendo ao longo de um dia escolar. Condições do clima não são aplicáveis.
+Embora a história do jogo se desenrole ao longo de um único dia escolar, com eventos acontecendo durante as aulas e interações entre os personagens, não haverá limite de tempo para a conclusão das fases. O objetivo é permitir que o jogador explore cada área da escola, resolva puzzles e interaja com os personagens sem pressões externas relacionadas ao tempo. Isso visa garantir uma experiência mais estratégica e imersiva, focada na resolução de problemas e tomada de decisões.
+
+Além disso, o jogo não incluirá variações climáticas, já que a narrativa ocorre inteiramente dentro da escola Bitshine, que está isolada do ambiente externo devido à invasão hacker. Consequentemente, o clima externo e os ciclos temporais, como mudanças de dia para noite, não serão aplicados ou influenciarão o andamento da história ou das fases. A principal ênfase estará na progressão do enredo, nos desafios internos da escola e na interação com o ambiente hackeado.
 
 ### 3.3.4. Concept Art (sprint 2)
 <br>
