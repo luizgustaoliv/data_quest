@@ -40,7 +40,23 @@
 
 #### 1.1.1.1. Modelo de 5 Forças de Porter (sprint 2)
 
-*Posicione aqui o modelo de 5 Forças de Porter para sustentar o contexto da indústria.*
+#### - Análise da Ameaça de Novos Entrantes:
+A ameaça de novos entrantes no mercado de tecnologias educacionais é significativa, especialmente com o crescimento de startups e empresas que buscam atender à crescente demanda por soluções digitais no setor educacional, porém é dificultada por barreiras como altos custos iniciais, exigências regulatórias (como a LGPD) e a fidelização dos usuários a plataformas consolidadas. Entretanto, o Google for Education mantém uma posição consolidada, oferecendo um ecossistema abrangente de ferramentas integradas que facilitam a adoção por instituições de ensino. Além disso, a empresa investe continuamente em tecnologias emergentes, como inteligência artificial, realidade virtual e aumentada, fortalecendo sua oferta e criando barreiras para novos concorrentes. A reputação estabelecida e a capacidade de inovação do Google for Education tornam desafiadora a entrada de novos players que desejam competir em igualdade de condições.
+
+#### - Análise da Ameaça de Produtos ou Serviços Substitutos:
+A ameaça de produtos ou serviços substitutos para o Google for Education é moderada, dado o número crescente de alternativas no mercado de tecnologias educacionais. Plataformas como Canvas, Edmodo e Moodle oferecem sistemas de gestão de aprendizagem com funcionalidades semelhantes, permitindo que instituições de ensino gerenciem cursos, distribuam conteúdo e avaliem o desempenho dos alunos. Além disso, ferramentas como o Microsoft Teams estão sendo cada vez mais adotadas em ambientes educacionais, proporcionando recursos integrados de comunicação e colaboração. No entanto, o Google for Education mantém uma posição competitiva sólida devido à sua integração perfeita com outros serviços do Google, facilidade de uso e uma base de usuários já estabelecida, o que dificulta a substituição completa por alternativas.
+
+#### - Análise do Poder de Barganha dos Fornecedores: 
+O poder de barganha dos fornecedores em relação ao Google for Education é baixo, pois a empresa possui uma infraestrutura tecnológica própria, incluindo uma vasta rede de data centers, reduzindo sua dependência externa. Além disso, colabora com múltiplos fabricantes de hardware, como os de Chromebooks, e mantém parcerias estratégicas globais para distribuir e integrar suas soluções educacionais. Essa diversificação enfraquece a influência de fornecedores individuais, permitindo ao Google maior controle sobre custos e inovações. A empresa também incentiva a colaboração com parceiros para vender produtos, oferecer serviços e criar soluções dentro de seu ecossistema, ampliando suas ofertas educacionais e consolidando sua posição no mercado. 
+
+#### - Análise do Poder de Barganha dos Clientes:
+O poder de barganha dos clientes em relação ao Google for Education é moderado. Embora a empresa ofereça ferramentas gratuitas, como o Google Workspace for Education Fundamentals, que incluem aplicativos como Documentos, Planilhas e Apresentações, as instituições de ensino podem optar por soluções alternativas, como Microsoft 365 Education ou plataformas de código aberto, caso suas necessidades não sejam atendidas. Para aumentar o valor percebido e incentivar a adoção de suas soluções, o Google for Education disponibiliza complementos pagos, como o Gemini Education e o Gemini Education Premium, que oferecem recursos avançados de inteligência artificial generativa. Além disso, a empresa mantém uma rede de mais de 4.000 especialistas para auxiliar escolas na implementação eficaz de suas tecnologias. Essas iniciativas buscam fortalecer a lealdade dos clientes e reduzir seu poder de barganha.
+
+#### - Análise da Rivalidade entre os Concorrentes Existentes:
+A rivalidade entre os concorrentes no mercado de tecnologias educacionais é intensa, com o Google for Education enfrentando competidores significativos. Plataformas como Canvas LMS, que detém 7,75% do mercado, e RenWeb, com 7,05%, oferecem sistemas de gestão de aprendizagem robustos e amplamente adotados. Além disso, alternativas como Kami, Flipgrid e Lockdown Browser proporcionam funcionalidades específicas que competem diretamente com as ferramentas do Google for Education. A presença de soluções de código aberto, como o Moodle, e ofertas de grandes corporações, como o Microsoft Teams, também intensificam a competição, oferecendo opções diversificadas para instituições de ensino. Para manter sua posição de destaque, o Google for Education investe continuamente na integração de suas ferramentas, na expansão de recursos e no fortalecimento de parcerias estratégicas, buscando atender às necessidades dinâmicas do setor educacional. 
+
+
+
 
 ### 1.1.2. Análise SWOT (sprint 2)
 
