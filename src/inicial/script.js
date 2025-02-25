@@ -48,32 +48,32 @@ document.getElementById("botaoJogar").addEventListener("click", function() {
 
     // Aguarda a animação antes de redirecionar
     setTimeout(() => {
-        window.location.href = "fases.html";
+        window.location.href = "../teladefases/fases.html";
     }, 1800); // Tempo deve ser igual à duração da animação no CSS (1.5s)
 });
 
 
 document.getElementById("botaoJogar").addEventListener("mousedown", function() {
-    this.src = "assets/botoes/botastartpress.png";
+    this.src = "assets/telainicial/botoes/botaostartpress.png";
 });
 
 document.getElementById("botaoJogar").addEventListener("mouseup", function() {
-    this.src = "assets/botoes/botaostart.png";
+    this.src = "assets/telainicial/botoes/botaostart.png";
 });
 
 document.getElementById("botaocomojogar").addEventListener("mousedown", function() {
-    this.src = "assets/botoes/comojogarpress.png";
+    this.src = "assets/telainicial/botoes/comojogarpress.png";
 });
 
 document.getElementById("botaocomojogar").addEventListener("mouseup", function() {
-    this.src = "assets/botoes/comojogar.png";
+    this.src = "assets/telainicial/botoes/comojogar.png";
 });
 
 document.getElementById("botaosobre").addEventListener("mouseup", function() {
-    this.src = "assets/botoes/botaosobre.png";
+    this.src = "assets/telainicial/botoes/botaosobre.png";
 });
 
 document.getElementById("botaosobre").addEventListener("mousedown", function() {
-    this.src = "assets/botoes/botaosobrepress.png";
+    this.src = "assets/telainicial/botoes/botaosobrepress.png";
 });
 

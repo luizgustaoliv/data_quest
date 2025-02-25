@@ -40,7 +40,7 @@ function preload() {
     frameWidth: 128,
     frameHeight: 128,
   });
-  this.load.image("background", "assets/background.png");
+  this.load.image("background", "assets/fasebackground.png");
   this.load.tilemapTiledJSON("map", "tileset.json");
   this.load.image("tileset", "assets/Inside_C.png");
 }
