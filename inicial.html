@@ -5,9 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="src/inicial/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-        <script src="src/inicial/script.js"></script>
-    <title>Data Quest</title>
-</head>
+        <title>Data Quest</title>
+    </head>
 <body>
     <div class="title">
         <img class="logo" src="assets/telainicial/logo.png">
@@ -15,9 +14,8 @@
 
     <div class="botoes">
        <img id="botaoJogar" class="botaojogar" src="assets/telainicial/botoes/botaostart.png" alt="Jogar">
-        <img id="botaocomojogar" src="assets/telainicial/botoes/comojogar.png" alt="comojogar" onclick="abrirPopup()">
-        <img id="botaosobre" src="assets/telainicial/botoes/botaosobre.png" alt="Sobre" onclick="abrirPopupSobre()">
-
+       <img id="botaocomojogar" src="assets/telainicial/botoes/comojogar.png" alt="comojogar" onclick="abrirPopup()">
+       <img id="botaosobre" src="assets/telainicial/botoes/botaosobre.png" alt="Sobre" onclick="abrirPopupSobre()">
     </div>
 
     <div id="popup-como-jogar" class="popup">
@@ -25,7 +23,7 @@
             <span class="close" onclick="fecharPopup()">&times;</span>
             <h2>Como Jogar</h2>
             <p>Use as setas ou 'W A S D' para mover e a tecla <b>E</b> para interagir.</p>
-    
+
             <div class="controls">
                 <div class="wasd">
                     <div class="key" id="key-w">W</div>
@@ -35,7 +33,7 @@
                         <div class="key" id="key-d">D</div>
                     </div>
                 </div>
-    
+
                 <div class="arrows">
                     <div class="key" id="key-up">↑</div>
                     <div class="row">
@@ -45,7 +43,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <!-- Nova seção para "Como Interagir" -->
             <div class="interaction-section">
                 <h2>Como Interagir</h2>
@@ -62,12 +60,13 @@
             <span class="close" onclick="fecharPopupSobre()">&times;</span>
             <h2>Sobre o Jogo</h2>
             <p>Jogo criado em parceria com a <b>Google for Education</b></p>
-    
+
             <h3>Desenvolvedores:</h3>
             <p>André Katz, Celso Rocha, Daniel Meiches, Kaian Santos, Luiz Fernando, Miguel Almeida, Wendel</p>
         </div>
     </div>
 
+    <!-- Script carregado aqui, após os elementos do body -->
+    <script src="src/inicial/script.js"></script>
 </body>
-
 </html>
