@@ -6,7 +6,7 @@ body {
     text-align: center;
     min-height: 100vh;
     margin: 0;
-    background-image: url('../assets/telafases/fundofases.png'); /* Substitua pela sua imagem */
+    background-image: url('../../assets/telafases/fundofases.png'); /* Substitua pela sua imagem */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -43,7 +43,7 @@ body::before {
     bottom: 0;
     width: 100%; /* Mantém a largura desejada */
     max-width: 100%;
-    background-image: url('../assets/telafases/fundofases.png'); /* Substitua pela sua imagem */
+    background-image: url('../../assets/telafases/fundofases.png'); /* Substitua pela sua imagem */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

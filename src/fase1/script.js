@@ -32,17 +32,17 @@ const config = {
 const game = new Phaser.Game(config);
 
 function preload() {
-  this.load.spritesheet("player", "assets/player.png", {
+  this.load.spritesheet("player", "../../assets/player.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
-  this.load.image("npc1", "assets/npc.png", {
+  this.load.image("npc1", "../../assets/npc.png", {
     frameWidth: 128,
     frameHeight: 128,
   });
-  this.load.image("background", "assets/fasebackground.png");
+  this.load.image("background", "../../assets/fase1/background.png");
   this.load.tilemapTiledJSON("map", "tileset.json");
-  this.load.image("tileset", "assets/Inside_C.png");
+  this.load.image("tileset", "../../assets/fase1/Inside_C.png");
 }
 
 function create() {
