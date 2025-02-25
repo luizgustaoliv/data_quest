@@ -1,12 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>RPG Phaser</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <title>Data Quest</title>
 </head>
+
 <body>
-    <div id="game-container"></div>
+    <div id="character-select">
+        <h2>Selecione seu personagem:</h2>
+        <div class="character-option">
+            <img src="../../assets/personagem/personagem1Big.png" alt="Personagem 1">
+            <button onclick="startGame('player1')">Personagem 1</button>
+        </div>
+        <div class="character-option">
+            <img src="../../assets/personagem/personagem2Big.png" alt="Personagem 2">
+            <button onclick="startGame('player2')">Personagem 2</button>
+        </div>
+        <div class="character-option">
+            <img src="../../assets/personagem/personagem3Big.png" alt="Personagem 3">
+            <button onclick="startGame('player3')">Personagem 3</button>
+        </div>
+        <div class="character-option">
+            <img src="../../assets/personagem/personagem4Big.png" alt="Personagem 4">
+            <button onclick="startGame('player4')">Personagem 4</button>
+        </div>
+    </div>
+    <div id="game-container" style="display:none;"></div>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
-    <script src="script.js"></script> 
+    <script src="script.js"></script>
 </body>
+
 </html>

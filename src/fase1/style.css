@@ -3,3 +3,63 @@
     height: 600px;
     margin: 0 auto;
 }
+
+#character-select {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8); /* Fundo semi-transparente */
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'assets/fase1/pixolde', cursive; /* Fonte pixelada (certifique-se de tê-la) */
+}
+
+#character-select h2 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 2em; /* Tamanho da fonte maior */
+}
+
+.character-option {
+    display: inline-block;
+    margin: 10px;
+    vertical-align: top; /* Alinha os elementos ao topo para melhor disposição */
+}
+
+.character-option img {
+    width: 150px; /* Aumenta o tamanho da imagem */
+    height: 150px;
+    border-radius: 0; /* Remove bordas arredondadas */
+    margin-bottom: 10px;
+    cursor: pointer;
+    image-rendering: pixelated; /* Garante a aparência pixelada da imagem */
+}
+
+.character-option button {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    border: 2px solid #3e8e41; /* Borda mais escura */
+    border-radius: 0; /* Remove bordas arredondadas */
+    cursor: pointer;
+    font-family: 'assets/fase1/pixolde', cursive;
+    font-size: 1em;
+    image-rendering: pixelated; /* Garante a aparência pixelada do botão */
+    box-shadow: 2px 2px 0 #000; /* Sombra para efeito 2D */
+    display: block; /* Faz o botão ocupar a largura total do contêiner */
+    margin: 10px auto 0; /* Centraliza o botão e adiciona margem superior */
+    width: fit-content; /* Ajusta a largura do botão ao seu conteúdo */
+}
+
+.character-option button:hover {
+    background-color: #3e8e41; /* Cor de fundo ao passar o mouse */
+    border-color: #367c39;
+}
+
+.character-option button:active {
+    box-shadow: none; /* Remove a sombra ao clicar */
+    transform: translate(2px, 2px); /* Move o botão ligeiramente para simular o efeito 2D */
+
+}
