@@ -434,7 +434,7 @@ function createMain() {
         sombra.setVisible(false);
         personagem.setVisible(false);
         textoDialogo.setVisible(false);
-        avisoTexto.setVisible(true); // Reexibe o aviso depois que o diálogo some
+        avisoTexto.setVisible(false); // Reexibe o aviso depois que o diálogo some
     }, 3000);
   });
   }
