@@ -8,9 +8,10 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 700px;
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.8); /* Fundo semi-transparente */
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
     text-align: center;
     font-family: 'assets/fase1/pixolde', cursive; /* Fonte pixelada (certifique-se de tê-la) */
@@ -29,8 +30,8 @@
 }
 
 .character-option img {
-    width: 150px; /* Aumenta o tamanho da imagem */
-    height: 150px;
+    width: 130px; /* Aumenta o tamanho da imagem */
+    height: 130px;
     border-radius: 0; /* Remove bordas arredondadas */
     margin-bottom: 10px;
     cursor: pointer;

@@ -45,6 +45,7 @@ function preload() {
   this.load.spritesheet("player3", "../../assets/fase1/players/player3.png", { frameWidth: 64, frameHeight: 64 });
   this.load.spritesheet("player4", "../../assets/fase1/players/player4.png", { frameWidth: 64, frameHeight: 64 });
   this.load.image("npc1", "../../assets/npc.png");
+  this.load.image("Personagem1", "../../assets/personagem1Big.png")
   this.load.image("background", "../../assets/fase1/background2.png");
   this.load.tilemapTiledJSON("map", "tileset.json");
   this.load.image("tileset", "../../assets/fase1/Inside_C.png");
@@ -80,13 +81,6 @@ function createMain() {
   player.setOrigin(0.5, 1);
   player.body.setSize(30, 30);
   player.body.setOffset(15, 40);
-
-  npc1 = this.physics.add.sprite(700, 400, "npc1", 0);
-  npc1.setCollideWorldBounds(true);
-  npc1.setScale(0.1);
-  npc1.setOrigin(0.5, 1);
-  npc1.body.setSize(700, 1000);
-  npc1.body.setOffset(100, 10);
 
   this.physics.add.collider(player, colisaoLayer);
 }
@@ -157,14 +151,14 @@ function createMain() {
   //criar npc
   npc1 = this.physics.add.sprite(700, 400, "npc1", 0);
   npc1.setCollideWorldBounds(true);
-  npc1.setScale(0.1);
-  npc1.setOrigin(0.5, 1);
+  npc1.setScale(1);
+  npc1.setOrigin(0.2, 1);
+  npc1.body.setOffset(50, 10);
+  npc1.body.setSize(50, 100);
 
   player.body.setSize(30, 30);
   player.body.setOffset(15, 40);
 
-  npc1.body.setSize(700, 1000); // Exemplo: Largura 40, Altura 90. Ajuste esses valores!
-  npc1.body.setOffset(100, 10);
 
   // Adicionar colisão entre o jogador e a camada de colisão
   this.physics.add.collider(player, colisaoLayer);

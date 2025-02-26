@@ -101,15 +101,15 @@ body.zoom-effect::before {
 }
 
 .botaojogar {
-    height: 70px;
+    height: 50px;
 }
 
 .botaocomojogar{
-    height: 70px;
+    height: 50px;
 }
 
 .botaosobre{
-    height: 70px;
+    height: 50px;
 }
 
 /* Ajuste da logo */
@@ -118,18 +118,6 @@ body.zoom-effect::before {
     margin-bottom: 80px;
     align-items: center;
     position: relative;
-    
-    /* Animação */
-    animation: moveLogo 6s infinite alternate ease-in-out;
-}
-
-@keyframes moveLogo {
-    0% {
-        transform: translateX(-10px);
-    }
-    100% {
-        transform: translateX(10px);
-    }
 }
 
 
