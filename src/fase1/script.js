@@ -6,12 +6,10 @@ let chaoLayer;
 let colisaoLayer;
 let cursors;
 let npc1;
-  // Variáveis para controle do diálogo
 let podeIniciarDialogo = false;
 let dialogoIniciado = false;
 let avisoTexto;
 let textoDialogo;
-
 
 const config = {
   type: Phaser.AUTO,
@@ -32,11 +30,8 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
-
-// Adicione a cena "main" corretamente
 game.scene.add("main", { create: createMain, update: updateMain });
 
-// Agora, quando startGame() for chamado, a cena já existirá
 function startGame(character) {
   selectedCharacter = character;
   document.getElementById("character-select").style.display = "none";
@@ -45,55 +40,77 @@ function startGame(character) {
 }
 
 function preload() {
-  // Carrega as spritesheets dos personagens
-  this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", {
-    frameWidth: 64,
-    frameHeight: 64,
-  });
-  this.load.spritesheet("player2", "../../assets/fase1/players/player2.png", {
-    frameWidth: 64,
-    frameHeight: 64,
-  });
-  this.load.spritesheet("player3", "../../assets/fase1/players/player3.png", {
-    frameWidth: 64,
-    frameHeight: 64,
-  });
-  this.load.spritesheet("player4", "../../assets/fase1/players/player4.png", {
-    frameWidth: 64,
-    frameHeight: 64,
-  });
-
-  this.load.image("npc1", "../../assets/npc.png", {
-    frameWidth: 128,
-    frameHeight: 128,
-  });
-  this.load.image("background", "../../assets/fase1/background.png");
+  this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", { frameWidth: 64, frameHeight: 64 });
+  this.load.spritesheet("player2", "../../assets/fase1/players/player2.png", { frameWidth: 64, frameHeight: 64 });
+  this.load.spritesheet("player3", "../../assets/fase1/players/player3.png", { frameWidth: 64, frameHeight: 64 });
+  this.load.spritesheet("player4", "../../assets/fase1/players/player4.png", { frameWidth: 64, frameHeight: 64 });
+  this.load.image("npc1", "../../assets/npc.png");
+  this.load.image("background", "../../assets/fase1/background2.png");
   this.load.tilemapTiledJSON("map", "tileset.json");
   this.load.image("tileset", "../../assets/fase1/Inside_C.png");
 }
 
 function create() {
-  this.scene.remove("main"); // Remove a cena atual para evitar duplicações
-  this.scene.add("main", { create: createMain, update: updateMain }, true); // Adiciona a cena 'main' com as funções createMain e updateMain
+  this.scene.remove("main");
+  this.scene.add("main", { create: createMain, update: updateMain }, true);
+}
 
-  // Resto do código (movido para createMain)
+function createMain() {
+  map = this.make.tilemap({ key: "map" });
+  tileset = map.addTilesetImage("Inside_C", "tileset");
+  chaoLayer = map.createLayer("Camada de Blocos 1", tileset, 0, 0);
+  colisaoLayer = map.createLayer("colisao", tileset, 0, 0);
+  livrosLayer = map.createLayer("livros", tileset, 0, 0);
+
+  cursors = this.input.keyboard.createCursorKeys();
+  teclaE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+
+  colisaoLayer.setCollisionByProperty({ collider: true });
+  livrosLayer.setCollisionByProperty({ collider: true });
+
+  chaoLayer.setScale(2);
+  colisaoLayer.setScale(2);
+  livrosLayer.setScale(2);
+
+  this.physics.world.createDebugGraphic();
+
+  player = this.physics.add.sprite(10, 100, selectedCharacter, 0);
+  player.setCollideWorldBounds(true);
+  player.setScale(1.3);
+  player.setOrigin(0.5, 1);
+  player.body.setSize(30, 30);
+  player.body.setOffset(15, 40);
+
+  npc1 = this.physics.add.sprite(700, 400, "npc1", 0);
+  npc1.setCollideWorldBounds(true);
+  npc1.setScale(0.1);
+  npc1.setOrigin(0.5, 1);
+  npc1.body.setSize(700, 1000);
+  npc1.body.setOffset(100, 10);
+
+  this.physics.add.collider(player, colisaoLayer);
 }
 
 function updateMain() {
-  player.setVelocity(0); // Reseta a velocidade antes de processar o movimento
+  player.setVelocity(0);
 
-  if (cursors.left.isDown) {
+  const leftPressed = cursors.left.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A).isDown;
+  const rightPressed = cursors.right.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D).isDown;
+  const upPressed = cursors.up.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W).isDown;
+  const downPressed = cursors.down.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S).isDown;
+
+  if (leftPressed) {
     player.setVelocityX(-160);
     player.anims.play("walk_side", true);
     player.setFlipX(true);
-  } else if (cursors.right.isDown) {
+  } else if (rightPressed) {
     player.setVelocityX(160);
     player.anims.play("walk_side", true);
     player.setFlipX(false);
-  } else if (cursors.up.isDown) {
+  } else if (upPressed) {
     player.setVelocityY(-160);
     player.anims.play("walk_up", true);
-  } else if (cursors.down.isDown) {
+  } else if (downPressed) {
     player.setVelocityY(160);
     player.anims.play("walk_down", true);
   } else {
@@ -209,26 +226,21 @@ function createMain() {
       frameRate: 7,
       repeat: -1,
     });
+
+    // Criar teclas WASD
+    teclasWASD = {
+    W: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
+    A: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+    S: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
+    D: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+    };
+
     console.log("Animações registradas:", this.anims.anims.entries);
   }
 
   function update() {
     let moving = false;
     let newAnimation = null;
-
-    // Captura de teclas WASD
-    const leftPressed =
-      cursors.left.isDown ||
-      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A).isDown;
-    const rightPressed =
-      cursors.right.isDown ||
-      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D).isDown;
-    const upPressed =
-      cursors.up.isDown ||
-      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W).isDown;
-    const downPressed =
-      cursors.down.isDown ||
-      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S).isDown;
 
     if (leftPressed) {
       player.setVelocityX(-130);
@@ -276,6 +288,11 @@ function createMain() {
           break;
       }
     }
+
+    const leftPressed = cursors.left.isDown || teclasWASD.A.isDown;
+    const rightPressed = cursors.right.isDown || teclasWASD.D.isDown;
+    const upPressed = cursors.up.isDown || teclasWASD.W.isDown;
+    const downPressed = cursors.down.isDown || teclasWASD.S.isDown;
 
     console.log(this.anims.exists("walk_down"));
     console.log(this.anims.exists("walk_up"));
