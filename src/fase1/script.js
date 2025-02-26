@@ -288,25 +288,65 @@ function createMain() {
     console.log(this.anims.exists("walk_up"));
     console.log(this.anims.exists("walk_side"));
 
-    // Se a animação precisa ser mudada, troca apenas se necessário
-    if (newAnimation && newAnimation !== currentAnimation) {
-      player.anims.play(newAnimation, true);
-      currentAnimation = newAnimation;
-    }
-
-    if (
-      podeIniciarDialogo &&
-      Phaser.Input.Keyboard.JustDown(teclaE) &&
-      !dialogoIniciado
-    ) {
+      // Se a animação precisa ser mudada, troca apenas se necessário
+      if (newAnimation && newAnimation !== currentAnimation) {
+        player.anims.play(newAnimation, true);
+        currentAnimation = newAnimation;
+      }
+    
+     // Captura a tecla "E"
+  let teclaE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+  
+  // Função para verificar a proximidade do jogador com o NPC
+  function jogadorPertoNpc(player, npc) {
+    podeIniciarDialogo = true;
+    avisoTexto.setPosition(npc.x, npc.y - 50);
+    avisoTexto.setVisible(true);
+  }
+  
+  // Função para quando o jogador sair da área do NPC
+  function jogadorSaiuDoNpc(player, npc) {
+    podeIniciarDialogo = false;
+    avisoTexto.setVisible(false);
+  }
+  
+  // Adiciona verificação de colisão com NPC
+  this.physics.add.overlap(player, npc1, jogadorPertoNpc, null, this);
+  this.physics.add.collider(player, npc1, jogadorSaiuDoNpc, null, this);
+  
+  // Função para iniciar o diálogo
+  function iniciarDialogo() {
+    if (!podeIniciarDialogo || dialogoIniciado) return;
+  
+    dialogoIniciado = true;
+  
+    // Escolhe um novo diálogo aleatório ao interagir
+    const novoDialogo = dialogo[Math.floor(Math.random() * dialogo.length)];
+    textoDialogo.setText(novoDialogo);
+    textoDialogo.setVisible(true);
+  
+    // Oculta o aviso de interação enquanto o diálogo está ativo
+    avisoTexto.setVisible(false);
+  
+    // Após um tempo, oculta o diálogo e permite nova interação
+    setTimeout(() => {
+      textoDialogo.setVisible(false);
+      dialogoIniciado = false;
+      avisoTexto.setVisible(podeIniciarDialogo); // Só reaparece se ainda estiver perto
+    }, 3000);
+  }
+  
+  // Atualiza a verificação da tecla no update()
+  this.update = function () {
+    if (podeIniciarDialogo && Phaser.Input.Keyboard.JustDown(teclaE) && !dialogoIniciado) {
       iniciarDialogo();
     }
-  }
-
-  // Configurar a câmera para seguir o jogador
-  this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-  this.cameras.main.startFollow(player);
-
+  }}
+    // Configurar a câmera para seguir o jogador
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.startFollow(player);
+  
+  // Criar o aviso de interação (inicia invisível)
   avisoTexto = this.add.text(0, 0, "Aperte 'E' para interagir", {
     fontFamily: "Arial",
     fontSize: "20px",
@@ -316,49 +356,27 @@ function createMain() {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     padding: { left: 5, right: 5, top: 2, bottom: 2 },
   });
-
   avisoTexto.setOrigin(0.5);
   avisoTexto.setVisible(false);
-
-  textoDialogo = this.add.text(100, 450, "", {
-    fontFamily: "Press Start 2P",
-    fontSize: "16px",
-    color: "#000000",
-    backgroundColor: "#FFFFFF",
-    padding: { left: 10, right: 10, top: 10, bottom: 10 },
-    wordWrap: { width: 600, useAdvancedWrap: true },
-  });
-
-  this.physics.add.overlap(player, npc1, jogadorPertoNpc, null, this);
-}
-
-let lastDirection = "front"; // Começa com 'front' (parado de frente)
-let currentAnimation = null; // Guarda a animação atual
-
-function distanciaEntre(sprite1, sprite2) {
-  return Phaser.Math.Distance.Between(
-    sprite1.x,
-    sprite2.x,
-    sprite1.y,
-    sprite2.y
-  );
-}
-
-function jogadorPertoNpc(player, npc) {
-  podeIniciarDialogo = true;
-}
-
-function jogadorPertoNpc(player, npc) {
-  podeIniciarDialogo = true;
-  avisoTexto.setPosition(npc.x, npc.y - 50);
-  avisoTexto.setVisible(true);
-}
-
-function iniciarDialogo() {
-  dialogoIniciado = true; // Impede que o diálogo seja iniciado novamente
-
-  // Array com diálogos aleatórios
-  const dialogos = [
+  
+  // Criar fundo da caixa de diálogo
+  let caixaDialogo = this.add.graphics();
+  caixaDialogo.fillStyle(0xffffff, 1); // Fundo branco
+  caixaDialogo.fillRoundedRect(50, 400, 700, 100, 10); // Caixa arredondada
+  caixaDialogo.lineStyle(4, 0xff0000, 1); // Borda vermelha
+  caixaDialogo.strokeRoundedRect(50, 400, 700, 100, 10);
+  
+  // Criar sombra para profundidade
+  let sombra = this.add.graphics();
+  sombra.fillStyle(0x000000, 0.3);
+  sombra.fillRoundedRect(55, 405, 700, 100, 10);
+  
+  // Adicionar imagem do personagem (se houver)
+  let personagem = this.add.image(80, 450, selectedCharacter).setScale(4);
+  personagem.setOrigin(0.5, 0.5);
+  
+  // Lista de diálogos possíveis
+  const dialogo = [
     "Olá, forasteiro! Seja bem-vindo à nossa humilde vila.",
     "Bom dia! Precisa de ajuda com algo?",
     "Ei, você! Já ouviu falar sobre a lenda do tesouro escondido?",
@@ -370,25 +388,50 @@ function iniciarDialogo() {
     "Olá! Se precisar de armas, temos um ferreiro habilidoso.",
     "Boa noite! Descanse bem, viajante.",
   ];
-
-  // Escolhe um diálogo aleatório
-
-  // Exibe o diálogo (você pode usar um elemento de texto na tela)
-  const dialogoEscolhido =
-    dialogos[Math.floor(Math.random() * dialogos.length)];
-
-  // Exibe o diálogo no elemento de texto
-  textoDialogo.setText(dialogoEscolhido);
-
-  // Quando o diálogo terminar (você precisa adicionar essa parte):
-  const distancia = distanciaEntre(player, npc1);
-  if (distancia < 50) {
-    // Ajuste o raio de proximidade (150) se necessário
-    avisoTexto.setPosition(npc1.x, npc1.y - 50);
+  
+  // Criar texto do diálogo (mas invisível no início)
+  let textoDialogo = this.add.text(150, 430, "", { // Começa vazio
+    fontFamily: "arial",
+    fontSize: "28px",
+    color: "#FFF",
+    wordWrap: { width: 550 },
+    padding: { left: 10, right: 10, top: 5, bottom: 5 }
+  }).setStroke("#000000", 4);
+  textoDialogo.setVisible(false); // Deixa invisível
+  
+  // Adiciona verificação de colisão com NPC
+  this.physics.add.overlap(player, npc1, jogadorPertoNpc, null, this);
+  
+  // Variáveis para controle do diálogo
+  let podeIniciarDialogo = false;
+  let dialogoIniciado = false;
+  
+  // Função para verificar a proximidade do jogador com o NPC
+  function jogadorPertoNpc(player, npc) {
+    podeIniciarDialogo = true;
+    avisoTexto.setPosition(npc.x, npc.y - 50);
     avisoTexto.setVisible(true);
-    podeIniciarDialogo = true; // Habilita a interação APENAS quando estiver perto
-  } else {
-    avisoTexto.setVisible(false);
-    podeIniciarDialogo = false; // Desabilita a interação quando se afastar
   }
-}
+  
+  // Função para iniciar o diálogo ao pressionar "E"
+  this.input.keyboard.on('keydown-E', () => {
+    if (!podeIniciarDialogo || dialogoIniciado) return;
+  
+    dialogoIniciado = true;
+  
+    // Escolhe um novo diálogo aleatório ao interagir
+    const novoDialogo = dialogo[Math.floor(Math.random() * dialogo.length)];
+    textoDialogo.setText(novoDialogo);
+    textoDialogo.setVisible(true);
+  
+    // Oculta o aviso de interação enquanto o diálogo está ativo
+    avisoTexto.setVisible(false);
+  
+    // Após um tempo, oculta o diálogo e permite nova interação
+    setTimeout(() => {
+        textoDialogo.setVisible(false);
+        dialogoIniciado = false;
+        avisoTexto.setVisible(true); // Reexibe o aviso depois que o diálogo some
+    }, 3000);
+  });
+  }
