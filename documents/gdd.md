@@ -36,7 +36,8 @@
 
 ### 1.1.1. Contexto da indústria (sprint 2)
 
-*Posicione aqui o texto que explica o contexto da indústria/mercado do qual o parceiro de projeto faz parte. Contextualize o segmento de atuação do parceiro (pode ser indústria, comércio ou serviço). Caracterize as atividades executadas pelo negócio do parceiro e a abrangência de suas atividades (âmbito internacional, nacional ou regional).*
+O mercado de educação digital está se tornando cada vez mais competitivo, com gigantes como Microsoft e Apple oferecendo soluções educacionais semelhantes, além de startups que trazem inovações constantes. As escolas e universidades estão em busca de ferramentas mais integradas e fáceis de usar, especialmente com o crescimento do ensino híbrido e remoto. As novas tecnologias, como inteligência artificial e aprendizagem adaptativa, estão mudando rapidamente o cenário e oferecendo grandes oportunidades para empresas como o Google for Education se destacarem. No entanto, essa inovação também exige atenção às regulamentações de privacidade e segurança, que estão ficando cada vez mais rigorosas em diversos países. Para continuar relevante, o Google for Education precisa se adaptar rapidamente às necessidades emergentes das instituições educacionais de todo o mundo, pois suas atividades se estendem por diversos países e necessitam estar atento às mudanças legais, sem perder de vista a crescente concorrência no setor.
+
 
 #### 1.1.1.1. Modelo de 5 Forças de Porter (sprint 2)
 
@@ -60,12 +61,12 @@ A rivalidade entre os concorrentes no mercado de tecnologias educacionais é int
 
 ### 1.1.2. Análise SWOT (sprint 2)
 
-O Google for Education tem várias forças, como a sua tecnologia avançada e a credibilidade da marca Google, que tornam suas ferramentas populares em escolas e universidades. Entre as fraquezas, estão a dependência da internet e desafios em personalizar as ferramentas para diferentes necessidades. As oportunidades incluem o crescimento da educação digital e o uso de novas tecnologias, como inteligência artificial. Porém, ele também enfrenta ameaças, como a concorrência de outras plataformas educacionais e questões de privacidade e segurança dos dados dos alunos.
+Entre as forças do Google for Education, destacam-se a credibilidade da marca Google, a integração de suas ferramentas com outros serviços do Google como Drive e Docs e a facilidade de uso que torna suas soluções populares em escolas e universidades. No entanto, suas fraquezas incluem a dependência de uma conexão de internet estável, o que pode ser um desafio em áreas com infraestrutura limitada, além de dificuldades na personalização de ferramentas para diferentes necessidades educacionais. As oportunidades são amplas, com o crescimento do mercado de educação digital e o potencial de integrar tecnologias emergentes, como inteligência artificial, para aprimorar a experiência de aprendizagem. Por outro lado, as ameaças incluem a forte concorrência de outras empresas como Microsoft e Apple, que também oferecem soluções educacionais populares, e as preocupações crescentes com a privacidade e segurança dos dados dos alunos, especialmente em face de regulamentações cada vez mais rigorosas.
 
 
 ### 1.1.3. Missão / Visão / Valores (sprint 2)
 
-*Posicione aqui a Missão, Visão e Valores do seu projeto.*
+A missão deste projeto é educar alunos e professores de forma divertida e envolvente sobre a importância da Lei Geral de Proteção de Dados LGPD  enquanto eles jogam um RPG sobre um aluno tentando impedir um hacker de roubar dados de sua escola. Durante a jornada, os jogadores terão que responder perguntas sobre a LGPD para libertar as salas trancadas e enfrentar desafios, tornando a educação sobre privacidade algo prático e empolgante. A visão é usar a narrativa de uma invasão hacker para mostrar de forma clara e dinâmica como a proteção de dados afeta nosso cotidiano, incentivando os jogadores a se tornarem mais conscientes e responsáveis no uso da tecnologia. Os valores do jogo são a promoção da privacidade, a segurança da informação e a ética digital, com o objetivo de criar uma experiência que vai além do entretenimento, tornando os jogadores mais preparados para lidar com os desafios da era digital.
 
 ### 1.1.4. Proposta de Valor (sprint 4)
 
