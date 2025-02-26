@@ -60,7 +60,8 @@ A rivalidade entre os concorrentes no mercado de tecnologias educacionais é int
 
 ### 1.1.2. Análise SWOT (sprint 2)
 
-*Posicione aqui a análise SWOT relacionada ao parceiro de projeto. Utilize a análise SWOT para fazer uma análise ambiental do parceiro no âmbito estratégico. Leve em consideração o contexto da indústria, concorrência e as características do ambiente interno (forças e fraquezas) e externo (oportunidades e ameaças) do parceiro.*
+O Google for Education tem várias forças, como a sua tecnologia avançada e a credibilidade da marca Google, que tornam suas ferramentas populares em escolas e universidades. Entre as fraquezas, estão a dependência da internet e desafios em personalizar as ferramentas para diferentes necessidades. As oportunidades incluem o crescimento da educação digital e o uso de novas tecnologias, como inteligência artificial. Porém, ele também enfrenta ameaças, como a concorrência de outras plataformas educacionais e questões de privacidade e segurança dos dados dos alunos.
+
 
 ### 1.1.3. Missão / Visão / Valores (sprint 2)
 
