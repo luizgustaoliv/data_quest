@@ -8,6 +8,7 @@ let colisaoLayer;
 let obj2ColisaoLayer;
 let cursors;
 let npc1;
+let professorNpc;
 let podeIniciarDialogo = false;
 let dialogoIniciado = false;
 let avisoTexto;
@@ -36,7 +37,10 @@ const config = {
 };
 
   const game = new Phaser.Game(config);
-  game.scene.add("main", { create: createMain, update: updateMain });
+  function create() {
+    this.scene.remove("main");
+    this.scene.add("main", { create: createMain, update: updateMain, update: update }, true);
+}
 
   function startGame(character) {
       selectedCharacter = character;
@@ -51,6 +55,7 @@ const config = {
       this.load.spritesheet("player3", "../../assets/fase1/players/player3.png", { frameWidth: 64, frameHeight: 64 });
       this.load.spritesheet("player4", "../../assets/fase1/players/player4.png", { frameWidth: 64, frameHeight: 64 });
       this.load.image("npc1", "../../assets/npc.png");
+      this.load.image("professorNpc", "../../assets/sprite_prof.png");
       this.load.image("background", "../../assets/fase1/background.png");
       this.load.tilemapTiledJSON("map", "tileset.json");
 
@@ -91,6 +96,13 @@ const config = {
       colisaoLayer = map.createLayer("obj_comcolisao", [bathroomTileset, classroomTileset, conferenceTileset, basementTileset, groceryTileset, jailTileset, hospitalTileset, studioTileset, shootingTileset, roomBuilderTileset], 0, 0);
       obj2ColisaoLayer = map.createLayer("obj2_comcolisao", [bathroomTileset, classroomTileset, conferenceTileset, basementTileset, groceryTileset, jailTileset, hospitalTileset, studioTileset, shootingTileset, roomBuilderTileset], 0, 0);
 
+      const objectsLayer = map.getObjectLayer("obj_comcolisao"); // Nome da camada de objetos no Tile
+
+      // Definindo colisões para as camadas
+      colisaoLayer.setCollisionByProperty({ collider: true });
+      obj2ColisaoLayer.setCollisionByProperty({ collider: true });
+      paredeLayer.setCollisionByProperty({ collider: true });
+
       chaoLayer.setScale(1);
       paredeLayer.setScale(1);
       objSemColisaoLayer.setScale(1);
@@ -106,16 +118,35 @@ const config = {
       player.body.setSize(27, 10);
       player.body.setOffset(18, 55);
 
-      npc1 = this.physics.add.sprite(700, 400, "npc1", 0);
+      npc1 = this.physics.add.sprite(130, 320, "npc1", 0);
       npc1.setCollideWorldBounds(true);
       npc1.setScale(0.6);
       npc1.setOrigin(0.2, 1);
       npc1.body.setOffset(50, 10);
       npc1.body.setSize(50, 100);
 
-      this.physics.add.collider(player, obj2ColisaoLayer);
+      professorNpc = this.physics.add.sprite(700, 450, "professorNpc", 0);
+      professorNpc.setCollideWorldBounds(true);
+      professorNpc.setScale(0.8);
+      professorNpc.setOrigin(0.2, 1);
+      professorNpc.body.setOffset(50, 10);
+      professorNpc.body.setSize(50, 100);
 
       cursors = this.input.keyboard.createCursorKeys();
+
+      if (objectsLayer) {
+        const collisionGroup = this.physics.add.staticGroup(); // Criando grupo de colisão
+    
+        objectsLayer.objects.forEach(obj => {
+            const collisionObject = this.add.rectangle(obj.x, obj.y, obj.width, obj.height);
+            this.physics.add.existing(collisionObject, true); // Torna o objeto estático
+            collisionGroup.add(collisionObject); // Adiciona ao grupo de colisão
+        });
+    
+        this.physics.add.collider(player, collisionGroup, () => {
+            console.log("Colisão com objeto detectada!");
+        });
+    }
 
       if (selectedCharacter && !this.anims.exists("idle_front")) {
         this.anims.create({
@@ -183,20 +214,14 @@ const config = {
     
         console.log("Animações registradas:", this.anims.anims.entries);
       }
-
-      const manualLayer = map.getObjectLayer("manual");
-
-if (manualLayer) {
-    manualLayer.objects.forEach(obj => {
-        if (obj.properties && obj.properties.collider) {
-            const colliderObj = this.physics.add.staticSprite(obj.x, obj.y, null);
-            colliderObj.setSize(obj.width, obj.height);
-            colliderObj.setOrigin(0);
-            this.physics.add.collider(player, colliderObj);
-        }
-    });
-}
       const layers = [colisaoLayer, obj2ColisaoLayer, paredeLayer];
+
+      colisaoLayer.forEachTile(tile => {
+        if (tile.index !== -1) { // Verifica apenas tiles existentes
+            console.log(`Tile ID: ${tile.index}, Collider: ${tile.properties.collider}`);
+        }
+        
+    });
 
       layers.forEach(layer => {
           if (layer) {
@@ -212,13 +237,6 @@ if (manualLayer) {
 
       console.log(player.body); // Verifique no console se o corpo do jogador existe
       console.log(player.body.blocked); // Veja se ele está detectando colisões
-
-      if (colisaoLayer) {
-        colisaoLayer.setCollisionByProperty({ collider: true });
-        colisaoLayer.setCollisionBetween(1, 9999); // Isso ajuda a garantir a ativação da colisão para todos os tiles
-        this.physics.add.collider(player, colisaoLayer);
-    }
-
       colisaoLayer.forEachTile(tile => {
         console.log(`Tile ID: ${tile.index}, Collider: ${tile.properties.collider}`);
     });
@@ -235,12 +253,6 @@ if (manualLayer) {
         }
     });
       
-      if (colisaoLayer) {
-        colisaoLayer.setCollisionByProperty({ collider: true });
-        this.physics.world.enable(colisaoLayer);
-        this.physics.add.collider(player, colisaoLayer);
-    }
-    
 
       if (colisaoLayer) {
         colisaoLayer.setCollisionByProperty({ collider: true });
@@ -257,15 +269,14 @@ if (manualLayer) {
         this.physics.add.collider(player, paredeLayer);
     }
 
-    
-
     this.physics.world.createDebugGraphic();
-colisaoLayer.renderDebug(this.add.graphics(), {
-    tileColor: null,    // Mantém os tiles normais sem cor
-    collidingTileColor: new Phaser.Display.Color(243, 134, 48, 150), // Laranja para colisores
-    faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Cinza para bordas
-});
-  }
+    colisaoLayer.renderDebug(this.add.graphics(), {
+      tileColor: null,    // Mantém os tiles normais sem cor
+      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 150), // Laranja para colisores
+      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Cinza para bordas
+  });
+  
+  }  
 
   function updateMain() {
       player.setVelocity(0);
@@ -279,74 +290,65 @@ colisaoLayer.renderDebug(this.add.graphics(), {
       player.setVelocityX(-160);
       player.anims.play("walk_side", true);
       player.setFlipX(true);
-    } else if (rightPressed) {
+  } else if (rightPressed) {
       player.setVelocityX(160);
       player.anims.play("walk_side", true);
       player.setFlipX(false);
-    } else if (upPressed) {
+  } else if (upPressed) {
       player.setVelocityY(-160);
       player.anims.play("walk_up", true);
-    } else if (downPressed) {
+  } else if (downPressed) {
       player.setVelocityY(160);
       player.anims.play("walk_down", true);
-    } else {
+  } else {
       player.setVelocity(0);
       player.anims.play("idle_front", true);
-    }
+  }
 
-    console.log(selectedCharacter);
+  function update() {
+    let newAnimation = null;
 
-
-    function update() {
-      let moving = false;
-      let newAnimation = null;
-
-      if (leftPressed) {
-        player.setVelocityX(-130);
-        player.setVelocityY(0);
+    if (leftPressed) {
         player.setFlipX(true);
         newAnimation = "walk_side";
         lastDirection = "left";
-        moving = true;
-      } else if (rightPressed) {
-        player.setVelocityX(130);
-        player.setVelocityY(0);
+    } else if (rightPressed) {
         player.setFlipX(false);
         newAnimation = "walk_side";
         lastDirection = "right";
-        moving = true;
-      } else if (upPressed) {
-        player.setVelocityY(-130);
-        player.setVelocityX(0);
+    } else if (upPressed) {
         newAnimation = "walk_up";
         lastDirection = "up";
-        moving = true;
-      } else if (downPressed) {
-        player.setVelocityY(130);
-        player.setVelocityX(0);
+    } else if (downPressed) {
         newAnimation = "walk_down";
         lastDirection = "down";
-        moving = true;
-      } else {
-        player.setVelocityX(0);
-        player.setVelocityY(0);
-
-        // Define a animação de idle baseada na última direção
+    } else {
         switch (lastDirection) {
-          case "left":
-          case "right":
-            newAnimation = "idle_side";
-            break;
-          case "up":
-            newAnimation = "idle_back";
-            break;
-          case "down":
-          case "front":
-          default:
-            newAnimation = "idle_front";
-            break;
+            case "left":
+            case "right":
+                newAnimation = "idle_side";
+                break;
+            case "up":
+                newAnimation = "idle_back";
+                break;
+            case "down":
+            case "front":
+            default:
+                newAnimation = "idle_front";
+                break;
         }
-      }
+    }
+
+    if (newAnimation && newAnimation !== currentAnimation) {
+        player.anims.play(newAnimation, true);
+        currentAnimation = newAnimation;
+    }
+
+    // Se a animação precisa ser mudada, troca apenas se necessário
+    if (newAnimation && newAnimation !== currentAnimation) {
+        player.anims.play(newAnimation, true);
+        currentAnimation = newAnimation;
+    }
 
       const leftPressed = cursors.left.isDown || teclasWASD.A.isDown;
       const rightPressed = cursors.right.isDown || teclasWASD.D.isDown;
@@ -382,6 +384,27 @@ colisaoLayer.renderDebug(this.add.graphics(), {
     // Adiciona verificação de colisão com NPC
     this.physics.add.overlap(player, npc1, jogadorPertoNpc, null, this);
     this.physics.add.collider(player, npc1, jogadorSaiuDoNpc, null, this);
+    this.physics.add.collider(player, colisaoLayer, handleCollision, null, this);
+    this.physics.add.collider(player, obj2ColisaoLayer, handleCollision, null, this);
+    this.physics.add.collider(player, paredeLayer, handleCollision, null, this);
+    
+    function handleCollision(player, collider) {
+      const overlap = Phaser.Geom.Rectangle.Intersection(player.getBounds(), collider.getBounds());
+  
+      if (overlap.width > overlap.height) {
+          if (player.body.x < collider.x) {
+              player.x -= overlap.width;
+          } else {
+              player.x += overlap.width;
+          }
+      } else {
+          if (player.body.y < collider.y) {
+              player.y -= overlap.height;
+          } else {
+              player.y += overlap.height;
+          }
+      }
+  }  
   
   function iniciarDialogo() {
     if (!podeIniciarDialogo || dialogoIniciado) return;
