@@ -1,6 +1,10 @@
 let selectedCharacter;
 let player;
 let map;
+let podeIniciarDialogo = false;
+let dialogoIniciado = false;
+let avisoTexto;
+let textoDialogo;
 let chaoLayer;
 let paredeLayer;
 let objSemColisaoLayer;
@@ -9,10 +13,6 @@ let obj2ColisaoLayer;
 let cursors;
 let npc1;
 let professorNpc;
-let podeIniciarDialogo = false;
-let dialogoIniciado = false;
-let avisoTexto;
-let textoDialogo;
 
 const config = {
   type: Phaser.AUTO,
@@ -41,7 +41,6 @@ const config = {
     this.scene.remove("main");
     this.scene.add("main", { create: createMain, update: updateMain, update: update }, true);
 }
-
   function startGame(character) {
       selectedCharacter = character;
       document.getElementById("character-select").style.display = "none";
@@ -58,7 +57,8 @@ const config = {
       this.load.image("professorNpc", "../../assets/sprite_prof.png");
       this.load.image("background", "../../assets/fase1/background.png");
       this.load.tilemapTiledJSON("map", "tileset.json");
-
+      this.load.image("player1big", "../../assets/personagem/personagem1Big.png");
+      this.load.image("key", "../../assets/fase1/chavesprite.png");
       this.load.image("3_Bathroom_32x32", "../../assets/fase1/3_Bathroom_32x32.png");
       this.load.image("5_Classroom_and_library_32x32", "../../assets/fase1/5_Classroom_and_library_32x32.png");
       this.load.image("13_Conference_Hall_32x32", "../../assets/fase1/13_Conference_Hall_32x32.png");
@@ -98,6 +98,7 @@ const config = {
 
       const objectsLayer = map.getObjectLayer("obj_comcolisao"); // Nome da camada de objetos no Tile
 
+
       // Definindo colisões para as camadas
       colisaoLayer.setCollisionByProperty({ collider: true });
       obj2ColisaoLayer.setCollisionByProperty({ collider: true });
@@ -110,6 +111,7 @@ const config = {
       obj2ColisaoLayer.setScale(1);
 
       this.physics.world.createDebugGraphic();
+      cursors = this.input.keyboard.createCursorKeys();
 
       player = this.physics.add.sprite(100, 280, selectedCharacter, 0);
       player.setCollideWorldBounds(true);
@@ -122,17 +124,30 @@ const config = {
       npc1.setCollideWorldBounds(true);
       npc1.setScale(0.6);
       npc1.setOrigin(0.2, 1);
-      npc1.body.setOffset(50, 10);
-      npc1.body.setSize(50, 100);
-
-      professorNpc = this.physics.add.sprite(700, 450, "professorNpc", 0);
+      npc1.body.setSize(40, 20);
+      npc1.body.setOffset(28, 75);
+      npc1.body.setImmovable(true); // Impede que o NPC seja movido pela colisão
+  
+      professorNpc = this.physics.add.sprite(600, 480, "professorNpc", 0);
       professorNpc.setCollideWorldBounds(true);
       professorNpc.setScale(0.8);
       professorNpc.setOrigin(0.2, 1);
-      professorNpc.body.setOffset(50, 10);
-      professorNpc.body.setSize(50, 100);
+      professorNpc.body.setSize(20, 20);
+      professorNpc.body.setOffset(38, 75);
+      professorNpc.body.setImmovable(true); // Impede que o NPC seja movido pela 
+      // colisão 
 
-      cursors = this.input.keyboard.createCursorKeys();
+      key = this.physics.add.sprite(1000, 320, "key", 0);
+      key.setCollideWorldBounds(true)
+      key.setScale(0.8);
+      key.setOrigin(0.2, 1);
+      key.body.setSize(20, 20);
+      key.body.setOffset(38, 75);
+      key.body.setImmovable(true); // Impede que o NPC seja movido pela 
+
+  // Colisão padrão para o mundo (player com paredes, etc)
+  this.physics.add.collider(player, professorNpc);
+              
 
       if (objectsLayer) {
         const collisionGroup = this.physics.add.staticGroup(); // Criando grupo de colisão
@@ -268,13 +283,6 @@ const config = {
         paredeLayer.setCollisionByProperty({ collider: true });
         this.physics.add.collider(player, paredeLayer);
     }
-
-    this.physics.world.createDebugGraphic();
-    colisaoLayer.renderDebug(this.add.graphics(), {
-      tileColor: null,    // Mantém os tiles normais sem cor
-      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 150), // Laranja para colisores
-      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Cinza para bordas
-  });
   
   }  
 
@@ -388,23 +396,13 @@ const config = {
     this.physics.add.collider(player, obj2ColisaoLayer, handleCollision, null, this);
     this.physics.add.collider(player, paredeLayer, handleCollision, null, this);
     
-    function handleCollision(player, collider) {
-      const overlap = Phaser.Geom.Rectangle.Intersection(player.getBounds(), collider.getBounds());
+    this.physics.add.collider(player, npc1, () => {
+      console.log("Colisão com NPC1 detectada!");
+  });
   
-      if (overlap.width > overlap.height) {
-          if (player.body.x < collider.x) {
-              player.x -= overlap.width;
-          } else {
-              player.x += overlap.width;
-          }
-      } else {
-          if (player.body.y < collider.y) {
-              player.y -= overlap.height;
-          } else {
-              player.y += overlap.height;
-          }
-      }
-  }  
+  this.physics.add.collider(player, professorNpc, () => {
+      console.log("Colisão com Professor NPC detectada!");
+  });
   
   function iniciarDialogo() {
     if (!podeIniciarDialogo || dialogoIniciado) return;
@@ -446,12 +444,14 @@ const config = {
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(player);
+    this.cameras.main.setZoom(1.2); // Defina o zoom desejado
+
   
   // Criar o aviso de interação (inicia invisível)
-  avisoTexto = this.add.text(0, 0, "Aperte 'E' para interagir", {
+  avisoTexto = this.add.text(0, 0, "(E)", {
     fontFamily: "Arial",
-    fontSize: "20px",
-    color: "#FFFF00",
+    fontSize: "12px",
+    color: "#FFFF",
     stroke: "#000000",
     strokeThickness: 2,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -462,18 +462,18 @@ const config = {
   
   // Criar fundo da caixa de diálogo
   let caixaDialogo = this.add.graphics();
-  caixaDialogo.fillStyle(0xffffff, 1); // Fundo branco
-  caixaDialogo.fillRoundedRect(50, 400, 700, 100, 10); // Caixa arredondada
-  caixaDialogo.lineStyle(4, 0xff0000, 1); // Borda vermelha
-  caixaDialogo.strokeRoundedRect(50, 400, 700, 100, 10);
+  caixaDialogo.fillStyle(0x00000, 1); // Fundo branco
+  caixaDialogo.fillRoundedRect(100, 400, 700, 100, 10); // Caixa arredondada
+  caixaDialogo.lineStyle(4, 0xefffffff, 1); // Borda vermelha
+  caixaDialogo.strokeRoundedRect(50, 400, 750, 100, 10);
   
   // Criar sombra para profundidade
   let sombra = this.add.graphics();
   sombra.fillStyle(0x000000, 0.3);
-  sombra.fillRoundedRect(55, 405, 700, 100, 10);
+  sombra.fillRoundedRect(0, 0, 0, 0, 0);
   
   // Adicionar imagem do personagem (se houver)
-  let personagem = this.add.image(80, 450, selectedCharacter).setScale(4);
+  let personagem = this.add.image(80, 450, "player1big").setScale(1);
   personagem.setOrigin(0.5, 0.5);
   
   // Lista de diálogos possíveis
