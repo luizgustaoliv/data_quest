@@ -671,6 +671,34 @@ function updateMain() {
     avisoTexto.setVisible(true);
   }
 
+  //nova alocação de if parando a movi do player durante o dialogo
+  if (dialogoIniciado == true) {
+    console.log("O diálogo iniciou!");
+    if (leftPressed) {
+      player.setVelocityX(0);
+      player.anims.play("walk_side", false);
+      player.setFlipX(false);
+      this.playerCanMove = false;
+    } else if (rightPressed) {
+      player.setVelocityX(0);
+      player.anims.play("walk_side", false);
+      player.setFlipX(false);
+      this.playerCanMove = false;
+    } else if (upPressed) {
+      player.setVelocityY(0);
+      player.anims.play("walk_up", false);
+      this.playerCanMove = false;
+    } else if (downPressed) {
+      player.setVelocityY(0);
+      player.anims.play("walk_down", false);
+      this.playerCanMove = false;
+    } else {
+      player.setVelocity(0);
+      player.anims.play("idle_front", false);
+      this.playerCanMove = true;
+    }
+  }
+
   caixaDialogo.setVisible(false);
   sombra.setVisible(false);
   personagem.setVisible(false);
