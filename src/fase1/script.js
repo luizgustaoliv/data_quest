@@ -219,14 +219,6 @@ const config = {
           repeat: -1,
         });
     
-        // Criar teclas WASD
-        teclasWASD = {
-        W: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-        A: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-        S: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-        D: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-        };
-    
         console.log("Animações registradas:", this.anims.anims.entries);
       }
       const layers = [colisaoLayer, obj2ColisaoLayer, paredeLayer];
@@ -357,11 +349,6 @@ const config = {
         player.anims.play(newAnimation, true);
         currentAnimation = newAnimation;
     }
-
-      const leftPressed = cursors.left.isDown || teclasWASD.A.isDown;
-      const rightPressed = cursors.right.isDown || teclasWASD.D.isDown;
-      const upPressed = cursors.up.isDown || teclasWASD.W.isDown;
-      const downPressed = cursors.down.isDown || teclasWASD.S.isDown;
 
       console.log(this.anims.exists("walk_down"));
       console.log(this.anims.exists("walk_up"));
