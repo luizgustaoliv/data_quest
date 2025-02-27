@@ -1,9 +1,11 @@
-let selectedCharacter; // Variável para armazenar o personagem selecionado
+let selectedCharacter;
 let player;
 let map;
-let tileset;
 let chaoLayer;
+let paredeLayer;
+let objSemColisaoLayer;
 let colisaoLayer;
+let obj2ColisaoLayer;
 let cursors;
 let npc1;
 let podeIniciarDialogo = false;
@@ -13,310 +15,373 @@ let textoDialogo;
 
 const config = {
   type: Phaser.AUTO,
-  width: 960,
-  height: 500,
+  width: window.innerWidth, // Usar a largura da janela
+  height: window.innerHeight, // Usar a altura da janela
   parent: "game-container",
+  scale: {
+      mode: Phaser.Scale.RESIZE, // Ajusta o tamanho do jogo dinamicamente
+      autoCenter: Phaser.Scale.CENTER_BOTH, // Centraliza o jogo na tela
+  },
   physics: {
-    default: "arcade",
-    arcade: {
-      gravity: { y: 0 },
-      debug: true,
-    },
+      default: "arcade",
+      arcade: {
+          gravity: { y: 0 },
+          debug: true,
+      },
   },
   scene: {
-    preload: preload,
-    create: create,
+      preload: preload,
+      create: create,
   },
 };
 
-const game = new Phaser.Game(config);
-game.scene.add("main", { create: createMain, update: updateMain });
+  const game = new Phaser.Game(config);
+  game.scene.add("main", { create: createMain, update: updateMain });
 
-function startGame(character) {
-  selectedCharacter = character;
-  document.getElementById("character-select").style.display = "none";
-  document.getElementById("game-container").style.display = "block";
-  game.scene.start("main");
-}
-
-function preload() {
-  this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", { frameWidth: 64, frameHeight: 64 });
-  this.load.spritesheet("player2", "../../assets/fase1/players/player2.png", { frameWidth: 64, frameHeight: 64 });
-  this.load.spritesheet("player3", "../../assets/fase1/players/player3.png", { frameWidth: 64, frameHeight: 64 });
-  this.load.spritesheet("player4", "../../assets/fase1/players/player4.png", { frameWidth: 64, frameHeight: 64 });
-  this.load.image("npc1", "../../assets/npc.png");
-  this.load.image("Personagem1", "../../assets/personagem1Big.png")
-  this.load.image("background", "../../assets/fase1/background2.png");
-  this.load.tilemapTiledJSON("map", "tileset.json");
-  this.load.image("tileset", "../../assets/fase1/Inside_C.png");
-}
-
-function create() {
-  this.scene.remove("main");
-  this.scene.add("main", { create: createMain, update: updateMain }, true);
-}
-
-function createMain() {
-  map = this.make.tilemap({ key: "map" });
-  tileset = map.addTilesetImage("Inside_C", "tileset");
-  chaoLayer = map.createLayer("Camada de Blocos 1", tileset, 0, 0);
-  colisaoLayer = map.createLayer("colisao", tileset, 0, 0);
-  livrosLayer = map.createLayer("livros", tileset, 0, 0);
-
-  cursors = this.input.keyboard.createCursorKeys();
-  teclaE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-
-  colisaoLayer.setCollisionByProperty({ collider: true });
-  livrosLayer.setCollisionByProperty({ collider: true });
-
-  chaoLayer.setScale(2);
-  colisaoLayer.setScale(2);
-  livrosLayer.setScale(2);
-
-  this.physics.world.createDebugGraphic();
-
-  player = this.physics.add.sprite(10, 100, selectedCharacter, 0);
-  player.setCollideWorldBounds(true);
-  player.setScale(1.3);
-  player.setOrigin(0.5, 1);
-  player.body.setSize(30, 30);
-  player.body.setOffset(15, 40);
-
-  this.physics.add.collider(player, colisaoLayer);
-}
-
-function updateMain() {
-  player.setVelocity(0);
-
-  const leftPressed = cursors.left.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A).isDown;
-  const rightPressed = cursors.right.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D).isDown;
-  const upPressed = cursors.up.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W).isDown;
-  const downPressed = cursors.down.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S).isDown;
-
-  if (leftPressed) {
-    player.setVelocityX(-160);
-    player.anims.play("walk_side", true);
-    player.setFlipX(true);
-  } else if (rightPressed) {
-    player.setVelocityX(160);
-    player.anims.play("walk_side", true);
-    player.setFlipX(false);
-  } else if (upPressed) {
-    player.setVelocityY(-160);
-    player.anims.play("walk_up", true);
-  } else if (downPressed) {
-    player.setVelocityY(160);
-    player.anims.play("walk_down", true);
-  } else {
-    player.setVelocity(0);
-    player.anims.play("idle_front", true);
-  }
-}
-
-function createMain() {
-  // Carregar o mapa *primeiro*
-  map = this.make.tilemap({ key: "map" });
-
-  // Adicionar o tileset *uma vez* e *depois* de criar o mapa
-  tileset = map.addTilesetImage("Inside_C", "tileset");
-
-  // Criar camada de chão
-  chaoLayer = map.createLayer("Camada de Blocos 1", tileset, 0, 0);
-
-  // criar teclas de movimentação
-  cursors = this.input.keyboard.createCursorKeys();
-  teclaE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E); // Captura a tecla E
-
-  // Criar camada de colisão e ativar colisões
-  colisaoLayer = map.createLayer("colisao", tileset, 0, 0);
-
-  livrosLayer = map.createLayer("livros", tileset, 0, 0);
-  livrosLayer.setCollisionByProperty({ collider: true });
-  // Verifique se a propriedade utilizada no Tiled é 'collides' ou 'collider'
-  colisaoLayer.setCollisionByProperty({ collider: true });
-
-  chaoLayer.setScale(2);
-  colisaoLayer.setScale(2);
-  livrosLayer.setScale(2);
-
-  // Ativar debug da colisão para verificar se está funcionando
-  this.physics.world.createDebugGraphic();
-
-  // Criar o jogador com base no personagem selecionado
-  player = this.physics.add.sprite(10, 100, selectedCharacter, 0);
-  player.setCollideWorldBounds(true);
-  player.setScale(1.3);
-  player.setOrigin(0.5, 1); // Centro horizontal, parte inferior vertical
-
-  //criar npc
-  npc1 = this.physics.add.sprite(700, 400, "npc1", 0);
-  npc1.setCollideWorldBounds(true);
-  npc1.setScale(1);
-  npc1.setOrigin(0.2, 1);
-  npc1.body.setOffset(50, 10);
-  npc1.body.setSize(50, 100);
-
-  player.body.setSize(30, 30);
-  player.body.setOffset(15, 40);
-
-
-  // Adicionar colisão entre o jogador e a camada de colisão
-  this.physics.add.collider(player, colisaoLayer);
-
-  console.log(selectedCharacter);
-
-  if (selectedCharacter && !this.anims.exists("idle_front")) {
-    this.anims.create({
-      key: "idle_front",
-      frames: [{ key: selectedCharacter, frame: 0 }],
-      frameRate: 1,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "idle_back",
-      frames: [{ key: selectedCharacter, frame: 5 }],
-      frameRate: 1,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "idle_side",
-      frames: [{ key: selectedCharacter, frame: 3 }],
-      frameRate: 1,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "walk_down",
-      frames: [
-        { key: selectedCharacter, frame: 0 },
-        { key: selectedCharacter, frame: 1 },
-        { key: selectedCharacter, frame: 0 },
-        { key: selectedCharacter, frame: 2 },
-      ],
-      frameRate: 7,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "walk_side",
-      frames: [
-        { key: selectedCharacter, frame: 3 },
-        { key: selectedCharacter, frame: 4 },
-      ],
-      frameRate: 7,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "walk_up",
-      frames: [
-        { key: selectedCharacter, frame: 5 },
-        { key: selectedCharacter, frame: 6 },
-        { key: selectedCharacter, frame: 5 },
-        { key: selectedCharacter, frame: 7 },
-      ],
-      frameRate: 7,
-      repeat: -1,
-    });
-
-    // Criar teclas WASD
-    teclasWASD = {
-    W: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-    A: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-    S: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-    D: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-    };
-
-    console.log("Animações registradas:", this.anims.anims.entries);
+  function startGame(character) {
+      selectedCharacter = character;
+      document.getElementById("character-select").style.display = "none";
+      document.getElementById("game-container").style.display = "block";
+      game.scene.start("main");
   }
 
-  function update() {
-    let moving = false;
-    let newAnimation = null;
+  function preload() {
+      this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", { frameWidth: 64, frameHeight: 64 });
+      this.load.spritesheet("player2", "../../assets/fase1/players/player2.png", { frameWidth: 64, frameHeight: 64 });
+      this.load.spritesheet("player3", "../../assets/fase1/players/player3.png", { frameWidth: 64, frameHeight: 64 });
+      this.load.spritesheet("player4", "../../assets/fase1/players/player4.png", { frameWidth: 64, frameHeight: 64 });
+      this.load.image("npc1", "../../assets/npc.png");
+      this.load.image("background", "../../assets/fase1/background.png");
+      this.load.tilemapTiledJSON("map", "tileset.json");
 
-    if (leftPressed) {
-      player.setVelocityX(-130);
-      player.setVelocityY(0);
-      player.setFlipX(true);
-      newAnimation = "walk_side";
-      lastDirection = "left";
-      moving = true;
-    } else if (rightPressed) {
-      player.setVelocityX(130);
-      player.setVelocityY(0);
-      player.setFlipX(false);
-      newAnimation = "walk_side";
-      lastDirection = "right";
-      moving = true;
-    } else if (upPressed) {
-      player.setVelocityY(-130);
-      player.setVelocityX(0);
-      newAnimation = "walk_up";
-      lastDirection = "up";
-      moving = true;
-    } else if (downPressed) {
-      player.setVelocityY(130);
-      player.setVelocityX(0);
-      newAnimation = "walk_down";
-      lastDirection = "down";
-      moving = true;
-    } else {
-      player.setVelocityX(0);
-      player.setVelocityY(0);
+      this.load.image("3_Bathroom_32x32", "../../assets/fase1/3_Bathroom_32x32.png");
+      this.load.image("5_Classroom_and_library_32x32", "../../assets/fase1/5_Classroom_and_library_32x32.png");
+      this.load.image("13_Conference_Hall_32x32", "../../assets/fase1/13_Conference_Hall_32x32.png");
+      this.load.image("14_Basement_32x32", "../../assets/fase1/14_Basement_32x32.png");
+      this.load.image("16_Grocery_store_32x32", "../../assets/fase1/16_Grocery_store_32x32.png");
+      this.load.image("18_Jail_32x32", "../../assets/fase1/18_Jail_32x32.png");
+      this.load.image("19_Hospital_32x32", "../../assets/fase1/19_Hospital_32x32.png");
+      this.load.image("23_Television_and_Film_Studio_32x32", "../../assets/fase1/23_Television_and_Film_Studio_32x32.png");
+      this.load.image("25_Shooting_Range_32x32", "../../assets/fase1/25_Shooting_Range_32x32.png");
+      this.load.image("Room_Builder_32x32", "../../assets/fase1/Room_Builder_32x32.png");
+  }
 
-      // Define a animação de idle baseada na última direção
-      switch (lastDirection) {
-        case "left":
-        case "right":
-          newAnimation = "idle_side";
-          break;
-        case "up":
-          newAnimation = "idle_back";
-          break;
-        case "down":
-        case "front":
-        default:
-          newAnimation = "idle_front";
-          break;
+  function create() {
+      this.scene.remove("main");
+      this.scene.add("main", { create: createMain, update: updateMain }, true);
+  }
+
+  function createMain() {
+      map = this.make.tilemap({ key: "map" });
+
+      const bathroomTileset = map.addTilesetImage("3_Bathroom_32x32", "3_Bathroom_32x32");
+      const classroomTileset = map.addTilesetImage("5_Classroom_and_library_32x32", "5_Classroom_and_library_32x32");
+      const conferenceTileset = map.addTilesetImage("13_Conference_Hall_32x32", "13_Conference_Hall_32x32");
+      const basementTileset = map.addTilesetImage("14_Basement_32x32", "14_Basement_32x32");
+      const groceryTileset = map.addTilesetImage("16_Grocery_store_32x32", "16_Grocery_store_32x32");
+      const jailTileset = map.addTilesetImage("18_Jail_32x32", "18_Jail_32x32");
+      const hospitalTileset = map.addTilesetImage("19_Hospital_32x32", "19_Hospital_32x32");
+      const studioTileset = map.addTilesetImage("23_Television_and_Film_Studio_32x32", "23_Television_and_Film_Studio_32x32");
+      const shootingTileset = map.addTilesetImage("25_Shooting_Range_32x32", "25_Shooting_Range_32x32");
+      const roomBuilderTileset = map.addTilesetImage("Room_Builder_32x32", "Room_Builder_32x32");
+
+      chaoLayer = map.createLayer("chão", [bathroomTileset, classroomTileset, conferenceTileset, basementTileset, groceryTileset, jailTileset, hospitalTileset, studioTileset, shootingTileset, roomBuilderTileset], 0, 0);
+      paredeLayer = map.createLayer("parede", [bathroomTileset, classroomTileset, conferenceTileset, basementTileset, groceryTileset, jailTileset, hospitalTileset, studioTileset, shootingTileset, roomBuilderTileset], 0, 0);
+      objSemColisaoLayer = map.createLayer("obj_semcolisao", [bathroomTileset, classroomTileset, conferenceTileset, basementTileset, groceryTileset, jailTileset, hospitalTileset, studioTileset, shootingTileset, roomBuilderTileset], 0, 0);
+      colisaoLayer = map.createLayer("obj_comcolisao", [bathroomTileset, classroomTileset, conferenceTileset, basementTileset, groceryTileset, jailTileset, hospitalTileset, studioTileset, shootingTileset, roomBuilderTileset], 0, 0);
+      obj2ColisaoLayer = map.createLayer("obj2_comcolisao", [bathroomTileset, classroomTileset, conferenceTileset, basementTileset, groceryTileset, jailTileset, hospitalTileset, studioTileset, shootingTileset, roomBuilderTileset], 0, 0);
+
+      chaoLayer.setScale(1);
+      paredeLayer.setScale(1);
+      objSemColisaoLayer.setScale(1);
+      colisaoLayer.setScale(1);
+      obj2ColisaoLayer.setScale(1);
+
+      this.physics.world.createDebugGraphic();
+
+      player = this.physics.add.sprite(100, 280, selectedCharacter, 0);
+      player.setCollideWorldBounds(true);
+      player.setScale(0.8);
+      player.setOrigin(0.5, 1);
+      player.body.setSize(27, 10);
+      player.body.setOffset(18, 55);
+
+      npc1 = this.physics.add.sprite(700, 400, "npc1", 0);
+      npc1.setCollideWorldBounds(true);
+      npc1.setScale(0.6);
+      npc1.setOrigin(0.2, 1);
+      npc1.body.setOffset(50, 10);
+      npc1.body.setSize(50, 100);
+
+      this.physics.add.collider(player, obj2ColisaoLayer);
+
+      cursors = this.input.keyboard.createCursorKeys();
+
+      if (selectedCharacter && !this.anims.exists("idle_front")) {
+        this.anims.create({
+          key: "idle_front",
+          frames: [{ key: selectedCharacter, frame: 0 }],
+          frameRate: 1,
+          repeat: -1,
+        });
+    
+        this.anims.create({
+          key: "idle_back",
+          frames: [{ key: selectedCharacter, frame: 5 }],
+          frameRate: 1,
+          repeat: -1,
+        });
+    
+        this.anims.create({
+          key: "idle_side",
+          frames: [{ key: selectedCharacter, frame: 3 }],
+          frameRate: 1,
+          repeat: -1,
+        });
+    
+        this.anims.create({
+          key: "walk_down",
+          frames: [
+            { key: selectedCharacter, frame: 0 },
+            { key: selectedCharacter, frame: 1 },
+            { key: selectedCharacter, frame: 0 },
+            { key: selectedCharacter, frame: 2 },
+          ],
+          frameRate: 7,
+          repeat: -1,
+        });
+    
+        this.anims.create({
+          key: "walk_side",
+          frames: [
+            { key: selectedCharacter, frame: 3 },
+            { key: selectedCharacter, frame: 4 },
+          ],
+          frameRate: 7,
+          repeat: -1,
+        });
+    
+        this.anims.create({
+          key: "walk_up",
+          frames: [
+            { key: selectedCharacter, frame: 5 },
+            { key: selectedCharacter, frame: 6 },
+            { key: selectedCharacter, frame: 5 },
+            { key: selectedCharacter, frame: 7 },
+          ],
+          frameRate: 7,
+          repeat: -1,
+        });
+    
+        // Criar teclas WASD
+        teclasWASD = {
+        W: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
+        A: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+        S: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
+        D: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+        };
+    
+        console.log("Animações registradas:", this.anims.anims.entries);
       }
+
+      const manualLayer = map.getObjectLayer("manual");
+
+if (manualLayer) {
+    manualLayer.objects.forEach(obj => {
+        if (obj.properties && obj.properties.collider) {
+            const colliderObj = this.physics.add.staticSprite(obj.x, obj.y, null);
+            colliderObj.setSize(obj.width, obj.height);
+            colliderObj.setOrigin(0);
+            this.physics.add.collider(player, colliderObj);
+        }
+    });
+}
+      const layers = [colisaoLayer, obj2ColisaoLayer, paredeLayer];
+
+      layers.forEach(layer => {
+          if (layer) {
+              layer.setCollisionByProperty({ collider: true }); // Ativa colisão para tiles com collider: true
+              this.physics.add.collider(player, layer);
+          }
+      });
+      
+    player.body.setBounce(0); // Garante que o jogador não "quique"
+    player.body.setMaxVelocity(200); // Limita a velocidade
+    player.body.useDamping = true; // Suaviza o movimento
+    player.body.setImmovable(false);
+
+      console.log(player.body); // Verifique no console se o corpo do jogador existe
+      console.log(player.body.blocked); // Veja se ele está detectando colisões
+
+      if (colisaoLayer) {
+        colisaoLayer.setCollisionByProperty({ collider: true });
+        colisaoLayer.setCollisionBetween(1, 9999); // Isso ajuda a garantir a ativação da colisão para todos os tiles
+        this.physics.add.collider(player, colisaoLayer);
     }
 
-    const leftPressed = cursors.left.isDown || teclasWASD.A.isDown;
-    const rightPressed = cursors.right.isDown || teclasWASD.D.isDown;
-    const upPressed = cursors.up.isDown || teclasWASD.W.isDown;
-    const downPressed = cursors.down.isDown || teclasWASD.S.isDown;
+      colisaoLayer.forEachTile(tile => {
+        console.log(`Tile ID: ${tile.index}, Collider: ${tile.properties.collider}`);
+    });
+    
+    this.physics.add.collider(player, colisaoLayer, () => {
+      console.log("Colisão detectada!");
+  });
+  
 
-    console.log(this.anims.exists("walk_down"));
-    console.log(this.anims.exists("walk_up"));
-    console.log(this.anims.exists("walk_side"));
+      layers.forEach(layer => {
+        if (layer) {
+            layer.setCollisionByProperty({ collider: true });
+            this.physics.add.collider(player, layer);
+        }
+    });
+      
+      if (colisaoLayer) {
+        colisaoLayer.setCollisionByProperty({ collider: true });
+        this.physics.world.enable(colisaoLayer);
+        this.physics.add.collider(player, colisaoLayer);
+    }
+    
 
-      // Se a animação precisa ser mudada, troca apenas se necessário
-      if (newAnimation && newAnimation !== currentAnimation) {
-        player.anims.play(newAnimation, true);
-        currentAnimation = newAnimation;
+      if (colisaoLayer) {
+        colisaoLayer.setCollisionByProperty({ collider: true });
+        this.physics.add.collider(player, colisaoLayer);
+    }
+    
+    if (obj2ColisaoLayer) {
+        obj2ColisaoLayer.setCollisionByProperty({ collider: true });
+        this.physics.add.collider(player, obj2ColisaoLayer);
+    }
+    
+    if (paredeLayer) {
+        paredeLayer.setCollisionByProperty({ collider: true });
+        this.physics.add.collider(player, paredeLayer);
+    }
+
+    
+
+    this.physics.world.createDebugGraphic();
+colisaoLayer.renderDebug(this.add.graphics(), {
+    tileColor: null,    // Mantém os tiles normais sem cor
+    collidingTileColor: new Phaser.Display.Color(243, 134, 48, 150), // Laranja para colisores
+    faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Cinza para bordas
+});
+  }
+
+  function updateMain() {
+      player.setVelocity(0);
+
+    const leftPressed = cursors.left.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A).isDown;
+    const rightPressed = cursors.right.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D).isDown;
+    const upPressed = cursors.up.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W).isDown;
+    const downPressed = cursors.down.isDown || this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S).isDown;
+
+    if (leftPressed) {
+      player.setVelocityX(-160);
+      player.anims.play("walk_side", true);
+      player.setFlipX(true);
+    } else if (rightPressed) {
+      player.setVelocityX(160);
+      player.anims.play("walk_side", true);
+      player.setFlipX(false);
+    } else if (upPressed) {
+      player.setVelocityY(-160);
+      player.anims.play("walk_up", true);
+    } else if (downPressed) {
+      player.setVelocityY(160);
+      player.anims.play("walk_down", true);
+    } else {
+      player.setVelocity(0);
+      player.anims.play("idle_front", true);
+    }
+
+    console.log(selectedCharacter);
+
+
+    function update() {
+      let moving = false;
+      let newAnimation = null;
+
+      if (leftPressed) {
+        player.setVelocityX(-130);
+        player.setVelocityY(0);
+        player.setFlipX(true);
+        newAnimation = "walk_side";
+        lastDirection = "left";
+        moving = true;
+      } else if (rightPressed) {
+        player.setVelocityX(130);
+        player.setVelocityY(0);
+        player.setFlipX(false);
+        newAnimation = "walk_side";
+        lastDirection = "right";
+        moving = true;
+      } else if (upPressed) {
+        player.setVelocityY(-130);
+        player.setVelocityX(0);
+        newAnimation = "walk_up";
+        lastDirection = "up";
+        moving = true;
+      } else if (downPressed) {
+        player.setVelocityY(130);
+        player.setVelocityX(0);
+        newAnimation = "walk_down";
+        lastDirection = "down";
+        moving = true;
+      } else {
+        player.setVelocityX(0);
+        player.setVelocityY(0);
+
+        // Define a animação de idle baseada na última direção
+        switch (lastDirection) {
+          case "left":
+          case "right":
+            newAnimation = "idle_side";
+            break;
+          case "up":
+            newAnimation = "idle_back";
+            break;
+          case "down":
+          case "front":
+          default:
+            newAnimation = "idle_front";
+            break;
+        }
       }
 
-     // Captura a tecla "E"
-  let teclaE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-  
-  // Função para verificar a proximidade do jogador com o NPC
-  function jogadorPertoNpc(player, npc) {
-    podeIniciarDialogo = true;
-    avisoTexto.setPosition(npc.x, npc.y - 50);
-    avisoTexto.setVisible(true);
-  }
-  
-  // Função para quando o jogador sair da área do NPC
-  function jogadorSaiuDoNpc(player, npc) {
-    podeIniciarDialogo = false;
-    avisoTexto.setVisible(false);
-  }
-  
-  // Adiciona verificação de colisão com NPC
-  this.physics.add.overlap(player, npc1, jogadorPertoNpc, null, this);
-  this.physics.add.collider(player, npc1, jogadorSaiuDoNpc, null, this);
+      const leftPressed = cursors.left.isDown || teclasWASD.A.isDown;
+      const rightPressed = cursors.right.isDown || teclasWASD.D.isDown;
+      const upPressed = cursors.up.isDown || teclasWASD.W.isDown;
+      const downPressed = cursors.down.isDown || teclasWASD.S.isDown;
+
+      console.log(this.anims.exists("walk_down"));
+      console.log(this.anims.exists("walk_up"));
+      console.log(this.anims.exists("walk_side"));
+
+        // Se a animação precisa ser mudada, troca apenas se necessário
+        if (newAnimation && newAnimation !== currentAnimation) {
+          player.anims.play(newAnimation, true);
+          currentAnimation = newAnimation;
+        }
+
+      // Captura a tecla "E"
+    let teclaE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+    
+    // Função para verificar a proximidade do jogador com o NPC
+    function jogadorPertoNpc(player, npc) {
+      podeIniciarDialogo = true;
+      avisoTexto.setPosition(npc.x, npc.y - 50);
+      avisoTexto.setVisible(true);
+    }
+    
+    // Função para quando o jogador sair da área do NPC
+    function jogadorSaiuDoNpc(player, npc) {
+      podeIniciarDialogo = false;
+      avisoTexto.setVisible(false);
+    }
+    
+    // Adiciona verificação de colisão com NPC
+    this.physics.add.overlap(player, npc1, jogadorPertoNpc, null, this);
+    this.physics.add.collider(player, npc1, jogadorSaiuDoNpc, null, this);
   
   function iniciarDialogo() {
     if (!podeIniciarDialogo || dialogoIniciado) return;
@@ -356,6 +421,7 @@ function createMain() {
   }}
     // Configurar a câmera para seguir o jogador
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(player);
   
   // Criar o aviso de interação (inicia invisível)
