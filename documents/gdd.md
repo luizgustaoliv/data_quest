@@ -36,8 +36,7 @@
 
 ### 1.1.1. Contexto da indústria (sprint 2)
 
-O mercado de educação digital está se tornando cada vez mais competitivo, com gigantes como Microsoft e Apple oferecendo soluções educacionais semelhantes, além de startups que trazem inovações constantes. As escolas e universidades estão em busca de ferramentas mais integradas e fáceis de usar, especialmente com o crescimento do ensino híbrido e remoto. As novas tecnologias, como inteligência artificial e aprendizagem adaptativa, estão mudando rapidamente o cenário e oferecendo grandes oportunidades para empresas como o Google for Education se destacarem. No entanto, essa inovação também exige atenção às regulamentações de privacidade e segurança, que estão ficando cada vez mais rigorosas em diversos países. Para continuar relevante, o Google for Education precisa se adaptar rapidamente às necessidades emergentes das instituições educacionais de todo o mundo, pois suas atividades se estendem por diversos países e necessitam estar atento às mudanças legais, sem perder de vista a crescente concorrência no setor.
-
+O mercado de educação digital está se tornando cada vez mais competitivo, com gigantes como Microsoft e Apple oferecendo soluções educacionais semelhantes por via do Office e do Apple Education, respectivamente. Startups de EdTech também trazem inovações constantes no mercado. De acordo com um Mapeamento de startups feito pela Abstartups, em 2022 foram identificadas 813 startups de EdTech ativas no Brasil, que é 44% mais startups comparado com 2021. As escolas e universidades estão em busca de ferramentas mais integradas e fáceis de usar, especialmente com o crescimento do ensino híbrido e remoto. As novas tecnologias, como inteligência artificial e aprendizagem adaptativa, estão mudando rapidamente o cenário e oferecendo grandes oportunidades para empresas como o Google for Education se destacarem. No entanto, essa inovação também exige atenção às regulamentações de privacidade e segurança, que estão ficando cada vez mais rigorosas em diversos países. Para continuar relevante, o Google for Education precisa se adaptar rapidamente às necessidades emergentes das instituições educacionais de todo o mundo, pois suas atividades se estendem por diversos países e necessitam estar atento às mudanças legais, sem perder de vista a crescente concorrência no setor.
 
 #### 1.1.1.1. Modelo de 5 Forças de Porter (sprint 2)
 
@@ -55,8 +54,6 @@ O poder de barganha dos clientes em relação ao Google for Education é moderad
 
 #### - Análise da Rivalidade entre os Concorrentes Existentes:
 A rivalidade entre os concorrentes no mercado de tecnologias educacionais é intensa, com o Google for Education enfrentando competidores significativos. Plataformas como Canvas LMS, que detém 7,75% do mercado, e RenWeb, com 7,05%, oferecem sistemas de gestão de aprendizagem robustos e amplamente adotados. Além disso, alternativas como Kami, Flipgrid e Lockdown Browser proporcionam funcionalidades específicas que competem diretamente com as ferramentas do Google for Education. A presença de soluções de código aberto, como o Moodle, e ofertas de grandes corporações, como o Microsoft Teams, também intensificam a competição, oferecendo opções diversificadas para instituições de ensino. Para manter sua posição de destaque, o Google for Education investe continuamente na integração de suas ferramentas, na expansão de recursos e no fortalecimento de parcerias estratégicas, buscando atender às necessidades dinâmicas do setor educacional. 
-
-
 
 
 ### 1.1.2. Análise SWOT (sprint 2)
@@ -153,7 +150,7 @@ O desenvolvimento de Data Quest foi inspirado em títulos específicos que servi
 
 ### 2.2.5. Tempo estimado de jogo (sprint 5)
 
-O tempo estimado para a conclusão de Data Quest é de aproximadamente 3 horas, considerando que o jogador passe por todas as fases do jogo. Esse tempo pode variar dependendo da habilidade do jogador, da exploração de áreas extras e da dificuldade das batalhas. Cada partida individual dentro do jogo tem uma duração média de até 15 minutos, o que permite que os jogadores aproveitem sessões rápidas e dinâmicas, sem a necessidade de longos períodos de tempo. A experiência de jogo foi planejada para ser tanto acessível quanto desafiadora, com a possibilidade de retorno para revisitar fases e conquistar todos os objetivos dentro de cada mapa.
+*a ser definido*
 
 # <a name="c3"></a>3. Game Design (sprints 2 e 3)
 
@@ -193,6 +190,12 @@ O Hacker Anônimo: Um criminoso cibernético que arquitetou o ataque na escola B
 Faxineiro: Primeiro personagem que o protagonista vai interagir no jogo. Dará informações sobre o conflito e ensinará o protagonista sobre conceitos básicos das leis LGPD.
 <br>
 <img src ="../assets/concepts/faxineiro_concept.png" width="400">
+<img src ="../assets/npc.png" width="300">
+
+Professora Rôbo: Segundo NPC da primeira fase do jogo. Ela será outra fonte de informações sobre conceitos básicos das leis LGPD.
+<br>
+<img src ="../assets/concepts/teacher_concept.png" width="400">
+<img src ="../assets/sprite_prof.png" width="300">
 
 (Terão outros personagens coadjuvantes que são aunos e professores da escola, mas esses não foram definidos ainda)
 
@@ -200,26 +203,39 @@ Faxineiro: Primeiro personagem que o protagonista vai interagir no jogo. Dará i
 
 Alinhamento com o público-alvo: O jogo se passa no ambiente escolar e aborda a Lei Geral de Proteção de Dados (LGPD), um tema essencial para estudantes que crescem em um mundo digital. Todos os personagens enfrentam desafios comuns, como atrasos e desatenção nas aulas, o que facilita a identificação do público jovem com eles.
 
-Diversidade dentro da realidade do Brasil e impacto esperado: A escola Bitshine é um reflexo da diversidade presente na realidade do Brasil, com personagens que representam diferentes etnias, gêneros e acessibilidade. O jogo oferece aos jogadores a possibilidade de escolher entre seis personagens distintos, permitindo que se identifiquem com aquele que mais se aproxima de sua própria realidade. O impacto esperado é reforçar a importância da inclusão tanto na educação quanto no setor da tecnologia.
+Diversidade dentro da realidade do Brasil e impacto esperado: A escola Bitshine é um reflexo da diversidade presente na realidade do Brasil, com personagens que representam diferentes etnias e gêneros. O jogo oferece aos jogadores a possibilidade de escolher entre quatro personagens distintos, permitindo que se identifiquem com aquele que mais se aproxima de sua própria realidade. O impacto esperado é reforçar a importância da inclusão tanto na educação quanto no setor da tecnologia.
 ## 3.3. Mundo do jogo (sprints 2 e 3)
 
 ### 3.3.1. Locações Principais e/ou Mapas (sprints 2 e 3)
 
-O cenário do jogo se passa na escola Bitshine, que foi invadida e hackeada por um criminoso digital. A narrativa se desenrola ao longo de 5 andares diferentes da escola, cada um representando uma fase única. Conforme os jogadores avançam, eles exploram diferentes ambientes como salas de aula trancadas, corredores bloqueados por segurança digital e áreas secretas dentro do prédio. [O mapeamento exato dessas áreas ainda está em desenvolvimento]
+O cenário do jogo se passa na escola Bitshine, que foi invadida e hackeada por um criminoso digital. A narrativa se desenrola ao longo de 5 andares diferentes da escola, cada um representando uma fase única. Conforme os jogadores avançam, eles exploram diferentes ambientes como salas de aula trancadas, corredores bloqueados por segurança digital e outras áreas dentro do prédio.
 
 <br>
-
-<p align="center">
+Fotos da escola Bitshine por fora:
+<p>
 <img src="../assets/concepts/escola_normal.png" width="400">
 <img src="../assets/concepts/escola_hack.png" width="400">
 <p>
 
+<br>
+Mapa da primeira fase do jogo, situado no primeiro andar da escola:
+<p>
+<img src="../assets/concepts/fase1.jpeg" width="500">
+<p>
+
+<br>
+Mapa da segunda fase do jogo, um labirinto situado no segundo andar, onde fica a biblioteca da escola:
+<p>
+<img src="../assets/concepts/fase2.jpeg" width="500">
+<p>
+
+
 ### 3.3.2. Navegação pelo mundo (sprints 2 e 3)
 
 - As 5 fases do jogo vão se passar nos 5 andares diferentes da escola.
-- O protagonista explorará cada andar, entrando em salas diferentes tentando encontrar key-cards.
+- O protagonista explorará cada andar, entrando em salas diferentes tentando encontrar objetos colecionáveis que ajudarão na progressão de cada fase.
 - Cada andar terá um key-card e a coleção desses cards é essencial para a progressão no jogo.
-- Uma fase se encerra quando o protagonista encontrar a chave contida em uma certa sala.
+- Uma fase se encerra quando o protagonista encontrar a chave contida no andar atual e voltar para o elevador.
 - Assim, o acesso para o próximo andar é liberado e a próxima fase é desbloqueada.
 
 ### 3.3.3. Condições climáticas e temporais (sprints 2 e 3)
@@ -252,6 +268,14 @@ Figura 5: Conceitos de ataques feitos pelos inimigos robôs.
 <img src="../assets/concepts/robo_concept.png" width="300">
 
 Figura 6: Ilustração do inimigo robô com suas cores definidas.
+
+<img src="../assets/concepts/protag_genero.png" width="300">
+
+Figura 7: Primeira concept da aprimoração do protagonista.
+
+<img src="../assets/concepts/teste_generos.png" width="300">
+
+Figura 8: Esboços dos designs aprimorados do protagonista.
 
 
 ### 3.3.5. Trilha sonora (sprint 3)
@@ -347,28 +371,28 @@ Os próximos passos incluem a melhoria do sistema de combate, tornando as pergun
 
 ## 4.2. Desenvolvimento básico do jogo (sprint 2)
 
-*Descreva e ilustre aqui o desenvolvimento da versão básica do jogo, explicando brevemente o que foi entregue em termos de código e jogo. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
-
 Durante o sprint 2, focamos em aprimorar o personagem principal e introduzir novos personagens, o que enriqueceu a narrativa e a jogabilidade do jogo. Os novos personagens foram integrados de forma a complementar a história, trazendo diversidade e ampliando as possibilidades de interação.
 Além disso, criamos e implementamos diálogos entre os personagens. Essa funcionalidade foi essencial para tornar a experiência do jogador mais imersiva, permitindo o desenvolvimento da trama de forma mais dinâmica. A implementação envolveu a construção de um sistema básico de diálogos, com ramificações que afetam o progresso do jogador.
 Outro ponto importante deste sprint foi o aprimoramento e a conclusão da fase 01. Foram feitos ajustes no design do cenário, correção de bugs e otimização da mecânica de jogo, garantindo uma experiência fluida e envolvente para o jogador.
 
 Dificuldades Encontradas:
 
- - Ajuste preciso da sincronização dos diálogos com as ações dos personagens.
- - Problemas de desempenho ao adicionar novos personagens, exigindo otimização do código.
- - Balanceamento da dificuldade da fase 01 para manter o jogo desafiador, mas acessível.
+- Ajuste preciso da sincronização dos diálogos com as ações dos personagens.
+- Problemas de desempenho ao adicionar novos personagens, exigindo otimização do código.
+- Balanceamento da dificuldade da fase 01 para manter o jogo desafiador, mas acessível.
 
 Próximos Passos:
 - Implementação da fase 02, com novos desafios e ambientes.
 - Melhoria no sistema de diálogos, incluindo opções de resposta mais complexas.
 - Testes de jogabilidade para refinar a experiência do usuário.
 
-Ilustrações do Desenvolvimento
-
-(Inserir aqui prints de tela que demonstrem os novos personagens, exemplos de diálogos e a fase 01 concluída)
-
-
+Ilustrações do Desenvolvimento:
+<br>
+<img src="../assets/ft_protags.png" width="500">
+<img src="../assets/concepts/protags_spritesheets.png" width="500">
+<br>
+<img src="../assets/ft_fase1.png" width="500">
+<img src="../assets/ft_dialogos.png" width="500">
 
 ## 4.3. Desenvolvimento intermediário do jogo (sprint 3)
 
@@ -431,7 +455,8 @@ O que poderia melhorar no jogo? | A responsividade do personagem aos controles, 
 
 # <a name="c7"></a>7. Referências (sprint 5)
 
-_Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
+Links vistos na seção 1.1.1:
+Abstartups. Disponível em: [Art](https://abstartups.com.br/wp-content/uploads/2022/11/MAPEAMENTO-EDTECH-1.pdf) Acesso em: 27/02/2025
 
 LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
 SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
