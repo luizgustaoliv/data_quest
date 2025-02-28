@@ -387,6 +387,7 @@ Próximos Passos:
 - Testes de jogabilidade para refinar a experiência do usuário.
 
 Ilustrações do Desenvolvimento:
+<br>
 <img src="../assets/ft_protags.png" width="500">
 <img src="../assets/concepts/protags_spritesheets.png" width="500">
 <br>
