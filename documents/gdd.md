@@ -380,14 +380,19 @@ Ilustrações do Desenvolvimento
 
 ## 5.1. Casos de Teste (sprints 2 a 4)
 
-*Descreva nesta seção os casos de teste comuns que podem ser executados a qualquer momento para testar o funcionamento e integração das partes do jogo. Utilize tabelas para facilitar a organização.*
+A tabela abaixo apresenta os casos de teste comuns que podem ser executados a qualquer momento para testar o funcionamento e a integração das partes do jogo.
 
-*Exemplo de tabela*
-\# | pré-condição | descrição do teste | pós-condição 
---- | --- | --- | --- 
-1 | posicionar o jogo na tela de abertura | iniciar o jogo desde seu início | o jogo deve iniciar da fase 1
-2 | posicionar o personagem em local seguro de inimigos | aguardar o tempo passar até o final da contagem | o personagem deve perder uma vida e reiniciar a fase
-3 | ...
+\# | Pré-condição | Descrição do Teste | Pós-condição
+--- | --- | --- | ---
+1 | Posicionar o jogo na tela de abertura | Iniciar o jogo desde seu início | O jogo deve iniciar da fase 1
+2 | Posicionar o personagem em local seguro de inimigos | Aguardar o tempo passar até o final da contagem | O personagem deve perder uma vida e reiniciar a fase
+3 | Posicionar o personagem próximo a um item coletável | Movimentar o personagem para coletar o item | O item deve ser removido do cenário e o efeito correspondente aplicado
+4 | Estar na fase e pegar a chave | Use a chave no elevador | O jogo deve avançar para a próxima fase
+5 | Posicionar o personagem próximo a um NPC interativo | Iniciar diálogo com o NPC | O diálogo deve ser exibido corretamente
+6 | Carregar um jogo salvo anteriormente | Iniciar a jogabilidade a partir do ponto salvo | O jogo deve carregar o progresso corretamente
+
+Esses testes garantem que as principais mecânicas do jogo estejam funcionando corretamente ao longo do desenvolvimento e das iterações nas sprints 2 a 4.
+
 
 ## 5.2. Testes de jogabilidade (playtests) (sprint 4)
 
