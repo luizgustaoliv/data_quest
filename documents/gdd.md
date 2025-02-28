@@ -295,9 +295,8 @@ Figura 6: Ilustração do inimigo robô com suas cores definidas.
 
 <div align="center">
   <sub>Diagrama de cenas</sub><br>
-  <img src="[caminho](https://github.com/Inteli-College/2025-1A-T19-IN01-G04/blob/main/assets/Fluxograma.jpg)" width="100%" 
+  <img src="https://github.com/Inteli-College/2025-1A-T19-IN01-G04/blob/main/assets/Fluxograma.jpg" width="100%" 
   alt="Diagrama de cenas"><br>
-  <sup>Fonte: </sup>
 </div>
 
 ## 3.6. Regras do jogo (sprint 3)
