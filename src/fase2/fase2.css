@@ -1,0 +1,18 @@
+body {
+    background-image: url('../../assets/fase2/fase2.png');
+    background-size: contain; /* Exibe a imagem inteira sem cortes */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita repetição da imagem */
+    background-color: black; /* Cor de fundo caso a imagem não ocupe toda a tela */
+    height: 100vh; /* Garante altura total da viewport */
+    margin: 0; /* Remove margens padrão */
+
+    opacity: 0;  /* Começa invisível */
+    filter: blur(10px); /* Começa borrado */
+    transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out;
+}
+
+body.fade-in {
+    opacity: 1;
+    filter: blur(0);
+}

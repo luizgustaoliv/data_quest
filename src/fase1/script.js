@@ -13,6 +13,9 @@ let obj2ColisaoLayer;
 let cursors;
 let npc1;
 let professorNpc;
+let keyCollected = false; // Variável para verificar se a chave foi coletada
+let collectedKey = null; // Variável para armazenar a chave quando for coletada
+
 
 const config = {
   type: Phaser.AUTO,
@@ -27,7 +30,7 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 0 },
-      debug: true,
+
     },
   },
   scene: {
@@ -71,6 +74,7 @@ function preload() {
   });
   this.load.image("npc1", "../../assets/npc.png");
   this.load.image("professorNpc", "../../assets/sprite_prof.png");
+  this.load.image("elevator", "../../assets/animated_elevator_door_entrance_2_32x32.gif");
   this.load.image("background", "../../assets/fase1/background.png");
   this.load.tilemapTiledJSON("map", "tileset.json");
   this.load.image("player1big", "../../assets/personagem/personagem1Big.png");
@@ -259,7 +263,6 @@ function createMain() {
   colisaoLayer.setScale(1);
   obj2ColisaoLayer.setScale(1);
 
-  this.physics.world.createDebugGraphic();
   cursors = this.input.keyboard.createCursorKeys();
 
   player = this.physics.add.sprite(100, 280, selectedCharacter, 0);
@@ -268,6 +271,31 @@ function createMain() {
   player.setOrigin(0.5, 1);
   player.body.setSize(27, 10);
   player.body.setOffset(18, 55);
+
+  elevator = this.physics.add.sprite(680, 363, "elevator", 0);
+  elevator.setCollideWorldBounds(true);
+  elevator.setScale(1);
+  elevator.setOrigin(0.2, 1);
+  elevator.body.setSize(70, 70);
+  elevator.body.setOffset(-3, 0); // Impede que o NPC seja movido pela
+  elevator.setImmovable(true);
+
+  this.physics.add.collider(player, elevator, enterElevator, null, this);
+
+  function enterElevator(player, elevator) {
+    console.log("Entrando no elevador...");
+
+    // Salvamos o personagem no localStorage antes de trocar de fase
+    localStorage.setItem("selectedCharacter", selectedCharacter);
+
+    // Adiciona a classe que aplica o efeito
+    document.body.classList.add("fade-out");
+
+    setTimeout(() => {
+        window.location.replace("../fase2/fase2.html");
+    }, 1200); // Espera a transição antes de mudar de fase
+}
+  
 
   npc1 = this.physics.add.sprite(130, 320, "npc1", 0);
   npc1.setCollideWorldBounds(true);
@@ -290,12 +318,15 @@ function createMain() {
   key.setCollideWorldBounds(true);
   key.setScale(0.8);
   key.setOrigin(0.2, 1);
-  key.body.setSize(20, 20);
-  key.body.setOffset(38, 75);
-  key.body.setImmovable(true); // Impede que o NPC seja movido pela
+  key.body.setSize(25, 10);
+  key.body.setOffset(2, 5); // Impede que o NPC seja movido pela
 
   // Colisão padrão para o mundo (player com paredes, etc)
   this.physics.add.collider(player, professorNpc);
+  this.physics.add.collider(player, elevator);
+  // Adiciona colisão entre o jogador e a chave
+  this.physics.add.overlap(player, key, collectKey, null, this);  
+
 
   if (objectsLayer) {
     const collisionGroup = this.physics.add.staticGroup(); // Criando grupo de colisão
@@ -316,6 +347,7 @@ function createMain() {
     });
   }
 
+  
   if (selectedCharacter && !this.anims.exists("idle_front")) {
     this.anims.create({
       key: "idle_front",
@@ -370,6 +402,7 @@ function createMain() {
       ],
       frameRate: 7,
       repeat: -1,
+      
     });
 
     console.log("Animações registradas:", this.anims.anims.entries);
@@ -408,7 +441,7 @@ function createMain() {
   this.physics.add.collider(player, colisaoLayer, () => {
     console.log("Colisão detectada!");
   });
-
+  
   layers.forEach((layer) => {
     if (layer) {
       layer.setCollisionByProperty({ collider: true });
@@ -432,7 +465,21 @@ function createMain() {
   }
 }
 
+function collectKey(player, key) {
+  keyCollected = true;
+  collectedKey = key; // Armazena a chave coletada
+  key.setDepth(1);
+  key.body.setEnable(false); // Desativa colisão para evitar bugs
+}
+
 function updateMain() {
+  // Se a chave foi coletada, faz com que ela siga o jogador
+  if (collectedKey) {
+          // Faz a chave seguir o jogador com um leve atraso
+  collectedKey.x = Phaser.Math.Linear(collectedKey.x, player.x, 0.1);
+  collectedKey.y = Phaser.Math.Linear(collectedKey.y, player.y - 20, 0.1);
+  }
+
   player.setVelocity(0);
 
   const leftPressed =

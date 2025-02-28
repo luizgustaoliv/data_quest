@@ -4,6 +4,16 @@
     margin: 0 auto;
 }
 
+body {
+    transition: filter 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+body.fade-out {
+    filter: blur(10px);
+    opacity: 0;
+}
+
+
 #character-select {
     position: absolute;
     top: 50%;
