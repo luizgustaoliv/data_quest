@@ -88,14 +88,37 @@ A missão deste projeto é educar alunos e professores de forma divertida e envo
 
 Os requisitos do projeto descrevem as funcionalidades essenciais para o desenvolvimento do jogo, garantindo seu correto funcionamento. Eles incluem mecânicas básicas, como movimentação e interação, além de elementos específicos da jogabilidade, como o sistema de combate baseado em perguntas sobre a LGPD. Esses requisitos são fundamentais para estruturar a experiência do jogador e assegurar a coerência do jogo dentro do seu tema e objetivo educacional.
 
-\# | Requisito | Descrição  
---- | --- | ---
-1 | O controle do personagem será realizado usando as teclas WASD para movimentação. | O jogador pode mover o personagem utilizando as teclas direcionais padrão de jogos no teclado.
-2 | O personagem poderá interagir com NPCs para iniciar diálogos. | Durante a exploração, o jogador pode conversar com personagens do jogo para obter informações e avançar na narrativa.
-3 | O combate será baseado em perguntas e respostas sobre LGPD. | Durante os confrontos, o jogador precisará responder corretamente a perguntas sobre a Lei Geral de Proteção de Dados (LGPD) para vencer os desafios.
-4 | O jogo será dividido em cinco fases representando os andares de uma escola. | Cada fase representará um andar diferente da escola, totalizando cinco andares com desafios progressivos.
-5 | A história do jogo será baseada na proteção de dados dentro de uma escola. |  O jogador assume o papel de um estudante que deve proteger os dados da escola contra ameaças cibernéticas. Durante a jornada, ele aprenderá sobre os conceitos da LGPD e enfrentará desafios que testarão seus conhecimentos na área.
-6 | O nível de dificuldade e progressão do jogo será baseado na complexidade das perguntas e desafios. | À medida que o jogador avança nas fases, as perguntas e desafios se tornam mais complexos. No início, as perguntas abordam conceitos básicos da LGPD, mas nas fases finais, exigem um conhecimento mais aprofundado para superar os obstáculos e vencer o jogo.
+Abaixo está todos os requisitos que trabalhamos na sprint 1 e 2.
+
+| \#  | Requisito | Descrição  |
+| --- | --- | --- |
+| 1 | Controle do personagem | O jogador pode mover o personagem utilizando as teclas WASD para movimentação. |
+| 2 | Interação com NPCs | Durante a exploração, o jogador pode conversar com personagens do jogo para obter informações e avançar na narrativa. |
+| 3 | Combate baseado em perguntas e respostas sobre LGPD | Durante os confrontos, o jogador precisará responder corretamente a perguntas sobre a Lei Geral de Proteção de Dados (LGPD) para vencer os desafios. |
+| 4 | Divisão do jogo em fases | O jogo será dividido em cinco fases representando os andares de uma escola, totalizando cinco andares com desafios progressivos. |
+| 5 | História baseada na proteção de dados dentro de uma escola | O jogador assume o papel de um estudante que deve proteger os dados da escola contra ameaças cibernéticas, aprendendo sobre os conceitos da LGPD. |
+| 6 | Progressão baseada na complexidade das perguntas e desafios | À medida que o jogador avança, as perguntas abordam conceitos mais aprofundados da LGPD. |
+| 7 | Aprimoramento de personagem | Implementação de melhorias na jogabilidade e características do personagem. |
+| 8 | Criação de personagem feminino | Adição de uma opção de personagem jogável do gênero feminino. |
+| 9 | Tileset | Desenvolvimento de um conjunto de tiles para compor os cenários do jogo. |
+| 10 | Mapa da fase 01 | Criação do mapa completo da primeira fase do jogo. |
+| 11 | Contextualização da indústria do mercado | Introdução ao contexto mercadológico da LGPD no jogo. |
+| 12 | Análise da ameaça de novos entrantes | Estudo sobre como novos concorrentes podem afetar a proteção de dados. |
+| 13 | Análise da ameaça de produtos ou serviços substitutos | Investigação sobre soluções alternativas que impactam a LGPD. |
+| 14 | Análise do poder de barganha dos fornecedores | Avaliação do impacto dos fornecedores na segurança de dados. |
+| 15 | Análise do poder de barganha dos clientes | Estudo do impacto dos clientes na gestão de dados. |
+| 16 | Análise da rivalidade entre concorrentes existentes | Análise da competição no mercado de segurança de dados. |
+| 17 | Análise SWOT | Identificação de forças, fraquezas, oportunidades e ameaças. |
+| 18 | Missão, visão e valores | Definição da identidade e propósito do jogo. |
+| 19 | Referências e fontes de pesquisa | Inclusão de fontes usadas no desenvolvimento do jogo. |
+| 20 | Nova cena | Implementação de uma nova cena no jogo. |
+| 21 | NPC 'faxineiro' | Criação do NPC faxineiro e sua interação com o jogador. |
+| 22 | NPC 'professor' | Criação do NPC professor e sua interação com o jogador. |
+| 23 | Implementação de mecânicas | Desenvolvimento de novas mecânicas de jogabilidade. |
+| 24 | Diálogos | Criação de interações de diálogo para NPCs. |
+| 25 | Novo mapa/cena | Desenvolvimento de um novo mapa para exploração. |
+| 26 | Tela de fases | Criação de uma tela para seleção de fases. |
+| 27 | Controle de movimento do personagem | Implementação de um sistema responsivo de movimentação para o personagem. |
 
 ## 1.3. Público-alvo do Projeto (sprint 2)
 
