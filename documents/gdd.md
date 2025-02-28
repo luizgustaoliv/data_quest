@@ -293,6 +293,13 @@ Figura 6: Ilustração do inimigo robô com suas cores definidas.
 
 *Posicione aqui seu "storyboard de programação" - o diagrama de cenas do jogo. Indique, por exemplo, como o jogo começa, quais opções o jogador tem, como ele avança nas fases, quais as condições de 'game over', como o jogo reinicia. Seu diagrama deve representar as classes, atributos e métodos usados no jogo.*
 
+<div align="center">
+  <sub>Diagrama de cenas</sub><br>
+  <img src="[caminho](https://github.com/Inteli-College/2025-1A-T19-IN01-G04/blob/main/assets/Fluxograma.jpg)" width="100%" 
+  alt="Diagrama de cenas"><br>
+  <sup>Fonte: </sup>
+</div>
+
 ## 3.6. Regras do jogo (sprint 3)
 
 *Descreva aqui as regras do seu jogo: objetivos/desafios, meios para se conseguir alcançar*
