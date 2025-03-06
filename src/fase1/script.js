@@ -6,7 +6,7 @@ let podeIniciarDialogo = false;
 let dialogoIniciado = false;
 let avisoTexto;
 let textoDialogo;
-let caixaDialogo, sombra, personagem;
+let caixaDialogo, sombra, personagem, npc1Image;
 let chaoLayer;
 let paredeLayer;
 let objSemColisaoLayer;
@@ -376,100 +376,146 @@ function createMain() {
   // Criação dos elementos da caixa de diálogo
   caixaDialogo = this.add.graphics();
   caixaDialogo.fillStyle(0x00000, 1);
-  caixaDialogo.fillRoundedRect(100, 400, 700, 100, 10);
+  caixaDialogo.fillRoundedRect(50, 400, 700, 100, 10);
   caixaDialogo.lineStyle(4, 0xefffffff, 1);
-  caixaDialogo.strokeRoundedRect(50, 400, 750, 100, 10);
+  caixaDialogo.strokeRoundedRect(50, 400, 700, 100, 10);
 
   // Criação da sombra para cobrir a tela inteira quando ativo
   sombra = this.add.graphics();
   sombra.fillStyle(0x000000, 0.3);
   sombra.fillRect(0, 0, map.widthInPixels, map.heightInPixels);
 
-  personagem = this.add.image(80, 450, "player1big").setScale(1);
+  personagem = this.add.image(70, 420, "player1big").setScale(0.7);
   personagem.setOrigin(0.5, 0.5);
 
-  // Lista de diálogos possíveis
-  const dialogo = [
-    "Olá, o quê aconteceu na escola?",
-    "Bom dia! cadê todo mundo?",
-    "Ei, você! cade o resto do pessoal?",
+  // Adiciona a imagem do npc1
+  npc1Image = this.add.image(750, 450, "npc1").setScale(2);
+  npc1Image.setOrigin(0.5, 0.5);
+ 
+
+  // Lista de diálogos personalizados - ATUALIZE esta parte
+  const dialogosPersonalizados = [
+    { texto: "Com licença senhor, o que aconteceu por aqui?...", autor: "player" },
+    { texto: "Por que a porta da escola está fechada?", autor: "player" },
+    { texto: "Fale mais baixo! Senão eles poderão te detectar!", autor: "npc" },
+    { texto: "Quem são eles?", autor: "player" },
+    { texto: "Tem muita informação para explicar...", autor: "npc" },
+    { texto: " É melhor você ir embora,", autor: "npc" },
+    { texto: "As coisas estão muito perigosas aqui dentro.", autor: "npc" },
+    { texto: "Não, eu quero saber o que aconteceu.", autor: "player" },
+    { texto: "(Rapaz persistente…) Ok, tudo bem...", autor: "npc" },
+    { texto: "Mas eu só consigo te explicar o que eu sei.", autor: "npc" },
+    { texto: "Tudo bem.", autor: "player" },
+    { texto: "Eu estava limpando as janelas perto da entrada...", autor: "npc" },
+    { texto: "e percebi que a escola começou a ser invadida.", autor: "npc" },
+    { texto: "Aparentemente alguém conseguiu acessar o sistema...", autor: "npc" },
+    { texto: "para controlar todos os professores da escola...", autor: "npc" },
+    { texto: "E ROUBAR DADOS DOS ALUNOS.", autor: "npc" },
+    { texto: "PERA…!!!", autor: "player" },
+    { texto: "UM HACKER CONTROLANDO OS PROFESSORES PARA ROUBAR DADOS PESSOAIS??", autor: "player" },
+    { texto: "…", autor: "npc" },
+    { texto: "Você não sabe o que é isso né?", autor: "npc" },
+    { texto: "Eheh…, eu nunca prestei muita atenção nessas aulas.", autor: "player" },
+    { texto: "Agora mais do que nunca os conteúdos daquelas aulas importam!!", autor: "npc" },
+    { texto: "Os seus dados pessoais são as informações...", autor: "npc" },
+    { texto: "que permitem identificar você. ", autor: "npc" },
+    { texto: "Informações como seu nome, seu RG e o seu CPF.", autor: "npc" },
+    { texto: "Ah... então tipo, meu nome completo e essas coisas?", autor: "player" },
+    { texto: "Exatamente! Mas não é só isso.", autor: "npc" },
+    { texto: "Seu endereço, seu telefone, até seu histórico escolar...", autor: "npc" },
+    { texto: "tudo isso são dados pessoais.", autor: "npc" },
+    { texto: "E essas informações, se caírem nas mãos erradas,", autor: "npc" },
+    { texto: "podem ser um grande problema.", autor: "npc" },
+    { texto: "Tá, mas por que alguém ia querer roubar essas informações?", autor: "player" },
+    { texto: "Olha, esses hackers podem vender...", autor: "npc" },
+    { texto: "essas informações ou usá-las para golpes.", autor: "npc" },
+    { texto: "Se alguém souber seus dados,", autor: "npc" },
+    { texto: "pode tentar criar contas no seu nome ou coisas piores.", autor: "npc" },
+    { texto: "Eita, sério mesmo?", autor: "player" },
+    { texto: "Muito sério!", autor: "npc" },
+    { texto: "E por isso existe a LGPD—Lei Geral de Proteção de Dados.", autor: "npc" },
+    { texto: "Ela serve para proteger as informações pessoais...", autor: "npc" },
+    { texto: "das pessoas e garantir que ninguém as use sem permissão.", autor: "npc" },
+    { texto: "Ah... acho que já ouvi esse nome em algum lugar,", autor: "player" },
+    { texto: "mas nunca tive tanto interesse.", autor: "player" },
+    { texto: "Pois é bom saber disso agora,", autor: "npc" },
+    { texto: "porque você não tem escolha.", autor: "npc" },
+    { texto: "Se quiser ajudar a salvar os alunos,", autor: "npc" },
+    { texto: "vai ter que aprender pelo menos o básico sobre isso.", autor: "npc" },
+    { texto: " Deve ter algum jeito de tirar os professores do controle do hacker, ", autor: "player" },
+    { texto: "eu sei algumas coisas sobre a IA deles.", autor: "player" },
+    { texto: "Certo, então tente recuperar o acesso!", autor: "npc" },
   ];
 
   // Criação do texto do diálogo
   textoDialogo = this.add
-    .text(150, 430, "", {
+    .text(400, 450, "", {
       fontFamily: "arial",
-      fontSize: "28px",
+      fontSize: "22px",
       color: "#FFF",
-      wordWrap: { width: 550 },
+      wordWrap: { width: 650 },
+      align: "center",
       padding: { left: 10, right: 10, top: 10, bottom: 5 },
     })
-    .setStroke("#000000", 4);
+    .setStroke("#000000", 3)
+    .setOrigin(0.5, 0.5); // Centraliza o texto no ponto especificado
   
   // Ocultar elementos de diálogo
   caixaDialogo.setVisible(false);
   sombra.setVisible(false);
   personagem.setVisible(false);
+  npc1Image.setVisible(false);
   textoDialogo.setVisible(false);
 
-  // Função para verificar a proximidade do jogador com o NPC
-  function jogadorPertoNpc(player, npc) {
-    if (!dialogoIniciado) {
-      podeIniciarDialogo = true;
-      avisoTexto.setPosition(npc.x, npc.y - 50);
-      avisoTexto.setVisible(true);
-      console.log("Jogador próximo ao NPC - pode iniciar diálogo:", podeIniciarDialogo);
-    }
-  }
-
-  // Adiciona verificação de proximidade com NPC
-  this.physics.add.overlap(player, npc1, jogadorPertoNpc, null, this);
-
-  // Verificar quando o jogador sair do alcance do NPC
-  this.physics.world.on('overlap', (gameObject1, gameObject2, body1, body2) => {
-    // Se não houver mais overlap com o NPC e o diálogo não estiver ativo
-    if ((gameObject1 === player && gameObject2 === npc1) || 
-        (gameObject1 === npc1 && gameObject2 === player)) {
-      if (!dialogoIniciado) {
-        podeIniciarDialogo = false;
-        avisoTexto.setVisible(false);
-      }
-    }
-  });
+  let dialogoIndex = 0;
+  podeIniciarDialogo = false; // Iniciar como falso por padrão
 
   // SUBSTITUA completamente o listener da tecla E com este código:
   this.input.keyboard.on("keydown-E", () => {
     console.log("Tecla E pressionada. Pode iniciar diálogo:", podeIniciarDialogo);
     
-    if (!podeIniciarDialogo || dialogoIniciado) {
-      console.log("Não pode iniciar diálogo ou diálogo já iniciado");
+    // Verifica se o jogador pode iniciar diálogo (ou seja, está encostando no NPC1)
+    if (!podeIniciarDialogo && !dialogoIniciado) {
+      console.log("Não pode iniciar diálogo - não está perto do NPC");
       return;
     }
 
-    console.log("Iniciando diálogo");
-    dialogoIniciado = true;
-    caixaDialogo.setVisible(true);
-    sombra.setVisible(true);
-    personagem.setVisible(true);
-      
-      // Escolhe um novo diálogo aleatório ao interagir
-    const novoDialogo = dialogo[Math.floor(Math.random() * dialogo.length)];
-    textoDialogo.setText(novoDialogo);
-    textoDialogo.setVisible(true);
+    if (!dialogoIniciado) {
+      console.log("Iniciando diálogo");
+      dialogoIniciado = true;
+      caixaDialogo.setVisible(true);
+      sombra.setVisible(true);
+      avisoTexto.setVisible(false);
+    }
 
-     // Oculta o aviso de interação enquanto o diálogo está ativo
-    avisoTexto.setVisible(false);
+    // Se já tem um diálogo em andamento, avança para o próximo
+    if (dialogoIndex < dialogosPersonalizados.length) {
+      // Exibe o próximo diálogo na lista
+      const dialogoAtual = dialogosPersonalizados[dialogoIndex];
+      textoDialogo.setText(dialogoAtual.texto);
+      textoDialogo.setVisible(true);
 
-    // Após um tempo, oculta o diálogo e permite nova interação
-    setTimeout(() => {
+      // Alterna a visibilidade das imagens
+      if (dialogoAtual.autor === "npc") {
+        npc1Image.setVisible(true);
+        personagem.setVisible(false);
+      } else {
+        npc1Image.setVisible(false);
+        personagem.setVisible(true);
+      }
+
+      // Avança para o próximo diálogo
+      dialogoIndex++;
+    } else {
+      // Encerra o diálogo quando todos os diálogos foram exibidos
+      dialogoIndex = 0;
       textoDialogo.setVisible(false);
       dialogoIniciado = false;
       caixaDialogo.setVisible(false);
       sombra.setVisible(false);
       personagem.setVisible(false);
-      // Não resetamos podeIniciarDialogo aqui porque
-      // queremos que isso dependa se o jogador está próximo ao NPC
-    }, 3000);
+      npc1Image.setVisible(false);
+    }
   });
 }
 
@@ -483,8 +529,23 @@ function collectKey(player, key) {
 
 // Função para atualizar a cena principal do jogo
 function updateMain() {
-  // Dentro da função updateMain()
-
+  // Redefinir a variável podeIniciarDialogo para false no início de cada frame
+  podeIniciarDialogo = false;
+  
+  // Verificar a sobreposição com o NPC1 em cada frame
+  let distance = Phaser.Math.Distance.Between(player.x, player.y, npc1.x, npc1.y);
+  if (distance < 70) { // Define uma distância razoável para interação
+    podeIniciarDialogo = true;
+    if (!dialogoIniciado) {
+      avisoTexto.setPosition(npc1.x, npc1.y - 50);
+      avisoTexto.setVisible(true);
+    }
+  } else {
+    if (!dialogoIniciado) {
+      avisoTexto.setVisible(false);
+    }
+  }
+  
   // Se a chave foi coletada, faz com que ela siga o jogador
   if (collectedKey) {
     collectedKey.x = Phaser.Math.Linear(collectedKey.x, player.x, 0.1);
