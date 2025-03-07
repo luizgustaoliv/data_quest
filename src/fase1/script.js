@@ -19,6 +19,10 @@ let keyCollected = false;
 let collectedKey = null;
 let currentAnimation;
 let lastDirection = "front";
+let dialogoNpc1Concluido = false;
+let dialogoProfessorIniciado = false;
+let dialogoProfessorConcluido = false;
+let professorImage;
 
 // Configuração do jogo Phaser
 const config = {
@@ -38,8 +42,9 @@ const config = {
     },
   },
   scene: {
+    key: "main",
     preload: preload,
-    create: create,
+    create: createMain,
     update: updateMain,
   },
 };
@@ -50,6 +55,8 @@ const game = new Phaser.Game(config);
 // Função para iniciar o jogo com o personagem selecionado
 function startGame(character) {
   selectedCharacter = character;
+  localStorage.setItem("currentCharacter", character);
+  console.log("Personagem selecionado e salvo:", selectedCharacter);
   document.getElementById("character-select").style.display = "none";
   document.getElementById("game-container").style.display = "block";
   game.scene.start("main");
@@ -72,6 +79,22 @@ function preload() {
   this.load.spritesheet("player4", "../../assets/fase1/players/player4.png", {
     frameWidth: 64,
     frameHeight: 64,
+  });
+  this.load.spritesheet("personagemDialogo1", "../../assets/dialogos/personagemDialogo1.png", {
+    frameWidth: 225,  // Reduzido novamente
+    frameHeight: 300  // Também ajuste a altura
+  });
+  this.load.spritesheet("personagemDialogo2", "../../assets/dialogos/personagemDialogo2.png", {
+    frameWidth: 225,
+    frameHeight: 300
+  });
+  this.load.spritesheet("personagemDialogo3", "../../assets/dialogos/personagemDialogo3.png", {
+    frameWidth: 225,
+    frameHeight: 300
+  });
+  this.load.spritesheet("personagemDialogo4", "../../assets/dialogos/personagemDialogo4.png", {
+    frameWidth: 225,
+    frameHeight: 300
   });
   this.load.image("npc1", "../../assets/npc.png");
   this.load.image("professorNpc", "../../assets/sprite_prof.png");
@@ -117,16 +140,22 @@ function preload() {
     "Room_Builder_32x32",
     "../../assets/fase1/Room_Builder_32x32.png"
   );
+  // Carregar sprite do professor para o diálogo
+  // Se houver apenas 1 frame para o faxineiro, use um .image ao invés do .spritesheet
+  this.load.image("faxineiroDialogo", "../../assets/dialogos/faxineiro.png");
 }
 
 // Função para criar a cena principal do jogo
 function create() {
-  this.scene.remove("main");
-  this.scene.add("main", { create: createMain, update: updateMain }, true);
+  // this.scene.remove("main");
+  // this.scene.add("main", { create: createMain, update: updateMain }, true);
 }
 
 // Função para criar a cena principal do jogo
 function createMain() {
+  selectedCharacter = localStorage.getItem("currentCharacter") || "player1";
+  console.log("Personagem recuperado do localStorage:", selectedCharacter);
+  
   map = this.make.tilemap({ key: "map" });
 
   const bathroomTileset = map.addTilesetImage(
@@ -373,6 +402,25 @@ function createMain() {
   avisoTexto.setOrigin(0.5);
   avisoTexto.setVisible(false);
 
+  // Determinamos qual sprite de diálogo usar com base no personagem selecionado
+  let dialogCharacterKey;
+  console.log("Criando diálogo para personagem:", selectedCharacter); // Log para debug
+  
+  if (selectedCharacter === "player1") {
+    dialogCharacterKey = "personagemDialogo1";
+  } else if (selectedCharacter === "player2") {
+    dialogCharacterKey = "personagemDialogo2";
+  } else if (selectedCharacter === "player3") {
+    dialogCharacterKey = "personagemDialogo3";
+  } else if (selectedCharacter === "player4") {
+    dialogCharacterKey = "personagemDialogo4";
+  } else {
+    dialogCharacterKey = "personagemDialogo1"; // Fallback
+    console.warn("Personagem desconhecido, usando personagemDialogo1 como fallback");
+  }
+  
+  console.log("Sprite de diálogo selecionado:", dialogCharacterKey); // Log para debug
+
   // Criação dos elementos da caixa de diálogo
   caixaDialogo = this.add.graphics();
   caixaDialogo.fillStyle(0x00000, 1);
@@ -385,25 +433,32 @@ function createMain() {
   sombra.fillStyle(0x000000, 0.3);
   sombra.fillRect(0, 0, map.widthInPixels, map.heightInPixels);
 
-  personagem = this.add.image(70, 420, "player1big").setScale(0.7);
+  // Substitua a imagem estática por um sprite sem animação, usando o dialogCharacterKey correto
+  personagem = this.add.sprite(70, 420, dialogCharacterKey, 1);
+  personagem.setScale(0.7); // Aumentar um pouco a escala para compensar o tamanho menor
   personagem.setOrigin(0.5, 0.5);
 
-  // Adiciona a imagem do npc1
-  npc1Image = this.add.image(750, 450, "npc1").setScale(2);
+  // Adiciona a imagem do npc1 como sprite
+  npc1Image = this.add.sprite(750, 420, "npc1", 0);
+  npc1Image.setScale(0.8); // Ajustar escala para combinar com o personagem
   npc1Image.setOrigin(0.5, 0.5);
- 
 
+  // Adicione uma imagem do professor para o diálogo
+  professorImage = this.add.sprite(750, 420, "professorNpc", 0);
+  professorImage.setScale(1.0);
+  professorImage.setOrigin(0.5, 0.5);
+  professorImage.setVisible(false);
+  
   // Lista de diálogos personalizados - ATUALIZE esta parte
   const dialogosPersonalizados = [
     { texto: "Com licença senhor, o que aconteceu por aqui?...", autor: "player" },
     { texto: "Por que a porta da escola está fechada?", autor: "player" },
     { texto: "Fale mais baixo! Senão eles poderão te detectar!", autor: "npc" },
     { texto: "Quem são eles?", autor: "player" },
-    { texto: "Tem muita informação para explicar...", autor: "npc" },
-    { texto: " É melhor você ir embora,", autor: "npc" },
+    { texto: "Tem muita informação para explicar. É melhor você ir embora,", autor: "npc" },
     { texto: "As coisas estão muito perigosas aqui dentro.", autor: "npc" },
     { texto: "Não, eu quero saber o que aconteceu.", autor: "player" },
-    { texto: "(Rapaz persistente…) Ok, tudo bem...", autor: "npc" },
+    { texto: "(Jovem persistente…) Ok, tudo bem...", autor: "npc" },
     { texto: "Mas eu só consigo te explicar o que eu sei.", autor: "npc" },
     { texto: "Tudo bem.", autor: "player" },
     { texto: "Eu estava limpando as janelas perto da entrada...", autor: "npc" },
@@ -447,6 +502,18 @@ function createMain() {
     { texto: "Certo, então tente recuperar o acesso!", autor: "npc" },
   ];
 
+  // Lista de diálogos do professor
+  const dialogosProfessor = [
+    { texto: "Professor? O senhor está bem?", autor: "player" },
+    { texto: "01101111 01101100 01100001", autor: "npc" },
+    { texto: "O quê? Não estou entendendo...", autor: "player" },
+    { texto: "Parece binário... ele deve estar sob controle do hacker!", autor: "player" },
+    { texto: "01000101 01110101 00100000 01110000 01110010 01100101 01100011 01101001 01110011 01101111 00100000 01100100 01100101 00100000 01100001 01101010 01110101 01100100 01100001", autor: "npc" },
+    { texto: "Ele está pedindo ajuda! Preciso descobrir como libertar os professores desse controle.", autor: "player" },
+    { texto: "Talvez eu possa encontrar alguma informação sobre como funciona o sistema de IA dos professores...", autor: "player" },
+    { texto: "...e usar isso para reverter o que o hacker fez.", autor: "player" },
+  ];
+
   // Criação do texto do diálogo
   textoDialogo = this.add
     .text(400, 450, "", {
@@ -470,53 +537,208 @@ function createMain() {
   let dialogoIndex = 0;
   podeIniciarDialogo = false; // Iniciar como falso por padrão
 
+  // Animação para os personagens no diálogo
+  if (!this.anims.exists("falaPersonagem")) {
+    this.anims.create({
+      key: 'falaPersonagem',
+      frames: [
+        { key: dialogCharacterKey, frame: 0 },
+        { key: dialogCharacterKey, frame: 1 }
+      ],
+      frameRate: 4, // Velocidade da animação - ajuste conforme necessário
+      repeat: -1    // Loop infinito
+    });
+  }
+
+  // SUBSTITUA completamente o listener da tecla E com este código:
+  if (!this.anims.exists("falaFaxineiro")) {
+    this.anims.create({
+      key: 'falaFaxineiro',
+      frames: [
+        { key: "faxineiroDialogo", frame: 0 }
+      ],
+      frameRate: 4,
+      repeat: -1
+    });
+  }
+
+  // Animação para o professor falando
+  if (!this.anims.exists("falaProfessor")) {
+    this.anims.create({
+      key: 'falaProfessor',
+      frames: [{ key: "professorNpc", frame: 0 }], 
+      frameRate: 4,
+      repeat: -1
+    });
+  }
+
   // SUBSTITUA completamente o listener da tecla E com este código:
   this.input.keyboard.on("keydown-E", () => {
     console.log("Tecla E pressionada. Pode iniciar diálogo:", podeIniciarDialogo);
     
-    // Verifica se o jogador pode iniciar diálogo (ou seja, está encostando no NPC1)
-    if (!podeIniciarDialogo && !dialogoIniciado) {
-      console.log("Não pode iniciar diálogo - não está perto do NPC");
+    // Verifica se o jogador pode iniciar diálogo e se o diálogo não foi concluído anteriormente
+    if ((!podeIniciarDialogo && !dialogoIniciado && !dialogoProfessorIniciado) || (dialogoNpc1Concluido && dialogoProfessorConcluido)) {
+      console.log("Não pode iniciar diálogo - não está perto do NPC ou diálogo já foi concluído");
       return;
     }
 
-    if (!dialogoIniciado) {
-      console.log("Iniciando diálogo");
+    // Primeiro, verificamos a distância com o NPC1 (faxineiro)
+    let distanceToNpc1 = Phaser.Math.Distance.Between(player.x, player.y, npc1.x, npc1.y);
+    let distanceToProfessor = Phaser.Math.Distance.Between(player.x, player.y, professorNpc.x, professorNpc.y);
+    
+    // Determina qual diálogo iniciar com base na proximidade
+    let proximoAoFaxineiro = distanceToNpc1 < 70 && !dialogoNpc1Concluido;
+    let proximoAoProfessor = distanceToProfessor < 70 && !dialogoProfessorConcluido;
+    
+    // Se não está próximo de nenhum NPC ou diálogo já foi iniciado, retorna
+    if ((!proximoAoFaxineiro && !proximoAoProfessor && !dialogoIniciado && !dialogoProfessorIniciado)) {
+      console.log("Não pode iniciar diálogo - não está perto de nenhum NPC");
+      return;
+    }
+    
+    // Diálogo com o Faxineiro
+    if (proximoAoFaxineiro && !dialogoIniciado) {
+      // Inicia diálogo com o faxineiro
+      console.log("Iniciando diálogo com faxineiro");
       dialogoIniciado = true;
       caixaDialogo.setVisible(true);
       sombra.setVisible(true);
       avisoTexto.setVisible(false);
+      processoDialogo(this, 'faxineiro', dialogosPersonalizados);
+    } 
+    // Diálogo com o Professor
+    else if (proximoAoProfessor && !dialogoProfessorIniciado) {
+      // Inicia diálogo com o professor
+      console.log("Iniciando diálogo com professor");
+      dialogoProfessorIniciado = true;
+      caixaDialogo.setVisible(true);
+      sombra.setVisible(true);
+      avisoTexto.setVisible(false);
+      processoDialogo(this, 'professor', dialogosProfessor);
     }
+    // Continuar diálogo com o Faxineiro
+    else if (dialogoIniciado) {
+      // Avança diálogo do faxineiro
+      avancaDialogo(this, 'faxineiro', dialogosPersonalizados);
+    }
+    // Continuar diálogo com o Professor
+    else if (dialogoProfessorIniciado) {
+      // Avança diálogo do professor
+      avancaDialogo(this, 'professor', dialogosProfessor);
+    }
+  });
 
-    // Se já tem um diálogo em andamento, avança para o próximo
-    if (dialogoIndex < dialogosPersonalizados.length) {
-      // Exibe o próximo diálogo na lista
-      const dialogoAtual = dialogosPersonalizados[dialogoIndex];
-      textoDialogo.setText(dialogoAtual.texto);
+  // Função para processar diálogos - extraída para reutilização
+  function processoDialogo(scene, tipo, dialogos) {
+    let dialogoIndex = 0;
+    avancaDialogo(scene, tipo, dialogos);
+  }
+  
+  // Função para avançar diálogos - extraída para reutilização
+  function avancaDialogo(scene, tipo, dialogos) {
+    // Verifica se ainda há diálogos a serem mostrados
+    const dialogoIndex = tipo === 'faxineiro' ? 
+      scene.registry.get('dialogoFaxineiroIndex') || 0 : 
+      scene.registry.get('dialogoProfessorIndex') || 0;
+    
+    if (dialogoIndex < dialogos.length) {
+      // Cancela timers existentes
+      if (scene.falaTimer) scene.falaTimer.remove();
+      if (scene.typingTimer) scene.typingTimer.remove();
+      
+      const dialogoAtual = dialogos[dialogoIndex];
+      let textoCompleto = dialogoAtual.texto;
+      let textoAtual = "";
+      let charIndex = 0;
+      
+      // Limpa o texto anterior
+      textoDialogo.setText("");
       textoDialogo.setVisible(true);
-
-      // Alterna a visibilidade das imagens
-      if (dialogoAtual.autor === "npc") {
-        npc1Image.setVisible(true);
-        personagem.setVisible(false);
-      } else {
-        npc1Image.setVisible(false);
-        personagem.setVisible(true);
+      
+      // Alterna visibilidade das imagens conforme o autor
+      if (tipo === 'faxineiro') {
+        if (dialogoAtual.autor === 'npc') {
+          npc1Image.setVisible(true);
+          personagem.setVisible(false);
+          professorImage.setVisible(false);
+          npc1Image.play('falaFaxineiro');
+        } else {
+          npc1Image.setVisible(false);
+          professorImage.setVisible(false);
+          personagem.setVisible(true);
+          personagem.play('falaPersonagem');
+        }
+      } else { // professor
+        if (dialogoAtual.autor === 'npc') {
+          professorImage.setVisible(true);
+          npc1Image.setVisible(false);
+          personagem.setVisible(false);
+        } else {
+          professorImage.setVisible(false);
+          npc1Image.setVisible(false);
+          personagem.setVisible(true);
+          personagem.play('falaPersonagem');
+        }
       }
-
-      // Avança para o próximo diálogo
-      dialogoIndex++;
+      
+      // Digita o texto letra por letra
+      const adicionarCaractere = () => {
+        if (charIndex < textoCompleto.length) {
+          textoAtual += textoCompleto[charIndex];
+          textoDialogo.setText(textoAtual);
+          charIndex++;
+          scene.typingTimer = scene.time.delayedCall(30, adicionarCaractere, [], scene);
+        } else {
+          scene.falaTimer = scene.time.delayedCall(1500, () => {
+            if (dialogoAtual.autor === "player") {
+              personagem.stop();
+              personagem.setFrame(1);
+            } else {
+              if (tipo === 'faxineiro') {
+                npc1Image.stop();
+                npc1Image.setFrame(0);
+              } else {
+                professorImage.stop();
+                professorImage.setFrame(0);
+              }
+            }
+          }, [], scene);
+        }
+      };
+      
+      adicionarCaractere();
+      
+      // Salva o próximo índice no registro
+      if (tipo === 'faxineiro') {
+        scene.registry.set('dialogoFaxineiroIndex', dialogoIndex + 1);
+      } else {
+        scene.registry.set('dialogoProfessorIndex', dialogoIndex + 1);
+      }
     } else {
-      // Encerra o diálogo quando todos os diálogos foram exibidos
-      dialogoIndex = 0;
+      // Finaliza o diálogo
       textoDialogo.setVisible(false);
-      dialogoIniciado = false;
       caixaDialogo.setVisible(false);
       sombra.setVisible(false);
       personagem.setVisible(false);
       npc1Image.setVisible(false);
+      professorImage.setVisible(false);
+      
+      if (tipo === 'faxineiro') {
+        dialogoIniciado = false;
+        dialogoNpc1Concluido = true;
+        scene.registry.set('dialogoFaxineiroIndex', 0);
+      } else {
+        dialogoProfessorIniciado = false;
+        dialogoProfessorConcluido = true;
+        scene.registry.set('dialogoProfessorIndex', 0);
+      }
+      
+      console.log(`Diálogo com ${tipo} concluído`);
+      
+      if (scene.falaTimer) scene.falaTimer.remove();
+      if (scene.typingTimer) scene.typingTimer.remove();
     }
-  });
+  }
 }
 
 // Função para coletar a chave
@@ -533,15 +755,28 @@ function updateMain() {
   podeIniciarDialogo = false;
   
   // Verificar a sobreposição com o NPC1 em cada frame
-  let distance = Phaser.Math.Distance.Between(player.x, player.y, npc1.x, npc1.y);
-  if (distance < 70) { // Define uma distância razoável para interação
+  let distanceToNpc1 = Phaser.Math.Distance.Between(player.x, player.y, npc1.x, npc1.y);
+  let distanceToProfessor = Phaser.Math.Distance.Between(player.x, player.y, professorNpc.x, professorNpc.y);
+  
+  // Verifica proximidade com o faxineiro
+  if (distanceToNpc1 < 70 && !dialogoNpc1Concluido) {
     podeIniciarDialogo = true;
     if (!dialogoIniciado) {
-      avisoTexto.setPosition(npc1.x, npc1.y - 50);
+      avisoTexto.setPosition(npc1.x, npc1.y - 10);
       avisoTexto.setVisible(true);
     }
-  } else {
-    if (!dialogoIniciado) {
+  } 
+  // Verifica proximidade com o professor
+  else if (distanceToProfessor < 70 && !dialogoProfessorConcluido) {
+    podeIniciarDialogo = true;
+    if (!dialogoProfessorIniciado) {
+      avisoTexto.setPosition(professorNpc.x, professorNpc.y - 10);
+      avisoTexto.setVisible(true);
+    }
+  }
+  else {
+    podeIniciarDialogo = false;
+    if (!dialogoIniciado && !dialogoProfessorIniciado) {
       avisoTexto.setVisible(false);
     }
   }
@@ -553,7 +788,7 @@ function updateMain() {
   }
 
   // Não mova o jogador se o diálogo estiver ativo
-  if (dialogoIniciado) {
+  if (dialogoIniciado || dialogoProfessorIniciado) {
     player.setVelocity(0);
     return;
   }
