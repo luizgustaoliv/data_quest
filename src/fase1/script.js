@@ -256,14 +256,6 @@ function createMain() {
   elevator.setImmovable(true);
 
   // Adiciona colisão entre o jogador e o elevador
-    door1 = this.physics.add.sprite(80, 345, "door1", 0);
-    door1.setScale(1.2);
-    door1.setCollideWorldBounds(true);
-    door1.setImmovable(true);
-    door1.body.setSize(20, 10);
-    door1.body.setOffset(6, 50);
-
-  // Adiciona colisão entre o jogador e o elevador
   this.physics.add.collider(player, elevator, enterElevator, null, this);
 
   // Função para entrar no elevador
