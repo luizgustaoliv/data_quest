@@ -427,6 +427,7 @@ function createMain() {
   caixaDialogo.fillRoundedRect(50, 400, 700, 100, 10);
   caixaDialogo.lineStyle(4, 0xefffffff, 1);
   caixaDialogo.strokeRoundedRect(50, 400, 700, 100, 10);
+  caixaDialogo.setScrollFactor(0); // Fixa na câmera
 
   // Criação da sombra para cobrir a tela inteira quando ativo
   sombra = this.add.graphics();
@@ -437,18 +438,21 @@ function createMain() {
   personagem = this.add.sprite(70, 420, dialogCharacterKey, 1);
   personagem.setScale(0.7); // Aumentar um pouco a escala para compensar o tamanho menor
   personagem.setOrigin(0.5, 0.5);
+  personagem.setScrollFactor(0); // Fixa na câmera
 
   // Adiciona a imagem do npc1 como sprite
   npc1Image = this.add.sprite(750, 420, "npc1", 0);
   npc1Image.setScale(0.8); // Ajustar escala para combinar com o personagem
   npc1Image.setOrigin(0.5, 0.5);
+  npc1Image.setScrollFactor(0); // Fixa na câmera
 
   // Adicione uma imagem do professor para o diálogo
   professorImage = this.add.sprite(750, 420, "professorNpc", 0);
-  professorImage.setScale(1.0);
+  professorImage.setScale(2.0);
   professorImage.setOrigin(0.5, 0.5);
   professorImage.setVisible(false);
-  
+  professorImage.setScrollFactor(0); // Fixa na câmera
+
   // Lista de diálogos personalizados - ATUALIZE esta parte
   const dialogosPersonalizados = [
     { texto: "Com licença senhor, o que aconteceu por aqui?...", autor: "player" },
@@ -504,28 +508,33 @@ function createMain() {
 
   // Lista de diálogos do professor
   const dialogosProfessor = [
-    { texto: "Professor? O senhor está bem?", autor: "player" },
+    { texto: "Ei, Professora robô, como você está?", autor: "player" },
     { texto: "01101111 01101100 01100001", autor: "npc" },
     { texto: "O quê? Não estou entendendo...", autor: "player" },
-    { texto: "Parece binário... ele deve estar sob controle do hacker!", autor: "player" },
-    { texto: "01000101 01110101 00100000 01110000 01110010 01100101 01100011 01101001 01110011 01101111 00100000 01100100 01100101 00100000 01100001 01101010 01110101 01100100 01100001", autor: "npc" },
-    { texto: "Ele está pedindo ajuda! Preciso descobrir como libertar os professores desse controle.", autor: "player" },
-    { texto: "Talvez eu possa encontrar alguma informação sobre como funciona o sistema de IA dos professores...", autor: "player" },
-    { texto: "...e usar isso para reverter o que o hacker fez.", autor: "player" },
+    { texto: "Parece binário... ela deve estar sob controle do hacker!", autor: "player" },
+    { texto: "Aluno não detectado. identifique-se", autor: "npc" },
+    { texto: "Professora?!", autor: "player" },
+    { texto: "Está acontecendo com você também?!", autor: "player" },
+    { texto: "Escuta, um hacker está controlando você para roubar nossos dados, resete seus dados imediatamente!!", autor: "player" },
+    { texto: "*Transmissão de dados em andamento*", autor: "npc" },
+    { texto: "Isso é contra a LGPD, você não pode fazer isso", autor: "player" },
+    { texto: "LGPD… processando, conflito detectado…", autor: "npc" },
+    { texto: "Erro de busca, por favor, responda minhas perguntas para ampliar meu prompt de conhecimento antes de continuarmos", autor: "npc" },
   ];
 
   // Criação do texto do diálogo
   textoDialogo = this.add
     .text(400, 450, "", {
       fontFamily: "arial",
-      fontSize: "22px",
+      fontSize: "22px", 
       color: "#FFF",
-      wordWrap: { width: 650 },
+      wordWrap: { width: 400 }, // Reduzida para evitar sobreposição
       align: "center",
-      padding: { left: 10, right: 10, top: 10, bottom: 5 },
+      padding: { left: 20, right: 20, top: 10, bottom: 10 }, // Aumentado padding para manter distância
     })
     .setStroke("#000000", 3)
-    .setOrigin(0.5, 0.5); // Centraliza o texto no ponto especificado
+    .setOrigin(0.5, 0.5) // Centraliza o texto no ponto especificado
+    .setScrollFactor(0); // Fixa na câmera
   
   // Ocultar elementos de diálogo
   caixaDialogo.setVisible(false);
@@ -631,6 +640,46 @@ function createMain() {
   // Função para processar diálogos - extraída para reutilização
   function processoDialogo(scene, tipo, dialogos) {
     let dialogoIndex = 0;
+    
+    // Posicionar elementos de diálogo fixos na tela
+    caixaDialogo.clear();
+    
+    // Calculando posições baseadas no tamanho da câmera
+    const cameraWidth = scene.cameras.main.width;
+    const cameraHeight = scene.cameras.main.height;
+    
+    // Posicionando a caixa na parte inferior da tela
+    const boxWidth = 600;
+    const boxHeight = 100;
+    const boxX = (cameraWidth - boxWidth) / 2;
+    const boxY = cameraHeight - boxHeight - 150; // 50 pixels de margem do fundo
+    
+    // Desenhando a caixa de diálogo na posição correta
+    caixaDialogo.fillStyle(0x000000, 1);
+    caixaDialogo.fillRoundedRect(boxX, boxY, boxWidth, boxHeight, 10);
+    caixaDialogo.lineStyle(4, 0xefffffff, 1);
+    caixaDialogo.strokeRoundedRect(boxX, boxY, boxWidth, boxHeight, 10);
+    
+    // Atualizando posições dos sprites
+    personagem.x = boxX + 0;
+    personagem.y = boxY + 50;
+    
+    npc1Image.x = boxX + boxWidth - 0;
+    npc1Image.y = boxY + 50;
+    
+    professorImage.x = boxX + boxWidth - 0;
+    professorImage.y = boxY + 50;
+    
+    // Largura disponível para texto considerando espaço para personagens nas laterais
+    const textAreaWidth = boxWidth - 140; // 70px de espaço em cada lado para personagens
+    
+    // Redefinir estilo de texto para evitar sobreposição
+    textoDialogo.setWordWrapWidth(textAreaWidth);
+    
+    // Posicionando o texto no centro exato da caixa, com margens seguras
+    textoDialogo.x = boxX + (boxWidth / 2);
+    textoDialogo.y = boxY + (boxHeight / 2);
+    
     avancaDialogo(scene, tipo, dialogos);
   }
   
@@ -686,6 +735,12 @@ function createMain() {
         if (charIndex < textoCompleto.length) {
           textoAtual += textoCompleto[charIndex];
           textoDialogo.setText(textoAtual);
+          
+          // Verificar se o texto está saindo da área designada e ajustar se necessário
+          if (textoDialogo.width > textoDialogo.style.wordWrapWidth) {
+            textoDialogo.setWordWrapWidth(textoDialogo.style.wordWrapWidth);
+          }
+          
           charIndex++;
           scene.typingTimer = scene.time.delayedCall(30, adicionarCaractere, [], scene);
         } else {
