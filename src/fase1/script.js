@@ -23,6 +23,9 @@ let dialogoNpc1Concluido = false;
 let dialogoProfessorIniciado = false;
 let dialogoProfessorConcluido = false;
 let professorImage;
+let doorMessage;
+let isDoorOpen = false;
+let canInteractWithDoor = false;
 
 // Configuração do jogo Phaser
 const config = {
@@ -95,6 +98,10 @@ function preload() {
   this.load.spritesheet("personagemDialogo4", "../../assets/dialogos/personagemDialogo4.png", {
     frameWidth: 225,
     frameHeight: 300
+  });
+  this.load.spritesheet("door1", "../../assets/fase1/door.png", {
+    frameWidth: 32,
+    frameHeight: 64
   });
   this.load.image("npc1", "../../assets/npc.png");
   this.load.image("professorNpc", "../../assets/sprite_prof.png");
@@ -247,6 +254,14 @@ function createMain() {
   elevator.body.setSize(70, 70);
   elevator.body.setOffset(-3, 0);
   elevator.setImmovable(true);
+
+  // Adiciona colisão entre o jogador e o elevador
+    door1 = this.physics.add.sprite(80, 345, "door1", 0);
+    door1.setScale(1.2);
+    door1.setCollideWorldBounds(true);
+    door1.setImmovable(true);
+    door1.body.setSize(20, 10);
+    door1.body.setOffset(6, 50);
 
   // Adiciona colisão entre o jogador e o elevador
   this.physics.add.collider(player, elevator, enterElevator, null, this);
@@ -794,6 +809,231 @@ function createMain() {
       if (scene.typingTimer) scene.typingTimer.remove();
     }
   }
+
+  // Antes do trecho de criação da porta, adicione a animação da porta abrindo
+
+  // Criação da porta (já existente no seu código)
+  door1 = this.physics.add.sprite(80, 345, "door1", 0);
+  door1.setScale(1.2);
+  door1.setCollideWorldBounds(true);
+  door1.setImmovable(true);
+  door1.body.setSize(20, 10);
+  door1.body.setOffset(6, 50);
+
+  // Adicione colisão entre o jogador e a porta
+  this.physics.add.collider(player, door1);
+
+  // Criação da mensagem para a porta
+  doorMessage = this.add.text(0, 0, "Preciso falar com o faxineiro primeiro!", {
+    fontFamily: "Arial",
+    fontSize: "16px",
+    color: "#FFFFFF",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    padding: { left: 10, right: 10, top: 5, bottom: 5 },
+  });
+  doorMessage.setOrigin(0.5);
+  doorMessage.setScrollFactor(0);  // Fixa na câmera
+  doorMessage.setVisible(false);
+
+  // Adicione o listener para a tecla espaço após a criação dos outros event listeners
+  this.input.keyboard.on("keydown-SPACE", () => {
+    // Verificar se o jogador está próximo da porta
+    let distanceToDoor = Phaser.Math.Distance.Between(player.x, player.y, door1.x, door1.y);
+    
+    if (distanceToDoor < 50) {
+      canInteractWithDoor = true;
+      
+      // Se a porta já estiver aberta, não fazemos nada
+      if (isDoorOpen) {
+        return;
+      }
+      
+      // Verificar se o diálogo com o faxineiro foi concluído
+      if (dialogoNpc1Concluido) {
+        // Abrir a porta
+        isDoorOpen = true;
+        
+        // Tocar a animação de abertura
+        door1.anims.play('doorOpening');
+        
+        // Quando a animação terminar, desativar a colisão
+        door1.once('animationcomplete', () => {
+          door1.body.enable = false;
+          doorMessage.setVisible(false);
+        });
+        
+      } else {
+        // Mostrar mensagem por 2 segundos
+        doorMessage.setText("Preciso falar com o faxineiro primeiro!");
+        doorMessage.setPosition(
+          this.cameras.main.worldView.x + this.cameras.main.width / 2,
+          this.cameras.main.worldView.y + this.cameras.main.height / 2 - 100
+        );
+        doorMessage.setVisible(true);
+        
+        // Configurar timer para esconder a mensagem
+        this.time.delayedCall(2000, () => {
+          doorMessage.setVisible(false);
+        });
+      }
+    } else {
+      canInteractWithDoor = false;
+    }
+  });
+
+  // Configuração de camadas de profundidade (depth)
+  const DEPTHS = {
+    BACKGROUND: 0,
+    WORLD: 10,
+    PLAYER: 15,     // Reduzi o valor do player
+    NPCS: 15,       // Reduzi o valor dos NPCs também
+    DOOR: 20,       // A porta agora tem profundidade maior que o player
+    UI: 50,
+    DIALOG: 100
+  };
+
+  // Após criar todos os elementos do diálogo, aplique as profundidades
+  caixaDialogo.setDepth(DEPTHS.DIALOG);
+  sombra.setDepth(DEPTHS.DIALOG - 1);
+  personagem.setDepth(DEPTHS.DIALOG + 1);
+  npc1Image.setDepth(DEPTHS.DIALOG + 1);
+  professorImage.setDepth(DEPTHS.DIALOG + 1);
+  textoDialogo.setDepth(DEPTHS.DIALOG + 2);
+  
+  // Defina a profundidade para mensagens e avisos
+  doorMessage.setDepth(DEPTHS.UI);
+  avisoTexto.setDepth(DEPTHS.UI);
+  
+  // Defina a profundidade para personagens
+  player.setDepth(DEPTHS.PLAYER);
+  npc1.setDepth(DEPTHS.NPCS);
+  professorNpc.setDepth(DEPTHS.NPCS);
+
+  // Após a criação da porta existente, adicione:
+  door1.setDepth(DEPTHS.DOOR);
+
+  // Modifique o listener de espaço para corrigir a duplicação de frames
+  this.input.keyboard.on("keydown-SPACE", () => {
+    // Verificar se o jogador está próximo da porta
+    let distanceToDoor = Phaser.Math.Distance.Between(player.x, player.y, door1.x, door1.y);
+    
+    if (distanceToDoor < 50) {
+      canInteractWithDoor = true;
+      
+      // Se a porta já estiver aberta, não fazemos nada
+      if (isDoorOpen) {
+        return;
+      }
+      
+      // Verificar se o diálogo com o faxineiro foi concluído
+      if (dialogoNpc1Concluido) {
+        // Abrir a porta
+        isDoorOpen = true;
+        
+        // Limpar qualquer animação anterior que possa estar tocando
+        door1.anims.stop();
+        
+        // Resetar para o frame inicial antes de iniciar a animação
+        door1.setFrame(0);
+        
+        // Tocar a animação de abertura
+        door1.play('doorOpening');
+        
+        // Quando a animação terminar, desativar a colisão e garantir o frame correto
+        door1.once('animationcomplete', () => {
+          door1.anims.stop();
+          door1.setFrame(4); // Garantir que esteja no frame final
+          door1.body.enable = false;
+          doorMessage.setVisible(false);
+        });
+        
+      } else {
+        // Mostrar mensagem por 2 segundos
+        doorMessage.setText("Preciso falar com o faxineiro primeiro!");
+        doorMessage.setPosition(
+          this.cameras.main.worldView.x + this.cameras.main.width / 2,
+          this.cameras.main.worldView.y + this.cameras.main.height / 2 - 100
+        );
+        doorMessage.setVisible(true);
+        
+        // Configurar timer para esconder a mensagem
+        this.time.delayedCall(2000, () => {
+          doorMessage.setVisible(false);
+        });
+      }
+    } else {
+      canInteractWithDoor = false;
+    }
+  });
+
+  // Certifique-se de que a seção de criação da porta apareça apenas UNA VEZ:
+  if (!this.doorCreated) {
+    // Crie a animação (definindo frames de 0 a 4)
+    this.anims.create({
+      key: 'doorOpening',
+      frames: [
+        { key: 'door1', frame: 0 },
+        { key: 'door1', frame: 1 },
+        { key: 'door1', frame: 2 },
+        { key: 'door1', frame: 3 },
+        { key: 'door1', frame: 4 }
+      ],
+      frameRate: 5,
+      repeat: 0
+    });
+
+    // Criação única da porta
+    door1 = this.physics.add.sprite(80, 345, "door1", 0);
+    door1.setScale(1.2);
+    door1.setCollideWorldBounds(true);
+    door1.setImmovable(true);
+    door1.body.setSize(20, 10);
+    door1.body.setOffset(6, 50);
+    door1.setDepth(DEPTHS.DOOR);
+
+    // Remova listeners antigos para SPACE e adicione somente este
+    this.input.keyboard.removeAllListeners('keydown-SPACE');
+    this.input.keyboard.on("keydown-SPACE", () => {
+      let distanceToDoor = Phaser.Math.Distance.Between(player.x, player.y, door1.x, door1.y);
+      if (distanceToDoor < 50) {
+        canInteractWithDoor = true;
+        if (isDoorOpen) return;
+        if (dialogoNpc1Concluido) {
+          isDoorOpen = true;
+          
+          // Tornar invisível a porta original criada no início
+          // Isso encontra todas as instâncias de door1 no jogo e torna invisíveis
+          this.children.list.forEach(child => {
+            if (child.texture && child.texture.key === 'door1' && child !== door1) {
+              console.log("Porta adicional encontrada e escondida");
+              child.setVisible(false);
+            }
+          });
+          
+          door1.anims.stop();
+          door1.setFrame(0);
+          door1.play('doorOpening');
+          door1.once('animationcomplete', () => {
+            door1.anims.stop();
+            door1.setFrame(4); // Último frame fixo
+            door1.body.enable = false;
+            doorMessage.setVisible(false);
+          });
+        } else {
+          doorMessage.setText("Preciso falar com o faxineiro primeiro!");
+          doorMessage.setPosition(
+            this.cameras.main.worldView.x + this.cameras.main.width / 2,
+            this.cameras.main.worldView.y + this.cameras.main.height / 2 - 100
+          );
+          doorMessage.setVisible(true);
+          this.time.delayedCall(2000, () => doorMessage.setVisible(false));
+        }
+      } else {
+        canInteractWithDoor = false;
+      }
+    });
+    this.doorCreated = true;
+  }
 }
 
 // Função para coletar a chave
@@ -846,6 +1086,22 @@ function updateMain() {
   if (dialogoIniciado || dialogoProfessorIniciado) {
     player.setVelocity(0);
     return;
+  }
+
+  // Verificar proximidade com a porta
+  let distanceToDoor = Phaser.Math.Distance.Between(player.x, player.y, door1.x, door1.y);
+  
+  if (distanceToDoor < 50 && !isDoorOpen) {
+    // Se não estamos em diálogo e não há aviso de interação com NPCs
+    if (!dialogoIniciado && !dialogoProfessorIniciado && !avisoTexto.visible) {
+      avisoTexto.setText("Aperte (Espaço) para interagir");
+      avisoTexto.setPosition(door1.x, door1.y - 10);
+      avisoTexto.setVisible(true);
+    }
+  } else {
+    if (!dialogoIniciado && !dialogoProfessorIniciado) {
+      avisoTexto.setVisible(false);
+    }
   }
 
   // Resto do código continua igual...
