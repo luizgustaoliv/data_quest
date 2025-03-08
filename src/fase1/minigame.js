@@ -230,37 +230,37 @@ function initMinigame(parentScene, onCompleteCallback) {
     });
     
     backButton.on('pointerdown', () => {
-      // Limpar todos os elementos do minigame
       cleanup();
       
       if (score >= 2) {
-        // Mensagem de sucesso temporária
+        // Adicionar efeito de fade out na mensagem de sucesso
         const successMsg = parentScene.add.text(
           parentScene.cameras.main.worldView.x + parentScene.cameras.main.width / 2,
           parentScene.cameras.main.worldView.y + parentScene.cameras.main.height / 2 - 100,
-          "A professora foi libertada do controle do hacker!",
+          "A professora foi libertada do controle do hacker!\nVocê ganhou um keycard!",
           {
             fontFamily: "Arial",
             fontSize: "16px",
             color: "#FFFFFF",
             backgroundColor: "rgba(0, 0, 0, 0.7)",
             padding: { left: 15, right: 15, top: 10, bottom: 10 },
+            align: 'center'
           }
         );
         successMsg.setOrigin(0.5);
         successMsg.setScrollFactor(0);
         successMsg.setDepth(100);
         
-        // Fazer a mensagem e o botão desaparecerem
-        parentScene.time.delayedCall(4000, () => {
+        // Remover a mensagem após 3 segundos e chamar o callback
+        parentScene.time.delayedCall(3000, () => {
           successMsg.destroy();
           if (onCompleteCallback) {
-            onCompleteCallback(true); // Passa true para indicar conclusão com sucesso
+            onCompleteCallback(true);
           }
         });
       } else {
         if (onCompleteCallback) {
-          onCompleteCallback(false); // Passa false para indicar que não completou
+          onCompleteCallback(false);
         }
       }
     });

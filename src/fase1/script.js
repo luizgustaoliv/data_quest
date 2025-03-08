@@ -33,6 +33,11 @@ let helpButton;
 // Adicionar variável global para controlar estado do minigame
 let minigameActive = false;
 
+// Adicionar variáveis globais no início do arquivo
+let keycardCount = 0;
+let keycardText;
+let keycardIcon;
+
 // Configuração do jogo Phaser
 const config = {
   type: Phaser.AUTO,
@@ -67,8 +72,17 @@ function startGame(character) {
   localStorage.setItem("currentCharacter", character);
   console.log("Personagem selecionado e salvo:", selectedCharacter);
   document.getElementById("character-select").style.display = "none";
-  document.getElementById("game-container").style.display = "block";
+  
+  // Adicionar estas linhas para esconder o contador de keycards durante a seleção
+  document.getElementById('keycard-container').style.visibility = 'hidden';
+  document.getElementById('game-container').style.display = "block";
+  
   game.scene.start("main");
+  
+  // Mostrar o contador de keycards depois do jogo iniciar
+  setTimeout(() => {
+    document.getElementById('keycard-container').style.visibility = 'visible';
+  }, 500);
 }
 
 // Função para pré-carregar os assets do jogo
@@ -115,6 +129,7 @@ function preload() {
   this.load.image("background", "../../assets/fase1/background.png");
   this.load.tilemapTiledJSON("map", "tileset.json");
   this.load.image("player1big", "../../assets/personagem/personagem1Big.png");
+  this.load.image("keycard", "../../assets/fase1/Spritegrande.png");
   this.load.image("key", "../../assets/fase1/chavesprite.png");
   this.load.image(
     "3_Bathroom_32x32",
@@ -167,8 +182,8 @@ function create() {
 // Função para criar a cena principal do jogo
 function createMain() {
   selectedCharacter = localStorage.getItem("currentCharacter") || "player1";
-  console.log("Personagem recuperado do localStorage:", selectedCharacter);
   
+  // Create map and basic setup first
   map = this.make.tilemap({ key: "map" });
 
   const bathroomTileset = map.addTilesetImage(
@@ -1103,6 +1118,97 @@ function createMain() {
   helpButton.setDepth(9999); // Maior que qualquer outra coisa na tela
   
   console.log("Botão de ajuda criado:", helpButton);
+
+  // Após configurar a câmera, adicionar o keycard UI
+  this.cameras.main.setZoom(1.5);
+
+  // Criar o ícone do keycard
+  keycardIcon = this.add.image(50, 50, 'keycard')
+    .setScrollFactor(0)
+    .setDepth(9999)
+    .setScale(0.15); // Ajuste a escala conforme necessário
+
+  // Criar o texto do contador
+  keycardText = this.add.text(80, 45, '0/4', {
+    fontFamily: 'Arial',
+    fontSize: '20px',
+    color: '#FFFFFF',
+    stroke: '#000000',
+    strokeThickness: 2,
+    padding: { x: 5, y: 5 }
+  })
+  .setScrollFactor(0)
+  .setDepth(9999);
+
+  // Create UI elements BEFORE any other game elements
+  const uiConfig = {
+    x: 20,
+    y: 20,
+    depth: 10000,  // Highest depth to ensure visibility
+    scale: {
+      icon: 0.12,
+      text: 1
+    }
+  };
+
+  // Create a UI container that's fixed to the camera
+  const uiContainer = this.add.container(0, 0)
+    .setScrollFactor(0)
+    .setDepth(uiConfig.depth);
+  uiContainer.setPosition(this.cameras.main.width - 180, 10);
+
+  // Create keycard icon with absolute positioning
+  keycardIcon = this.add.image(uiConfig.x, uiConfig.y, 'keycard')
+    .setOrigin(0, 0)
+    .setScale(uiConfig.scale.icon)
+    .setScrollFactor(0)
+    .setDepth(uiConfig.depth);
+
+  // Create counter text with absolute positioning and improved visibility
+  keycardText = this.add.text(uiConfig.x + 40, uiConfig.y + 5, '0/4', {
+    fontFamily: 'Arial Black',
+    fontSize: '24px',
+    color: '#ffffff',
+    stroke: '#000000',
+    strokeThickness: 4,
+    padding: { x: 4, y: 4 },
+    shadow: {
+      offsetX: 2,
+      offsetY: 2,
+      color: '#000000',
+      blur: 4,
+      stroke: true,
+      fill: true
+    }
+  })
+  .setOrigin(0, 0)
+  .setScrollFactor(0)
+  .setDepth(uiConfig.depth);
+
+  // Add both elements to the container
+  uiContainer.add([keycardIcon, keycardText]);
+
+  // Force visibility
+  keycardIcon.setVisible(true);
+  keycardText.setVisible(true);
+  uiContainer.setVisible(true);
+
+  // Debug logging
+  console.log('UI Elements Created:', {
+    icon: {
+      visible: keycardIcon.visible,
+      x: keycardIcon.x,
+      y: keycardIcon.y,
+      depth: keycardIcon.depth
+    },
+    text: {
+      visible: keycardText.visible,
+      x: keycardText.x,
+      y: keycardText.y,
+      depth: keycardText.depth,
+      content: keycardText.text
+    }
+  });
 }
 
 // Função para iniciar o minigame (chamada quando o botão é clicado)
@@ -1119,10 +1225,25 @@ function startMinigame(scene) {
     if (typeof initMinigame === 'function') {
       initMinigame(scene, (success) => {
         minigameActive = false; // Desativar estado quando minigame terminar
-        // Só mostra o botão novamente se não completou com sucesso
-        if (!success) {
-          helpButton.setVisible(true);
+        if (success) {
+          // Atualizar o contador HTML em vez do contador do Phaser
+          keycardCount++;
+          const counterElement = document.getElementById('keycard-counter');
+          if (counterElement) {
+            counterElement.textContent = `${keycardCount}/4`;
+            
+            // Efeito visual para o ícone HTML
+            const iconElement = document.getElementById('keycard-icon');
+            if (iconElement) {
+              iconElement.style.transition = 'transform 0.2s ease-in-out';
+              iconElement.style.transform = 'scale(1.3)';
+              setTimeout(() => {
+                iconElement.style.transform = 'scale(1)';
+              }, 200);
+            }
+          }
         }
+        helpButton.setVisible(!success);
       });
     } else {
       console.error("Função initMinigame não encontrada. Verifique se minigame.js está carregado corretamente.");

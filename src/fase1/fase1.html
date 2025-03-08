@@ -5,6 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Data Quest</title>
+    <style>
+        /* Estilo para o contador de keycard fixo na tela */
+        #keycard-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 10px;
+            z-index: 10000;
+            border: 2px solid #555;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        #keycard-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            margin-right: 10px;
+        }
+        
+        #keycard-counter {
+            color: #ffffff;
+            font-family: 'Arial Black', Arial, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px #000000;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,6 +58,13 @@
             <button onclick="startGame('player4')">Personagem 4</button>
         </div>
     </div>
+    
+    <!-- Adicionar o contador de keycard como elemento HTML fixo -->
+    <div id="keycard-container">
+        <img id="keycard-icon" src="../../assets/fase1/Spritegrande.png" alt="Keycard">
+        <span id="keycard-counter">0/4</span>
+    </div>
+    
     <div id="game-container" style="display:none;"></div>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
     <script src="minigame.js"></script>
