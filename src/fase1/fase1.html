@@ -36,6 +36,10 @@
             text-shadow: 2px 2px 4px #000000;
         }
     </style>
+    <!-- Load script.js FIRST so startGame is available -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+    <script src="minigame.js"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
@@ -66,9 +70,6 @@
     </div>
     
     <div id="game-container" style="display:none;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
-    <script src="minigame.js"></script>
-    <script src="script.js"></script>
 </body>
 
 </html>

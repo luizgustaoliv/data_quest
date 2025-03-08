@@ -282,12 +282,76 @@ function createMain() {
 
   // Função para entrar no elevador
   function enterElevator(player, elevator) {
-    console.log("Entrando no elevador...");
-    localStorage.setItem("selectedCharacter", selectedCharacter);
-    document.body.classList.add("fade-out");
-    setTimeout(() => {
+    // Verificar se o jogador coletou a chave
+    if (keyCollected) {
+      console.log("Entrando no elevador...");
+      localStorage.setItem("selectedCharacter", selectedCharacter);
+      document.body.classList.add("fade-out");
+      setTimeout(() => {
         window.location.replace("../fase2/fase2.html");
-    }, 1200);
+      }, 1200);
+    } else {
+      // Mostrar mensagem informando que precisa da chave
+      showElevatorMessage(this);
+    }
+  }
+
+  // Adicione esta nova função para mostrar a mensagem do elevador
+  function showElevatorMessage(scene) {
+    // Se já existe uma mensagem, não criar outra
+    if (scene.elevatorMessage) return;
+    
+    // Calculando posições baseadas no tamanho da câmera (mesma lógica dos diálogos)
+    const cameraWidth = scene.cameras.main.width;
+    const cameraHeight = scene.cameras.main.height;
+    
+    // Usar posição e estilo similares aos diálogos
+    const boxWidth = 600;
+    const boxHeight = 100;
+    const boxY = cameraHeight - boxHeight - 150; // Mesma posição Y dos diálogos
+    
+    // Criar mensagem informando que precisa da chave
+    scene.elevatorMessage = scene.add.text(
+      cameraWidth / 2,
+      boxY + (boxHeight / 2), // Centralizar verticalmente na "caixa" invisível
+      "Preciso encontrar a chave para usar o elevador!",
+      {
+        fontFamily: "Arial",
+        fontSize: "20px", // Aumentei um pouco para melhor visibilidade
+        color: "#FFFFFF",
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        padding: { left: 20, right: 20, top: 15, bottom: 15 },
+        align: 'center'
+      }
+    );
+    scene.elevatorMessage.setOrigin(0.5);
+    scene.elevatorMessage.setScrollFactor(0);
+    scene.elevatorMessage.setDepth(100); // Mesmo depth dos diálogos
+    
+    // Fazer a mensagem aparecer com efeito de fade in
+    scene.elevatorMessage.setAlpha(0);
+    scene.tweens.add({
+      targets: scene.elevatorMessage,
+      alpha: 1,
+      duration: 300,
+      ease: 'Power2'
+    });
+    
+    // Remover a mensagem após 2.5 segundos
+    scene.time.delayedCall(2500, () => {
+      if (scene.elevatorMessage) {
+        scene.tweens.add({
+          targets: scene.elevatorMessage,
+          alpha: 0,
+          duration: 300,
+          ease: 'Power2',
+          onComplete: () => {
+            scene.elevatorMessage.destroy();
+            scene.elevatorMessage = null;
+          }
+        });
+      }
+    });
   }
 
   // Criação do NPC1
@@ -315,6 +379,17 @@ function createMain() {
   key.setOrigin(0.2, 1);
   key.body.setSize(25, 10);
   key.body.setOffset(2, 5);
+  
+  // Adicionar efeito de "pulsação" na chave para destacá-la
+  this.tweens.add({
+    targets: key,
+    scaleX: 0.9,
+    scaleY: 0.9,
+    duration: 800,
+    yoyo: true,
+    repeat: -1,
+    ease: 'Sine.easeInOut'
+  });
 
   // Adiciona colisão entre o jogador e o professor NPC
   this.physics.add.collider(player, professorNpc);

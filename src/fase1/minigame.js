@@ -233,17 +233,21 @@ function initMinigame(parentScene, onCompleteCallback) {
       cleanup();
       
       if (score >= 2) {
-        // Adicionar efeito de fade out na mensagem de sucesso
+        // Calcula posição Y similar aos diálogos
+        const cameraHeight = parentScene.cameras.main.height;
+        const dialogY = cameraHeight - 250; // Posiciona na parte inferior onde diálogos aparecem
+        
+        // Cria a mensagem de sucesso na mesma posição dos diálogos
         const successMsg = parentScene.add.text(
           parentScene.cameras.main.worldView.x + parentScene.cameras.main.width / 2,
-          parentScene.cameras.main.worldView.y + parentScene.cameras.main.height / 2 - 100,
+          dialogY,
           "A professora foi libertada do controle do hacker!\nVocê ganhou um keycard!",
           {
             fontFamily: "Arial",
-            fontSize: "16px",
+            fontSize: "18px",
             color: "#FFFFFF",
             backgroundColor: "rgba(0, 0, 0, 0.7)",
-            padding: { left: 15, right: 15, top: 10, bottom: 10 },
+            padding: { left: 20, right: 20, top: 15, bottom: 15 },
             align: 'center'
           }
         );
@@ -251,12 +255,30 @@ function initMinigame(parentScene, onCompleteCallback) {
         successMsg.setScrollFactor(0);
         successMsg.setDepth(100);
         
+        // Adicionar efeito de aparecimento suave
+        successMsg.setAlpha(0);
+        parentScene.tweens.add({
+          targets: successMsg,
+          alpha: 1,
+          duration: 500,
+          ease: 'Power2'
+        });
+        
         // Remover a mensagem após 3 segundos e chamar o callback
         parentScene.time.delayedCall(3000, () => {
-          successMsg.destroy();
-          if (onCompleteCallback) {
-            onCompleteCallback(true);
-          }
+          // Fade out antes de destruir
+          parentScene.tweens.add({
+            targets: successMsg,
+            alpha: 0,
+            duration: 500,
+            ease: 'Power2',
+            onComplete: () => {
+              successMsg.destroy();
+              if (onCompleteCallback) {
+                onCompleteCallback(true);
+              }
+            }
+          });
         });
       } else {
         if (onCompleteCallback) {
