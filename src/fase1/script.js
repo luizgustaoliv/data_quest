@@ -27,6 +27,12 @@ let doorMessage;
 let isDoorOpen = false;
 let canInteractWithDoor = false;
 
+// Adicione esta variável global
+let helpButton;
+
+// Adicionar variável global para controlar estado do minigame
+let minigameActive = false;
+
 // Configuração do jogo Phaser
 const config = {
   type: Phaser.AUTO,
@@ -255,6 +261,7 @@ function createMain() {
   elevator.body.setOffset(-3, 0);
   elevator.setImmovable(true);
 
+
   // Adiciona colisão entre o jogador e o elevador
   this.physics.add.collider(player, elevator, enterElevator, null, this);
 
@@ -395,6 +402,28 @@ function createMain() {
   this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
   this.cameras.main.startFollow(player);
   this.cameras.main.setZoom(1.5);
+
+  // Criar o botão de ajuda aqui
+  helpButton = this.add.text(400, 300, "Ajudar Professora", {
+    fontFamily: "Arial",
+    fontSize: "32px",
+    color: "#ffffff",
+    backgroundColor: "#ff0000",
+    padding: { x: 20, y: 10 },
+    fixedWidth: 300,
+    align: 'center'
+  })
+  .setScrollFactor(0)
+  .setDepth(1000)
+  .setOrigin(0.5)
+  .setInteractive({ useHandCursor: true })
+  .on('pointerdown', () => {
+    console.log("Botão clicado!");
+    startMinigame(this);
+  });
+  
+  helpButton.setVisible(false);
+  console.log("Botão criado:", helpButton);
 
   // Criação do aviso de interação
   avisoTexto = this.add.text(0, 0, " Aperte (E) para interagir", {
@@ -793,6 +822,24 @@ function createMain() {
         dialogoProfessorIniciado = false;
         dialogoProfessorConcluido = true;
         scene.registry.set('dialogoProfessorIndex', 0);
+        
+        // Mostrar botão de ajuda após o diálogo com a professora
+        const gameWidth = scene.cameras.main.width;
+        const gameHeight = scene.cameras.main.height;
+        const centerX = gameWidth / 2;
+        const centerY = gameHeight / 2;
+
+        // Atualizar posição do botão para o centro exato da tela
+        helpButton.setPosition(centerX, centerY);
+        helpButton.setStyle({
+          fontSize: '32px',
+          backgroundColor: '#ff4500',
+          padding: { x: 30, y: 20 },
+          fixedWidth: 300
+        });
+        helpButton.setVisible(true);
+        
+        console.log("Botão centralizado em:", centerX, centerY);
       }
       
       console.log(`Diálogo com ${tipo} concluído`);
@@ -1026,6 +1073,77 @@ function createMain() {
     });
     this.doorCreated = true;
   }
+
+  // Crie o botão de ajuda (inicialmente invisível)
+  helpButton = this.add.text(
+    this.cameras.main.width / 2,
+    this.cameras.main.height / 2 + 50,
+    "Ajudar Professora",
+    {
+      fontFamily: "Arial",
+      fontSize: "22px", // Aumentei o tamanho da fonte
+      color: "#FFFFFF",
+      backgroundColor: "#4CAF50",
+      padding: { left: 20, right: 20, top: 10, bottom: 10 }, // Aumentei o padding
+      align: "center"
+    }
+  )
+  .setOrigin(0.5)
+  .setScrollFactor(0)
+  .setInteractive({ useHandCursor: true })
+  .on('pointerover', () => helpButton.setStyle({backgroundColor: '#388E3C'}))
+  .on('pointerout', () => helpButton.setStyle({backgroundColor: '#4CAF50'}))
+  .on('pointerdown', () => {
+    console.log("Iniciando minigame da professora");
+    startMinigame(this);
+  })
+  .setVisible(false); // Começa invisível
+
+  // Certifique-se de que o botão tenha prioridade de exibição alta
+  helpButton.setDepth(9999); // Maior que qualquer outra coisa na tela
+  
+  console.log("Botão de ajuda criado:", helpButton);
+}
+
+// Função para iniciar o minigame (chamada quando o botão é clicado)
+function startMinigame(scene) {
+  helpButton.setVisible(false);
+  minigameActive = true; // Ativar estado do minigame
+  
+  // Salvar o estado do jogo atual, se necessário
+  // ...
+  
+  // Iniciar o minigame importando o script de minigame.js
+  try {
+    // Verifica se o minigame já foi carregado
+    if (typeof initMinigame === 'function') {
+      initMinigame(scene, (success) => {
+        minigameActive = false; // Desativar estado quando minigame terminar
+        // Só mostra o botão novamente se não completou com sucesso
+        if (!success) {
+          helpButton.setVisible(true);
+        }
+      });
+    } else {
+      console.error("Função initMinigame não encontrada. Verifique se minigame.js está carregado corretamente.");
+      // Carregar o script dinamicamente se não estiver carregado
+      const script = document.createElement('script');
+      script.src = 'minigame.js';
+      script.onload = () => {
+        if (typeof initMinigame === 'function') {
+          initMinigame(scene, () => {
+            minigameActive = false; // Desativar estado quando minigame terminar
+            helpButton.setVisible(true);
+          });
+        }
+      };
+      document.head.appendChild(script);
+    }
+  } catch (error) {
+    console.error("Erro ao iniciar o minigame:", error);
+    helpButton.setVisible(true);
+    minigameActive = false; // Garantir que desative em caso de erro
+  }
 }
 
 // Função para coletar a chave
@@ -1074,8 +1192,8 @@ function updateMain() {
     collectedKey.y = Phaser.Math.Linear(collectedKey.y, player.y - 20, 0.1);
   }
 
-  // Não mova o jogador se o diálogo estiver ativo
-  if (dialogoIniciado || dialogoProfessorIniciado) {
+  // Bloquear movimento durante diálogo OU minigame
+  if (dialogoIniciado || dialogoProfessorIniciado || minigameActive) {
     player.setVelocity(0);
     return;
   }
