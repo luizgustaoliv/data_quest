@@ -38,6 +38,26 @@ let keycardCount = 0;
 let keycardText;
 let keycardIcon;
 
+// Adicione estas novas variáveis globais no início do arquivo
+let dialogoProfessor2Iniciado = false;
+let dialogoProfessor2Concluido = false;
+let professor2Image;
+
+// Adicione estas novas variáveis globais no início do arquivo
+let dialogoProfessor3Iniciado = false;
+let dialogoProfessor3Concluido = false;
+let professor3Image;
+let currentProfessor = null; // Para controlar qual professor está ativo no minigame
+
+// Adicione estas novas variáveis globais no início do arquivo
+let dialogoProfessor4Iniciado = false;
+let dialogoProfessor4Concluido = false;
+let professor4Image;
+
+// Adicione estas variáveis globais para controlar o estado da segunda porta
+let isDoor2Open = false;
+let door2OpenMessage = null;
+
 // Configuração do jogo Phaser
 const config = {
   type: Phaser.AUTO,
@@ -123,8 +143,15 @@ function preload() {
     frameWidth: 32,
     frameHeight: 64
   });
+  this.load.spritesheet("door2", "../../assets/fase1/door.png", {
+    frameWidth: 32,
+    frameHeight: 64
+  });
   this.load.image("npc1", "../../assets/npc.png");
   this.load.image("professorNpc", "../../assets/sprite_prof.png");
+  this.load.image("professorNpc2", "../../assets/sprite_prof.png");
+  this.load.image("professorNpc3", "../../assets/sprite_prof.png");
+  this.load.image("professorNpc4", "../../assets/sprite_prof.png");
   this.load.image("elevator", "../../assets/animated_elevator_door_entrance_2_32x32.gif");
   this.load.image("background", "../../assets/fase1/background.png");
   this.load.tilemapTiledJSON("map", "tileset.json");
@@ -137,36 +164,39 @@ function preload() {
   );
   this.load.image(
     "5_Classroom_and_library_32x32",
-    "../../assets/fase1/5_Classroom_and_library_32x32.png"
+    "../../assets/fase1/5_Classroom_and_library_32x32.png" // Added .png
   );
   this.load.image(
     "13_Conference_Hall_32x32",
-    "../../assets/fase1/13_Conference_Hall_32x32.png"
+    "../../assets/fase1/13_Conference_Hall_32x32.png" // Added .png
   );
   this.load.image(
     "14_Basement_32x32",
-    "../../assets/fase1/14_Basement_32x32.png"
+    "../../assets/fase1/14_Basement_32x32.png" // Added .png
   );
   this.load.image(
     "16_Grocery_store_32x32",
-    "../../assets/fase1/16_Grocery_store_32x32.png"
+    "../../assets/fase1/16_Grocery_store_32x32.png" // Added .png
   );
-  this.load.image("18_Jail_32x32", "../../assets/fase1/18_Jail_32x32.png");
+  this.load.image(
+    "18_Jail_32x32",
+    "../../assets/fase1/18_Jail_32x32.png"
+  );
   this.load.image(
     "19_Hospital_32x32",
     "../../assets/fase1/19_Hospital_32x32.png"
   );
   this.load.image(
     "23_Television_and_Film_Studio_32x32",
-    "../../assets/fase1/23_Television_and_Film_Studio_32x32.png"
+    "../../assets/fase1/23_Television_and_Film_Studio_32x32.png" // Added .png
   );
   this.load.image(
     "25_Shooting_Range_32x32",
-    "../../assets/fase1/25_Shooting_Range_32x32.png"
+    "../../assets/fase1/25_Shooting_Range_32x32.png" // Added .png
   );
   this.load.image(
     "Room_Builder_32x32",
-    "../../assets/fase1/Room_Builder_32x32.png"
+    "../../assets/fase1/Room_Builder_32x32.png" // Added .png
   );
   // Carregar sprite do professor para o diálogo
   // Se houver apenas 1 frame para o faxineiro, use um .image ao invés do .spritesheet
@@ -372,6 +402,34 @@ function createMain() {
   professorNpc.body.setOffset(38, 75);
   professorNpc.body.setImmovable(true);
 
+   // Criação do professor NPC
+   professorNpc2 = this.physics.add.sprite(400, 318, "professorNpc2", 0);
+   professorNpc2.setCollideWorldBounds(true);
+   professorNpc2.setScale(0.8);
+   professorNpc2.setOrigin(0.2, 1);
+   professorNpc2.body.setSize(20, 20);
+   professorNpc2.body.setOffset(38, 75);
+   professorNpc2.body.setImmovable(true);
+
+   
+   // Criação do professor NPC
+   professorNpc3 = this.physics.add.sprite(400, 795, "professorNpc3", 0);
+   professorNpc3.setCollideWorldBounds(true);
+   professorNpc3.setScale(0.8);
+   professorNpc3.setOrigin(0.2, 1);
+   professorNpc3.body.setSize(20, 20);
+   professorNpc3.body.setOffset(38, 75);
+   professorNpc3.body.setImmovable(true);
+
+   // Criação do professor NPC
+   professorNpc4 = this.physics.add.sprite(1000, 605, "professorNpc4", 0);
+   professorNpc4.setCollideWorldBounds(true);
+   professorNpc4.setScale(0.8);
+   professorNpc4.setOrigin(0.2, 1);
+   professorNpc4.body.setSize(20, 20);
+   professorNpc4.body.setOffset(38, 75);
+   professorNpc4.body.setImmovable(true);
+
   // Criação da chave
   key = this.physics.add.sprite(1000, 320, "key", 0);
   key.setCollideWorldBounds(true);
@@ -393,6 +451,10 @@ function createMain() {
 
   // Adiciona colisão entre o jogador e o professor NPC
   this.physics.add.collider(player, professorNpc);
+  // Adiciona colisão entre o jogador e o professor NPC
+  this.physics.add.collider(player, professorNpc2);
+  // Adiciona colisão entre o jogador e o professorNpc4
+  this.physics.add.collider(player, professorNpc4);
   // Adiciona sobreposição entre o jogador e a chave
   this.physics.add.overlap(player, key, collectKey, null, this);  
 
@@ -579,6 +641,27 @@ function createMain() {
   professorImage.setVisible(false);
   professorImage.setScrollFactor(0); // Fixa na câmera
 
+  // Adicione a imagem para o diálogo do professor2, logo depois da criação do professorImage
+  professor2Image = this.add.sprite(750, 420, "professorNpc2", 0);
+  professor2Image.setScale(2.0);
+  professor2Image.setOrigin(0.5, 0.5);
+  professor2Image.setVisible(false);
+  professor2Image.setScrollFactor(0); // Fixa na câmera
+
+  // Adicione a imagem para o diálogo do professor3
+  professor3Image = this.add.sprite(750, 420, "professorNpc3", 0);
+  professor3Image.setScale(2.0);
+  professor3Image.setOrigin(0.5, 0.5);
+  professor3Image.setVisible(false);
+  professor3Image.setScrollFactor(0);
+
+  // Adicione a imagem para o diálogo do professor4
+  professor4Image = this.add.sprite(750, 420, "professorNpc4", 0);
+  professor4Image.setScale(2.0);
+  professor4Image.setOrigin(0.5, 0.5);
+  professor4Image.setVisible(false);
+  professor4Image.setScrollFactor(0);
+
   // Lista de diálogos personalizados - ATUALIZE esta parte
   const dialogosPersonalizados = [
     { texto: "Com licença senhor, o que aconteceu por aqui?...", autor: "player" },
@@ -648,6 +731,48 @@ function createMain() {
     { texto: "Erro de busca, por favor, responda minhas perguntas para ampliar meu prompt de conhecimento antes de continuarmos", autor: "npc" },
   ];
 
+  // Adicione diálogos para o professor2 após os diálogos do professor
+  const dialogosProfessor2 = [
+    { texto: "Olá, você parece perdido. Precisa de ajuda?", autor: "npc" },
+    { texto: "Sim, estou tentando entender o que está acontecendo na escola.", autor: "player" },
+    { texto: "ERRO... SISTEMA... COMPROMETIDO...", autor: "npc" },
+    { texto: "Oh não, outro professor sob controle do hacker!", autor: "player" },
+    { texto: "TRANSMISSÃO DE DADOS... INICIANDO...", autor: "npc" },
+    { texto: "Ei! Isso é ilegal! A LGPD protege nossos dados pessoais!", autor: "player" },
+    { texto: "Processando... Conflito detectado...", autor: "npc" },
+    { texto: "Preciso de sua ajuda para restaurar meu sistema.", autor: "npc" },
+    { texto: "Responda algumas perguntas sobre segurança de dados para me auxiliar.", autor: "npc" },
+    { texto: "Vou fazer o possível para ajudar.", autor: "player" }
+  ];
+
+  // Adicione diálogos para o professor3
+  const dialogosProfessor3 = [
+    { texto: "Estranho ver um aluno por aqui nesse momento...", autor: "npc" },
+    { texto: "Professor, está tudo bem com o senhor?", autor: "player" },
+    { texto: "SISTEMA DE SEGURANÇA COMPROMETIDO... BYPASS DETECTADO...", autor: "npc" },
+    { texto: "Ah não! Outro professor sendo controlado!", autor: "player" },
+    { texto: "COLETANDO DADOS PESSOAIS... ENVIANDO PARA SERVIDOR REMOTO...", autor: "npc" },
+    { texto: "Professor, você está violando a LGPD! Isso é crime!", autor: "player" },
+    { texto: "Conflito de protocolos... Sobrecarga de sistema...", autor: "npc" },
+    { texto: "Necessito de assistência para restaurar protocolo de proteção de dados.", autor: "npc" },
+    { texto: "Pode testar meu conhecimento sobre privacidade de dados?", autor: "npc" },
+    { texto: "Sim, vou ajudá-lo a recuperar o controle.", autor: "player" }
+  ];
+
+  // Adicione diálogos para o professor4
+  const dialogosProfessor4 = [
+    { texto: "Olá, aluno. O que faz aqui neste horário?", autor: "npc" },
+    { texto: "Professor, precisamos da sua ajuda! Um hacker está controlando os professores!", autor: "player" },
+    { texto: "SEQUÊNCIA INICIADA... CONEXÃO REMOTA... ATIVA", autor: "npc" },
+    { texto: "Oh não, ele também foi comprometido!", autor: "player" },
+    { texto: "COLETANDO DADOS DOS ALUNOS... CATEGORIZAÇÃO EM ANDAMENTO", autor: "npc" },
+    { texto: "Professor, isso é ilegal! Dados pessoais são protegidos pela LGPD!", autor: "player" },
+    { texto: "REFERÊNCIA À LGPD DETECTADA... AVALIANDO...", autor: "npc" },
+    { texto: "Meu sistema precisa de ajuda para classificar dados pessoais corretamente", autor: "npc" },
+    { texto: "Pode me ajudar a associar os dados às suas categorias de proteção?", autor: "npc" },
+    { texto: "Claro, vou ajudá-lo a recuperar o controle", autor: "player" }
+  ];
+
   // Criação do texto do diálogo
   textoDialogo = this.add
     .text(400, 450, "", {
@@ -712,7 +837,7 @@ function createMain() {
     console.log("Tecla E pressionada. Pode iniciar diálogo:", podeIniciarDialogo);
     
     // Verifica se o jogador pode iniciar diálogo e se o diálogo não foi concluído anteriormente
-    if ((!podeIniciarDialogo && !dialogoIniciado && !dialogoProfessorIniciado) || (dialogoNpc1Concluido && dialogoProfessorConcluido)) {
+    if ((!podeIniciarDialogo && !dialogoIniciado && !dialogoProfessorIniciado && !dialogoProfessor2Iniciado && !dialogoProfessor3Iniciado && !dialogoProfessor4Iniciado) || (dialogoNpc1Concluido && dialogoProfessorConcluido && dialogoProfessor2Concluido && dialogoProfessor3Concluido && dialogoProfessor4Concluido)) {
       console.log("Não pode iniciar diálogo - não está perto do NPC ou diálogo já foi concluído");
       return;
     }
@@ -720,13 +845,19 @@ function createMain() {
     // Primeiro, verificamos a distância com o NPC1 (faxineiro)
     let distanceToNpc1 = Phaser.Math.Distance.Between(player.x, player.y, npc1.x, npc1.y);
     let distanceToProfessor = Phaser.Math.Distance.Between(player.x, player.y, professorNpc.x, professorNpc.y);
+    let distanceToProfessor2 = Phaser.Math.Distance.Between(player.x, player.y, professorNpc2.x, professorNpc2.y);
+    let distanceToProfessor3 = Phaser.Math.Distance.Between(player.x, player.y, professorNpc3.x, professorNpc3.y);
+    let distanceToProfessor4 = Phaser.Math.Distance.Between(player.x, player.y, professorNpc4.x, professorNpc4.y);
     
     // Determina qual diálogo iniciar com base na proximidade
     let proximoAoFaxineiro = distanceToNpc1 < 70 && !dialogoNpc1Concluido;
     let proximoAoProfessor = distanceToProfessor < 70 && !dialogoProfessorConcluido;
+    let proximoAoProfessor2 = distanceToProfessor2 < 70 && !dialogoProfessor2Concluido;
+    let proximoAoProfessor3 = distanceToProfessor3 < 70 && !dialogoProfessor3Concluido;
+    let proximoAoProfessor4 = distanceToProfessor4 < 70 && !dialogoProfessor4Concluido;
     
     // Se não está próximo de nenhum NPC ou diálogo já foi iniciado, retorna
-    if ((!proximoAoFaxineiro && !proximoAoProfessor && !dialogoIniciado && !dialogoProfessorIniciado)) {
+    if ((!proximoAoFaxineiro && !proximoAoProfessor && !proximoAoProfessor2 && !proximoAoProfessor3 && !proximoAoProfessor4 && !dialogoIniciado && !dialogoProfessorIniciado && !dialogoProfessor2Iniciado && !dialogoProfessor3Iniciado && !dialogoProfessor4Iniciado)) {
       console.log("Não pode iniciar diálogo - não está perto de nenhum NPC");
       return;
     }
@@ -751,6 +882,36 @@ function createMain() {
       avisoTexto.setVisible(false);
       processoDialogo(this, 'professor', dialogosProfessor);
     }
+    // Diálogo com o Professor2
+    else if (proximoAoProfessor2 && !dialogoProfessor2Iniciado) {
+      // Inicia diálogo com o professor2
+      console.log("Iniciando diálogo com professor 2");
+      dialogoProfessor2Iniciado = true;
+      caixaDialogo.setVisible(true);
+      sombra.setVisible(true);
+      avisoTexto.setVisible(false);
+      processoDialogo(this, 'professor2', dialogosProfessor2);
+    }
+    // Diálogo com o Professor3
+    else if (proximoAoProfessor3 && !dialogoProfessor3Iniciado) {
+      // Inicia diálogo com o professor3
+      console.log("Iniciando diálogo com professor 3");
+      dialogoProfessor3Iniciado = true;
+      caixaDialogo.setVisible(true);
+      sombra.setVisible(true);
+      avisoTexto.setVisible(false);
+      processoDialogo(this, 'professor3', dialogosProfessor3);
+    }
+    // Diálogo com o Professor4
+    else if (proximoAoProfessor4 && !dialogoProfessor4Iniciado) {
+      // Inicia diálogo com o professor4
+      console.log("Iniciando diálogo com professor 4");
+      dialogoProfessor4Iniciado = true;
+      caixaDialogo.setVisible(true);
+      sombra.setVisible(true);
+      avisoTexto.setVisible(false);
+      processoDialogo(this, 'professor4', dialogosProfessor4);
+    }
     // Continuar diálogo com o Faxineiro
     else if (dialogoIniciado) {
       // Avança diálogo do faxineiro
@@ -760,6 +921,21 @@ function createMain() {
     else if (dialogoProfessorIniciado) {
       // Avança diálogo do professor
       avancaDialogo(this, 'professor', dialogosProfessor);
+    }
+    // Continuar diálogo com o Professor2
+    else if (dialogoProfessor2Iniciado) {
+      // Avança diálogo do professor2
+      avancaDialogo(this, 'professor2', dialogosProfessor2);
+    }
+    // Continuar diálogo com o Professor3
+    else if (dialogoProfessor3Iniciado) {
+      // Avança diálogo do professor3
+      avancaDialogo(this, 'professor3', dialogosProfessor3);
+    }
+    // Continuar diálogo com o Professor4
+    else if (dialogoProfessor4Iniciado) {
+      // Avança diálogo do professor4
+      avancaDialogo(this, 'professor4', dialogosProfessor4);
     }
   });
 
@@ -796,6 +972,24 @@ function createMain() {
     professorImage.x = boxX + boxWidth - 0;
     professorImage.y = boxY + 50;
     
+    // Na parte onde atualiza as posições dos sprites, adicione:
+    if (tipo === 'professor2') {
+      professor2Image.x = boxX + boxWidth - 0;
+      professor2Image.y = boxY + 50;
+    }
+    
+    // Na parte onde atualiza as posições dos sprites, adicione:
+    if (tipo === 'professor3') {
+      professor3Image.x = boxX + boxWidth - 0;
+      professor3Image.y = boxY + 50;
+    }
+    
+    // Na parte onde atualiza as posições dos sprites, adicione:
+    if (tipo === 'professor4') {
+      professor4Image.x = boxX + boxWidth - 0;
+      professor4Image.y = boxY + 50;
+    }
+    
     // Largura disponível para texto considerando espaço para personagens nas laterais
     const textAreaWidth = boxWidth - 140; // 70px de espaço em cada lado para personagens
     
@@ -814,7 +1008,13 @@ function createMain() {
     // Verifica se ainda há diálogos a serem mostrados
     const dialogoIndex = tipo === 'faxineiro' ? 
       scene.registry.get('dialogoFaxineiroIndex') || 0 : 
-      scene.registry.get('dialogoProfessorIndex') || 0;
+      tipo === 'professor' ?
+      scene.registry.get('dialogoProfessorIndex') || 0 :
+      tipo === 'professor2' ?
+      scene.registry.get('dialogoProfessor2Index') || 0 :
+      tipo === 'professor3' ?
+      scene.registry.get('dialogoProfessor3Index') || 0 :
+      scene.registry.get('dialogoProfessor4Index') || 0;
     
     if (dialogoIndex < dialogos.length) {
       // Cancela timers existentes
@@ -836,21 +1036,84 @@ function createMain() {
           npc1Image.setVisible(true);
           personagem.setVisible(false);
           professorImage.setVisible(false);
+          professor2Image.setVisible(false);
+          professor3Image.setVisible(false);
+          professor4Image.setVisible(false);
           npc1Image.play('falaFaxineiro');
         } else {
           npc1Image.setVisible(false);
           professorImage.setVisible(false);
+          professor2Image.setVisible(false);
+          professor3Image.setVisible(false);
+          professor4Image.setVisible(false);
           personagem.setVisible(true);
           personagem.play('falaPersonagem');
         }
-      } else { // professor
+      } else if (tipo === 'professor') { // professor
         if (dialogoAtual.autor === 'npc') {
           professorImage.setVisible(true);
           npc1Image.setVisible(false);
+          professor2Image.setVisible(false);
+          professor3Image.setVisible(false);
+          professor4Image.setVisible(false);
           personagem.setVisible(false);
         } else {
           professorImage.setVisible(false);
           npc1Image.setVisible(false);
+          professor2Image.setVisible(false);
+          professor3Image.setVisible(false);
+          professor4Image.setVisible(false);
+          personagem.setVisible(true);
+          personagem.play('falaPersonagem');
+        }
+      } else if (tipo === 'professor2') { // professor2
+        if (dialogoAtual.autor === 'npc') {
+          professor2Image.setVisible(true);
+          npc1Image.setVisible(false);
+          professorImage.setVisible(false);
+          professor3Image.setVisible(false);
+          professor4Image.setVisible(false);
+          personagem.setVisible(false);
+        } else {
+          professor2Image.setVisible(false);
+          npc1Image.setVisible(false);
+          professorImage.setVisible(false);
+          professor3Image.setVisible(false);
+          professor4Image.setVisible(false);
+          personagem.setVisible(true);
+          personagem.play('falaPersonagem');
+        }
+      } else if (tipo === 'professor3') { // professor3
+        if (dialogoAtual.autor === 'npc') {
+          professor3Image.setVisible(true);
+          npc1Image.setVisible(false);
+          professorImage.setVisible(false);
+          professor2Image.setVisible(false);
+          professor4Image.setVisible(false);
+          personagem.setVisible(false);
+        } else {
+          professor3Image.setVisible(false);
+          npc1Image.setVisible(false);
+          professorImage.setVisible(false);
+          professor2Image.setVisible(false);
+          professor4Image.setVisible(false);
+          personagem.setVisible(true);
+          personagem.play('falaPersonagem');
+        }
+      } else { // professor4
+        if (dialogoAtual.autor === 'npc') {
+          professor4Image.setVisible(true);
+          professor3Image.setVisible(false);
+          professor2Image.setVisible(false);
+          npc1Image.setVisible(false);
+          professorImage.setVisible(false);
+          personagem.setVisible(false);
+        } else {
+          professor4Image.setVisible(false);
+          professor3Image.setVisible(false);
+          professor2Image.setVisible(false);
+          npc1Image.setVisible(false);
+          professorImage.setVisible(false);
           personagem.setVisible(true);
           personagem.play('falaPersonagem');
         }
@@ -878,9 +1141,18 @@ function createMain() {
               if (tipo === 'faxineiro') {
                 npc1Image.stop();
                 npc1Image.setFrame(0);
-              } else {
+              } else if (tipo === 'professor') {
                 professorImage.stop();
                 professorImage.setFrame(0);
+              } else if (tipo === 'professor2') {
+                professor2Image.stop();
+                professor2Image.setFrame(0);
+              } else if (tipo === 'professor3') {
+                professor3Image.stop();
+                professor3Image.setFrame(0);
+              } else {
+                professor4Image.stop();
+                professor4Image.setFrame(0);
               }
             }
           }, [], scene);
@@ -892,8 +1164,14 @@ function createMain() {
       // Salva o próximo índice no registro
       if (tipo === 'faxineiro') {
         scene.registry.set('dialogoFaxineiroIndex', dialogoIndex + 1);
-      } else {
+      } else if (tipo === 'professor') {
         scene.registry.set('dialogoProfessorIndex', dialogoIndex + 1);
+      } else if (tipo === 'professor2') {
+        scene.registry.set('dialogoProfessor2Index', dialogoIndex + 1);
+      } else if (tipo === 'professor3') {
+        scene.registry.set('dialogoProfessor3Index', dialogoIndex + 1);
+      } else {
+        scene.registry.set('dialogoProfessor4Index', dialogoIndex + 1);
       }
     } else {
       // Finaliza o diálogo
@@ -903,12 +1181,15 @@ function createMain() {
       personagem.setVisible(false);
       npc1Image.setVisible(false);
       professorImage.setVisible(false);
+      professor2Image.setVisible(false);
+      professor3Image.setVisible(false);
+      professor4Image.setVisible(false);
       
       if (tipo === 'faxineiro') {
         dialogoIniciado = false;
         dialogoNpc1Concluido = true;
         scene.registry.set('dialogoFaxineiroIndex', 0);
-      } else {
+      } else if (tipo === 'professor') {
         dialogoProfessorIniciado = false;
         dialogoProfessorConcluido = true;
         scene.registry.set('dialogoProfessorIndex', 0);
@@ -930,6 +1211,79 @@ function createMain() {
         helpButton.setVisible(true);
         
         console.log("Botão centralizado em:", centerX, centerY);
+      } else if (tipo === 'professor2') {
+        dialogoProfessor2Iniciado = false;
+        dialogoProfessor2Concluido = true;
+        scene.registry.set('dialogoProfessor2Index', 0);
+        
+        // Mostrar botão de ajuda após o diálogo com o professor2
+        const gameWidth = scene.cameras.main.width;
+        const gameHeight = scene.cameras.main.height;
+        const centerX = gameWidth / 2;
+        const centerY = gameHeight / 2;
+
+        // Atualizar posição do botão para o centro exato da tela
+        helpButton.setPosition(centerX, centerY);
+        helpButton.setStyle({
+          fontSize: '32px',
+          backgroundColor: '#ff4500',
+          padding: { x: 30, y: 20 },
+          fixedWidth: 350,
+          align: 'center'
+        });
+        helpButton.setText("Ajudar Professor 2");
+        helpButton.setVisible(true);
+        
+        console.log("Botão para o professor 2 centralizado em:", centerX, centerY);
+      } else if (tipo === 'professor3') {
+        dialogoProfessor3Iniciado = false;
+        dialogoProfessor3Concluido = true;
+        scene.registry.set('dialogoProfessor3Index', 0);
+        
+        // Mostrar botão de ajuda após o diálogo com o professor3
+        const gameWidth = scene.cameras.main.width;
+        const gameHeight = scene.cameras.main.height;
+        const centerX = gameWidth / 2;
+        const centerY = gameHeight / 2;
+
+        // Atualizar posição do botão para o centro exato da tela
+        helpButton.setPosition(centerX, centerY);
+        helpButton.setStyle({
+          fontSize: '32px',
+          backgroundColor: '#ff4500',
+          padding: { x: 30, y: 20 },
+          fixedWidth: 350,
+          align: 'center'
+        });
+        helpButton.setText("Ajudar Professor 3");
+        helpButton.setVisible(true);
+        
+        console.log("Botão para o professor 3 centralizado em:", centerX, centerY);
+      } else if (tipo === 'professor4') {
+        dialogoProfessor4Iniciado = false;
+        dialogoProfessor4Concluido = true;
+        scene.registry.set('dialogoProfessor4Index', 0);
+        
+        // Mostrar botão de ajuda após o diálogo com o professor4
+        const gameWidth = scene.cameras.main.width;
+        const gameHeight = scene.cameras.main.height;
+        const centerX = gameWidth / 2;
+        const centerY = gameHeight / 2;
+
+        // Atualizar posição do botão para o centro exato da tela
+        helpButton.setPosition(centerX, centerY);
+        helpButton.setStyle({
+          fontSize: '32px',
+          backgroundColor: '#ff4500',
+          padding: { x: 30, y: 20 },
+          fixedWidth: 350,
+          align: 'center'
+        });
+        helpButton.setText("Ajudar Professor 4");
+        currentProfessor = 'professor4'; // Define o professor atual
+        helpButton.setVisible(true);
+        
+        console.log("Botão para o professor 4 centralizado em:", centerX, centerY);
       }
       
       console.log(`Diálogo com ${tipo} concluído`);
@@ -949,8 +1303,17 @@ function createMain() {
   door1.body.setSize(20, 10);
   door1.body.setOffset(6, 50);
 
+  door2 = this.physics.add.sprite(1200, 345, "door2", 0);
+  door2.setScale(1.2);
+  door2.setCollideWorldBounds(true);
+  door2.setImmovable(true);
+  door2.body.setSize(20, 10);
+  door2.body.setOffset(6, 50);
+
   // Adicione colisão entre o jogador e a porta
   this.physics.add.collider(player, door1);
+  // Adicionar colisão entre o jogador e a segunda porta
+  this.physics.add.collider(player, door2);
 
   // Criação da mensagem para a porta
   doorMessage = this.add.text(0, 0, "Preciso falar com o faxineiro primeiro!", {
@@ -1027,6 +1390,9 @@ function createMain() {
   personagem.setDepth(DEPTHS.DIALOG + 1);
   npc1Image.setDepth(DEPTHS.DIALOG + 1);
   professorImage.setDepth(DEPTHS.DIALOG + 1);
+  professor2Image.setDepth(DEPTHS.DIALOG + 1);
+  professor3Image.setDepth(DEPTHS.DIALOG + 1);
+  professor4Image.setDepth(DEPTHS.DIALOG + 1);
   textoDialogo.setDepth(DEPTHS.DIALOG + 2);
   
   // Defina a profundidade para mensagens e avisos
@@ -1040,6 +1406,7 @@ function createMain() {
 
   // Após a criação da porta existente, adicione:
   door1.setDepth(DEPTHS.DOOR);
+  door2.setDepth(DEPTHS.DOOR);
 
   // Modifique o listener de espaço para corrigir a duplicação de frames
   this.input.keyboard.on("keydown-SPACE", () => {
@@ -1287,9 +1654,10 @@ function createMain() {
 }
 
 // Função para iniciar o minigame (chamada quando o botão é clicado)
-function startMinigame(scene) {
+function startMinigame(scene, professorId = 'professor1') {
+  currentProfessor = professorId; // Armazene qual professor está sendo ajudado
   helpButton.setVisible(false);
-  minigameActive = true; // Ativar estado do minigame
+  minigameActive = true;
   
   // Salvar o estado do jogo atual, se necessário
   // ...
@@ -1298,7 +1666,7 @@ function startMinigame(scene) {
   try {
     // Verifica se o minigame já foi carregado
     if (typeof initMinigame === 'function') {
-      initMinigame(scene, (success) => {
+      initMinigame(scene, professorId, (success) => {
         minigameActive = false; // Desativar estado quando minigame terminar
         if (success) {
           // Atualizar o contador HTML em vez do contador do Phaser
@@ -1316,6 +1684,11 @@ function startMinigame(scene) {
                 iconElement.style.transform = 'scale(1)';
               }, 200);
             }
+            
+            // Verificar se o jogador coletou todos os 4 keycards
+            if (keycardCount >= 4 && !isDoor2Open) {
+              openDoor2(scene);
+            }
           }
         }
         helpButton.setVisible(!success);
@@ -1327,7 +1700,7 @@ function startMinigame(scene) {
       script.src = 'minigame.js';
       script.onload = () => {
         if (typeof initMinigame === 'function') {
-          initMinigame(scene, () => {
+          initMinigame(scene, professorId, () => {
             minigameActive = false; // Desativar estado quando minigame terminar
             helpButton.setVisible(true);
           });
@@ -1340,6 +1713,90 @@ function startMinigame(scene) {
     helpButton.setVisible(true);
     minigameActive = false; // Garantir que desative em caso de erro
   }
+}
+
+// Adicionar esta nova função para abrir a door2
+function openDoor2(scene) {
+  // Marcar a porta como aberta
+  isDoor2Open = true;
+  
+  // Verificar se a door2 existe
+  if (!door2) {
+    console.error("door2 não foi encontrada");
+    return;
+  }
+  
+  // Limpar qualquer animação anterior que possa estar tocando
+  door2.anims.stop();
+  
+  // Resetar para o frame inicial antes de iniciar a animação
+  door2.setFrame(0);
+  
+  // Tocar a animação de abertura
+  door2.play('doorOpening');
+  
+  // Quando a animação terminar, desativar a colisão
+  door2.once('animationcomplete', () => {
+    door2.anims.stop();
+    door2.setFrame(4); // Garantir que esteja no frame final
+    door2.body.enable = false; // Desativar a colisão para permitir passagem
+    
+    // Mostrar mensagem informando que a porta foi aberta
+    showDoor2OpenMessage(scene);
+  });
+}
+
+// Função para mostrar mensagem quando a porta for aberta
+function showDoor2OpenMessage(scene) {
+  // Se já existe uma mensagem, não criar outra
+  if (door2OpenMessage) return;
+  
+  // Posicionar no centro da tela
+  const cameraWidth = scene.cameras.main.width;
+  const cameraHeight = scene.cameras.main.height;
+  
+  // Criar mensagem informando que a porta foi aberta
+  door2OpenMessage = scene.add.text(
+    cameraWidth / 2,
+    cameraHeight / 2 - 100,
+    "A porta secundária foi desbloqueada!\nVocê coletou todos os keycards!",
+    {
+      fontFamily: "Arial",
+      fontSize: "20px",
+      color: "#FFFFFF",
+      backgroundColor: "rgba(0, 0, 0, 0.7)",
+      padding: { left: 20, right: 20, top: 15, bottom: 15 },
+      align: 'center'
+    }
+  );
+  door2OpenMessage.setOrigin(0.5);
+  door2OpenMessage.setScrollFactor(0);
+  door2OpenMessage.setDepth(100);
+  
+  // Adicionar efeito de aparecimento suave
+  door2OpenMessage.setAlpha(0);
+  scene.tweens.add({
+    targets: door2OpenMessage,
+    alpha: 1,
+    duration: 500,
+    ease: 'Power2'
+  });
+  
+  // Remover a mensagem após 4 segundos
+  scene.time.delayedCall(4000, () => {
+    if (door2OpenMessage) {
+      scene.tweens.add({
+        targets: door2OpenMessage,
+        alpha: 0,
+        duration: 500,
+        ease: 'Power2',
+        onComplete: () => {
+          door2OpenMessage.destroy();
+          door2OpenMessage = null;
+        }
+      });
+    }
+  });
 }
 
 // Função para coletar a chave
@@ -1358,6 +1815,9 @@ function updateMain() {
   // Verificar a sobreposição com o NPC1 em cada frame
   let distanceToNpc1 = Phaser.Math.Distance.Between(player.x, player.y, npc1.x, npc1.y);
   let distanceToProfessor = Phaser.Math.Distance.Between(player.x, player.y, professorNpc.x, professorNpc.y);
+  let distanceToProfessor2 = Phaser.Math.Distance.Between(player.x, player.y, professorNpc2.x, professorNpc2.y);
+  let distanceToProfessor3 = Phaser.Math.Distance.Between(player.x, player.y, professorNpc3.x, professorNpc3.y);
+  let distanceToProfessor4 = Phaser.Math.Distance.Between(player.x, player.y, professorNpc4.x, professorNpc4.y);
   
   // Verifica proximidade com o faxineiro
   if (distanceToNpc1 < 70 && !dialogoNpc1Concluido) {
@@ -1375,9 +1835,33 @@ function updateMain() {
       avisoTexto.setVisible(true);
     }
   }
+  // Verifica proximidade com o professor2
+  else if (distanceToProfessor2 < 70 && !dialogoProfessor2Concluido) {
+    podeIniciarDialogo = true;
+    if (!dialogoProfessor2Iniciado) {
+      avisoTexto.setPosition(professorNpc2.x, professorNpc2.y - 10);
+      avisoTexto.setVisible(true);
+    }
+  }
+  // Verifica proximidade com o professor3
+  else if (distanceToProfessor3 < 70 && !dialogoProfessor3Concluido) {
+    podeIniciarDialogo = true;
+    if (!dialogoProfessor3Iniciado) {
+      avisoTexto.setPosition(professorNpc3.x, professorNpc3.y - 10);
+      avisoTexto.setVisible(true);
+    }
+  }
+  // Verifica proximidade com o professor4
+  else if (distanceToProfessor4 < 70 && !dialogoProfessor4Concluido) {
+    podeIniciarDialogo = true;
+    if (!dialogoProfessor4Iniciado) {
+      avisoTexto.setPosition(professorNpc4.x, professorNpc4.y - 10);
+      avisoTexto.setVisible(true);
+    }
+  }
   else {
     podeIniciarDialogo = false;
-    if (!dialogoIniciado && !dialogoProfessorIniciado) {
+    if (!dialogoIniciado && !dialogoProfessorIniciado && !dialogoProfessor2Iniciado && !dialogoProfessor3Iniciado && !dialogoProfessor4Iniciado) {
       avisoTexto.setVisible(false);
     }
   }
@@ -1389,7 +1873,7 @@ function updateMain() {
   }
 
   // Bloquear movimento durante diálogo OU minigame
-  if (dialogoIniciado || dialogoProfessorIniciado || minigameActive) {
+  if (dialogoIniciado || dialogoProfessorIniciado || dialogoProfessor2Iniciado || dialogoProfessor3Iniciado || dialogoProfessor4Iniciado || minigameActive) {
     player.setVelocity(0);
     return;
   }
@@ -1399,15 +1883,20 @@ function updateMain() {
   
   if (distanceToDoor < 50 && !isDoorOpen) {
     // Se não estamos em diálogo e não há aviso de interação com NPCs
-    if (!dialogoIniciado && !dialogoProfessorIniciado && !avisoTexto.visible) {
+    if (!dialogoIniciado && !dialogoProfessorIniciado && !dialogoProfessor2Iniciado && !dialogoProfessor3Iniciado && !dialogoProfessor4Iniciado && !avisoTexto.visible) {
       avisoTexto.setText("Aperte (Espaço) para interagir");
       avisoTexto.setPosition(door1.x, door1.y - 10);
       avisoTexto.setVisible(true);
     }
   } else {
-    if (!dialogoIniciado && !dialogoProfessorIniciado) {
+    if (!dialogoIniciado && !dialogoProfessorIniciado && !dialogoProfessor2Iniciado && !dialogoProfessor3Iniciado && !dialogoProfessor4Iniciado) {
       avisoTexto.setVisible(false);
     }
+  }
+
+  // Verificar se a door2 deve ser aberta (keycard count = 4)
+  if (keycardCount >= 4 && !isDoor2Open) {
+    openDoor2(this);
   }
 
   // Resto do código continua igual...
