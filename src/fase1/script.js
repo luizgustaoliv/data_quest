@@ -1556,19 +1556,36 @@ function createMain() {
     this.cameras.main.height / 2 + 50,
     "Ajudar Professora",
     {
-      fontFamily: "Arial",
-      fontSize: "22px", // Aumentei o tamanho da fonte
+      fontFamily: "Press Start 2P", // Fonte pixelizada
+      fontSize: "16px",
       color: "#FFFFFF",
-      backgroundColor: "#4CAF50",
-      padding: { left: 20, right: 20, top: 10, bottom: 10 }, // Aumentei o padding
-      align: "center"
+      backgroundColor: "#4a6eb5",
+      padding: { left: 25, right: 25, top: 15, bottom: 15 },
+      align: "center",
+      shadow: {
+        offsetX: 3,
+        offsetY: 3,
+        color: '#2a4e95',
+        blur: 0,
+        fill: true
+      }
     }
   )
   .setOrigin(0.5)
   .setScrollFactor(0)
   .setInteractive({ useHandCursor: true })
-  .on('pointerover', () => helpButton.setStyle({backgroundColor: '#388E3C'}))
-  .on('pointerout', () => helpButton.setStyle({backgroundColor: '#4CAF50'}))
+  .on('pointerover', () => {
+    helpButton.setStyle({
+      backgroundColor: '#5a7ec5',
+      shadow: { color: '#3a5ea5' }
+    });
+  })
+  .on('pointerout', () => {
+    helpButton.setStyle({
+      backgroundColor: '#4a6eb5',
+      shadow: { color: '#2a4e95' }
+    });
+  })
   .on('pointerdown', () => {
     console.log("Iniciando minigame da professora");
     startMinigame(this);

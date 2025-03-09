@@ -1,99 +1,53 @@
-// Atualizar para receber qual professor está sendo ajudado
 function initMinigame(parentScene, professorId = 'professor1', onCompleteCallback) {
   console.log(`Inicializando minigame para ${professorId}...`);
   
-  // Criar um overlay para o minigame
-  const gameWidth = parentScene.scale.width;
-  const gameHeight = parentScene.scale.height;
+  // Garantir que estamos usando as dimensões da câmera, não do mundo
+  const gameWidth = parentScene.cameras.main.width;
+  const gameHeight = parentScene.cameras.main.height;
   
-  // Criar um fundo escuro semi-transparente
+  // Remover o overlay escuro completamente (ou tornar transparente)
+  // const overlay = parentScene.add.graphics();
+  // overlay.fillStyle(0x000000, 0.7);
+  // overlay.fillRect(...);
+  // overlay.setScrollFactor(0).setDepth(1001);
+  
+  // Criar um overlay invisível apenas para detectar cliques fora do minigame
   const overlay = parentScene.add.graphics();
-  overlay.fillStyle(0x000000, 0.8);
-  overlay.fillRect(0, 0, gameWidth, gameHeight);
-  overlay.setScrollFactor(0);
-  overlay.setDepth(1000);
+  overlay.fillStyle(0x000000, 0); // Alpha 0 = totalmente transparente
+  overlay.fillRect(
+    parentScene.cameras.main.worldView.x,
+    parentScene.cameras.main.worldView.y,
+    gameWidth,
+    gameHeight
+  );
+  overlay.setScrollFactor(0).setDepth(1001);
+  overlay.setInteractive(
+    new Phaser.Geom.Rectangle(0, 0, gameWidth, gameHeight),
+    Phaser.Geom.Rectangle.Contains
+  );
+
+  // Dimensionar o painel de conteúdo de forma consistente
+  const boxWidth = Math.min(500, gameWidth * 0.7);
+  const boxHeight = Math.min(445, gameHeight * 0.7);
   
-  // Se for o professor4, vamos criar o minigame especial de associação
-  if (professorId === 'professor4') {
-    createMatchingGame(parentScene, onCompleteCallback);
-    return;
-  }
+  // Posicionamento centralizado na câmera, não no mundo
+  const boxX = gameWidth / 2 - boxWidth / 2;
+  const boxY = gameHeight / 2 - boxHeight / 2;
+
+  // Criar painel sempre centralizado na tela
+  const contentBox = parentScene.add.graphics();
+  contentBox.fillStyle(0x333366, 0.95);
+  contentBox.fillRoundedRect(boxX, boxY, boxWidth, boxHeight, 15);
+  contentBox.lineStyle(4, 0xffffff, 1);
+  contentBox.strokeRoundedRect(boxX, boxY, boxWidth, boxHeight, 15);
+  contentBox.setScrollFactor(0).setDepth(1001);
+
+  // Remover completamente a verificação para o minigame de associação
+  // Todas as professoras usarão o quiz normal agora
   
-  // Configurar título e perguntas específicas para cada professor
-  let title;
-  let questions;
-  
-  if (professorId === 'professor2') {
-    title = "Ajude o Professor 2 a recuperar o controle";
-    questions = [
-      {
-        question: "O que são dados pessoais sensíveis segundo a LGPD?",
-        options: [
-          "Apenas dados médicos",
-          "Dados sobre origem racial, convicção religiosa, opinião política, dados referentes à saúde, entre outros",
-          "Apenas dados de crianças",
-          "Apenas números de documentos"
-        ],
-        correct: 1
-      },
-      {
-        question: "Qual princípio da LGPD determina que os dados devem ser usados apenas para fins específicos?",
-        options: [
-          "Transparência",
-          "Adequação",
-          "Finalidade",
-          "Segurança"
-        ],
-        correct: 2
-      },
-      {
-        question: "Quem é considerado 'titular dos dados' pela LGPD?",
-        options: [
-          "A empresa que coleta os dados",
-          "O governo que fiscaliza",
-          "A pessoa natural a quem os dados se referem",
-          "A ANPD (Autoridade Nacional de Proteção de Dados)"
-        ],
-        correct: 2
-      }
-    ];
-  } else if (professorId === 'professor3') {
-    title = "Ajude o Professor 3 a recuperar o controle";
-    questions = [
-      {
-        question: "Qual é a penalidade para empresas que violam a LGPD?",
-        options: [
-          "Apenas advertência",
-          "Apenas suspensão do serviço",
-          "Pode incluir multa de até 2% do faturamento limitado a R$50 milhões",
-          "Prisão imediata dos responsáveis"
-        ],
-        correct: 2
-      },
-      {
-        question: "O que é necessário para que uma empresa use dados pessoais conforme a LGPD?",
-        options: [
-          "Apenas ter os dados armazenados",
-          "Consentimento do titular ou outra base legal",
-          "Apenas informar que está coletando",
-          "Não há necessidade de permissão"
-        ],
-        correct: 1
-      },
-      {
-        question: "Qual direito NÃO é garantido ao titular dos dados pela LGPD?",
-        options: [
-          "Acesso aos dados",
-          "Correção de dados incompletos ou incorretos",
-          "Receber pagamento pelo uso dos seus dados",
-          "Revogação do consentimento"
-        ],
-        correct: 2
-      }
-    ];
-  } else { // professor1 (padrão)
-    title = "Ajude a professora a recuperar o controle";
-    questions = [
+  // Configurar perguntas específicas para cada professor
+  const quizzes = {
+    professor1: [
       {
         question: "O que significa a sigla LGPD?",
         options: [
@@ -124,46 +78,152 @@ function initMinigame(parentScene, professorId = 'professor1', onCompleteCallbac
         ],
         correct: 2
       }
-    ];
-  }
-  
-  // Adicionar um título específico para o professor
-  const titleText = parentScene.add.text(gameWidth / 2, 80, title, {
-    fontFamily: "Arial",
-    fontSize: "20px",
-    color: "#FFFFFF",
-    align: "center"
-  });
-  titleText.setOrigin(0.5);
-  titleText.setScrollFactor(0);
-  titleText.setDepth(1001);
+    ],
+    professor2: [
+      {
+        question: "O que são dados pessoais sensíveis segundo a LGPD?",
+        options: [
+          "Apenas dados médicos",
+          "Dados sobre origem racial, convicção religiosa, opinião política, dados referentes à saúde, entre outros",
+          "Apenas dados de crianças",
+          "Apenas números de documentos"
+        ],
+        correct: 1
+      },
+      {
+        question: "Qual princípio da LGPD determina que os dados devem ser usados apenas para fins específicos?",
+        options: [
+          "Transparência",
+          "Adequação",
+          "Finalidade",
+          "Segurança"
+        ],
+        correct: 2
+      },
+      {
+        question: "Quem é considerado 'titular dos dados' pela LGPD?",
+        options: [
+          "A empresa que coleta os dados",
+          "O governo que fiscaliza",
+          "A pessoa natural a quem os dados se referem",
+          "A ANPD (Autoridade Nacional de Proteção de Dados)"
+        ],
+        correct: 2
+      }
+    ],
+    professor3: [
+      {
+        question: "Qual direito a LGPD garante aos titulares de dados?",
+        options: [
+          "Direito de receber pagamento pelos dados",
+          "Direito de acessar, corrigir e solicitar exclusão dos dados",
+          "Direito de processar empresas a qualquer momento",
+          "Direito de impedir qualquer uso de seus dados"
+        ],
+        correct: 1
+      },
+      {
+        question: "O que caracteriza um dado pessoal segundo a LGPD?",
+        options: [
+          "Apenas informações que identificam diretamente uma pessoa",
+          "Apenas documentos oficiais como RG e CPF",
+          "Qualquer informação que possa identificar uma pessoa direta ou indiretamente",
+          "Apenas informações médicas e financeiras"
+        ],
+        correct: 2
+      },
+      {
+        question: "Qual princípio da LGPD impõe limites ao tratamento de dados?",
+        options: [
+          "Princípio da necessidade",
+          "Princípio da adequação",
+          "Princípio da limitação",
+          "Princípio da minimização"
+        ],
+        correct: 0
+      }
+    ],
+    professor4: [
+      {
+        question: "Qual é a penalidade para empresas que violam a LGPD?",
+        options: [
+          "Apenas advertência",
+          "Apenas suspensão do serviço",
+          "Pode incluir multa de até 2% do faturamento limitado a R$50 milhões",
+          "Prisão imediata dos responsáveis"
+        ],
+        correct: 2
+      },
+      {
+        question: "O que é necessário para que uma empresa use dados pessoais conforme a LGPD?",
+        options: [
+          "Apenas ter os dados armazenados",
+          "Consentimento do titular ou outra base legal",
+          "Apenas informar que está coletando",
+          "Não há necessidade de permissão"
+        ],
+        correct: 1
+      },
+      {
+        question: "Qual direito NÃO é garantido ao titular dos dados pela LGPD?",
+        options: [
+          "Acesso aos dados",
+          "Correção de dados incompletos ou incorretos",
+          "Receber pagamento pelo uso dos seus dados",
+          "Revogação do consentimento"
+        ],
+        correct: 2
+      }
+    ]
+  };
+
+  // Selecionar as perguntas corretas para o professor atual
+  questions = quizzes[professorId] || quizzes.professor1;
+
+  // Ajustar o título baseado no professor
+  let title = `Ajude ${professorId === 'professor1' ? 'a professora' : 'o ' + professorId} a recuperar o controle`;
+
+  // Criar o título centralizado
+  const titleText = parentScene.add.text(
+    gameWidth / 2, // Centralizado horizontalmente
+    boxY + 30,     // Posição Y relativa ao topo da caixa
+    title,
+    {
+      fontFamily: 'Press Start 2P',
+      fontSize: '20px',
+      color: '#ffffff',
+      align: 'center'
+    }
+  ).setOrigin(0.5).setScrollFactor(0).setDepth(1002);
   
   // Adicionar instruções apropriadas para o professor específico
   let instructionText = "Você precisa responder corretamente às perguntas sobre a LGPD\n";
   if (professorId === 'professor2') {
     instructionText += "para ajudar o professor 2 a se libertar do controle do hacker.";
-  } else if (professorId === 'professor3') {
-    instructionText += "para ajudar o professor 3 a se libertar do controle do hacker.";
+  } else if (professorId === 'professor4') {
+    instructionText += "para ajudar o professor 4 a se libertar do controle do hacker.";
   } else {
     instructionText += "para ajudar a professora a se libertar do controle do hacker.";
   }
   
-  const instructions = parentScene.add.text(gameWidth / 2, 120, instructionText, {
+  const instructions = parentScene.add.text(gameWidth / 2, boxY + 70, instructionText, {
     fontFamily: "Arial",
     fontSize: "14px",
     color: "#FFFFFF",
-    align: "center"
-  });
-  instructions.setOrigin(0.5);
-  instructions.setScrollFactor(0);
-  instructions.setDepth(1001);
+    align: "center",
+    wordWrap: { width: boxWidth - 40 }
+  }).setOrigin(0.5).setScrollFactor(0).setDepth(1001);
   
   // Variáveis de controle do jogo
   let currentQuestion = 0;
   let score = 0;
   let questionText;
   let optionButtons = [];
+  let feedbackText = null;
   
+  // Ajustar posição vertical inicial das perguntas
+  const questionStartY = boxY + 100;
+
   // Função para mostrar uma pergunta
   function showQuestion(index) {
     // Limpar perguntas anteriores
@@ -173,94 +233,154 @@ function initMinigame(parentScene, professorId = 'professor1', onCompleteCallbac
     
     const question = questions[index];
     
-    // Mostrar a pergunta
-    questionText = parentScene.add.text(gameWidth / 2, 180, question.question, {
-      fontFamily: "Arial",
-      fontSize: "18px",
-      color: "#FFFFFF",
-      align: "center"
-    });
-    questionText.setOrigin(0.5);
-    questionText.setScrollFactor(0);
-    questionText.setDepth(1001);
+    // Mostrar a pergunta centralizada
+    questionText = parentScene.add.text(
+      gameWidth / 2,
+      boxY + 120,
+      question.question,
+      {
+        fontFamily: 'Arial',
+        fontSize: '18px',
+        color: '#ffffff',
+        align: 'center',
+        wordWrap: { width: boxWidth - 60 },
+        lineSpacing: 10
+      }
+    ).setOrigin(0.5).setScrollFactor(0).setDepth(1002);
     
-    // Mostrar as opções
+    // Calcular espaço entre opções e posição inicial
+    const totalOptions = question.options.length;
+    const optionHeight = 40;
+    const optionSpacing = 15;
+    const startY = boxY + 180;
+
+    // Mostrar as opções - CORREÇÃO DO PROBLEMA DE HOVER
     for (let i = 0; i < question.options.length; i++) {
-      const y = 240 + i * 45;
-      
-      const buttonBg = parentScene.add.rectangle(gameWidth / 2, y, 400, 35, 0x4a6eb5);
-      buttonBg.setOrigin(0.5);
-      buttonBg.setScrollFactor(0);
-      buttonBg.setDepth(1001);
-      buttonBg.setInteractive({ useHandCursor: true });
-      
-      const optionText = parentScene.add.text(gameWidth / 2, y, question.options[i], {
-        fontFamily: "Arial",
-        fontSize: "14px",
-        color: "#FFFFFF",
-        align: "center"
+      const y = startY + (i * (optionHeight + optionSpacing));
+
+      // Container centralizado horizontalmente
+      const optionContainer = parentScene.add.container(
+        gameWidth / 2,
+        y
+      );
+      optionContainer.setScrollFactor(0).setDepth(1002);
+
+      // Constantes para o tamanho e posição do botão
+      const buttonWidth = 300;
+      const buttonHeight = 40;
+      const buttonX = -buttonWidth/2; // Centralizar no container
+      const buttonY = -buttonHeight/2; // Centralizar no container
+
+      // Background da opção com largura fixa centralizada
+      const buttonBg = parentScene.add.graphics();
+      buttonBg.fillStyle(0x4a6eb5, 1);
+      buttonBg.fillRoundedRect(buttonX, buttonY, buttonWidth, buttonHeight, 8);
+      buttonBg.lineStyle(2, 0x6c8fd6, 1);
+      buttonBg.strokeRoundedRect(buttonX, buttonY, buttonWidth, buttonHeight, 8);
+
+      // Texto centralizado dentro do botão
+      const optionText = parentScene.add.text(0, 0, question.options[i], {
+        fontFamily: 'Arial',
+        fontSize: '14px',
+        color: '#ffffff',
+        align: 'center'
+      }).setOrigin(0.5);
+
+      // Ajustar texto se for muito longo
+      if (optionText.width > 260) {
+        optionText.setWordWrapWidth(260);
+        optionText.setFontSize('12px');
+      }
+
+      optionContainer.add([buttonBg, optionText]);
+      optionContainer.setInteractive(new Phaser.Geom.Rectangle(
+        buttonX, buttonY, buttonWidth, buttonHeight
+      ), Phaser.Geom.Rectangle.Contains);
+
+      // Efeitos de hover - CORRIGIDOS
+      optionContainer.on('pointerover', () => {
+        buttonBg.clear();
+        buttonBg.fillStyle(0x6c8fd6, 1);
+        buttonBg.fillRoundedRect(buttonX, buttonY, buttonWidth, buttonHeight, 8);
+        buttonBg.lineStyle(2, 0x8caae6, 1);
+        buttonBg.strokeRoundedRect(buttonX, buttonY, buttonWidth, buttonHeight, 8);
+        
+        // Apenas animar o container inteiro para evitar problemas de posicionamento
+        parentScene.tweens.add({
+          targets: optionContainer,
+          scaleX: 1.05,
+          scaleY: 1.05,
+          duration: 100
+        });
       });
-      optionText.setOrigin(0.5);
-      optionText.setScrollFactor(0);
-      optionText.setDepth(1002);
-      
-      // Adicionar evento de clique
-      buttonBg.on('pointerover', () => {
-        buttonBg.setFillStyle(0x6c8fd6);
+
+      optionContainer.on('pointerout', () => {
+        buttonBg.clear();
+        buttonBg.fillStyle(0x4a6eb5, 1);
+        buttonBg.fillRoundedRect(buttonX, buttonY, buttonWidth, buttonHeight, 8);
+        buttonBg.lineStyle(2, 0x6c8fd6, 1);
+        buttonBg.strokeRoundedRect(buttonX, buttonY, buttonWidth, buttonHeight, 8);
+        
+        parentScene.tweens.add({
+          targets: optionContainer,
+          scaleX: 1,
+          scaleY: 1,
+          duration: 100
+        });
       });
-      
-      buttonBg.on('pointerout', () => {
-        buttonBg.setFillStyle(0x4a6eb5);
+
+      optionContainer.on('pointerdown', () => {
+        handleAnswer(i, question.correct, buttonBg, optionContainer);
       });
-      
-      buttonBg.on('pointerdown', () => {
-        handleAnswer(i, question.correct, buttonBg);
-      });
-      
-      optionButtons.push(buttonBg);
-      optionButtons.push(optionText);
+
+      // Armazenar referências importantes no container
+      optionContainer.buttonBg = buttonBg;
+      optionButtons.push(optionContainer);
     }
   }
   
   // Função para lidar com a resposta selecionada
-  function handleAnswer(selectedIndex, correctIndex, button) {
-    // Desativar todos os botões para evitar cliques múltiplos
-    optionButtons.forEach(button => {
-      if (button.input) button.disableInteractive();
+  function handleAnswer(selectedIndex, correctIndex, buttonBg, container) {
+    // Desativar todos os containers para evitar cliques múltiplos
+    optionButtons.forEach(container => {
+      container.removeInteractive();
     });
     
+    // Remover feedback anterior se existir
+    if (feedbackText) {
+        feedbackText.destroy();
+    }
+
     // Verificar se a resposta está correta
     if (selectedIndex === correctIndex) {
-      // Resposta correta
-      button.setFillStyle(0x4CAF50);
-      score++;
-      
-      // Feedback visual e sonoro (se disponível)
-      parentScene.add.text(gameWidth / 2, 450, "Correto!", {
-        fontFamily: "Arial",
-        fontSize: "18px",
-        color: "#4CAF50"
-      }).setOrigin(0.5).setScrollFactor(0).setDepth(1002);
-      
+        // Resposta correta
+        container.buttonBg.clear();
+        container.buttonBg.fillStyle(0x4CAF50, 1);
+        container.buttonBg.fillRoundedRect(-175, -20, 300, 40, 8); // Mudado de -190 para -175
+        container.buttonBg.lineStyle(2, 0x6c8fd6, 1);
+        container.buttonBg.strokeRoundedRect(-175, -20, 300, 40, 8); // Mudado de -190 para -175
+        
+        score++;
+        showFeedback(true);
+        
     } else {
-      // Resposta incorreta
-      button.setFillStyle(0xFF5252);
-      
-      // Destacar a resposta correta
-      optionButtons.forEach((btn, index) => {
-        if (index / 2 === correctIndex && btn.setFillStyle) {
-          btn.setFillStyle(0x4CAF50);
-        }
-      });
-      
-      // Feedback visual e sonoro
-      parentScene.add.text(gameWidth / 2, 450, "Incorreto!", {
-        fontFamily: "Arial",
-        fontSize: "18px",
-        color: "#FF5252"
-      }).setOrigin(0.5).setScrollFactor(0).setDepth(1002);
+        // Resposta incorreta
+        container.buttonBg.clear();
+        container.buttonBg.fillStyle(0xFF5252, 1);
+        container.buttonBg.fillRoundedRect(-175, -20, 300, 40, 8); // Mudado de -190 para -175
+        container.buttonBg.lineStyle(2, 0x6c8fd6, 1);
+        container.buttonBg.strokeRoundedRect(-175, -20, 300, 40, 8); // Mudado de -190 para -175
+        
+        // Destacar a resposta correta
+        optionButtons[correctIndex].buttonBg.clear();
+        optionButtons[correctIndex].buttonBg.fillStyle(0x4CAF50, 1);
+        optionButtons[correctIndex].buttonBg.fillRoundedRect(-175, -20, 300, 40, 8); // Mudado de -190 para -175
+        optionButtons[correctIndex].buttonBg.lineStyle(2, 0x6c8fd6, 1);
+        optionButtons[correctIndex].buttonBg.strokeRoundedRect(-175, -20, 300, 40, 8); // Mudado de -190 para -175
+        
+        showFeedback(false);
     }
-    
+
     // Avançar para a próxima pergunta após um delay
     parentScene.time.delayedCall(1500, () => {
       currentQuestion++;
@@ -271,6 +391,44 @@ function initMinigame(parentScene, professorId = 'professor1', onCompleteCallbac
         // Fim do jogo - mostrar resultado
         endGame();
       }
+    });
+  }
+
+  // Atualizar estilo do feedback
+  function showFeedback(isCorrect) {
+    const feedbackStyle = {
+      fontFamily: 'Press Start 2P',
+      fontSize: '28px',
+      color: isCorrect ? '#4CAF50' : '#FF5252',
+      stroke: '#000000',
+      strokeThickness: 4,
+      shadow: {
+        offsetX: 3,
+        offsetY: 3,
+        color: '#000000',
+        blur: 2,
+        fill: true
+      }
+    };
+    
+    // Ajustar posição do feedback para ficar dentro do container
+    const feedbackY = boxY + boxHeight - 50; // Ajustado para ficar mais acima
+    
+    feedbackText = parentScene.add.text(gameWidth / 2, feedbackY,
+        isCorrect ? "CORRETO!" : "INCORRETO!", feedbackStyle
+    ).setOrigin(0.5).setScrollFactor(0).setDepth(1002);
+    
+    // Adicionar efeito de fade out
+    parentScene.tweens.add({
+        targets: feedbackText,
+        alpha: 0,
+        y: feedbackY - 20,
+        duration: 700,
+        ease: 'Power2',
+        onComplete: () => {
+            feedbackText.destroy();
+            feedbackText = null;
+        }
     });
   }
   
@@ -284,6 +442,7 @@ function initMinigame(parentScene, professorId = 'professor1', onCompleteCallbac
     let professorText = "a professora";
     if (professorId === 'professor2') professorText = "o professor 2";
     if (professorId === 'professor3') professorText = "o professor 3";
+    if (professorId === 'professor4') professorText = "o professor 4";
     
     // Mostrar resultado final
     const resultText = parentScene.add.text(gameWidth / 2, 250, 
@@ -300,25 +459,8 @@ function initMinigame(parentScene, professorId = 'professor1', onCompleteCallbac
     resultText.setDepth(1001);
     
     // Botão para voltar ao jogo
-    const backButton = parentScene.add.text(gameWidth / 2, 350, "Voltar ao Jogo", {
-      fontFamily: "Arial",
-      fontSize: "16px",
-      backgroundColor: "#4CAF50",
-      padding: { left: 12, right: 12, top: 8, bottom: 8 },
-      color: "#FFFFFF"
-    });
-    backButton.setOrigin(0.5);
-    backButton.setScrollFactor(0);
-    backButton.setDepth(1001);
-    backButton.setInteractive({ useHandCursor: true });
-    
-    backButton.on('pointerover', () => {
-      backButton.setStyle({backgroundColor: "#388E3C"});
-    });
-    
-    backButton.on('pointerout', () => {
-      backButton.setStyle({backgroundColor: "#4CAF50"});
-    });
+    const backButton = createButton(parentScene, gameWidth / 2, 350, "Voltar ao Jogo");
+    backButton.setScrollFactor(0).setDepth(1001);
     
     backButton.on('pointerdown', () => {
       cleanup();
@@ -332,7 +474,7 @@ function initMinigame(parentScene, professorId = 'professor1', onCompleteCallbac
         const successMsg = parentScene.add.text(
           parentScene.cameras.main.worldView.x + parentScene.cameras.main.width / 2,
           dialogY,
-          `${professorText === "a professora" ? "A professora" : (professorText === "o professor 2" ? "O professor 2" : "O professor 3")} foi libertado do controle do hacker!\nVocê ganhou um keycard!`,
+          `${professorText === "a professora" ? "A professora" : (professorText === "o professor 2" ? "O professor 2" : "O professor 4")} foi libertado do controle do hacker!\nVocê ganhou um keycard!`,
           {
             fontFamily: "Arial",
             fontSize: "18px",
@@ -403,402 +545,56 @@ function initMinigame(parentScene, professorId = 'professor1', onCompleteCallbac
     cleanup();
     if (onCompleteCallback) onCompleteCallback();
   });
-  
-  // Função para criar o jogo de associação para o professor4
-  function createMatchingGame(scene, callback) {
-    const elements = [];
-    let selectedLeft = null;
-    let selectedRight = null;
-    let connections = [];
-    let correctMatches = 0;
-    const totalMatches = 4;
-    
-    // Título e instruções
-    const titleText = scene.add.text(gameWidth / 2, 60, "Associe os Dados às Categorias Corretas", {
-      fontFamily: "Arial",
-      fontSize: "20px",
-      color: "#FFFFFF",
-      align: "center",
-      fontWeight: "bold"
-    }).setOrigin(0.5).setScrollFactor(0).setDepth(1001);
-    
-    elements.push(titleText);
-    
-    const instruction = scene.add.text(gameWidth / 2, 100, 
-      "Clique em um item da coluna esquerda e depois em seu correspondente na direita",
-      {
-        fontFamily: "Arial",
-        fontSize: "16px",
-        color: "#FFFFFF",
-        align: "center"
-      }
-    ).setOrigin(0.5).setScrollFactor(0).setDepth(1001);
-    
-    elements.push(instruction);
-    
-    // Dados a serem associados
-    const leftItems = [
-      "Nome completo",
-      "CPF",
-      "Histórico médico",
-      "Opiniões políticas"
-    ];
-    
-    const rightItems = [
-      "Dado pessoal",
-      "Dado pessoal",
-      "Dado sensível",
-      "Dado sensível"
-    ];
-    
-    // Mapeamento das respostas corretas (índice da esquerda -> índice da direita)
-    const correctAnswers = {
-      0: 0, // Nome completo -> Dado pessoal
-      1: 0, // CPF -> Dado pessoal
-      2: 2, // Histórico médico -> Dado sensível
-      3: 2  // Opiniões políticas -> Dado sensível
-    };
-    
-    // Criar coluna esquerda
-    const leftCol = scene.add.text(gameWidth / 2 - 200, 150, "DADOS", {
-      fontFamily: "Arial",
-      fontSize: "18px",
-      color: "#FFFF00",
-      fontWeight: "bold"
-    }).setOrigin(0.5).setScrollFactor(0).setDepth(1001);
-    
-    elements.push(leftCol);
-    
-    // Criar coluna direita
-    const rightCol = scene.add.text(gameWidth / 2 + 200, 150, "CATEGORIAS", {
-      fontFamily: "Arial",
-      fontSize: "18px",
-      color: "#FFFF00",
-      fontWeight: "bold"
-    }).setOrigin(0.5).setScrollFactor(0).setDepth(1001);
-    
-    elements.push(rightCol);
-    
-    // Criar os itens da coluna esquerda
-    const leftButtons = [];
-    for (let i = 0; i < leftItems.length; i++) {
-      const y = 200 + i * 60;
-      
-      const button = scene.add.rectangle(gameWidth / 2 - 200, y, 300, 40, 0x4a6eb5)
-        .setOrigin(0.5)
-        .setScrollFactor(0)
-        .setDepth(1001)
-        .setInteractive({ useHandCursor: true });
-      
-      const text = scene.add.text(gameWidth / 2 - 200, y, leftItems[i], {
-        fontFamily: "Arial",
-        fontSize: "16px",
-        color: "#FFFFFF",
-        align: "center"
-      }).setOrigin(0.5).setScrollFactor(0).setDepth(1002);
-      
-      // Adicionar evento de clique
-      button.on('pointerover', () => {
-        if (selectedLeft !== i) {
-          button.setFillStyle(0x5a7ec5);
-        }
-      });
-      
-      button.on('pointerout', () => {
-        if (selectedLeft !== i) {
-          button.setFillStyle(0x4a6eb5);
-        }
-      });
-      
-      button.on('pointerdown', () => {
-        // Se já estava selecionado, desselecione
-        if (selectedLeft === i) {
-          button.setFillStyle(0x4a6eb5);
-          selectedLeft = null;
-          return;
-        }
-        
-        // Resetar todos os outros botões
-        leftButtons.forEach((b, index) => {
-          if (index !== i) {
-            b.button.setFillStyle(0x4a6eb5);
-          }
-        });
-        
-        // Selecionar este botão
-        button.setFillStyle(0x00aa00);
-        selectedLeft = i;
-        
-        // Se já havia uma seleção na direita, verificar se é um match
-        checkForMatch();
-      });
-      
-      leftButtons.push({button, text, index: i});
-      elements.push(button);
-      elements.push(text);
-    }
-    
-    // Criar os itens da coluna direita
-    const rightButtons = [];
-    // Nesse caso, temos apenas 2 itens únicos, mas duplicamos para facilitar a interface
-    const uniqueRightItems = [...new Set(rightItems)]; // Remove duplicatas
-    
-    for (let i = 0; i < uniqueRightItems.length; i++) {
-      const y = 200 + i * 60;
-      
-      const button = scene.add.rectangle(gameWidth / 2 + 200, y, 300, 40, 0x4a6eb5)
-        .setOrigin(0.5)
-        .setScrollFactor(0)
-        .setDepth(1001)
-        .setInteractive({ useHandCursor: true });
-      
-      const text = scene.add.text(gameWidth / 2 + 200, y, uniqueRightItems[i], {
-        fontFamily: "Arial",
-        fontSize: "16px",
-        color: "#FFFFFF",
-        align: "center"
-      }).setOrigin(0.5).setScrollFactor(0).setDepth(1002);
-      
-      // Adicionar evento de clique
-      button.on('pointerover', () => {
-        if (selectedRight !== i) {
-          button.setFillStyle(0x5a7ec5);
-        }
-      });
-      
-      button.on('pointerout', () => {
-        if (selectedRight !== i) {
-          button.setFillStyle(0x4a6eb5);
-        }
-      });
-      
-      button.on('pointerdown', () => {
-        // Se já estava selecionado, desselecione
-        if (selectedRight === i) {
-          button.setFillStyle(0x4a6eb5);
-          selectedRight = null;
-          return;
-        }
-        
-        // Resetar todos os outros botões
-        rightButtons.forEach((b, index) => {
-          if (index !== i) {
-            b.button.setFillStyle(0x4a6eb5);
-          }
-        });
-        
-        // Selecionar este botão
-        button.setFillStyle(0x00aa00);
-        selectedRight = i;
-        
-        // Se já havia uma seleção na esquerda, verificar se é um match
-        checkForMatch();
-      });
-      
-      rightButtons.push({button, text, index: i});
-      elements.push(button);
-      elements.push(text);
-    }
-    
-    // Função para verificar se a associação está correta
-    function checkForMatch() {
-      if (selectedLeft !== null && selectedRight !== null) {
-        const leftIndex = selectedLeft;
-        const rightItem = uniqueRightItems[selectedRight];
-        const correctRightItem = rightItems[correctAnswers[leftIndex]];
-        
-        // Ver se a associação está correta
-        if (rightItem === correctRightItem) {
-          // Associação correta
-          const leftButton = leftButtons[leftIndex].button;
-          const rightButton = rightButtons[selectedRight].button;
-          
-          // Deixar os botões verdes permanentemente
-          leftButton.setFillStyle(0x00aa00);
-          rightButton.setFillStyle(0x00aa00);
-          
-          // Desabilitar os botões
-          leftButton.disableInteractive();
-          
-          // Criar uma linha conectando os dois itens
-          const line = scene.add.graphics();
-          line.lineStyle(2, 0x00ff00, 1);
-          line.beginPath();
-          line.moveTo(gameWidth / 2 - 50, leftButton.y);
-          line.lineTo(gameWidth / 2 + 50, rightButton.y);
-          line.closePath();
-          line.strokePath();
-          line.setScrollFactor(0).setDepth(1001);
-          
-          connections.push(line);
-          elements.push(line);
-          
-          // Adicionar texto de feedback
-          const feedbackText = scene.add.text(gameWidth / 2, leftButton.y, "✓", {
-            fontFamily: "Arial",
-            fontSize: "24px",
-            color: "#00FF00"
-          }).setOrigin(0.5).setScrollFactor(0).setDepth(1002);
-          
-          elements.push(feedbackText);
-          
-          // Incrementar contagem de acertos
-          correctMatches++;
-          
-          // Verificar se completou todos os matches
-          if (correctMatches === totalMatches) {
-            // Jogo concluído!
-            finishGame(true);
-          }
-        } else {
-          // Associação incorreta - mostrar feedback
-          const feedbackText = scene.add.text(gameWidth / 2, gameHeight - 100, "Essa associação está incorreta. Tente novamente!", {
-            fontFamily: "Arial",
-            fontSize: "18px",
-            color: "#FF0000"
-          }).setOrigin(0.5).setScrollFactor(0).setDepth(1002);
-          
-          elements.push(feedbackText);
-          
-          // Remover o texto após 2 segundos
-          scene.time.delayedCall(2000, () => {
-            feedbackText.destroy();
-            elements.splice(elements.indexOf(feedbackText), 1);
-          });
-        }
-        
-        // Resetar seleções
-        selectedLeft = null;
-        selectedRight = null;
-      }
-    }
-    
-    // Adicionar botão de confirmar/desistir
-    const confirmButton = scene.add.text(gameWidth / 2, gameHeight - 50, "Confirmar Associações", {
-      fontFamily: "Arial",
-      fontSize: "18px",
-      color: "#FFFFFF",
-      backgroundColor: "#4CAF50",
-      padding: { left: 15, right: 15, top: 10, bottom: 10 }
-    }).setOrigin(0.5).setScrollFactor(0).setDepth(1002)
-      .setInteractive({ useHandCursor: true });
-    
-    confirmButton.on('pointerover', () => {
-      confirmButton.setStyle({backgroundColor: "#388E3C"});
-    });
-    
-    confirmButton.on('pointerout', () => {
-      confirmButton.setStyle({backgroundColor: "#4CAF50"});
-    });
-    
-    confirmButton.on('pointerdown', () => {
-      finishGame(correctMatches >= totalMatches / 2);
-    });
-    
-    elements.push(confirmButton);
-    
-    // Função para finalizar o jogo
-    function finishGame(isSuccess) {
-      // Remover todos os elementos do jogo
-      elements.forEach(element => {
-        if (element && element.destroy) {
-          element.destroy();
-        }
-      });
-      
-      // Mostrar mensagem de resultado
-      const resultText = scene.add.text(gameWidth / 2, gameHeight / 2 - 50, 
-        isSuccess ? 
-        "Parabéns! Você ajudou a restaurar o sistema de classificação de dados." : 
-        "Você não conseguiu classificar corretamente os dados. Tente novamente!", 
-        {
-          fontFamily: "Arial",
-          fontSize: "18px",
-          color: isSuccess ? "#00FF00" : "#FF0000",
-          align: "center",
-          backgroundColor: "rgba(0, 0, 0, 0.7)",
-          padding: { left: 20, right: 20, top: 15, bottom: 15 },
-        }
-      ).setOrigin(0.5).setScrollFactor(0).setDepth(1002);
-      
-      // Botão para voltar ao jogo
-      const backButton = scene.add.text(gameWidth / 2, gameHeight / 2 + 50, "Voltar ao Jogo", {
-        fontFamily: "Arial",
-        fontSize: "16px",
-        color: "#FFFFFF",
-        backgroundColor: "#4CAF50",
-        padding: { left: 15, right: 15, top: 10, bottom: 10 }
-      }).setOrigin(0.5).setScrollFactor(0).setDepth(1002)
-        .setInteractive({ useHandCursor: true });
-      
-      backButton.on('pointerover', () => {
-        backButton.setStyle({backgroundColor: "#388E3C"});
-      });
-      
-      backButton.on('pointerout', () => {
-        backButton.setStyle({backgroundColor: "#4CAF50"});
-      });
-      
-      backButton.on('pointerdown', () => {
-        // Remover todos os elementos restantes
-        resultText.destroy();
-        backButton.destroy();
-        overlay.destroy();
-        
-        if (isSuccess) {
-          // Mensagem de sucesso no estilo de diálogo
-          const cameraHeight = scene.cameras.main.height;
-          const dialogY = cameraHeight - 250;
-          
-          const successMsg = scene.add.text(
-            scene.cameras.main.worldView.x + scene.cameras.main.width / 2,
-            dialogY,
-            "O Professor 4 foi libertado do controle do hacker!\nVocê ganhou um keycard!",
-            {
-              fontFamily: "Arial",
-              fontSize: "18px",
-              color: "#FFFFFF",
-              backgroundColor: "rgba(0, 0, 0, 0.7)",
-              padding: { left: 20, right: 20, top: 15, bottom: 15 },
-              align: 'center'
-            }
-          );
-          successMsg.setOrigin(0.5);
-          successMsg.setScrollFactor(0);
-          successMsg.setDepth(100);
-          
-          // Adicionar efeito de aparecimento suave
-          successMsg.setAlpha(0);
-          scene.tweens.add({
-            targets: successMsg,
-            alpha: 1,
-            duration: 500,
-            ease: 'Power2'
-          });
-          
-          // Remover a mensagem após 3 segundos e chamar o callback
-          scene.time.delayedCall(3000, () => {
-            scene.tweens.add({
-              targets: successMsg,
-              alpha: 0,
-              duration: 500,
-              ease: 'Power2',
-              onComplete: () => {
-                successMsg.destroy();
-                if (callback) {
-                  callback(true);
-                }
-              }
-            });
-          });
-        } else {
-          if (callback) {
-            callback(false);
-          }
-        }
-      });
-    }
+}
+
+// Adicionar estilos base para botões do minigame
+const buttonBaseStyle = {
+  fontFamily: "Press Start 2P",
+  fontSize: "16px",
+  color: "#ffffff",
+  backgroundColor: "#4a6eb5",
+  padding: { x: 25, y: 15 },
+  shadow: {
+    offsetX: 4,
+    offsetY: 4,
+    color: '#2a4e95',
+    blur: 2,
+    fill: true
+  },
+  align: 'center'
+};
+
+const buttonHoverStyle = {
+  backgroundColor: '#5a7ec5',
+  shadow: {
+    offsetX: 2,
+    offsetY: 2,
+    color: '#3a5ea5',
+    blur: 4,
+    fill: true
   }
+};
+
+function createButton(scene, x, y, text) {
+  return scene.add.text(x, y, text, buttonBaseStyle)
+    .setOrigin(0.5)
+    .setInteractive({ useHandCursor: true })
+    .on('pointerover', function() {
+      this.setStyle(buttonHoverStyle);
+      scene.tweens.add({
+        targets: this,
+        scale: 1.05,
+        duration: 100
+      });
+    })
+    .on('pointerout', function() {
+      this.setStyle(buttonBaseStyle);
+      scene.tweens.add({
+        targets: this,
+        scale: 1,
+        duration: 100
+      });
+    });
 }
 
 // Exportar a função para uso no script.js
