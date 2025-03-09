@@ -58,6 +58,11 @@ let professor4Image;
 let isDoor2Open = false;
 let door2OpenMessage = null;
 
+// Adicione estas variáveis globais para o sistema de tutorial
+let tutorialActive = false;
+let tutorialSlide = 0;
+let tutorialElements = [];
+
 // Configuração do jogo Phaser
 const config = {
   type: Phaser.AUTO,
@@ -95,6 +100,7 @@ function startGame(character) {
   
   // Adicionar estas linhas para esconder o contador de keycards durante a seleção
   document.getElementById('keycard-container').style.visibility = 'hidden';
+  document.getElementById('key-container').style.visibility = 'hidden';
   document.getElementById('game-container').style.display = "block";
   
   game.scene.start("main");
@@ -102,6 +108,15 @@ function startGame(character) {
   // Mostrar o contador de keycards depois do jogo iniciar
   setTimeout(() => {
     document.getElementById('keycard-container').style.visibility = 'visible';
+    document.getElementById('key-container').style.visibility = 'visible';
+    
+    // Iniciar o tutorial após um pequeno delay para garantir que a cena principal foi carregada
+    setTimeout(() => {
+      const mainScene = game.scene.getScene('main');
+      if (mainScene) {
+        showTutorial(mainScene);
+      }
+    }, 500);
   }, 500);
 }
 
@@ -1377,9 +1392,10 @@ function createMain() {
   const DEPTHS = {
     BACKGROUND: 0,
     WORLD: 10,
-    PLAYER: 15,     // Reduzi o valor do player
-    NPCS: 15,       // Reduzi o valor dos NPCs também
-    DOOR: 20,       // A porta agora tem profundidade maior que o player
+    PLAYER: 14,      // Player agora fica abaixo dos NPCs
+    NPCS: 15,        // NPCs acima do player
+    DOOR: 16,        // Primeira porta acima de tudo
+    DOOR2: 13,       // Segunda porta abaixo do player
     UI: 50,
     DIALOG: 100
   };
@@ -1403,10 +1419,13 @@ function createMain() {
   player.setDepth(DEPTHS.PLAYER);
   npc1.setDepth(DEPTHS.NPCS);
   professorNpc.setDepth(DEPTHS.NPCS);
+  professorNpc2.setDepth(DEPTHS.NPCS);
+  professorNpc3.setDepth(DEPTHS.NPCS);
+  professorNpc4.setDepth(DEPTHS.NPCS);
 
   // Após a criação da porta existente, adicione:
   door1.setDepth(DEPTHS.DOOR);
-  door2.setDepth(DEPTHS.DOOR);
+  door2.setDepth(DEPTHS.DOOR2);
 
   // Modifique o listener de espaço para corrigir a duplicação de frames
   this.input.keyboard.on("keydown-SPACE", () => {
@@ -1651,6 +1670,39 @@ function createMain() {
       content: keycardText.text
     }
   });
+
+  // Add collisions with all NPCs
+  this.physics.add.collider(player, npc1);
+  this.physics.add.collider(player, professorNpc);
+  this.physics.add.collider(player, professorNpc2);
+  this.physics.add.collider(player, professorNpc3);
+  this.physics.add.collider(player, professorNpc4);
+
+  // Make sure all NPCs are immovable
+  npc1.setImmovable(true);
+  professorNpc.setImmovable(true);
+  professorNpc2.setImmovable(true);
+  professorNpc3.setImmovable(true);
+  professorNpc4.setImmovable(true);
+
+  // Adjust collision boxes for better precision
+  npc1.body.setSize(40, 20); // Adjust these numbers as needed
+  npc1.body.setOffset(28, 75); // Adjust these numbers as needed
+
+  professorNpc.body.setSize(20, 20);
+  professorNpc.body.setOffset(38, 75);
+
+  professorNpc2.body.setSize(20, 20);
+  professorNpc2.body.setOffset(38, 75);
+
+  professorNpc3.body.setSize(20, 20);
+  professorNpc3.body.setOffset(38, 75);
+
+  professorNpc4.body.setSize(20, 20);
+  professorNpc4.body.setOffset(38, 75);
+
+  // Enable debug mode for collisions (optional, remove in production)
+  this.physics.world.createDebugGraphic();
 }
 
 // Função para iniciar o minigame (chamada quando o botão é clicado)
@@ -1805,10 +1857,32 @@ function collectKey(player, key) {
   collectedKey = key;
   key.setDepth(1);
   key.body.setEnable(false);
+  
+  // Atualizar o contador HTML da chave
+  const keyCounter = document.getElementById('key-counter');
+  if (keyCounter) {
+      keyCounter.textContent = '1/1';
+      
+      // Adicionar efeito visual
+      const keyIcon = document.getElementById('key-icon');
+      if (keyIcon) {
+          keyIcon.style.transition = 'transform 0.2s ease-in-out';
+          keyIcon.style.transform = 'scale(1.3)';
+          setTimeout(() => {
+              keyIcon.style.transform = 'scale(1)';
+          }, 200);
+      }
+  }
 }
 
 // Função para atualizar a cena principal do jogo
 function updateMain() {
+  // Se o tutorial estiver ativo, não prosseguir com o resto da lógica de atualização
+  if (tutorialActive) {
+    player.setVelocity(0);
+    return;
+  }
+
   // Redefinir a variável podeIniciarDialogo para false no início de cada frame
   podeIniciarDialogo = false;
   
@@ -1915,45 +1989,356 @@ function updateMain() {
     cursors.down.isDown ||
     this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S).isDown;
 
-  let newAnimation = null;
+  // Substituir o código de movimento por este mais simples
+  const speed = 160;
+  let velocityX = 0;
+  let velocityY = 0;
 
+  // Priorizar movimento horizontal sobre o vertical
   if (leftPressed) {
-    player.setVelocityX(-160);
-    newAnimation = "walk_side";
-    player.setFlipX(true);
-    lastDirection = "left";
+      velocityX = -speed;
   } else if (rightPressed) {
-    player.setVelocityX(160);
-    newAnimation = "walk_side";
-    player.setFlipX(false);
-    lastDirection = "right";
-  } else if (upPressed) {
-    player.setVelocityY(-160);
-    newAnimation = "walk_up";
-    lastDirection = "up";
+      velocityX = speed;
+  } else if (upPressed) { // Só move vertical se não estiver movendo horizontal
+      velocityY = -speed;
   } else if (downPressed) {
-    player.setVelocityY(160);
-    newAnimation = "walk_down";
-    lastDirection = "down";
+      velocityY = speed;
+  }
+
+  // Aplicar movimento
+  player.setVelocity(velocityX, velocityY);
+
+  // Atualizar animação baseado no movimento
+  let newAnimation = null;
+  if (velocityX < 0) {
+      newAnimation = "walk_side";
+      player.setFlipX(true);
+      lastDirection = "left";
+  } else if (velocityX > 0) {
+      newAnimation = "walk_side";
+      player.setFlipX(false);
+      lastDirection = "right";
+  } else if (velocityY < 0) {
+      newAnimation = "walk_up";
+      lastDirection = "up";
+  } else if (velocityY > 0) {
+      newAnimation = "walk_down";
+      lastDirection = "down";
   } else {
-    switch (lastDirection) {
-      case "left":
-      case "right":
-        newAnimation = "idle_side";
-        break;
-      case "up":
-        newAnimation = "idle_back";
-        break;
-      case "down":
-      case "front":
-      default:
-        newAnimation = "idle_front";
-        break;
-    }
+      switch (lastDirection) {
+          case "left":
+          case "right":
+              newAnimation = "idle_side";
+              break;
+          case "up":
+              newAnimation = "idle_back";
+              break;
+          case "down":
+          case "front":
+          default:
+              newAnimation = "idle_front";
+              break;
+      }
   }
 
   if (newAnimation && newAnimation !== currentAnimation) {
-    player.anims.play(newAnimation, true);
-    currentAnimation = newAnimation;
+      player.anims.play(newAnimation, true);
+      currentAnimation = newAnimation;
   }
+}
+
+// Adicione esta nova função para mostrar o tutorial
+function showTutorial(scene) {
+  // Não mostrar o tutorial se o jogo já estiver em algum estado ativo
+  if (dialogoIniciado || dialogoProfessorIniciado || minigameActive) return;
+  
+  tutorialActive = true;
+  tutorialSlide = 0;
+  tutorialElements = [];
+  
+  // Conteúdo dos slides do tutorial (título e texto)
+  const tutorialContent = [
+    {
+      title: "DATA QUEST - FASE 1",
+      text: "Neste jogo, você vai aprender sobre proteção de dados\ne ajudar a salvar sua escola de um ataque hacker.\nVamos começar com os controles básicos!",
+    },
+    {
+      title: "Como se Movimentar",
+      text: "Use as teclas W, A, S, D ou as setas direcionais\npara mover seu personagem pela escola.",
+    },
+    {
+      title: "Interagindo com Personagens",
+      text: "Pressione a tecla 'E' quando estiver próximo de\num NPC para conversar com ele.",
+    },
+    {
+      title: "Portas e Objetos",
+      text: "Pressione a tecla 'ESPAÇO' para interagir\ncom portas e objetos no cenário.",
+      image: "tutorial_objects"
+    },
+    {
+      title: "Sua Missão",
+      text: "Nesta fase os professores estão sendo controlados por um hacker\nque está tentando roubar dados dos alunos!\nAjude os professores-robôs a recuperar a consciência.\nA cada minigame concluído, você ganha um keycard.",
+    },
+      {
+      title: "Keycard e chave",
+      text: "Nessa fase seu objetivo é coletar os 4 keycard pra desbloquear\n a última sala que tem uma chave. Com essa chave,\n você pode entrar no elevador e ir pra próxima fase.",
+    }
+  ];
+  
+  // Calcular dimensões baseadas na câmera
+  const cameraWidth = scene.cameras.main.width;
+  const cameraHeight = scene.cameras.main.height;
+  
+  // Criar fundo escurecido
+  const darkOverlay = scene.add.graphics();
+  darkOverlay.fillStyle(0x000000, 0.7);
+  darkOverlay.fillRect(0, 0, cameraWidth * 2, cameraHeight * 2); // Dimensão maior para cobrir todo o mapa
+  darkOverlay.setScrollFactor(0);
+  darkOverlay.setDepth(9000);
+  tutorialElements.push(darkOverlay);
+  
+  // Criar painel do tutorial
+  const panelWidth = Math.min(550, cameraWidth * 0.8);
+  const panelHeight = Math.min(300, cameraHeight * 0.7);
+  const panelX = cameraWidth / 2 - panelWidth / 2;
+  const panelY = cameraHeight / 2 - panelHeight / 2;
+  
+  const panel = scene.add.graphics();
+  panel.fillStyle(0x333366, 0.95);
+  panel.fillRoundedRect(panelX, panelY, panelWidth, panelHeight, 15);
+  panel.lineStyle(4, 0xffffff, 1);
+  panel.strokeRoundedRect(panelX, panelY, panelWidth, panelHeight, 15);
+  panel.setScrollFactor(0);
+  panel.setDepth(9001);
+  tutorialElements.push(panel);
+  
+  // Adicionar título do slide
+  const titleText = scene.add.text(
+    cameraWidth / 2, 
+    panelY + 40, 
+    tutorialContent[0].title,
+    {
+      fontFamily: 'Arial',
+      fontSize: '28px',
+      color: '#ffffff',
+      fontStyle: 'bold',
+      align: 'center'
+    }
+  );
+  titleText.setOrigin(0.5);
+  titleText.setScrollFactor(0);
+  titleText.setDepth(9002);
+  tutorialElements.push(titleText);
+  
+  // Adicionar conteúdo do slide
+  const contentText = scene.add.text(
+    cameraWidth / 2, 
+    cameraHeight / 2, 
+    tutorialContent[0].text,
+    {
+      fontFamily: 'Arial',
+      fontSize: '18px',
+      color: '#ffffff',
+      align: 'center',
+      lineSpacing: 10
+    }
+  );
+  contentText.setOrigin(0.5, 0.5);
+  contentText.setScrollFactor(0);
+  contentText.setDepth(9002);
+  tutorialElements.push(contentText);
+  
+  // Opcionalmente, pode adicionar imagem ilustrativa
+  if (scene.textures.exists(tutorialContent[0].image)) {
+    const image = scene.add.image(cameraWidth / 2, cameraHeight / 2 - 40, tutorialContent[0].image);
+    image.setScale(0.5); // Ajuste conforme necessário
+    image.setScrollFactor(0);
+    image.setDepth(9002);
+    tutorialElements.push(image);
+  }
+  
+  // Indicador de slides (exemplo: "1/5")
+  const slideIndicator = scene.add.text(
+    cameraWidth / 2,
+    panelY + panelHeight - 30,
+    `1/${tutorialContent.length}`,
+    {
+      fontFamily: 'Arial',
+      fontSize: '16px',
+      color: '#ffffff'
+    }
+  );
+  slideIndicator.setOrigin(0.5);
+  slideIndicator.setScrollFactor(0);
+  slideIndicator.setDepth(9002);
+  tutorialElements.push(slideIndicator);
+  
+  // Botão Anterior
+  const prevButton = scene.add.text(
+    panelX + 80,
+    panelY + panelHeight - 50,
+    "< Anterior",
+    {
+      fontFamily: 'Arial',
+      fontSize: '18px',
+      color: '#ffffff',
+      backgroundColor: '#4a6eb5',
+      padding: { left: 15, right: 15, top: 8, bottom: 8 }
+    }
+  );
+  prevButton.setOrigin(0.5);
+  prevButton.setScrollFactor(0);
+  prevButton.setDepth(9003);
+  prevButton.setInteractive({ useHandCursor: true });
+  prevButton.on('pointerover', () => {
+    prevButton.setStyle({ backgroundColor: '#5a7ec5' });
+  });
+  prevButton.on('pointerout', () => {
+    prevButton.setStyle({ backgroundColor: '#4a6eb5' });
+  });
+  prevButton.on('pointerdown', () => {
+    navigateTutorial(scene, tutorialContent, -1);
+  });
+  prevButton.setVisible(false); // Inicialmente oculto no primeiro slide
+  tutorialElements.push(prevButton);
+  
+  // Botão Próximo
+  const nextButton = scene.add.text(
+    panelX + panelWidth - 80,
+    panelY + panelHeight - 50,
+    "Próximo >",
+    {
+      fontFamily: 'Arial',
+      fontSize: '18px',
+      color: '#ffffff',
+      backgroundColor: '#4a6eb5',
+      padding: { left: 15, right: 15, top: 8, bottom: 8 }
+    }
+  );
+  nextButton.setOrigin(0.5);
+  nextButton.setScrollFactor(0);
+  nextButton.setDepth(9003);
+  nextButton.setInteractive({ useHandCursor: true });
+  nextButton.on('pointerover', () => {
+    nextButton.setStyle({ backgroundColor: '#5a7ec5' });
+  });
+  nextButton.on('pointerout', () => {
+    nextButton.setStyle({ backgroundColor: '#4a6eb5' });
+  });
+  nextButton.on('pointerdown', () => {
+    navigateTutorial(scene, tutorialContent, 1);
+  });
+  tutorialElements.push(nextButton);
+  
+  // Botão Pular/Fechar
+  const closeButton = scene.add.text(
+    panelX + panelWidth - 20,
+    panelY + 20,
+    "X",
+    {
+      fontFamily: 'Arial',
+      fontSize: '24px',
+      color: '#ffffff',
+      padding: { left: 10, right: 10, top: 5, bottom: 5 }
+    }
+  );
+  closeButton.setOrigin(0.5);
+  closeButton.setScrollFactor(0);
+  closeButton.setDepth(9003);
+  closeButton.setInteractive({ useHandCursor: true });
+  closeButton.on('pointerover', () => {
+    closeButton.setStyle({ color: '#ff4444' });
+  });
+  closeButton.on('pointerout', () => {
+    closeButton.setStyle({ color: '#ffffff' });
+  });
+  closeButton.on('pointerdown', () => {
+    closeTutorial(scene);
+  });
+  tutorialElements.push(closeButton);
+  
+  // Adicionar teclas de navegação para passar os slides
+  const leftKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+  leftKey.on('down', () => {
+    if (tutorialActive) navigateTutorial(scene, tutorialContent, -1);
+  });
+  
+  const rightKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+  rightKey.on('down', () => {
+    if (tutorialActive) navigateTutorial(scene, tutorialContent, 1);
+  });
+  
+  const escKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+  escKey.on('down', () => {
+    if (tutorialActive) closeTutorial(scene);
+  });
+  
+  // Pausar as animações e movimentos do jogador durante o tutorial
+  if (player) player.setVelocity(0);
+}
+
+// Função para navegar entre os slides do tutorial
+function navigateTutorial(scene, content, direction) {
+  const newSlide = tutorialSlide + direction;
+  
+  // Verificar limites
+  if (newSlide < 0 || newSlide >= content.length) return;
+  
+  tutorialSlide = newSlide;
+  
+  // Atualizar conteúdo dos elementos
+  const title = tutorialElements[2]; // Título é o 3º elemento (índice 2)
+  const text = tutorialElements[3]; // Texto é o 4º elemento (índice 3)
+  const slideIndicator = tutorialElements[4]; // Indicador de slides é o 5º elemento
+  const prevButton = tutorialElements[5]; // Botão anterior é o 6º elemento
+  const nextButton = tutorialElements[6]; // Botão próximo é o 7º elemento
+  
+  title.setText(content[tutorialSlide].title);
+  text.setText(content[tutorialSlide].text);
+  slideIndicator.setText(`${tutorialSlide + 1}/${content.length}`);
+  
+  // Mostrar/ocultar botão "Anterior" no primeiro slide
+  prevButton.setVisible(tutorialSlide > 0);
+  
+  // Mudar texto do botão "Próximo" para "Concluir" no último slide
+  if (tutorialSlide === content.length - 1) {
+    nextButton.setText("Concluir");
+    nextButton.removeAllListeners('pointerdown');
+    nextButton.on('pointerdown', () => {
+      closeTutorial(scene);
+    });
+  } else {
+    nextButton.setText("Próximo >");
+    nextButton.removeAllListeners('pointerdown');
+    nextButton.on('pointerdown', () => {
+      navigateTutorial(scene, content, 1);
+    });
+  }
+  
+  // Se tiver imagem, atualizar
+  if (tutorialElements.length > 8 && tutorialElements[8].setTexture) {
+    if (scene.textures.exists(content[tutorialSlide].image)) {
+      tutorialElements[8].setTexture(content[tutorialSlide].image);
+      tutorialElements[8].setVisible(true);
+    } else {
+      tutorialElements[8].setVisible(false);
+    }
+  }
+}
+
+// Função para fechar o tutorial
+function closeTutorial(scene) {
+  tutorialActive = false;
+  
+  // Remover todos os elementos do tutorial
+  tutorialElements.forEach(element => {
+    if (element && element.destroy) element.destroy();
+  });
+  
+  tutorialElements = [];
+  
+  // Remover ouvintes de teclas especiais (se necessário)
+  // scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+  // scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+  // scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 }
