@@ -1,10 +1,20 @@
-#game-container {
-    width: 800px;
-    height: 600px;
-    margin: 0 auto;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     transition: filter 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
@@ -13,64 +23,336 @@ body.fade-out {
     opacity: 0;
 }
 
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/fase1/background.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(3px) brightness(0.4);
+    z-index: -2;
+    animation: slowPulse 15s infinite alternate;
+}
 
-#character-select {
+/* Partículas */
+#particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.particle {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 700px;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.8); /* Fundo semi-transparente */
-    padding: 10px;
-    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) translateX(-10px);
+    }
+    100% {
+        transform: translateY(-10vh) translateX(10px);
+    }
+}
+
+/* Logo */
+#logo-container {
     text-align: center;
-    font-family: 'assets/fase1/pixolde', cursive; /* Fonte pixelada (certifique-se de tê-la) */
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.5s ease-out;
 }
 
-#character-select h2 {
-    color: white;
-    margin-bottom: 20px;
-    font-size: 2em; /* Tamanho da fonte maior */
+#logo-container.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.character-option {
-    display: inline-block;
-    margin: 10px;
-    vertical-align: top; /* Alinha os elementos ao topo para melhor disposição */
-}
-
-.character-option img {
-    width: 130px; /* Aumenta o tamanho da imagem */
-    height: 130px;
-    border-radius: 0; /* Remove bordas arredondadas */
+#logo-container h1 {
+    font-size: 48px;
+    color: #4CAF50;
+    text-shadow: 
+        0 0 10px rgba(76, 175, 80, 0.7),
+        0 0 20px rgba(76, 175, 80, 0.5);
+    letter-spacing: 4px;
     margin-bottom: 10px;
+}
+
+#logo-container h2 {
+    font-size: 18px;
+    color: #6c8fd6;
+    letter-spacing: 2px;
+}
+
+/* Contêiner de seleção de personagem */
+#character-select {
+    width: 90%;
+    max-width: 1200px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #6c8fd6;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 30px rgba(76, 175, 80, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-out;
+    position: relative;
+}
+
+#character-select.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#character-select::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 1px solid rgba(108, 143, 214, 0.5);
+    border-radius: 7px;
+    pointer-events: none;
+}
+
+/* Título */
+#character-select h2 {
+    font-size: 24px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: #4CAF50;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    letter-spacing: 2px;
+}
+
+/* Grid de personagens */
+.characters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+/* Cards de personagem */
+.character-card {
+    background: rgba(35, 35, 60, 0.8);
+    border: 2px solid #4a6eb5;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
     cursor: pointer;
-    image-rendering: pixelated; /* Garante a aparência pixelada da imagem */
 }
 
-.character-option button {
-    padding: 10px 20px;
-    background-color: #4CAF50; /* Cor de fundo */
-    color: white; /* Cor do texto */
-    border: 2px solid #3e8e41; /* Borda mais escura */
-    border-radius: 0; /* Remove bordas arredondadas */
+.character-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(74, 110, 181, 0.4);
+    border-color: #6c8fd6;
+}
+
+/* Cabeçalho do card */
+.character-header {
+    background: linear-gradient(to right, #4a6eb5, #2a4e95);
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #1a3e85;
+}
+
+.character-number {
+    background: #fff;
+    color: #000;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-right: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.character-header h3 {
+    font-size: 14px;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+/* Preview do personagem */
+.character-preview {
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1a1a36;
+    padding: 15px;
+}
+
+.character-preview img {
+    height: 150px;
+    width: auto;
+    object-fit: contain;
+    image-rendering: pixelated;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));
+}
+
+.character-card:hover .character-preview img {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
+}
+
+/* Estatísticas do personagem */
+.character-stats {
+    padding: 15px;
+    background: rgba(35, 35, 60, 0.6);
+}
+
+.stat {
+    margin-bottom: 10px;
+}
+
+.stat-name {
+    font-size: 10px;
+    color: #ccc;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.stat-bar {
+    height: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.stat-fill {
+    height: 100%;
+    background: linear-gradient(to right, #4CAF50, #8BC34A);
+    transition: width 0.3s ease;
+}
+
+/* Botão de seleção */
+.character-select-button {
+    padding: 12px;
+    background: #4CAF50;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.character-card:hover .character-select-button {
+    background: #5ecc62;
+}
+
+/* Botões de navegação */
+.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#back-button {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    border-radius: 5px;
     cursor: pointer;
-    font-family: 'assets/fase1/pixolde', cursive;
-    font-size: 1em;
-    image-rendering: pixelated; /* Garante a aparência pixelada do botão */
-    box-shadow: 2px 2px 0 #000; /* Sombra para efeito 2D */
-    display: block; /* Faz o botão ocupar a largura total do contêiner */
-    margin: 10px auto 0; /* Centraliza o botão e adiciona margem superior */
-    width: fit-content; /* Ajusta a largura do botão ao seu conteúdo */
+    transition: all 0.3s;
+    border: 2px solid #555;
 }
 
-.character-option button:hover {
-    background-color: #3e8e41; /* Cor de fundo ao passar o mouse */
-    border-color: #367c39;
+#back-button:hover {
+    background: #555;
+    transform: translateY(-2px);
 }
 
-.character-option button:active {
-    box-shadow: none; /* Remove a sombra ao clicar */
-    transform: translate(2px, 2px); /* Move o botão ligeiramente para simular o efeito 2D */
+/* Contêiner do jogo */
+#game-container {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5; /* Garantir que fique acima do fundo mas abaixo dos elementos de UI */
+}
 
+/* Garantir que o canvas do Phaser seja visível */
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Efeito de transição */
+#transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
+
+#transition-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Animações */
+@keyframes slowPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+.transition-in {
+    animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .characters-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    #logo-container h1 {
+        font-size: 32px;
+    }
+    
+    #logo-container h2 {
+        font-size: 14px;
+    }
+    
+    #character-select h2 {
+        font-size: 18px;
+    }
 }

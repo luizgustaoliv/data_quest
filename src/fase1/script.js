@@ -63,61 +63,47 @@ let tutorialActive = false;
 let tutorialSlide = 0;
 let tutorialElements = [];
 
-// Configuração do jogo Phaser
-const config = {
-  type: Phaser.AUTO,
-  width: window.innerWidth,
-  height: window.innerHeight,
-  parent: "game-container",
-  scale: {
-    mode: Phaser.Scale.RESIZE,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-  },
-  physics: {
-    default: "arcade",
-    arcade: {
-      gravity: { y: 0 },
-      debug: true, // Ativa o modo de depuração
+// Garanta que estas linhas estejam no início do seu script.js
+// para evitar a duplicação da configuração do jogo
+if (window.game) {
+  console.log("Jogo já inicializado. Usando a instância existente.");
+} else {
+  // Configuração do jogo Phaser
+  const config = {
+    type: Phaser.AUTO,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    parent: "game-container",
+    scale: {
+      mode: Phaser.Scale.RESIZE,
+      autoCenter: Phaser.Scale.CENTER_BOTH,
     },
-  },
-  scene: {
-    key: "main",
-    preload: preload,
-    create: createMain,
-    update: updateMain,
-  },
-};
+    physics: {
+      default: "arcade",
+      arcade: {
+        gravity: { y: 0 },
+        debug: false, // Mudar para false em produção
+      },
+    },
+    scene: {
+      key: "main",
+      preload: preload,
+      create: createMain,
+      update: updateMain,
+    }
+  };
 
-// Criação do jogo Phaser
-const game = new Phaser.Game(config);
+  // Criação do jogo Phaser
+  window.game = new Phaser.Game(config);
+}
 
 // Função para iniciar o jogo com o personagem selecionado
 function startGame(character) {
+  // Essa função agora está sendo substituída pela versão no arquivo HTML
+  // Mantemos uma versão básica aqui por compatibilidade
   selectedCharacter = character;
   localStorage.setItem("currentCharacter", character);
-  console.log("Personagem selecionado e salvo:", selectedCharacter);
-  document.getElementById("character-select").style.display = "none";
-  
-  // Adicionar estas linhas para esconder o contador de keycards durante a seleção
-  document.getElementById('keycard-container').style.visibility = 'hidden';
-  document.getElementById('key-container').style.visibility = 'hidden';
-  document.getElementById('game-container').style.display = "block";
-  
-  game.scene.start("main");
-  
-  // Mostrar o contador de keycards depois do jogo iniciar
-  setTimeout(() => {
-    document.getElementById('keycard-container').style.visibility = 'visible';
-    document.getElementById('key-container').style.visibility = 'visible';
-    
-    // Iniciar o tutorial após um pequeno delay para garantir que a cena principal foi carregada
-    setTimeout(() => {
-      const mainScene = game.scene.getScene('main');
-      if (mainScene) {
-        showTutorial(mainScene);
-      }
-    }, 500);
-  }, 500);
+  console.log("Personagem selecionado e salvo (função original):", selectedCharacter);
 }
 
 // Função para pré-carregar os assets do jogo

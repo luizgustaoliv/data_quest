@@ -1,158 +1,332 @@
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 100vh;
+* {
     margin: 0;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-
-@font-face {
-    font-family: 'Pixolde';
-    src: url('Pixolde.ttf') format('truetype');
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Pixolde', sans-serif;
-}
-
-
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 100vh; /* Ocupa toda a altura da tela */
-    margin: 0;
+    font-family: 'Press Start 2P', cursive;
+    background-color: #000;
+    color: #fff;
     overflow: hidden;
-    background-color: black;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 body::before {
     content: '';
     position: fixed;
     top: 0;
-    left: 50%; /* Move a borda esquerda para o meio da tela */
-    transform: translateX(-50%); /* Ajusta a posição para que o centro do elemento fique alinhado */
-    bottom: 0;
-    width: 100%; /* Mantém a largura desejada */
-    max-width: 100%;
-    background-image: url('../../assets/telafases/fundofases.png'); /* Substitua pela sua imagem */
-    background-repeat: no-repeat;
-    background-position: center;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/telafases/fundofases.png');
     background-size: cover;
-    filter: blur(2px);
+    background-position: center;
+    filter: blur(2px) brightness(0.5);
+    z-index: -2;
+    animation: slowPulse 10s infinite alternate;
+}
+
+/* Partículas */
+#particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: -1;
+    overflow: hidden;
 }
 
-@keyframes zoomBackgroundTransition {
+.particle {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float linear infinite;
+}
+
+@keyframes float {
     0% {
-        transform: translateX(-50%) scale(9.2);
-        transform-origin: 50% 50%;
-        opacity: 0;
+        transform: translateY(100vh) translateX(-10px);
     }
     100% {
-        transform: translateX(-50%) scale(1);
-        transform-origin: 50% 50%;
-        opacity: 1;
+        transform: translateY(-10vh) translateX(10px);
     }
 }
 
-/* Animação contínua de leve movimento e zoom */
-@keyframes backgroundFloat {
-    0% {
-        transform: translateX(-50%) scale(1);
-    }
-    50% {
-        transform: translateX(-50%) scale(1.05);
-    }
-    100% {
-        transform: translateX(-50%) scale(1);
-    }
+/* Logo */
+#logo-container {
+    text-align: center;
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.5s ease-out;
 }
 
-/* Aplica a animação inicial */
-body.transition-effect::before {
-    animation: zoomBackgroundTransition 1.5s forwards ease-in-out;
+#logo-container.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* Aplica a animação contínua APÓS a transição */
-body.floating-effect::before {
-    animation: backgroundFloat 6s infinite alternate ease-in-out;
+#game-logo {
+    max-width: 400px;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
 }
 
+/* Contêiner principal */
 #fase-container {
-    width: 60%;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 20px;
+    width: 90%;
+    max-width: 1200px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #6c8fd6;
     border-radius: 10px;
-    color: white;
+    padding: 30px;
+    box-shadow: 0 0 30px rgba(76, 175, 80, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-out;
+    position: relative;
 }
 
+#fase-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#fase-container::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 1px solid rgba(108, 143, 214, 0.5);
+    border-radius: 7px;
+    pointer-events: none;
+}
+
+/* Título */
 h1 {
-    margin-bottom: 20px;
-    image-rendering: pixelated;
-    font-family: 'Pixolde', cursive;
+    font-size: 28px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: #4CAF50;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    letter-spacing: 2px;
 }
 
+/* Grid de fases */
 .botoes-fase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+/* Cards de fase */
+.fase-card {
+    background: rgba(35, 35, 60, 0.8);
+    border: 2px solid #4a6eb5;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.fase-card:not(.locked):hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(74, 110, 181, 0.4);
+    border-color: #6c8fd6;
+}
+
+.fase-card.locked {
+    filter: grayscale(60%);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Cabeçalho do card */
+.fase-header {
+    background: linear-gradient(to right, #4a6eb5, #2a4e95);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #1a3e85;
+}
+
+.fase-number {
+    background: #fff;
+    color: #000;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-right: 15px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.fase-header h2 {
+    font-size: 16px;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+/* Preview da fase */
+.fase-preview {
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+}
+
+.fase-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.fase-card:not(.locked):hover .fase-preview img {
+    transform: scale(1.05);
+}
+
+/* Overlay de bloqueio */
+.lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cadeado {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    animation: pulse 2s infinite alternate;
+}
+
+/* Descrição da fase */
+.fase-description {
+    padding: 15px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.fase-description p {
+    font-size: 10px;
+    line-height: 1.6;
+    color: #ccc;
+}
+
+/* Status da fase */
+.fase-status {
+    padding: 10px;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.fase-status.available {
+    background: #4CAF50;
+}
+
+.fase-status.locked {
+    background: #FF5252;
+}
+
+/* Botões de navegação */
+.navigation-buttons {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    image-rendering: pixelated;
-    font-family: 'Pixolde', cursive;
+    margin-top: 20px;
 }
 
-.fase-container {
-    position: relative;
-    display: inline-block;
-}
-
-/* Deixa o botão bloqueado com efeito de transparência */
-.fase-container.bloqueada .fase {
-    pointer-events: none; /* Impede o clique */
-    opacity: 0.5; /* Deixa o botão mais apagado */
-}
-
-/* Cadeado sobre o botão bloqueado */
-.cadeado {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px; /* Ajuste o tamanho do cadeado */
-    height: 70px;
-    image-rendering: pixelated; /* Mantém a aparência pixelada */
-    pointer-events: none; /* O cadeado não interfere no clique */
-}
-
-
-.fase {
-     font-family: 'Press Start 2P', cursive; /* Fonte pixelada */
-    background-color: #c90000;
+#back-button {
+    background: #333;
     color: white;
-        padding: 15px 30px;
-        font-size: 16px;
-        border: 4px solid white;
-        text-transform: uppercase;
-        cursor: pointer;
-        box-shadow: 4px 4px 0px black; /* Efeito 3D pixelado */
-        transition: all 0.1s ease-in-out;
-        image-rendering: pixelated; /* Mantém a aparência pixelada */
-    }
-
-.fase:hover {
-    background-color: #5b0303a5;
-    transform: translate(-2px, -2px); /* Dá um efeito de movimento */
-    box-shadow: 6px 6px 0px black;
+    border: none;
+    padding: 15px 30px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid #555;
 }
 
-.fase:active{
-transform: translate(2px, 2px); /* Efeito de pressionado */
-    box-shadow: 2px 2px 0px black;
+#back-button:hover {
+    background: #555;
+    transform: translateY(-2px);
+}
+
+/* Efeito de transição */
+#transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
+
+#transition-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Animações */
+@keyframes pulse {
+    0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5)); }
+    100% { transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)); }
+}
+
+@keyframes slowPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+.transition-in {
+    animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .botoes-fase {
+        grid-template-columns: 1fr;
+    }
+    
+    #game-logo {
+        max-width: 80%;
+    }
+    
+    h1 {
+        font-size: 20px;
+    }
 }

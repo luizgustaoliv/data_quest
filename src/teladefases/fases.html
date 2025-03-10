@@ -3,68 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data quest</title>
+    <title>Data Quest - Seleção de Fases</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="fase.css">
 </head>
 <body>
+    <!-- Partículas de fundo -->
+    <div id="particles-container"></div>
+    
+    <div id="logo-container">
+        <h2>Data Quest</h2>
+    </div>
+
     <div id="fase-container">
-        <h1>Escolha uma Fase</h1>
+        <h1>SELECIONE UMA FASE</h1>
+        
         <div class="botoes-fase">
-            <div class="fase-container">
-                <a href="../fase1/fase1.html">
-                    <button class="fase">Fase 1</button>
-                </a>
+            <div class="fase-card" onclick="selecionarFase(1)">
+                <div class="fase-header">
+                    <span class="fase-number">1</span>
+                    <h2>Escola Invadida</h2>
+                </div>
+                <div class="fase-preview">
+                    <img src="../../assets/telafases/fundofases.png" alt="Fase 1">
+                </div>
+                <div class="fase-description">
+                    <p>Ajude os professores a recuperar o controle e proteger os dados dos alunos.</p>
+                </div>
+                <div class="fase-status available">
+                    <span class="status-text">DISPONÍVEL</span>
+                </div>
             </div>
             
-            <div class="fase-container bloqueada">
-                <button class="fase">Fase 2</button>
-                <img src="../../assets/telafases/cadeado.png" class="cadeado" alt="Cadeado">
+            <div class="fase-card locked">
+                <div class="fase-header">
+                    <span class="fase-number">2</span>
+                    <h2>Biblioteca</h2>
+                </div>
+                <div class="fase-preview">
+                    <img src="../../assets/telafases/bibliotecalogo.png" alt="Fase 2">
+                    <div class="lock-overlay">
+                        <img src="../../assets/telafases/cadeado.png" class="cadeado" alt="Bloqueado">
+                    </div>
+                </div>
+                <div class="fase-description">
+                    <p>Complete a Fase 1 para desbloquear.</p>
+                </div>
+                <div class="fase-status locked">
+                    <span class="status-text">BLOQUEADA</span>
+                </div>
             </div>
-    
-            <div class="fase-container bloqueada">
-                <button class="fase">Fase 3</button>
-                <img src="../../assets/telafases/cadeado.png" class="cadeado" alt="Cadeado">
+            
+            <div class="fase-card locked">
+                <div class="fase-header">
+                    <span class="fase-number">3</span>
+                    <h2>Servidor Central</h2>
+                </div>
+                <div class="fase-preview">
+                    <img src="../../assets/telafases/datacenter.webp" alt="Fase 3">
+                    <div class="lock-overlay">
+                        <img src="../../assets/telafases/cadeado.png" class="cadeado" alt="Bloqueado">
+                    </div>
+                </div>
+                <div class="fase-description">
+                    <p>Complete a Fase 2 para desbloquear.</p>
+                </div>
+                <div class="fase-status locked">
+                    <span class="status-text">BLOQUEADA</span>
+                </div>
             </div>
-    
-            <div class="fase-container bloqueada">
-                <button class="fase">Fase 4</button>
-                <img src="../../assets/telafases/cadeado.png" class="cadeado" alt="Cadeado">
-            </div>
-    
-            <div class="fase-container bloqueada">
-                <button class="fase">Fase 5</button>
-                <img src="../../assets/telafases/cadeado.png" class="cadeado" alt="Cadeado">
-            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button id="back-button" onclick="voltarMenu()">VOLTAR</button>
         </div>
     </div>
     
+    <!-- Efeito de transição para telas -->
+    <div id="transition-overlay"></div>
 
     <script>
-
-window.onload = function() {
-    document.body.classList.add("transition-effect"); // Inicia a animação inicial
-
-    setTimeout(() => {
-        document.body.classList.add("floating-effect"); // Ativa o movimento suave após a transição
-    }, 1500); // 1.5s = tempo da animação `zoomBackgroundTransition`
-};
-
-function selecionarFase(fase) {
-    document.body.classList.add("transition-effect"); // Ativa o efeito antes de sair
-
-    setTimeout(() => {
-        window.location.href = "Pages/Fases/fase" + fase + "/fase" + fase + ".html"; // Redireciona após a animação
-    }, 2500); // Tempo igual à duração da animação no CSS (2.5s)
-}
-
-        function selecionarFase(fase) {
-            alert("Você selecionou a Fase " + fase);
-            // Aqui você pode redirecionar para a página da fase
-            // window.location.href = "fase" + fase + ".html";
-        }
-
+    window.onload = function() {
+        document.body.classList.add("transition-in");
+        createParticles();
         
+        // Aparecer elementos com delay
+        setTimeout(() => {
+            document.getElementById('logo-container').classList.add('visible');
+        }, 500);
+        
+        setTimeout(() => {
+            document.getElementById('fase-container').classList.add('visible');
+        }, 1000);
+    };
+
+    function selecionarFase(fase) {
+        // Apenas a fase 1 está disponível
+        if (fase === 1) {
+            document.getElementById('transition-overlay').classList.add('active');
+            
+            setTimeout(() => {
+                window.location.href = "../fase1/fase1.html";
+            }, 1000);
+        }
+    }
+    
+    function voltarMenu() {
+        document.getElementById('transition-overlay').classList.add('active');
+        
+        setTimeout(() => {
+            window.location.href = "../../inicial.html";
+        }, 1000);
+    }
+    
+    // Sistema de partículas simples
+    function createParticles() {
+        const container = document.getElementById('particles-container');
+        const particleCount = 50;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Posição aleatória
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            
+            // Tamanho aleatório
+            const size = Math.random() * 3 + 1;
+            
+            // Velocidade aleatória
+            const speed = Math.random() * 20 + 10;
+            
+            particle.style.left = `${posX}%`;
+            particle.style.top = `${posY}%`;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.animationDuration = `${speed}s`;
+            
+            container.appendChild(particle);
+        }
+    }
     </script>
 </body>
 </html>
