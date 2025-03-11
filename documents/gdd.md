@@ -326,7 +326,7 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 *Descreva aqui as regras do seu jogo: objetivos/desafios, meios para se conseguir alcançar*
 
 #### Objetivo geral do jogo:
- - O jogador deve conseguir ultrapassar as fases, concluindo as tarefas de cada uma para que no final ele liberte a escola da invasão hacker.
+ - O jogador precisa superar cada fase completando as tarefas específicas para progredir na história. Seu objetivo final é libertar a escola da invasão hacker.
 
 #### Objetivos/Desafios da **Fase 1**:
  - O jogador deverá interagir com os professores e responder às perguntas com base nos conhecimentos adquiridos anteriormente ao interagir com o faxineiro no início da fase. Para cada resposta correta, ele receberá um keycard. Ao coletar quatro keycards, uma sala especial será desbloqueada, onde encontrará uma chave. Essa chave será utilizada no elevador para acessar a próxima fase.
