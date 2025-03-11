@@ -342,6 +342,9 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
  - Use a tecla **"E"** para interagir com os NPCs.
  - Na primeira fase você poderá interagir com o NPC do faxineiro, que dará um contexto geral da situação da fase ao personagem e com os NPCs dos professores robôs, que deverão ter seus sistemas reiniciados através de um minigame de perguntas e respostas. 
 
+#### Botão de "Missões":
+ - Durante todas as fases, o jogador terá acesso a um botão "Missões", localizado no canto superior direito da tela. Ao clicar nele, poderá visualizar os objetivos específicos da fase atual, garantindo que saiba quais tarefas precisa concluir para avançar no jogo. Isso ajudará na organização das ações e no acompanhamento do progresso rumo à libertação da escola da invasão hacker.
+
 #### Mecânicas da primeira fase:
  - O jogador deve interagir com o NPC do faxineiro para entender o contexto da fase.
  - Após a interação, deverá abrir a porta da sala e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
