@@ -336,7 +336,7 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
  - O jogador deverá interagir com os professores e responder às perguntas com base nos conhecimentos adquiridos anteriormente ao interagir com o faxineiro no início da fase. Para cada resposta correta, ele receberá um keycard. Ao coletar quatro keycards, uma sala especial será desbloqueada, onde encontrará uma chave. Essa chave será utilizada no elevador para acessar a próxima fase.
  - O jogador só irá conseguir um keycard caso ele responda certo duas de três perguntas feitas pelos NPCs.
  - Caso o jogador erre duas perguntas ele terá a chance de respondê-las novamente, até acertar no mínimo duas.
- - Ao conseguir 4 keycards a sala com a chave deve será liberada.
+ - Ao conseguir 4 keycards a sala com a chave deverá ser liberada.
  - Para acessar a próxima fase o jogador deve se aproximar da chave e após isso ir até o elevador, automaticamente a transição entre fases ocorrerá.
 
 ## 3.7. Mecânicas do jogo (sprint 3)
