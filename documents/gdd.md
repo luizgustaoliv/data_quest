@@ -92,7 +92,7 @@ Abaixo está todos os requisitos que trabalhamos na sprint 1 e 2.
 | 1 | Controle do personagem | O jogador pode mover o personagem utilizando as teclas WASD para movimentação. |
 | 2 | Interação com NPCs | Durante a exploração, o jogador pode conversar com personagens do jogo para obter informações e avançar na narrativa. |
 | 3 | Combate baseado em perguntas e respostas sobre LGPD | Durante os confrontos, o jogador precisará responder corretamente a perguntas sobre a Lei Geral de Proteção de Dados (LGPD) para vencer os desafios. |
-| 4 | Divisão do jogo em fases | O jogo será dividido em cinco fases representando os andares de uma escola, totalizando cinco andares com desafios progressivos. |
+| 4 | Divisão do jogo em fases | O jogo será dividido em três fases representando os andares de uma escola, totalizando três andares com desafios progressivos. |
 | 5 | História baseada na proteção de dados dentro de uma escola | O jogador assume o papel de um estudante que deve proteger os dados da escola contra ameaças cibernéticas, aprendendo sobre os conceitos da LGPD. |
 | 6 | Progressão baseada na complexidade das perguntas e desafios | À medida que o jogador avança, as perguntas abordam conceitos mais aprofundados da LGPD. |
 | 7 | Aprimoramento de personagem | Implementação de melhorias na jogabilidade e características do personagem. |
@@ -125,7 +125,7 @@ De acordo com o nosso parceiro, nosso público abrange alunos, com idades entre 
 
 ## 2.1. Objetivos do Jogo (sprint 2)
 
-O jogo está distribuído em 5 fases. O objetivo final é levar o protagonista até o Data Center da escola, localizado no quinto andar, para impedir que um grupo de hackers faça o upload dos dados de todos. Para avançar, cada fase contém 4 keycards espalhados pelo mapa, protegidos por robôs inimigos. O jogador precisa coletar todos os keycards para desbloquear a última sala da fase, onde encontrará a chave que permite o acesso à próxima fase. Durante essa jornada, será necessário enfrentar batalhas contra inimigos e superar diversos obstáculos enquanto explora a escola.
+O jogo está distribuído em 3 fases. O objetivo final é levar o protagonista até o Data Center da escola, localizado no quinto andar, para impedir que um grupo de hackers faça o upload dos dados de todos. Para avançar, cada fase contém 4 keycards espalhados pelo mapa, protegidos por robôs inimigos. O jogador precisa coletar todos os keycards para desbloquear a última sala da fase, onde encontrará a chave que permite o acesso à próxima fase. Durante essa jornada, será necessário enfrentar batalhas contra inimigos e superar diversos obstáculos enquanto explora a escola.
 
 ## 2.2. Características do Jogo (sprint 2)
 
@@ -208,7 +208,7 @@ Diversidade dentro da realidade do Brasil e impacto esperado: A escola Bitshine 
 
 ### 3.3.1. Locações Principais e/ou Mapas (sprints 2 e 3)
 
-O cenário do jogo se passa na escola Bitshine, que foi invadida e hackeada por um criminoso digital. A narrativa se desenrola ao longo de 5 andares diferentes da escola, cada um representando uma fase única. Conforme os jogadores avançam, eles exploram diferentes ambientes como salas de aula trancadas, corredores bloqueados por segurança digital e outras áreas dentro do prédio.
+O cenário do jogo se passa na escola Bitshine, que foi invadida e hackeada por um criminoso digital. A narrativa se desenrola ao longo de 3 andares diferentes da escola, cada um representando uma fase única. Conforme os jogadores avançam, eles exploram diferentes ambientes como salas de aula trancadas, corredores bloqueados por segurança digital e outras áreas dentro do prédio.
 
 <br>
 Fotos da escola Bitshine por fora:
@@ -232,7 +232,7 @@ Mapa da segunda fase do jogo, um labirinto situado no segundo andar, onde fica a
 
 ### 3.3.2. Navegação pelo mundo (sprints 2 e 3)
 
-- As 5 fases do jogo vão se passar nos 5 andares diferentes da escola.
+- As 3 fases do jogo vão se passar nos 3 andares diferentes da escola.
 - O protagonista explorará cada andar, entrando em salas diferentes tentando encontrar objetos colecionáveis que ajudarão na progressão de cada fase.
 - Cada andar terá um key-card e a coleção desses cards é essencial para a progressão no jogo.
 - Uma fase se encerra quando o protagonista encontrar a chave contida no andar atual e voltar para o elevador.
@@ -366,7 +366,7 @@ A primeira versão do jogo foi desenvolvida com foco na implementação das mec�
 
 Em termos de código, foi implementado um sistema de movimentação utilizando as teclas WASD, permitindo que o jogador navegue pelo ambiente do jogo de forma fluida. Além disso, foi criada a mecânica de interação com personagens não jogáveis (NPCs), possibilitando diálogos que fornecem informações e desafios ao jogador. O combate foi desenvolvido com um modelo inovador de perguntas e respostas, no qual o progresso depende do conhecimento do jogador sobre LGPD. Caso acerte as respostas, o jogador avança; caso contrário, perde pontos ou enfrenta consequências dentro do jogo.
 
-A estrutura das fases foi pensada para representar os cinco andares de uma escola, onde cada fase corresponde a um andar. Isso cria uma progressão lógica e imersiva, incentivando o jogador a explorar novos desafios conforme avança. Essa abordagem contribui para a ambientação e narrativa do jogo, tornando a experiência mais envolvente.
+A estrutura das fases foi pensada para representar os três andares de uma escola, onde cada fase corresponde a um andar. Isso cria uma progressão lógica e imersiva, incentivando o jogador a explorar novos desafios conforme avança. Essa abordagem contribui para a ambientação e narrativa do jogo, tornando a experiência mais envolvente.
 
 ### Ilustrações e Prints de Tela
 <p align="center">
