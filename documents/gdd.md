@@ -325,17 +325,35 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 *Descreva aqui as regras do seu jogo: objetivos/desafios, meios para se conseguir alcançar*
 
-*Ex. O jogador deve pilotar o carro e conseguir terminar a corrida dentro de um minuto sem bater em nenhum obstáculo.*
+#### Objetivo geral do jogo:
+ - O jogador deve conseguir ultrapassar as fases, concluindo as tarefas de cada uma para que no final ele liberte a escola da invasão hacker.
 
-*Ex. O jogador deve concluir a fase dentro do tempo, para obter uma estrela. Se além disso ele coletar todas as moedas, ganha mais uma estrela. E se além disso ele coletar os três medalhões espalhados, ganha mais uma estrela, totalizando três. Ao final do jogo, obtendo três estrelas em todas as fases, desbloqueia o mundo secreto.*  
+#### Objetivos/Desafios da **Fase 1**:
+ - O jogador deverá interagir com os professores e responder às perguntas com base nos conhecimentos adquiridos anteriormente ao interagir com o faxineiro no início da fase. Para cada resposta correta, ele receberá um keycard. Ao coletar quatro keycards, uma sala especial será desbloqueada, onde encontrará uma chave. Essa chave será utilizada no elevador para acessar a próxima fase.
 
 ## 3.7. Mecânicas do jogo (sprint 3)
 
 *Descreva aqui as formas de controle e interação que o jogador tem sobre o jogo: quais os comandos disponíveis, quais combinações de comandos, e quais as ações consequentes desses comandos. Utilize listas ou tabelas para organizar esta seção.*
 
-*Ex. Em um jogo de plataforma 2D para desktop, o jogador pode usar as teclas WASD para mecânicas de andar, mirar para cima, agachar, e as teclas JKL para atacar, correr, arremesar etc.*
+#### Teclas de movimentação: **W A S D** ou **Setas do Teclado**:
+ - **W** ou **Seta para cima**: Movimentação para cima; **S** ou **Seta para baixo**: Movimentação para baixo; **A** ou **Seta para esquerda**: Movimentação para esquerda; **D** ou **Seta para direita**: Movimentação para direita.
 
-*Ex. Em um jogo de puzzle para celular, o jogador pode tocar e arrastar sobre uma peça para movê-la sobre o tabuleiro, ou fazer um toque simples para rotacioná-la*
+#### Tecla de interação com o cenário (portas e objetos): **"Espaço"**: 
+ - Use a tecla **"Espaço"** para abrir portas, coletar itens e para demais interações com o cenário.
+ - Na primeira fase você deverá user a tecla "espaço" para abrir a porta da sala de faxina, para poder ter acesso ao restante do mapa.
+
+#### Tecla de interação com NPCs: **"E"**:
+ - Use a tecla **"E"** para interagir com os NPCs.
+ - Na primeira fase você poderá interagir com o NPC do faxineiro, que dará um contexto geral da situação da fase ao personagem e com os NPCs dos professores robôs, que deverão ter seus sistemas reiniciados através de um minigame de perguntas e respostas. 
+
+#### Mecânicas da primeira fase:
+ - O jogador deve interagir com o NPC do faxineiro para entender o contexto da fase.
+ - Após a interação, deverá abrir a porta da sala e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
+ - Ao encontrar os professores, deverá interagir com eles e participar de um minigame de perguntas e respostas para que possa "reiniciar seus sistemas" e caso seja feito com sucesso, o jogador ganhará 1 keycard.
+ - O jogador deve ajudar os 4 professores para ganhar o total de 4 keycards, para que ele possa acessar uma sala.
+ - Ao acessar a sala haverá uma chave, e ao se aproximar o jogador irá coletar e deverá ir até o elevador, que dará acesso a fase 2.
+
+   
 
 ## 3.8. Implementação Matemática de Animação/Movimento (sprint 4)
 
