@@ -278,7 +278,7 @@ Figura 7: Primeira concept da aprimoração do protagonista.
 Figura 8: Esboços dos designs aprimorados do protagonista.
 
 
-### 3.3.5. Trilha sonora (sprint 3)
+### 3.3.5. Trilha sonora (sprint 4)
 
 *Descreva a trilha sonora do jogo, indicando quais músicas serão utilizadas no mundo e nas fases. Utilize listas ou tabelas para organizar esta seção. Caso utilize material de terceiros em licença Creative Commons, não deixe de citar os autores/fontes.*
 
