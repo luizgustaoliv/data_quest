@@ -2174,10 +2174,12 @@ function updateMain() {
   }
 
   // Bloquear movimento durante diálogo OU minigame
-  if (dialogoIniciado || dialogoProfessorIniciado || dialogoProfessor2Iniciado || dialogoProfessor3Iniciado || dialogoProfessor4Iniciado || minigameActive) {
+  if (dialogoIniciado || dialogoProfessorIniciado || dialogoProfessor2Iniciado || dialogoProfessor3Iniciado || dialogoProfessor4Iniciado || minigameActive || helpButton.visible) {
+    player.setFrame(0);
     player.setVelocity(0);
     return;
   }
+
 
   // Verificar proximidade com a porta
   let distanceToDoor = Phaser.Math.Distance.Between(player.x, player.y, door1.x, door1.y);
