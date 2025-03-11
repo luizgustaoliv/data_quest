@@ -131,16 +131,16 @@ body.zoom-effect::before {
     color: white;
     padding: 15px;
     border-radius: 0px;
-    width: 600px;
-    height: auto;
+    width: 500px; /* Reduzido de 600px para 500px */
+    max-height: 90vh; /* Limita a altura máxima a 90% da altura da tela */
+    overflow-y: auto; /* Adiciona rolagem se o conteúdo for maior que a altura */
     text-align: center;
-    font-size: 26px;
+    font-size: 20px; /* Reduzido de 26px para 20px */
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
     font-family: 'Press Start 2P', cursive;
     border: 4px solid white;
     image-rendering: pixelated;
 }
-
 
 .popup-content {
     position: relative;
@@ -159,20 +159,21 @@ body.zoom-effect::before {
 }
 
 .popup h2 {
-    font-size: 16px;
-    margin-bottom: 10px;
+    font-size: 14px; /* Reduzido de 16px para 14px */
+    margin-bottom: 8px; /* Reduzido de 10px para 8px */
 }
 
 .popup p {
-    font-size: 16px;
+    font-size: 14px; /* Reduzido de 16px para 14px */
+    margin: 6px 0; /* Adicionado para reduzir espaçamento vertical */
 }
 
 /* Controles estilizados */
 .controls {
     display: flex;
     justify-content: center;
-    gap: 50px;
-    margin-top: 20px;
+    gap: 30px; /* Reduzido de 50px para 30px */
+    margin-top: 10px; /* Reduzido de 20px para 10px */
 }
 
 .wasd, .arrows {
@@ -183,24 +184,30 @@ body.zoom-effect::before {
 
 .row {
     display: flex;
-    gap: 5px;
+    gap: 3px; /* Reduzido de 5px para 3px */
     margin-top: 5px;
 }
 
 .key {
-    width: 60px;
-    height: 60px;
+    width: 45px; /* Reduzido de 60px para 45px */
+    height: 45px; /* Reduzido de 60px para 45px */
     display: flex;
     align-items: center;
     justify-content: center;
     background: gray;
-    border: 4px solid white;
-    font-size: 16px;
+    border: 3px solid white; /* Reduzido de 4px para 3px */
+    font-size: 14px; /* Reduzido de 16px para 14px */
     font-weight: bold;
     color: white;
     text-transform: uppercase;
     box-shadow: 4px 4px 0px black;
     image-rendering: pixelated;
+}
+
+/* Adicionando estilo apenas para a tecla espaço */
+#key-space {
+  width: 100px; /* Reduzido de 120px para 100px */
+  font-size: 12px; /* Reduzido de 14px para 12px */
 }
 
 /* Efeito de destaque para animação */
@@ -212,12 +219,22 @@ body.zoom-effect::before {
 
 /* Estilização da seção de interação */
 .interaction-section {
-    margin-top: 30px; /* Espaço entre os controles e a tecla "E" */
+    margin-top: 5px; /* Reduzido de 10px para 5px */
 }
 
 .interaction {
+    margin: 5px 0; /* Reduzido espaçamento */
+}
+
+/* Layout em colunas para aproveitar melhor o espaço horizontal */
+.interaction-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     margin-top: 10px;
+}
+
+.interaction-item {
+    text-align: center;
+    width: 45%; /* Cada item ocupa aproximadamente metade do espaço */
 }
 

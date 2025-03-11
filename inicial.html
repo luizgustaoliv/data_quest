@@ -42,11 +42,9 @@
       <div class="popup-content">
         <span class="close" onclick="fecharPopup()">&times;</span>
         <h2>Como Jogar</h2>
-        <p>
-          Use as setas ou 'W A S D' para mover e a tecla <b>E</b> para
-          interagir.
-        </p>
+        <p>Use as setas ou 'WASD' para mover</p>
 
+        <!-- Controles compactados -->
         <div class="controls">
           <div class="wasd">
             <div class="key" id="key-w">W</div>
@@ -67,12 +65,21 @@
           </div>
         </div>
 
-        <!-- Nova seção para "Como Interagir" -->
-        <div class="interaction-section">
-          <h2>Como Interagir</h2>
-          <p>Pressione <b>E</b> para interagir com objetos e NPCs.</p>
-          <div class="interaction">
-            <div class="key" id="key-e">E</div>
+        <!-- Seção de interação reorganizada em duas colunas lado a lado -->
+        <h2>Interações</h2>
+        <div class="interaction-container">
+          <div class="interaction-item">
+            <p>Pressione <b>E</b><br>para NPCs</p>
+            <div class="interaction">
+              <div class="key" id="key-e">E</div>
+            </div>
+          </div>
+          
+          <div class="interaction-item">
+            <p>Pressione <b>ESPAÇO</b><br>para portas</p>
+            <div class="interaction">
+              <div class="key" id="key-space">SPC</div>
+            </div>
           </div>
         </div>
       </div>

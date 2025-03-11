@@ -86,110 +86,66 @@
         <h2>SELECIONE SEU PERSONAGEM</h2>
         
         <div class="characters-grid">
-            <div class="character-card" onclick="startGame('player1')">
+            <div class="character-card">
                 <div class="character-header">
                     <span class="character-number">1</span>
-                    <h3>Hacker Ético</h3>
+                    <h3>Personagem 1</h3>
                 </div>
                 <div class="character-preview">
                     <img src="../../assets/personagem/personagem1Big.png" alt="Personagem 1">
                 </div>
-                <div class="character-stats">
-                    <div class="stat">
-                        <span class="stat-name">Força</span>
-                        <div class="stat-bar">
-                            <div class="stat-fill" style="width: 60%;"></div>
-                        </div>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-name">Agilidade</span>
-                        <div class="stat-bar">
-                            <div class="stat-fill" style="width: 80%;"></div>
-                        </div>
-                    </div>
+                <div class="player-name-container">
+                    <input type="text" class="player-name-input" placeholder="Digite seu nome" maxlength="15">
                 </div>
-                <div class="character-select-button">
+                <div class="character-select-button" onclick="startGameWithName('player1', this)">
                     <span>SELECIONAR</span>
                 </div>
             </div>
             
-            <div class="character-card" onclick="startGame('player2')">
+            <div class="character-card">
                 <div class="character-header">
                     <span class="character-number">2</span>
-                    <h3>Especialista em Dados</h3>
+                    <h3>Personagem 2</h3>
                 </div>
                 <div class="character-preview">
                     <img src="../../assets/personagem/personagem2Big.png" alt="Personagem 2">
                 </div>
-                <div class="character-stats">
-                    <div class="stat">
-                        <span class="stat-name">Força</span>
-                        <div class="stat-bar">
-                            <div class="stat-fill" style="width: 50%;"></div>
-                        </div>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-name">Agilidade</span>
-                        <div class="stat-bar">
-                            <div class="stat-fill" style="width: 90%;"></div>
-                        </div>
-                    </div>
+                <div class="player-name-container">
+                    <input type="text" class="player-name-input" placeholder="Digite seu nome" maxlength="15">
                 </div>
-                <div class="character-select-button">
+                <div class="character-select-button" onclick="startGameWithName('player2', this)">
                     <span>SELECIONAR</span>
                 </div>
             </div>
             
-            <div class="character-card" onclick="startGame('player3')">
+            <div class="character-card">
                 <div class="character-header">
                     <span class="character-number">3</span>
-                    <h3>Analista de Segurança</h3>
+                    <h3>Personagem 3</h3>
                 </div>
                 <div class="character-preview">
                     <img src="../../assets/personagem/personagem3Big.png" alt="Personagem 3">
                 </div>
-                <div class="character-stats">
-                    <div class="stat">
-                        <span class="stat-name">Força</span>
-                        <div class="stat-bar">
-                            <div class="stat-fill" style="width: 75%;"></div>
-                        </div>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-name">Agilidade</span>
-                        <div class="stat-bar">
-                            <div class="stat-fill" style="width: 65%;"></div>
-                        </div>
-                    </div>
+                <div class="player-name-container">
+                    <input type="text" class="player-name-input" placeholder="Digite seu nome" maxlength="15">
                 </div>
-                <div class="character-select-button">
+                <div class="character-select-button" onclick="startGameWithName('player3', this)">
                     <span>SELECIONAR</span>
                 </div>
             </div>
             
-            <div class="character-card" onclick="startGame('player4')">
+            <div class="character-card">
                 <div class="character-header">
                     <span class="character-number">4</span>
-                    <h3>Engenheira de Software</h3>
+                    <h3>Personagem 4</h3>
                 </div>
                 <div class="character-preview">
                     <img src="../../assets/personagem/personagem4Big.png" alt="Personagem 4">
                 </div>
-                <div class="character-stats">
-                    <div class="stat">
-                        <span class="stat-name">Força</span>
-                        <div class="stat-bar">
-                            <div class="stat-fill" style="width: 70%;"></div>
-                        </div>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-name">Agilidade</span>
-                        <div class="stat-bar">
-                            <div class="stat-fill" style="width: 70%;"></div>
-                        </div>
-                    </div>
+                <div class="player-name-container">
+                    <input type="text" class="player-name-input" placeholder="Digite seu nome" maxlength="15">
                 </div>
-                <div class="character-select-button">
+                <div class="character-select-button" onclick="startGameWithName('player4', this)">
                     <span>SELECIONAR</span>
                 </div>
             </div>
@@ -332,6 +288,170 @@
             console.error("Funções do jogo não foram carregadas corretamente! Verificar script.js");
             alert("Erro ao carregar o jogo. Por favor, recarregue a página.");
         }
+
+        // Nova função para iniciar o jogo com nome personalizado
+        function startGameWithName(character, buttonElement) {
+            // Encontrar o campo de entrada dentro do mesmo card
+            const card = buttonElement.closest('.character-card');
+            const nameInput = card.querySelector('.player-name-input');
+            const playerName = nameInput.value.trim() || "Jogador"; // Usa "Jogador" como padrão se vazio
+            
+            // Salvar o nome e o personagem selecionado
+            localStorage.setItem("playerName", playerName);
+            localStorage.setItem("currentCharacter", character);
+            console.log("Personagem selecionado:", character, "com nome:", playerName);
+            
+            // Continuar com o código original de startGame
+            document.getElementById('transition-overlay').classList.add('active');
+            
+            setTimeout(() => {
+                // Esconder elementos da seleção
+                document.getElementById("character-select").style.display = "none";
+                document.getElementById('logo-container').style.display = "none";
+                document.getElementById('particles-container').style.display = "none";
+                
+                // Mostrar o container do jogo
+                const gameContainer = document.getElementById('game-container');
+                gameContainer.style.display = "block";
+                
+                // Garantir que não haja jogo existente antes de criar um novo
+                if (window.game) {
+                    window.game.destroy(true);
+                }
+                
+                // Inicializar o jogo Phaser com configuração correta
+                window.game = new Phaser.Game({
+                    type: Phaser.AUTO,
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                    parent: 'game-container',
+                    scale: {
+                        mode: Phaser.Scale.RESIZE,
+                        autoCenter: Phaser.Scale.CENTER_BOTH,
+                    },
+                    physics: {
+                        default: "arcade",
+                        arcade: {
+                            gravity: { y: 0 },
+                            debug: false // Desativa debug para produção
+                        },
+                    },
+                    scene: {
+                        key: "main",
+                        preload: preload,
+                        create: createMain,
+                        update: updateMain,
+                    }
+                });
+                
+                // Mostrar os contadores após o jogo iniciar
+                setTimeout(() => {
+                    document.getElementById('keycard-container').style.visibility = 'visible';
+                    document.getElementById('key-container').style.visibility = 'visible';
+                }, 1000);
+                
+                // Remover a transição após iniciar o jogo
+                setTimeout(() => {
+                    document.getElementById('transition-overlay').classList.remove('active');
+                }, 1500);
+            }, 1000);
+        }
+
+        // Certificar-se que startGameWithName existe globalmente
+        window.startGameWithName = window.startGameWithName || function(character, buttonElement) {
+            // Encontrar o campo de entrada dentro do mesmo card
+            const card = buttonElement.closest('.character-card');
+            const nameInput = card.querySelector('.player-name-input');
+            const playerName = nameInput.value.trim() || "Jogador"; // Usa "Jogador" como padrão se vazio
+            
+            // Salvar o nome e o personagem selecionado
+            localStorage.setItem("playerName", playerName);
+            localStorage.setItem("currentCharacter", character);
+            console.log("Personagem selecionado:", character, "com nome:", playerName);
+            
+            // Continuar com o código original de startGame
+            document.getElementById('transition-overlay').classList.add('active');
+            
+            setTimeout(() => {
+                // Esconder elementos da seleção
+                document.getElementById("character-select").style.display = "none";
+                document.getElementById('logo-container').style.display = "none";
+                document.getElementById('particles-container').style.display = "none";
+                
+                // Mostrar o container do jogo
+                const gameContainer = document.getElementById('game-container');
+                gameContainer.style.display = "block";
+                
+                // Garantir que não haja jogo existente antes de criar um novo
+                if (window.game) {
+                    window.game.destroy(true);
+                }
+                
+                // Inicializar o jogo Phaser com configuração correta
+                window.game = new Phaser.Game({
+                    type: Phaser.AUTO,
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                    parent: 'game-container',
+                    scale: {
+                        mode: Phaser.Scale.RESIZE,
+                        autoCenter: Phaser.Scale.CENTER_BOTH,
+                    },
+                    physics: {
+                        default: "arcade",
+                        arcade: {
+                            gravity: { y: 0 },
+                            debug: false // Desativa debug para produção
+                        },
+                    },
+                    scene: {
+                        key: "main",
+                        preload: preload,
+                        create: createMain,
+                        update: updateMain,
+                    }
+                });
+                
+                // Mostrar os contadores após o jogo iniciar
+                setTimeout(() => {
+                    document.getElementById('keycard-container').style.visibility = 'visible';
+                    document.getElementById('key-container').style.visibility = 'visible';
+                }, 1000);
+                
+                // Remover a transição após iniciar o jogo
+                setTimeout(() => {
+                    document.getElementById('transition-overlay').classList.remove('active');
+                }, 1500);
+            }, 1000);
+        };
+
+        // Solução para permitir digitação das teclas WASD nos campos de entrada
+        document.addEventListener('DOMContentLoaded', function() {
+            // Seleciona todos os campos de entrada de nome
+            const nameInputs = document.querySelectorAll('.player-name-input');
+            
+            // Para cada campo de entrada encontrado
+            nameInputs.forEach(input => {
+                // Quando o campo ganha foco, desativa as teclas de movimento
+                input.addEventListener('focus', function() {
+                    // Salvar o estado atual das teclas (se estavam pressionadas)
+                    window.inputActive = true;
+                    console.log("Campo de entrada em foco - WASD disponível para digitação");
+                });
+                
+                // Quando o campo perde foco, reativa as teclas de movimento
+                input.addEventListener('blur', function() {
+                    window.inputActive = false;
+                    console.log("Campo de entrada perdeu foco - WASD usado para movimento");
+                });
+                
+                // Para cada tecla pressionada no campo de entrada
+                input.addEventListener('keydown', function(e) {
+                    // Impedir que o evento de teclado se propague para o jogo
+                    e.stopPropagation();
+                });
+            });
+        });
     </script>
 </body>
 </html>

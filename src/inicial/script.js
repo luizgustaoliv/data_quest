@@ -24,9 +24,27 @@ function animarTeclaE() {
   }, 500);
 }
 
+function animarTeclaInteracao() {
+  let interactionKeys = ["key-e", "key-space"];
+  let j = 0;
+  
+  setInterval(() => {
+    interactionKeys.forEach((key) => {
+      if (document.getElementById(key)) {
+        document.getElementById(key).classList.remove("animate");
+      }
+    });
+    if (document.getElementById(interactionKeys[j])) {
+      document.getElementById(interactionKeys[j]).classList.add("animate");
+    }
+    j = (j + 1) % interactionKeys.length;
+  }, 1500);
+}
+
 window.onload = function () {
   animarTeclas();
   animarTeclaE();
+  animarTeclaInteracao();
 };
 
 function fecharPopup() {

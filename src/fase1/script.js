@@ -63,6 +63,25 @@ let tutorialActive = false;
 let tutorialSlide = 0;
 let tutorialElements = [];
 
+// Adicionar às variáveis globais
+let playerName;
+
+// Adicionar função startGameWithName no início do arquivo, logo após as variáveis globais
+function startGameWithName(character, buttonElement) {
+  // Encontrar o campo de entrada dentro do mesmo card
+  const card = buttonElement.closest('.character-card');
+  const nameInput = card.querySelector('.player-name-input');
+  const playerName = nameInput.value.trim() || "Jogador"; // Usa "Jogador" como padrão se vazio
+  
+  // Salvar o nome e o personagem selecionado
+  localStorage.setItem("playerName", playerName);
+  localStorage.setItem("currentCharacter", character);
+  console.log("Personagem selecionado:", character, "com nome:", playerName);
+  
+  // Iniciar o jogo usando a função existente
+  startGame(character);
+}
+
 // Garanta que estas linhas estejam no início do seu script.js
 // para evitar a duplicação da configuração do jogo
 if (window.game) {
@@ -213,6 +232,7 @@ function create() {
 // Função para criar a cena principal do jogo
 function createMain() {
   selectedCharacter = localStorage.getItem("currentCharacter") || "player1";
+  playerName = localStorage.getItem("playerName") || "Jogador";
   
   // Create map and basic setup first
   map = this.make.tilemap({ key: "map" });
@@ -297,6 +317,29 @@ function createMain() {
   player.setOrigin(0.5, 1);
   player.body.setSize(27, 10);
   player.body.setOffset(18, 55);
+
+  // Após criar o jogador e antes de configurar a câmera, adicione o nome sobre o jogador
+  const nameTag = this.add.text(0, -32, playerName, { // Movido para cima (de -35 para -25)
+    fontFamily: 'Arial',
+    fontSize: '9px', // Diminuído ainda mais (de 9px para 7px)
+    color: '#ffffff',
+    stroke: '#000000',
+    strokeThickness: 2, // Reduzido de 3 para 2 para ficar mais proporcional
+    align: 'center'
+  });
+  nameTag.setOrigin(0.5, 0.5);
+  
+  // Criar um container que inclui o jogador e sua nameTag
+  const playerContainer = this.add.container(player.x, player.y);
+  playerContainer.add([nameTag]);
+  
+  // Atribuir o container ao player para fácil acesso
+  player.nameContainer = playerContainer;
+  
+  // Configurar a profundidade do container
+  playerContainer.setDepth(15); // DEPTHS.PLAYER + 1
+
+  // Não precisamos de event listener aqui, vamos fazer a atualização em updateMain
 
   // Criação do elevador
   elevator = this.physics.add.sprite(680, 363, "elevator", 0);
@@ -1303,6 +1346,7 @@ function createMain() {
   door1.setImmovable(true);
   door1.body.setSize(20, 10);
   door1.body.setOffset(6, 50);
+  this.doorCollider = this.physics.add.collider(player, door1, null, null, this);
 
   door2 = this.physics.add.sprite(1200, 345, "door2", 0);
   door2.setScale(1.2);
@@ -1706,6 +1750,160 @@ function createMain() {
 
   // Enable debug mode for collisions (optional, remove in production)
   this.physics.world.createDebugGraphic();
+
+  // Iniciar o tutorial de forma automática quando o jogo começar
+  this.time.delayedCall(1000, () => {
+    showTutorial(this);
+  }, [], this);
+
+  // SUBSTITUIR COMPLETAMENTE o código da criação da porta
+  if (!this.doorFixed) {
+    console.log("===== IMPLEMENTANDO CORREÇÃO DEFINITIVA DA PORTA =====");
+    
+    // 1. Destruir todas as portas existentes para ter certeza que não há duplicatas
+    this.children.getChildren().forEach(child => {
+      if (child.texture && child.texture.key === 'door1') {
+        console.log("Destruindo porta pré-existente");
+        if (child.body) child.body.enable = false;
+        child.destroy();
+      }
+    });
+
+    // 2. Verificar e remover qualquer colisor existente relacionado à porta
+    if (this.physics.world && this.physics.world.colliders) {
+      this.physics.world.colliders.getActive().forEach(collider => {
+        // Checar por colisores que possam estar relacionados à porta
+        if (collider.name && collider.name.includes('door')) {
+          console.log("Removendo colisor pré-existente da porta");
+          collider.destroy();
+        }
+      });
+    }
+
+    // 3. Criar animação da porta apenas uma vez
+    if (!this.anims.exists('doorOpeningFixed')) {
+      this.anims.create({
+        key: 'doorOpeningFixed',
+        frames: [
+          { key: 'door1', frame: 0 },
+          { key: 'door1', frame: 1 },
+          { key: 'door1', frame: 2 },
+          { key: 'door1', frame: 3 },
+          { key: 'door1', frame: 4 },
+        ],
+        frameRate: 6,
+        repeat: 0
+      });
+    }
+
+    // 4. Criar a porta com um nome exclusivo para facilitar referência
+    door1 = this.physics.add.sprite(80, 345, 'door1', 0);
+    door1.name = 'doorFixed';
+    door1.setScale(1.2);
+    door1.setOrigin(0.5, 0.5);
+    door1.setImmovable(true);
+    door1.body.setSize(20, 10);
+    door1.body.setOffset(6, 50);
+    door1.setDepth(DEPTHS.DOOR);
+
+    // 5. Criar o colisor com um nome específico e armazenar a referência
+    this.doorColliderFixed = this.physics.add.collider(
+      player, 
+      door1, 
+      null, 
+      null, 
+      this
+    );
+    this.doorColliderFixed.name = 'doorColliderFixed';
+    
+    // 6. Remover todos os listeners anteriores para evitar duplicação
+    this.input.keyboard.removeAllListeners('keydown-SPACE');
+    
+    // 7. Adicionar um novo listener dedicado apenas para a porta
+    this.input.keyboard.on('keydown-SPACE', () => {
+      if (dialogoIniciado || dialogoProfessorIniciado || minigameActive) return;
+      
+      // Verificar proximidade com a porta
+      const distanceToDoor = Phaser.Math.Distance.Between(
+        player.x, player.y, 
+        door1.x, door1.y
+      );
+      
+      if (distanceToDoor < 60) {
+        console.log("Jogador próximo à porta. Estado:", isDoorOpen ? "Aberta" : "Fechada");
+        
+        if (isDoorOpen) {
+          console.log("Porta já está aberta.");
+          return;
+        }
+        
+        if (dialogoNpc1Concluido) {
+          console.log("Abrindo porta - condição atendida");
+          isDoorOpen = true;
+          
+          // Reproduzir animação
+          door1.anims.play('doorOpeningFixed');
+          
+          // Quando a animação terminar, DESTRUIR a porta completamente
+          door1.once('animationcomplete', () => {
+            console.log("Animação completa - removendo porta COMPLETAMENTE");
+            
+            // Destruir o colisor explicitamente
+            if (this.doorColliderFixed) {
+              this.doorColliderFixed.destroy();
+              this.doorColliderFixed = null;
+              console.log("Colisor da porta removido");
+            }
+            
+            // Verificar qualquer colisor adicional
+            this.physics.world.colliders.getActive().forEach(collider => {
+              if (collider.object1 === door1 || collider.object2 === door1) {
+                collider.destroy();
+                console.log("Colisor adicional encontrado e removido");
+              }
+            });
+            
+            // Parar e configurar último frame
+            door1.anims.stop();
+            door1.setFrame(4);
+            
+            // Desativar o corpo físico
+            if (door1.body) {
+              door1.body.enable = false;
+              door1.body.checkCollision.none = true;
+              console.log("Corpo físico da porta desativado");
+            }
+            
+            // Criar uma nova porta decorativa sem física (apenas visual)
+            const doorDecoration = this.add.image(door1.x, door1.y, 'door1', 4);
+            doorDecoration.setScale(1.2);
+            doorDecoration.setOrigin(0.5, 0.5);
+            doorDecoration.setDepth(DEPTHS.DOOR - 1); // Atrás de tudo
+            
+            // Destruir a porta original completamente
+            door1.destroy();
+            console.log("Porta original destruída e substituída por decoração");
+          });
+        } else {
+          console.log("Tentando abrir porta - condição não atendida");
+          doorMessage.setText("Preciso falar com o faxineiro primeiro!");
+          doorMessage.setPosition(
+            this.cameras.main.worldView.x + this.cameras.main.width / 2,
+            this.cameras.main.worldView.y + this.cameras.main.height / 2 - 100
+          );
+          doorMessage.setVisible(true);
+          
+          this.time.delayedCall(2000, () => {
+            doorMessage.setVisible(false);
+          });
+        }
+      }
+    });
+    
+    // Marcar que esta correção já foi aplicada
+    this.doorFixed = true;
+    console.log("===== CORREÇÃO DA PORTA IMPLEMENTADA =====");
+  }
 }
 
 // Função para iniciar o minigame (chamada quando o botão é clicado)
@@ -2048,6 +2246,25 @@ function updateMain() {
       player.anims.play(newAnimation, true);
       currentAnimation = newAnimation;
   }
+
+  // Atualizando a posição do nome do jogador - VERSÃO CORRIGIDA
+  if (player && player.nameContainer) {
+    // Atualiza o container para seguir a posição do jogador
+    player.nameContainer.setPosition(player.x, player.y - 25); // Também ajustado aqui (de -35 para -25)
+  }
+  
+  // REMOVA OU COMENTE a seção antiga que tentava atualizar player.nameTag
+  // Se houver um nameTag associado ao jogador, atualize sua posição
+  // if (player.nameTag) {
+  //   player.nameTag.setPosition(player.x, player.y - 27);
+  // }
+
+  // Verificar se um campo de entrada está em foco antes de processar movimento
+  if (window.inputActive) {
+    // Se um campo de entrada estiver em foco, desabilitar movimento
+    player.setVelocity(0);
+    return; // Saia da função para não processar movimento
+  }
 }
 
 // Adicione esta nova função para mostrar o tutorial
@@ -2344,4 +2561,154 @@ function closeTutorial(scene) {
   // scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
   // scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
   // scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+}
+
+// SUBSTITUIR COMPLETAMENTE o código da criação da porta
+// Primeiro, remova completamente QUALQUER porta criada anteriormente
+if (!this.doorFixed) {
+  console.log("===== IMPLEMENTANDO CORREÇÃO DEFINITIVA DA PORTA =====");
+  
+  // 1. Destruir todas as portas existentes para ter certeza que não há duplicatas
+  this.children.getChildren().forEach(child => {
+    if (child.texture && child.texture.key === 'door1') {
+      console.log("Destruindo porta pré-existente");
+      if (child.body) child.body.enable = false;
+      child.destroy();
+    }
+  });
+
+  // 2. Verificar e remover qualquer colisor existente relacionado à porta
+  if (this.physics.world && this.physics.world.colliders) {
+    this.physics.world.colliders.getActive().forEach(collider => {
+      // Checar por colisores que possam estar relacionados à porta
+      if (collider.name && collider.name.includes('door')) {
+        console.log("Removendo colisor pré-existente da porta");
+        collider.destroy();
+      }
+    });
+  }
+
+  // 3. Criar animação da porta apenas uma vez
+  if (!this.anims.exists('doorOpeningFixed')) {
+    this.anims.create({
+      key: 'doorOpeningFixed',
+      frames: [
+        { key: 'door1', frame: 0 },
+        { key: 'door1', frame: 1 },
+        { key: 'door1', frame: 2 },
+        { key: 'door1', frame: 3 },
+        { key: 'door1', frame: 4 },
+      ],
+      frameRate: 6,
+      repeat: 0
+    });
+  }
+
+  // 4. Criar a porta com um nome exclusivo para facilitar referência
+  door1 = this.physics.add.sprite(80, 345, 'door1', 0);
+  door1.name = 'doorFixed';
+  door1.setScale(1.2);
+  door1.setOrigin(0.5, 0.5);
+  door1.setImmovable(true);
+  door1.body.setSize(20, 10);
+  door1.body.setOffset(6, 50);
+  door1.setDepth(DEPTHS.DOOR);
+
+  // 5. Criar o colisor com um nome específico e armazenar a referência
+  this.doorColliderFixed = this.physics.add.collider(
+    player, 
+    door1, 
+    null, 
+    null, 
+    this
+  );
+  this.doorColliderFixed.name = 'doorColliderFixed';
+  
+  // 6. Remover todos os listeners anteriores para evitar duplicação
+  this.input.keyboard.removeAllListeners('keydown-SPACE');
+  
+  // 7. Adicionar um novo listener dedicado apenas para a porta
+  this.input.keyboard.on('keydown-SPACE', () => {
+    if (dialogoIniciado || dialogoProfessorIniciado || minigameActive) return;
+    
+    // Verificar proximidade com a porta
+    const distanceToDoor = Phaser.Math.Distance.Between(
+      player.x, player.y, 
+      door1.x, door1.y
+    );
+    
+    if (distanceToDoor < 60) {
+      console.log("Jogador próximo à porta. Estado:", isDoorOpen ? "Aberta" : "Fechada");
+      
+      if (isDoorOpen) {
+        console.log("Porta já está aberta.");
+        return;
+      }
+      
+      if (dialogoNpc1Concluido) {
+        console.log("Abrindo porta - condição atendida");
+        isDoorOpen = true;
+        
+        // Reproduzir animação
+        door1.anims.play('doorOpeningFixed');
+        
+        // Quando a animação terminar, DESTRUIR a porta completamente
+        door1.once('animationcomplete', () => {
+          console.log("Animação completa - removendo porta COMPLETAMENTE");
+          
+          // Destruir o colisor explicitamente
+          if (this.doorColliderFixed) {
+            this.doorColliderFixed.destroy();
+            this.doorColliderFixed = null;
+            console.log("Colisor da porta removido");
+          }
+          
+          // Verificar qualquer colisor adicional
+          this.physics.world.colliders.getActive().forEach(collider => {
+            if (collider.object1 === door1 || collider.object2 === door1) {
+              collider.destroy();
+              console.log("Colisor adicional encontrado e removido");
+            }
+          });
+          
+          // Parar e configurar último frame
+          door1.anims.stop();
+          door1.setFrame(4);
+          
+          // Desativar o corpo físico
+          if (door1.body) {
+            door1.body.enable = false;
+            door1.body.checkCollision.none = true;
+            console.log("Corpo físico da porta desativado");
+          }
+          
+          // Criar uma nova porta decorativa sem física (apenas visual)
+          const doorDecoration = this.add.image(door1.x, door1.y, 'door1', 4);
+          doorDecoration.setScale(1.2);
+          doorDecoration.setOrigin(0.5, 0.5);
+          doorDecoration.setDepth(DEPTHS.DOOR - 1); // Atrás de tudo
+          
+          // Destruir a porta original completamente
+          door1.destroy();
+          console.log("Porta original destruída e substituída por decoração");
+        });
+      } else {
+        console.log("Tentando abrir porta - condição não atendida");
+        doorMessage.setText("Preciso falar com o faxineiro primeiro!");
+        doorMessage.setPosition(
+          this.cameras.main.worldView.x + this.cameras.main.width / 2,
+          this.cameras.main.worldView.y + this.cameras.main.height / 2 - 100
+        );
+        doorMessage.setVisible(true);
+        
+        this.time.delayedCall(2000, () => {
+          doorMessage.setVisible(false);
+        });
+      }
+    }
+  });
+  
+  // Marcar que esta correção já foi aplicada
+  this.doorFixed = true;
+  console.log("===== CORREÇÃO DA PORTA IMPLEMENTADA =====");
 }

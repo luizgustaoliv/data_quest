@@ -63,7 +63,7 @@ body::before {
 /* Logo */
 #logo-container {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px; /* Reduzido de 30px para 15px */
     opacity: 0;
     transform: translateY(-20px);
     transition: all 0.5s ease-out;
@@ -83,10 +83,12 @@ body::before {
 #fase-container {
     width: 90%;
     max-width: 1200px;
+    max-height: 85vh; /* Limita a altura para garantir que caiba na tela */
+    overflow-y: auto; /* Permite rolagem se necessário */
     background: rgba(0, 0, 0, 0.8);
     border: 2px solid #6c8fd6;
     border-radius: 10px;
-    padding: 30px;
+    padding: 20px; /* Reduzido de 30px para 20px */
     box-shadow: 0 0 30px rgba(76, 175, 80, 0.3);
     opacity: 0;
     transform: translateY(20px);
@@ -113,8 +115,8 @@ body::before {
 
 /* Título */
 h1 {
-    font-size: 28px;
-    margin-bottom: 40px;
+    font-size: 22px; /* Reduzido de 28px para 22px */
+    margin-bottom: 25px; /* Reduzido de 40px para 25px */
     text-align: center;
     color: #4CAF50;
     text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
@@ -124,9 +126,9 @@ h1 {
 /* Grid de fases */
 .botoes-fase {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-bottom: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Reduzido de 300px para 250px */
+    gap: 20px; /* Reduzido de 30px para 20px */
+    margin-bottom: 20px; /* Reduzido de 30px para 20px */
     justify-content: center;
 }
 
@@ -183,10 +185,10 @@ h1 {
     letter-spacing: 1px;
 }
 
-/* Preview da fase */
+/* Preview da fase - Aumentada altura */
 .fase-preview {
     position: relative;
-    height: 150px;
+    height: 340px; /* Aumentado de 300px para 340px para melhor visualização */
     overflow: hidden;
 }
 
@@ -222,10 +224,10 @@ h1 {
     animation: pulse 2s infinite alternate;
 }
 
-/* Descrição da fase */
+/* Descrição da fase - Altura ajustada para balancear o card */
 .fase-description {
-    padding: 15px;
-    min-height: 80px;
+    padding: 12px; /* Ajustado de 10px para 12px */
+    min-height: 70px; /* Aumentado de 60px para 70px */
     display: flex;
     align-items: center;
 }
@@ -327,6 +329,64 @@ h1 {
     }
     
     h1 {
-        font-size: 20px;
+        font-size: 18px; /* Reduzido de 20px para 18px */
+        margin-bottom: 20px;
+    }
+    
+    .fase-preview {
+        height: 200px; /* Aumentado de 140px para 180px */
+    }
+    
+    .fase-header {
+        padding: 10px;
+    }
+    
+    .fase-header h2 {
+        font-size: 12px;
+    }
+    
+    .fase-description p {
+        font-size: 8px;
+    }
+    
+    .navigation-buttons {
+        margin-top: 10px;
+    }
+    
+    #back-button {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+}
+
+/* Para telas muito pequenas */
+@media (max-height: 650px) {
+    #fase-container {
+        padding: 15px;
+    }
+    
+    h1 {
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+    
+    .botoes-fase {
+        gap: 15px;
+    }
+    
+    .fase-preview {
+        height: 160px; /* Aumentado de 120px para 160px */
+    }
+    
+    .fase-description {
+        min-height: 50px;
+    }
+    
+    #logo-container {
+        margin-bottom: 10px;
+    }
+    
+    #back-button {
+        padding: 8px 15px;
     }
 }
