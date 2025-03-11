@@ -350,7 +350,7 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
  - Após a interação, deverá abrir a porta da sala e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
  - Ao encontrar os professores, deverá interagir com eles e participar de um minigame de perguntas e respostas para que possa "reiniciar seus sistemas" e caso seja feito com sucesso, o jogador ganhará 1 keycard.
  - O jogador deve ajudar os 4 professores para ganhar o total de 4 keycards, para que ele possa acessar uma sala.
- - Ao acessar a sala haverá uma chave, e ao se aproximar o jogador irá coletar e deverá ir até o elevador, que dará acesso a fase 2.
+ - Ao acessar a sala haverá uma chave, ao se aproximar dela o jogador irá coletá-la e deverá ir até o elevador, que dará acesso a fase 2.
 
    
 
