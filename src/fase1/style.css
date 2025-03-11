@@ -187,9 +187,9 @@ body::before {
     font-size: 12px; /* Reduzido de 14px */
 }
 
-/* Preview do personagem - altura aumentada em 40px */
+/* Preview do personagem - ajustado para encaixar melhor */
 .character-preview {
-    height: 190px; /* Aumentado de 150px para 190px */
+    height: 220px; /* Mantido em 220px */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -198,7 +198,7 @@ body::before {
 }
 
 .character-preview img {
-    height: 190px; /* Aumentado de 150px para 190px */
+    height: 190px; /* Reduzido de 220px para 190px para caber dentro do container */
     width: auto;
     object-fit: contain;
     image-rendering: pixelated;
@@ -383,7 +383,7 @@ canvas {
     }
     
     .character-preview {
-        height: 160px; /* Aumentado de 120px para 160px */
+        height: 190px; /* Mantido em 190px */
     }
     
     .character-header h3 {
@@ -409,6 +409,10 @@ canvas {
         font-size: 14px;
         padding: 8px;
     }
+
+    .character-preview img {
+        height: 160px; /* Reduzido de 190px para 160px para caber dentro do container */
+    }
 }
 
 /* Para telas muito pequenas */
@@ -431,12 +435,16 @@ canvas {
     }
     
     .character-preview {
-        height: 140px; /* Aumentado de 100px para 140px */
+        height: 170px; /* Mantido em 170px */
     }
     
     #back-button {
         padding: 8px 15px;
         font-size: 12px;
+    }
+
+    .character-preview img {
+        height: 140px; /* Reduzido de 170px para 140px para caber dentro do container */
     }
 }
 
@@ -447,6 +455,10 @@ canvas {
     }
     
     .character-preview {
-        height: 180px; /* Aumentado de 140px para 180px */
+        height: 210px; /* Mantido em 210px */
+    }
+    
+    .character-preview img {
+        height: 180px; /* Reduzido de 210px para 180px para caber dentro do container */
     }
 }

@@ -1232,7 +1232,14 @@ function createMain() {
       if (tipo === 'faxineiro') {
         dialogoIniciado = false;
         dialogoNpc1Concluido = true;
+        scene.registry.set('dialogoNpc1Concluido', true);
+        window.dialogoNpc1Concluido = true; // Exposição explícita para o HTML
         scene.registry.set('dialogoFaxineiroIndex', 0);
+        
+        // Atualizar missões ao concluir o diálogo com o faxineiro
+        if (typeof window.updateMissions === 'function') {
+          window.updateMissions();
+        }
       } else if (tipo === 'professor') {
         dialogoProfessorIniciado = false;
         dialogoProfessorConcluido = true;
@@ -1924,6 +1931,7 @@ function startMinigame(scene, professorId = 'professor1') {
         if (success) {
           // Atualizar o contador HTML em vez do contador do Phaser
           keycardCount++;
+          window.keycardCount = keycardCount; // Exposição explícita para o HTML
           const counterElement = document.getElementById('keycard-counter');
           if (counterElement) {
             counterElement.textContent = `${keycardCount}/4`;
@@ -1941,6 +1949,11 @@ function startMinigame(scene, professorId = 'professor1') {
             // Verificar se o jogador coletou todos os 4 keycards
             if (keycardCount >= 4 && !isDoor2Open) {
               openDoor2(scene);
+            }
+            
+            // Atualizar o painel de missões
+            if (typeof window.updateMissions === 'function') {
+              window.updateMissions();
             }
           }
         }
@@ -1972,6 +1985,7 @@ function startMinigame(scene, professorId = 'professor1') {
 function openDoor2(scene) {
   // Marcar a porta como aberta
   isDoor2Open = true;
+  window.isDoor2Open = true; // Exposição explícita para o HTML
   
   // Verificar se a door2 existe
   if (!door2) {
@@ -1996,6 +2010,11 @@ function openDoor2(scene) {
     
     // Mostrar mensagem informando que a porta foi aberta
     showDoor2OpenMessage(scene);
+    
+    // Atualizar o painel de missões quando a porta for aberta
+    if (typeof window.updateMissions === 'function') {
+      window.updateMissions();
+    }
   });
 }
 
@@ -2055,7 +2074,9 @@ function showDoor2OpenMessage(scene) {
 // Função para coletar a chave
 function collectKey(player, key) {
   keyCollected = true;
+  window.keyCollected = true; // Exposição explícita para o HTML
   collectedKey = key;
+  window.collectedKey = {}; // Apenas para sinalizar que existe
   key.setDepth(1);
   key.body.setEnable(false);
   
@@ -2073,6 +2094,11 @@ function collectKey(player, key) {
               keyIcon.style.transform = 'scale(1)';
           }, 200);
       }
+  }
+  
+  // Atualizar as missões quando a chave for coletada
+  if (typeof window.updateMissions === 'function') {
+    window.updateMissions();
   }
 }
 
@@ -2264,6 +2290,11 @@ function updateMain() {
     // Se um campo de entrada estiver em foco, desabilitar movimento
     player.setVelocity(0);
     return; // Saia da função para não processar movimento
+  }
+
+  // Atualizar estado das missões se a função global existir
+  if (typeof window.updateMissions === 'function') {
+    window.updateMissions();
   }
 }
 
@@ -2712,3 +2743,34 @@ if (!this.doorFixed) {
   this.doorFixed = true;
   console.log("===== CORREÇÃO DA PORTA IMPLEMENTADA =====");
 }
+
+// Modificar a função avancaDialogo para expor variáveis globais
+function avancaDialogo(scene, tipo, dialogos) {
+  // ...existing code...
+  if (dialogoIndex < dialogos.length) {
+    // ...existing code...
+  } else {
+    // ...existing code...
+    if (tipo === 'faxineiro') {
+      dialogoIniciado = false;
+      dialogoNpc1Concluido = true;
+      scene.registry.set('dialogoNpc1Concluido', true);
+      window.dialogoNpc1Concluido = true; // Exposição explícita para o HTML
+      scene.registry.set('dialogoFaxineiroIndex', 0);
+      
+      // Chamada explícita para atualizar missões
+      if (typeof window.updateMissions === 'function') {
+        window.updateMissions();
+        console.log('Missão do faxineiro atualizada');
+      }
+    }
+    // ...existing code...
+  }
+}
+
+// Adicionar ao final de createMain para garantir que as variáveis globais sejam expostas
+// Adicione antes do fechamento da função createMain
+window.dialogoNpc1Concluido = dialogoNpc1Concluido;
+window.keycardCount = keycardCount;
+window.isDoor2Open = isDoor2Open;
+window.keyCollected = keyCollected;

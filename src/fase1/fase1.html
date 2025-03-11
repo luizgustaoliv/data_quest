@@ -66,6 +66,132 @@
             font-weight: bold;
             text-shadow: 2px 2px 4px #000000;
         }
+
+        /* Estilo para a HUD de Missões */
+        #missions-button {
+            position: fixed;
+            top: 180px; /* Posicionado abaixo do key-container */
+            right: 20px;
+            display: flex;
+            align-items: center;
+            background-color: #4a6eb5;
+            padding: 10px 15px;
+            border-radius: 10px;
+            z-index: 10000;
+            border: 2px solid #6c8fd6;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            font-family: 'Arial Black', Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000000;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        #missions-button:hover {
+            background-color: #5a7ec5;
+            transform: translateY(-2px);
+        }
+        
+        #missions-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(30, 30, 50, 0.95);
+            border: 3px solid #6c8fd6;
+            border-radius: 15px;
+            padding: 20px;
+            width: 400px;
+            max-height: 80vh;
+            z-index: 10001;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            display: none;
+            overflow-y: auto;
+        }
+        
+        #missions-panel h2 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-shadow: 1px 1px 2px #000000;
+            font-family: 'Press Start 2P', cursive;
+        }
+        
+        .mission-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: rgba(50, 50, 80, 0.7);
+            border-radius: 8px;
+            border: 1px solid #4a6eb5;
+            transition: background-color 0.2s ease;
+        }
+        
+        .mission-item:hover {
+            background-color: rgba(60, 60, 100, 0.7);
+        }
+        
+        .mission-check {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            background-image: url('../../assets/fase1/mission-incomplete.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        
+        .mission-complete .mission-check {
+            background-image: url('../../assets/fase1/mission-complete.png');
+        }
+        
+        .mission-text {
+            flex: 1;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+        }
+        
+        .mission-complete .mission-text {
+            color: #8BC34A;
+        }
+        
+        #close-missions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: #aa3333;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        
+        #close-missions:hover {
+            background-color: #cc4444;
+            transform: scale(1.1);
+        }
+        
+        #missions-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            display: none;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
     <script src="minigame.js"></script>
@@ -165,6 +291,38 @@
     <div id="key-container">
         <img id="key-icon" src="../../assets/fase1/chavesprite.png" alt="Key">
         <span id="key-counter">0/1</span>
+    </div>
+
+    <!-- HUD de Missões -->
+    <div id="missions-button">MISSÕES</div>
+    
+    <div id="missions-overlay"></div>
+    
+    <div id="missions-panel">
+        <h2>MISSÕES</h2>
+        <button id="close-missions">X</button>
+        
+        <div id="mission-list">
+            <div class="mission-item" id="mission-faxineiro">
+                <div class="mission-check"></div>
+                <div class="mission-text">Interagir com o faxineiro</div>
+            </div>
+            
+            <div class="mission-item" id="mission-professoras">
+                <div class="mission-check"></div>
+                <div class="mission-text">Ajudar as professoras (0/4)</div>
+            </div>
+            
+            <div class="mission-item" id="mission-sala">
+                <div class="mission-check"></div>
+                <div class="mission-text">Desbloquear a sala da chave</div>
+            </div>
+            
+            <div class="mission-item" id="mission-elevador">
+                <div class="mission-check"></div>
+                <div class="mission-text">Levar a chave até o elevador</div>
+            </div>
+        </div>
     </div>
 
     <!-- Container do jogo - corrigindo o estilo para ocupar toda a tela -->
@@ -452,6 +610,233 @@
                 });
             });
         });
+
+        // Sistema de missões
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicialmente, o botão de missões e painéis estão escondidos no menu de seleção
+            const missionsButton = document.getElementById('missions-button');
+            const missionsPanel = document.getElementById('missions-panel');
+            const missionsOverlay = document.getElementById('missions-overlay');
+            const closeButton = document.getElementById('close-missions');
+            
+            // Esconder todos os elementos de missão até que o jogo comece
+            missionsButton.style.visibility = 'hidden';
+            
+            // Mostrar o botão de missões quando o jogo começa
+            if (window.startGameWithName) {
+                const originalStartGame = window.startGameWithName;
+                window.startGameWithName = function(character, buttonElement) {
+                    originalStartGame(character, buttonElement);
+                    
+                    // Mostrar botão de missões após o jogo iniciar
+                    setTimeout(() => {
+                        missionsButton.style.visibility = 'visible';
+                    }, 1000);
+                };
+            }
+            
+            // Abrir o painel de missões quando o botão for clicado
+            missionsButton.addEventListener('click', function() {
+                missionsPanel.style.display = 'block';
+                missionsOverlay.style.display = 'block';
+                updateMissions(); // Atualiza o estado das missões ao abrir o painel
+            });
+            
+            // Fechar o painel quando o botão de fechar for clicado
+            closeButton.addEventListener('click', function() {
+                missionsPanel.style.display = 'none';
+                missionsOverlay.style.display = 'none';
+            });
+            
+            // Fechar o painel quando clicar fora dele
+            missionsOverlay.addEventListener('click', function() {
+                missionsPanel.style.display = 'none';
+                missionsOverlay.style.display = 'none';
+            });
+            
+            // Função para atualizar o estado das missões
+            window.updateMissions = function() {
+                console.log('Atualizando estado das missões com:', {
+                    dialogoNpc1Concluido: window.dialogoNpc1Concluido,
+                    keycardCount: window.keycardCount,
+                    isDoor2Open: window.isDoor2Open,
+                    keyCollected: window.keyCollected
+                });
+                
+                // Missão 1: Interagir com o faxineiro
+                if (window.dialogoNpc1Concluido) {
+                    document.getElementById('mission-faxineiro').classList.add('mission-complete');
+                }
+                
+                // Missão 2: Ajudar as professoras (0/4)
+                const keycardCount = window.keycardCount || 0;
+                const professorProgress = document.getElementById('mission-professoras');
+                professorProgress.querySelector('.mission-text').textContent = `Ajudar as professoras (${keycardCount}/4)`;
+                if (keycardCount >= 4) {
+                    professorProgress.classList.add('mission-complete');
+                }
+                
+                // Missão 3: Desbloquear a sala da chave
+                if (window.isDoor2Open) {
+                    document.getElementById('mission-sala').classList.add('mission-complete');
+                }
+                
+                // Missão 4: Levar a chave até o elevador
+                if (window.keyCollected) {
+                    document.getElementById('mission-elevador').classList.add('mission-complete');
+                }
+            };
+            
+            // Adicionar um verificador periódico para as missões como backup
+            setInterval(function() {
+                if (document.getElementById('game-container').style.display === 'block') {
+                    window.updateMissions();
+                }
+            }, 2000); // Verificar a cada 2 segundos
+            
+            // Adicione um ouvinte para quando o botão de missões for clicado
+            missionsButton.addEventListener('click', function() {
+                missionsPanel.style.display = 'block';
+                missionsOverlay.style.display = 'block';
+                window.updateMissions(); // Força uma atualização quando abrir o painel
+            });
+        });
+        
+        // Modificar a função startGameWithName para inicializar variáveis de missão
+        const originalStartGameWithName = window.startGameWithName;
+        window.startGameWithName = function(character, buttonElement) {
+            // Reset das variáveis globais de missões
+            window.dialogoNpc1Concluido = false;
+            window.keycardCount = 0;
+            window.isDoor2Open = false;
+            window.keyCollected = false;
+            
+            // Chamar a função original
+            if (originalStartGameWithName) {
+                originalStartGameWithName(character, buttonElement);
+            }
+            
+            // Mostrar botão de missões após o jogo iniciar
+            setTimeout(() => {
+                document.getElementById('missions-button').style.visibility = 'visible';
+            }, 1000);
+        };
+
+        // Sistema de missões - melhorado para garantir que a missão do faxineiro seja corretamente atualizada
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicialmente, o botão de missões e painéis estão escondidos no menu de seleção
+            const missionsButton = document.getElementById('missions-button');
+            const missionsPanel = document.getElementById('missions-panel');
+            const missionsOverlay = document.getElementById('missions-overlay');
+            const closeButton = document.getElementById('close-missions');
+            
+            // Esconder todos os elementos de missão até que o jogo comece
+            missionsButton.style.visibility = 'hidden';
+            
+            // Mostrar o botão de missões quando o jogo começa
+            if (window.startGameWithName) {
+                const originalStartGame = window.startGameWithName;
+                window.startGameWithName = function(character, buttonElement) {
+                    originalStartGame(character, buttonElement);
+                    
+                    // Mostrar botão de missões após o jogo iniciar
+                    setTimeout(() => {
+                        missionsButton.style.visibility = 'visible';
+                    }, 1000);
+                };
+            }
+            
+            // Abrir o painel de missões quando o botão for clicado
+            missionsButton.addEventListener('click', function() {
+                missionsPanel.style.display = 'block';
+                missionsOverlay.style.display = 'block';
+                updateMissions(); // Atualiza o estado das missões ao abrir o painel
+            });
+            
+            // Fechar o painel quando o botão de fechar for clicado
+            closeButton.addEventListener('click', function() {
+                missionsPanel.style.display = 'none';
+                missionsOverlay.style.display = 'none';
+            });
+            
+            // Fechar o painel quando clicar fora dele
+            missionsOverlay.addEventListener('click', function() {
+                missionsPanel.style.display = 'none';
+                missionsOverlay.style.display = 'none';
+            });
+            
+            // Função para atualizar o estado das missões - ajustada com melhor detecção
+            window.updateMissions = function() {
+                console.log('Atualizando estado das missões:', {
+                    dialogoNpc1Concluido: window.dialogoNpc1Concluido,
+                    keycardCount: window.keycardCount,
+                    isDoor2Open: window.isDoor2Open,
+                    keyCollected: window.keyCollected
+                });
+                
+                // Missão 1: Interagir com o faxineiro - checagem aprimorada
+                if (window.dialogoNpc1Concluido === true) {
+                    console.log("Marcando missão do faxineiro como completa");
+                    document.getElementById('mission-faxineiro').classList.add('mission-complete');
+                } else {
+                    // Verifica diretamente na cena do jogo como fallback
+                    if (window.game && window.game.scene.scenes[0]) {
+                        const dialogoConcluido = window.game.scene.scenes[0].registry.get('dialogoNpc1Concluido');
+                        if (dialogoConcluido) {
+                            console.log("Detectado conclusão do diálogo via registry");
+                            window.dialogoNpc1Concluido = true;
+                            document.getElementById('mission-faxineiro').classList.add('mission-complete');
+                        }
+                    }
+                }
+                
+                // Missão 2: Ajudar as professoras (0/4)
+                const keycardCount = window.keycardCount || 0;
+                const professorProgress = document.getElementById('mission-professoras');
+                professorProgress.querySelector('.mission-text').textContent = `Ajudar as professoras (${keycardCount}/4)`;
+                if (keycardCount >= 4) {
+                    professorProgress.classList.add('mission-complete');
+                }
+                
+                // Missão 3: Desbloquear a sala da chave
+                if (window.isDoor2Open) {
+                    document.getElementById('mission-sala').classList.add('mission-complete');
+                }
+                
+                // Missão 4: Levar a chave até o elevador
+                if (window.keyCollected) {
+                    document.getElementById('mission-elevador').classList.add('mission-complete');
+                }
+            };
+            
+            // Adicionar um verificador específico para a missão do faxineiro além do verificador periódico
+            function checkFaxineiroMission() {
+                if (document.getElementById('game-container').style.display === 'block' && window.dialogoNpc1Concluido) {
+                    console.log("Verificação adicional: diálogo com faxineiro concluído");
+                    document.getElementById('mission-faxineiro').classList.add('mission-complete');
+                }
+            }
+            
+            // Verificar a missão do faxineiro a cada 1 segundo como backup
+            setInterval(checkFaxineiroMission, 1000);
+            
+            // Adicionar um verificador periódico para as missões como backup
+            setInterval(function() {
+                if (document.getElementById('game-container').style.display === 'block') {
+                    window.updateMissions();
+                }
+            }, 2000); // Verificar a cada 2 segundos
+            
+            // Adicione um ouvinte para quando o botão de missões for clicado
+            missionsButton.addEventListener('click', function() {
+                missionsPanel.style.display = 'block';
+                missionsOverlay.style.display = 'block';
+                window.updateMissions(); // Força uma atualização quando abrir o painel
+            });
+        });
+        
+        // Modificar a função startGameWithName para inicializar variáveis de missão
     </script>
+
 </body>
 </html>
