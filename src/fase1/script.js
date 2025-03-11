@@ -337,7 +337,7 @@ function createMain() {
   player.nameContainer = playerContainer;
   
   // Configurar a profundidade do container
-  playerContainer.setDepth(15); // DEPTHS.PLAYER + 1
+  playerContainer.setDepth(1005); // DEPTHS.PLAYER + 1
 
   // Não precisamos de event listener aqui, vamos fazer a atualização em updateMain
 
