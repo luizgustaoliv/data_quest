@@ -326,8 +326,18 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 #### Objetivo geral do jogo:
  - O jogador precisa superar cada fase completando as tarefas específicas para progredir na história. Seu objetivo final é libertar a escola da invasão hacker.
 
-#### Regras = Objetivos/Desafios da **Fase 1**:
+#### Regras gerais do jogo:
+ - O jogador precisa concluir os minigames de uma fase para ter acesso a fase seguinte.
+ - Caso o jogador fracasse ao concluir um minigame, ele terá a chance de fazer novamente até acertar.
+ - O jogo só vai ser finalizado caso todas as fases e objetivos forem concluídos.
+ - Ao decorrer das fases o jogador terá contato com novos conceitos e conhecimentos sobre a LGPD.
+
+#### Regras da **Fase 1**:
  - O jogador deverá interagir com os professores e responder às perguntas com base nos conhecimentos adquiridos anteriormente ao interagir com o faxineiro no início da fase. Para cada resposta correta, ele receberá um keycard. Ao coletar quatro keycards, uma sala especial será desbloqueada, onde encontrará uma chave. Essa chave será utilizada no elevador para acessar a próxima fase.
+ - O jogador só irá conseguir um keycard caso ele responda certo 2 de 3 perguntas feitas pelos NPCs.
+ - Caso o jogador erre duas perguntas ele terá a chance de respondê-las novamente, até acertar no mínimo duas.
+ - Ao conseguir 4 keycards a sala com a chave deve será liberada.
+ - Para acessar a próxima fase o jogador deve se aproximar da chave e após isso ir até o elevador, automaticamente a transição entre fases ocorrerá.
 
 ## 3.7. Mecânicas do jogo (sprint 3)
 
@@ -347,10 +357,10 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 #### Mecânicas da primeira fase:
  - O jogador deve interagir com o NPC do faxineiro para entender o contexto da fase.
- - Após a interação, deverá abrir a porta da sala e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
- - Ao encontrar os professores, deverá interagir com eles e participar de um minigame de perguntas e respostas para que possa "reiniciar seus sistemas" e caso seja feito com sucesso, o jogador ganhará 1 keycard.
- - O jogador deve ajudar os 4 professores para ganhar o total de 4 keycards, para que ele possa acessar uma sala.
- - Ao acessar a sala haverá uma chave, ao se aproximar dela o jogador irá coletá-la e deverá ir até o elevador, que dará acesso a fase 2.
+ - Após a interação, deverá abrir a porta da sala (pressionando "espaço") e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
+ - Ao encontrar os professores, deverá interagir com eles (pressionando "e") e participar de um minigame de perguntas e respostas para que possa "reiniciar seus sistemas" e caso seja feito com sucesso, o jogador ganhará 1 keycard.
+ - O jogador deverá ajudar os 4 professores para ganhar o total de 4 keycards, para que ele possa acessar uma sala.
+ - Ao acessar a sala haverá uma chave, ao se aproximar dela o jogador irá coletá-la automaticamente e deverá ir até o elevador, que dará acesso a fase 2.
 
    
 
