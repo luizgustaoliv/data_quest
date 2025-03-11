@@ -323,8 +323,6 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 ## 3.6. Regras do jogo (sprint 3)
 
-*Descreva aqui as regras do seu jogo: objetivos/desafios, meios para se conseguir alcançar*
-
 #### Objetivo geral do jogo:
  - O jogador precisa superar cada fase completando as tarefas específicas para progredir na história. Seu objetivo final é libertar a escola da invasão hacker.
 
@@ -332,8 +330,6 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
  - O jogador deverá interagir com os professores e responder às perguntas com base nos conhecimentos adquiridos anteriormente ao interagir com o faxineiro no início da fase. Para cada resposta correta, ele receberá um keycard. Ao coletar quatro keycards, uma sala especial será desbloqueada, onde encontrará uma chave. Essa chave será utilizada no elevador para acessar a próxima fase.
 
 ## 3.7. Mecânicas do jogo (sprint 3)
-
-*Descreva aqui as formas de controle e interação que o jogador tem sobre o jogo: quais os comandos disponíveis, quais combinações de comandos, e quais as ações consequentes desses comandos. Utilize listas ou tabelas para organizar esta seção.*
 
 #### Teclas de movimentação: **W A S D** ou **Setas do Teclado**:
  - **W** ou **Seta para cima**: Movimentação para cima; **S** ou **Seta para baixo**: Movimentação para baixo; **A** ou **Seta para esquerda**: Movimentação para esquerda; **D** ou **Seta para direita**: Movimentação para direita.
