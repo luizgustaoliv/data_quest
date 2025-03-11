@@ -315,8 +315,6 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 ## 3.5. Gameflow (Diagrama de cenas) (sprint 2)
 
-*Posicione aqui seu "storyboard de programação" - o diagrama de cenas do jogo. Indique, por exemplo, como o jogo começa, quais opções o jogador tem, como ele avança nas fases, quais as condições de 'game over', como o jogo reinicia. Seu diagrama deve representar as classes, atributos e métodos usados no jogo.*
-
 <div align="center">
   <sub>Diagrama de cenas</sub><br>
   <img src="https://github.com/Inteli-College/2025-1A-T19-IN01-G04/blob/main/assets/Fluxograma.jpg" width="100%" 
