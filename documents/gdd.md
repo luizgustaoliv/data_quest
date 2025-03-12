@@ -293,7 +293,6 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 ### 3.4.1. Inventário
 
-*Exemplo de tabela*
 \# | item |  | como obter | função | efeito sonoro
 --- | --- | --- | --- | --- | ---
 1 | Cartão de Identificação (KeyCard) | <img src="../assets/keycard.png" width="200"> | você o obtém após ajudar cada professor-robô a recuperar o controle de sua consciência | Com o acúmulo de quatro deles, dá acesso a áreas restritas dentro da escola e permite o acesso à ultima sala da fase 1 | Som de leitura de cartão
