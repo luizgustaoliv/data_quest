@@ -293,13 +293,11 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 ### 3.4.1. Inventário
 
-*\<opcional\> Caso seu jogo utilize itens ou poderes para os personagens obterem, descreva-os aqui, indicando títulos, imagens, meios de obtenção e funções no jogo. Utilize listas ou tabelas para organizar esta seção. Caso utilize material de terceiros em licença Creative Commons, não deixe de citar os autores/fontes.* 
-
 *Exemplo de tabela*
 \# | item |  | como obter | função | efeito sonoro
 --- | --- | --- | --- | --- | ---
-1 | moeda | <img src="../assets/coin.png"> | há muitas espalhadas em todas as fases | acumula dinheiro para comprar outros itens | som de moeda
-2 | madeira | <img src="../assets/wood.png"> | há muitas espalhadas em todas as fases | acumula madeira para construir casas | som de madeiras
+1 | Cartão de Identificação (KeyCard) | <img src="../assets/keycard.png" width="200"> | você o obtém após ajudar cada professor-robô a recuperar o controle de sua consciência | Com o acúmulo de quatro deles, dá acesso a áreas restritas dentro da escola e permite o acesso à ultima sala da fase 1 | Som de leitura de cartão
+2 | Chave | <img src="../assets/fase1/chavesprite.png" width="170"> | Ela fica disponível na última sala da fase 1 após todos os 4 keycards serem coletados | É utilizada para entrar no elevador para acessar a fase 2 | Som de chave
 3 | ... 
 
 ### 3.4.2. Bestiário
@@ -309,9 +307,8 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 *Exemplo de tabela*
 \# | inimigo |  | ocorrências | função | impacto | efeito sonoro
 --- | --- | --- | --- | --- | --- | ---
-1 | robô terrestre | <img src="../assets/inimigo2.PNG"> |  a partir da fase 1 | ataca o personagem vindo pelo chão em sua direção, com velocidade constante, atirando parafusos | se encostar no inimigo ou no parafuso arremessado, o personagem perde 1 ponto de vida | sons de tiros e engrenagens girando
-2 | robô voador | <img src="../assets/inimigo1.PNG"> | a partir da fase 2 | ataca o personagem vindo pelo ar, fazendo movimento em 'V' quando se aproxima | se encostar, o personagem perde 3 pontos de vida | som de hélice
-3 | ... 
+1 | professora-robô | <img src="../assets/sprite_prof.png" width="1000"> |  a partir da fase 1 | aparece e bloqueia o caminho do jogador, soltando ameaças sobre vazar dados da escola. Após alguns segundos de diálogo, o jogador recebe um questionário sobre a LGPD para "desbloqueá-la" e restaurar seu sistema para que ela volte ao normal | se o jogador acerta todas as perguntas, a professora volta ao normal e o jogador aprende mais sobre a LGPD; se o jogador erra, ele precisa refazer até acertar | sons de sistema corrompido (bipes, estática, glitch)
+2 | ...
 
 ## 3.5. Gameflow (Diagrama de cenas) (sprint 2)
 
