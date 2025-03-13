@@ -417,6 +417,15 @@ Ilustrações do Desenvolvimento:
 
 *Descreva e ilustre aqui o desenvolvimento da versão intermediária do jogo, explicando brevemente o que foi entregue em termos de código e jogo. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
 
+Em termos de código, no decorrer da sprint, os principais pontos do desenvolvimento foram:
+## HUD
+
+<img src="../assets/hud.png" width="500">
+Código da implementação da Hud de missões
+
+## Minigames
+## Diálogos dos npcs
+
 ## 4.4. Desenvolvimento final do MVP (sprint 4)
 
 *Descreva e ilustre aqui o desenvolvimento da versão final do jogo, explicando brevemente o que foi entregue em termos de MVP. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e planos futuros.*
