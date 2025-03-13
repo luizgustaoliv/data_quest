@@ -158,9 +158,9 @@ O desenvolvimento de Data Quest foi inspirado em títulos específicos que servi
 
 Em um dia comum de aula na escola Bitshine, um hacker com um plano bem elaborado invade a instituição e toma controle dos sistemas internos, trancando as portas de entrada e as salas de aula com alunos dentro. Superando esses obstáculos, ele avança até o quinto e último andar, onde se encontra o Data Center que abriga os servidores com informações sensíveis sobre alunos, professores e a própria escola. O hacker assume o controle dos professores robôs, programados para ensinar os alunos.
 
-Nosso protagonista, Connie, estudante da Bitshine, perde a hora e é acordado apressadamente para se dirigir à escola. Chegando lá, não encontra opções de entrada, mas percebe uma janela que está aberta que leva até a sala do faxineiro da escola. Dentro da sala, Connie e o faxineiro tem uma conversa que contextualiza o conflito da Bitshine e ensina os básicos da LGPD para o jogador.
+Nosso protagonista, estudante da Bitshine, perde a hora e é acordado apressadamente para se dirigir à escola. Chegando lá, não encontra opções de entrada, mas percebe uma janela que está aberta que leva até a sala do faxineiro da escola. Dentro da sala, o protagonista e o faxineiro tem uma conversa que contextualiza o conflito da Bitshine e ensina os básicos da LGPD para o jogador.
 
-Desse ponto, o jogador, controlando Connie, vai progredir por cada andar coletando key-cards protegidos pelos professores robôs, controlados pelo hacker, que lhe dá acesso aos diferentes andares da instituição. Ao longo do enredo, o jogador vai encontrar alunos e professores diferentes que o ajudarão a enfrentar os inimigos e que ajudarão a passar conhecimentos das leis LGPD, necessárias para a solução do problema. O objetivo final do protagonista é impedir o sucesso dos planos do hacker e libertar os alunos e professores das salas trancadas, enquanto o jogador aprende sobre a LGPD e a importância da proteção de dados pessoais.
+Desse ponto, o jogador, controlando o protagonista, vai progredir por cada andar coletando key-cards protegidos pelos professores robôs, controlados pelo hacker, que lhe dá acesso aos diferentes andares da instituição. Ao longo do enredo, o jogador vai encontrar alunos e professores diferentes que o ajudarão a enfrentar os inimigos e que ajudarão a passar conhecimentos das leis LGPD, necessárias para a solução do problema. O objetivo final do protagonista é impedir o sucesso dos planos do hacker e libertar os alunos e professores das salas trancadas, enquanto o jogador aprende sobre a LGPD e a importância da proteção de dados pessoais.
 
 ## 3.2. Personagens (sprints 2 e 3)
 
@@ -201,9 +201,10 @@ Professora Rôbo: Segundo NPC da primeira fase do jogo. Ela será outra fonte de
 
 ### 3.2.3. Diversidade e Representatividade dos Personagens
 
-Alinhamento com o público-alvo: O jogo se passa no ambiente escolar e aborda a Lei Geral de Proteção de Dados (LGPD), um tema essencial para estudantes que crescem em um mundo digital. Todos os personagens enfrentam desafios comuns, como atrasos e desatenção nas aulas, o que facilita a identificação do público jovem com eles.
+Alinhamento com o público-alvo: Quando o cenário e o enredo do jogo foram concebidos, pensamos em um mundo ficcional que tem uma sociedade tecnologicamente mais avançada e que pode englobar qualquer cultura. O ambiente escolar da escola Bitshine tem uma arquitetura futurista que aborda a Lei Geral de Proteção de Dados (LGPD), que é uma matéria essencial para estudantes que crescem nesse mundo mais digital. Assim, o mundo do jogo é um pouco desconectado da realidade do Brasil, mas todos os personagens enfrentam desafios comuns, como atrasos e desatenção nas aulas, o que facilita a identificação do público jovem com eles.
 
-Diversidade dentro da realidade do Brasil e impacto esperado: A escola Bitshine é um reflexo da diversidade presente na realidade do Brasil, com personagens que representam diferentes etnias e gêneros. O jogo oferece aos jogadores a possibilidade de escolher entre quatro personagens distintos, permitindo que se identifiquem com aquele que mais se aproxima de sua própria realidade. O impacto esperado é reforçar a importância da inclusão tanto na educação quanto no setor da tecnologia.
+Diversidade dentro da realidade do Brasil e impacto esperado: Os estudantes da escola Bitshine são um reflexo da diversidade presente na realidade do Brasil, com personagens que representam diferentes etnias e gêneros. O jogo, em seu estado atual, oferece aos jogadores a possibilidade de escolher entre quatro personagens distintos e nomeá-lo da maneira que quiserem, permitindo que se identifiquem com aquele que mais se aproxima de sua própria realidade. O impacto esperado é reforçar a importância da inclusão tanto na educação quanto no setor da tecnologia.
+
 ## 3.3. Mundo do jogo (sprints 2 e 3)
 
 ### 3.3.1. Locações Principais e/ou Mapas (sprints 2 e 3)
@@ -255,7 +256,7 @@ Figuras 1 e 2: Conceitos iniciais da aparência externa da escola Bitshine. Figu
 
 <img src="../assets/concepts/conceitos_protagonista.png" width="300">
 
-Figura 3: Conceitos iniciais do protagonista, Connie.
+Figura 3: Conceitos iniciais do protagonista, que o jogador poderá nomear.
 
 <img src="../assets/concepts/dialogue_concept.png" width="300">
 
