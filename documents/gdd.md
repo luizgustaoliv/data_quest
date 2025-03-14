@@ -89,19 +89,19 @@ Abaixo está todos os requisitos que trabalhamos na sprint 1 e 2.
 
 | \#  | Requisito | Descrição  |
 | --- | --- | --- |
-| 1 | Controle do personagem | O jogador pode mover o personagem utilizando as teclas WASD para movimentação. |
-| 2 | Interação com NPCs | Durante a exploração, o jogador pode conversar com personagens do jogo para obter informações e avançar na narrativa. |
+| 1 | Controle do personagem | O jogador pode mover o personagem utilizando as teclas WASD ou setas direcionais para movimentação. |
+| 2 | Interação com NPCs | Durante a exploração, o jogador pode conversar com personagens do jogo apertando a tecla 'E' para obter informações e avançar na narrativa. |
 | 3 | Combate baseado em perguntas e respostas sobre LGPD | Durante os confrontos, o jogador precisará responder corretamente a perguntas sobre a Lei Geral de Proteção de Dados (LGPD) para vencer os desafios. |
 | 4 | Divisão do jogo em fases | O jogo será dividido em três fases representando os andares de uma escola, totalizando três andares com desafios progressivos. |
 | 5 | História baseada na proteção de dados dentro de uma escola | O jogador assume o papel de um estudante que deve proteger os dados da escola contra ameaças cibernéticas, aprendendo sobre os conceitos da LGPD. |
 | 6 | Progressão baseada na complexidade das perguntas e desafios | À medida que o jogador avança, as perguntas abordam conceitos mais aprofundados da LGPD. |
-| 7 | Aprimoramento de personagem | Implementação de melhorias na jogabilidade e características do personagem. |
+| 7 | Aprimoramento de personagem | Implementação de melhorias na jogabilidade e características do personagem. 
 | 8 | Criação de personagem feminino | Adição de uma opção de personagem jogável do gênero feminino. |
 | 9 | Tileset | Desenvolvimento de um conjunto de tiles para compor os cenários do jogo. |
 | 10 | Mapa da fase 01 | Criação do mapa completo da primeira fase do jogo. |
 | 11 | Contextualização da indústria do mercado | Introdução ao contexto mercadológico da LGPD no jogo. |
 | 12 | Análise da ameaça de novos entrantes | Estudo sobre como novos concorrentes podem afetar a proteção de dados. |
-| 13 | Análise da ameaça de produtos ou serviços substitutos | Investigação sobre soluções alternativas que impactam a LGPD. |
+| 13 | Análise da ameaça de produtos ou serviços substitutos | Investigação sobre soluções alternativas que impactam a LGPD. 
 | 14 | Análise do poder de barganha dos fornecedores | Avaliação do impacto dos fornecedores na segurança de dados. |
 | 15 | Análise do poder de barganha dos clientes | Estudo do impacto dos clientes na gestão de dados. |
 | 16 | Análise da rivalidade entre concorrentes existentes | Análise da competição no mercado de segurança de dados. |
@@ -422,23 +422,285 @@ Em termos de código, os principais pontos do desenvolvimento foram:
 O jogo ja se encontra com 4 mini games na fase 1, buscamos realizar com jogos clássicos para que seja mais intuitivo de joga_los, os 4 mini games são: perguntas sobre conceitos gerais da LGPD, jogo da forca com termos da LGPD, jogo da memória em que o jogador deve relacionar dois pares de palavras com um sendo um termo e o outro o conceito e um jogo de classificação de conteudo pessoal ou conteúdo sensível dada as informações do mini game.
 
 <img src="../assets/minigame.png" width="500">
-código de implementação dos mini games
+Código de implementação dos mini games:
+
+```javascript
+ function startMinigame(scene, professorId = 'professor1') {
+    currentProfessor = professorId; // Armazene qual professor está sendo ajudado
+    helpButton.setVisible(false);
+    minigameActive = true;
+    
+    // Verificar se já tentamos carregar anteriormente
+    if (window.minigameLoadAttempted && !window.initMinigame) {
+      console.error("Falha ao carregar o minigame após tentativa anterior");
+      helpButton.setVisible(true);
+      minigameActive = false;
+      return;
+    }
+```
+
+```javascript
+  helpButton.removeListener('pointerdown');
+        helpButton.on('pointerdown', () => {
+          console.log("Iniciando minigame do Professor 1");
+          startMinigame(scene, 'professor1');
+        });
+        
+```
 
 ## Diálogos dos npcs
 
-Na construção dos diálogo
+Na construção dos diálogo:
+
+```javascript
+// Verifica proximidade com o faxineiro
+    if (distanceToNpc1 < 70 && !dialogoNpc1Concluido) {
+      podeIniciarDialogo = true;
+      if (!dialogoIniciado) {
+        avisoTexto.setPosition(npc1.x, npc1.y - 10);
+        avisoTexto.setVisible(true);
+      }
+    } 
+    // Verifica proximidade com o professor
+    else if (distanceToProfessor < 70 && !dialogoProfessorConcluido) {
+      podeIniciarDialogo = true;
+      if (!dialogoProfessorIniciado) {
+        avisoTexto.setPosition(professorNpc.x, professorNpc.y - 10);
+        avisoTexto.setVisible(true);
+      }
+    }
+    // Verifica proximidade com o professor2
+    else if (distanceToProfessor2 < 70 && !dialogoProfessor2Concluido) {
+      podeIniciarDialogo = true;
+      if (!dialogoProfessor2Iniciado) {
+        avisoTexto.setPosition(professorNpc2.x, professorNpc2.y - 10);
+        avisoTexto.setVisible(true);
+      }
+    }
+    // Verifica proximidade com o professor3
+    else if (distanceToProfessor3 < 70 && !dialogoProfessor3Concluido) {
+      podeIniciarDialogo = true;
+      if (!dialogoProfessor3Iniciado) {
+        avisoTexto.setPosition(professorNpc3.x, professorNpc3.y - 10);
+        avisoTexto.setVisible(true);
+      }
+    }
+    // Verifica proximidade com o professor4
+    else if (distanceToProfessor4 < 70 && !dialogoProfessor4Concluido) {
+      podeIniciarDialogo = true;
+      if (!dialogoProfessor4Iniciado) {
+        avisoTexto.setPosition(professorNpc4.x, professorNpc4.y - 10);
+        avisoTexto.setVisible(true);
+      }
+    }
+    else {
+      podeIniciarDialogo = false;
+      if (!dialogoIniciado && !dialogoProfessorIniciado && !dialogoProfessor2Iniciado && !dialogoProfessor3Iniciado && !dialogoProfessor4Iniciado) {
+        avisoTexto.setVisible(false);
+      }
+    }
+    
+```
 
 
 <img src="../assets/diálogos.png" width="500">
-código de texto dos diálogos com o faxineiro
+código de texto dos diálogos com o faxineiro:
+
+```javascript
+ const dialogosPersonalizados = [
+        { texto: "Com licença senhor, o que aconteceu por aqui?...", autor: "player" },
+        { texto: "Por que a porta da escola está fechada?", autor: "player" },
+        { texto: "Fale mais baixo! Senão eles poderão te detectar!", autor: "npc" },
+        { texto: "Quem são eles?", autor: "player" },
+        { texto: "Tem muita informação para explicar. É melhor você ir embora,", autor: "npc" },
+        { texto: "As coisas estão muito perigosas aqui dentro.", autor: "npc" },
+        { texto: "Não, eu quero saber o que aconteceu.", autor: "player" },
+        { texto: "(Jovem persistente…) Ok, tudo bem...", autor: "npc" },
+        { texto: "Mas eu só consigo te explicar o que eu sei.", autor: "npc" },
+        { texto: "Tudo bem.", autor: "player" },
+        { texto: "Eu estava limpando as janelas perto da entrada...", autor: "npc" },
+        { texto: "e percebi que a escola começou a ser invadida.", autor: "npc" },
+        { texto: "Aparentemente alguém conseguiu acessar o sistema...", autor: "npc" },
+        { texto: "para controlar todos os professores da escola...", autor: "npc" },
+        { texto: "E ROUBAR DADOS DOS ALUNOS.", autor: "npc" },
+        { texto: "PERA…!!!", autor: "player" },
+        { texto: "UM HACKER CONTROLANDO OS PROFESSORES PARA ROUBAR DADOS PESSOAIS??", autor: "player" },
+        { texto: "…", autor: "npc" },
+        { texto: "Você não sabe o que é isso né?", autor: "npc" },
+        { texto: "Eheh…, eu nunca prestei muita atenção nessas aulas.", autor: "player" },
+        { texto: "Agora mais do que nunca os conteúdos daquelas aulas importam!!", autor: "npc" },
+        { texto: "Os seus dados pessoais são as informações...", autor: "npc" },
+        { texto: "que permitem identificar você. ", autor: "npc" },
+        { texto: "Informações como seu nome, seu RG e o seu CPF.", autor: "npc" },
+        { texto: "Ah... então tipo, meu nome completo e essas coisas?", autor: "player" },
+        { texto: "Exatamente! Mas não é só isso.", autor: "npc" },
+        { texto: "Seu endereço, seu telefone, até seu histórico escolar...", autor: "npc" },
+        { texto: "tudo isso são dados pessoais.", autor: "npc" },
+        { texto: "E essas informações, se caírem nas mãos erradas,", autor: "npc" },
+        { texto: "podem ser um grande problema.", autor: "npc" },
+        { texto: "Tá, mas por que alguém ia querer roubar essas informações?", autor: "player" },
+        { texto: "Olha, esses hackers podem vender...", autor: "npc" },
+        { texto: "essas informações ou usá-las para golpes.", autor: "npc" },
+        { texto: "Se alguém souber seus dados,", autor: "npc" },
+        { texto: "pode tentar criar contas no seu nome ou coisas piores.", autor: "npc" },
+        { texto: "Eita, sério mesmo?", autor: "player" },
+        { texto: "Muito sério!", autor: "npc" },
+        { texto: "E por isso existe a LGPD—Lei Geral de Proteção de Dados.", autor: "npc" },
+        { texto: "Ela serve para proteger as informações pessoais...", autor: "npc" },
+        { texto: "das pessoas e garantir que ninguém as use sem permissão.", autor: "npc" },
+        { texto: "Ah... acho que já ouvi esse nome em algum lugar,", autor: "player" },
+        { texto: "mas nunca tive tanto interesse.", autor: "player" },
+        { texto: "Pois é bom saber disso agora,", autor: "npc" },
+        { texto: "porque você não tem escolha.", autor: "npc" },
+        { texto: "Se quiser ajudar a salvar os alunos,", autor: "npc" },
+        { texto: "vai ter que aprender pelo menos o básico sobre isso.", autor: "npc" },
+        { texto: " Deve ter algum jeito de tirar os professores do controle do hacker, ", autor: "player" },
+        { texto: "eu sei algumas coisas sobre a IA deles.", autor: "player" },
+        { texto: "Certo, então tente recuperar o acesso!", autor: "npc" },
+      ];
+```
 
 ## HUD
 
-Na construção da Hud do jogo buscamos um desingn
-
+Na construção da Hud do jogo buscamos um design simples e eficaz.
 
 <img src="../assets/hud2.png" width="250"> <img src="../assets/hud.png" width="500">
-Código da implementação da Hud de missões
+Código da implementação da Hud de missões:
+
+```javascript
+ // Configurar o sistema de missões
+  function setupMissionsSystem() {
+    const missionsButton = document.getElementById('missions-button');
+    const missionsPanel = document.getElementById('missions-panel');
+    const missionsOverlay = document.getElementById('missions-overlay');
+    const closeButton = document.getElementById('close-missions');
+    
+    if (!missionsButton || !missionsPanel || !missionsOverlay || !closeButton) {
+      console.error("Mission system elements not found in DOM");
+      return;
+    }
+    
+    console.log("Setting up missions system with elements:", {
+      button: missionsButton,
+      panel: missionsPanel,
+      overlay: missionsOverlay,
+      closeBtn: closeButton
+    });
+    
+    // Remove any existing listeners to prevent duplicates
+    missionsButton.removeEventListener('click', showMissionsPanel);
+    closeButton.removeEventListener('click', hideMissionsPanel);
+    missionsOverlay.removeEventListener('click', hideMissionsPanel);
+    
+    // Add fresh listeners
+    missionsButton.addEventListener('click', showMissionsPanel);
+    closeButton.addEventListener('click', hideMissionsPanel);
+    missionsOverlay.addEventListener('click', hideMissionsPanel);
+    
+    // Define the functions for showing/hiding the panel
+    function showMissionsPanel() {
+      console.log("Mission button clicked, showing panel");
+      
+      // Apply inline styles to ensure visibility
+      missionsPanel.style.display = 'block';
+      missionsPanel.style.opacity = '1';
+      missionsOverlay.style.display = 'block';
+      missionsOverlay.style.opacity = '1';
+      
+      // Force redraw (sometimes needed for display changes to take effect)
+      missionsPanel.offsetHeight;
+      
+      // Add visible class if using CSS animations
+      missionsPanel.classList.add('visible');
+      missionsOverlay.classList.add('visible');
+      
+      // Update missions when panel opens
+      if (typeof window.updateMissions === 'function') {
+        window.updateMissions();
+      }
+    }
+    
+    function hideMissionsPanel() {
+      console.log("Hiding missions panel");
+      
+      // Remove visible class first if using CSS animations
+      missionsPanel.classList.remove('visible');
+      missionsOverlay.classList.remove('visible');
+      
+      // Set display to none after a small delay (to allow animations to complete)
+      setTimeout(() => {
+        missionsPanel.style.display = 'none';
+        missionsOverlay.style.display = 'none';
+      }, 300);
+    }
+    
+    // Ensure initial state
+    missionsPanel.style.display = 'none';
+    missionsOverlay.style.display = 'none';
+    
+    // Add debugging click handler to confirm button is responsive
+    missionsButton.onclick = function() {
+      console.log("Missions button clicked directly");
+      showMissionsPanel();
+    };
+  }
+
+  // Função para atualizar o estado das missões
+  window.updateMissions = function() {
+    console.log('Atualizando estado das missões:', {
+      dialogoNpc1Concluido: window.dialogoNpc1Concluido,
+      keycardCount: window.keycardCount,
+      isDoor2Open: window.isDoor2Open,
+      keyCollected: window.keyCollected
+    });
+    
+    // Missão 1: Interagir com o faxineiro - checagem aprimorada
+    const missionFaxineiro = document.getElementById('mission-faxineiro');
+    if (missionFaxineiro && window.dialogoNpc1Concluido === true) {
+      console.log("Marcando missão do faxineiro como completa");
+      missionFaxineiro.classList.add('mission-complete');
+    }
+    
+    // Missão 2: Ajudar as professoras (0/4)
+    const keycardCount = window.keycardCount || 0;
+    const professorProgress = document.getElementById('mission-professoras');
+    if (professorProgress) {
+      const missionTextElement = professorProgress.querySelector('.mission-text');
+      if (missionTextElement) {
+        missionTextElement.textContent = `Ajudar as professoras (${keycardCount}/4)`;
+      }
+      if (keycardCount >= 4) {
+        professorProgress.classList.add('mission-complete');
+      }
+    }
+    
+    // Missão 3: Desbloquear a sala da chave
+    const missionSala = document.getElementById('mission-sala');
+    if (missionSala && window.isDoor2Open) {
+      missionSala.classList.add('mission-complete');
+    }
+    
+    // Missão 4: Levar a chave até o elevador
+    const missionElevador = document.getElementById('mission-elevador');
+    if (missionElevador && window.keyCollected) {
+      missionElevador.classList.add('mission-complete');
+    }
+  };
+
+  // Verificar a missão do faxineiro a cada 1 segundo como backup
+  setInterval(function() {
+    if (document.getElementById('game-container').style.display === 'block' && window.dialogoNpc1Concluido) {
+      document.getElementById('mission-faxineiro').classList.add('mission-complete');
+    }
+  }, 1000);
+
+  // Adicionar um verificador periódico para as missões como backup
+  setInterval(function() {
+    if (document.getElementById('game-container').style.display === 'block') {
+      window.updateMissions();
+    }
+  }, 2000);
+```
 
 ## Próximos passos
 
@@ -467,6 +729,8 @@ A tabela abaixo apresenta os casos de teste comuns que podem ser executados a qu
 3 | Estar na fase e pegar a chave | Aproxime-se do elevador com a chave que ficará flutuando ao lado do personagem | O jogo deve acionar a transição e avançar para a próxima fase.
 4 | Posicionar o personagem próximo a um NPC interativo | Iniciar diálogo com o NPC | O diálogo deve ser exibido dentro da caixa de diálogo, com a opção de avançar a conversa usando a tecla "E".
 5 | Carregar um jogo salvo anteriormente | Iniciar a jogabilidade a partir do ponto salvo | O jogo deve carregar o progresso salvo corretamente, restaurando posição do personagem, itens coletados e status das fases sem falhas ou perda de dados."
+6 | Carregar missões | Salvar as missões para progresso | O jogo deve ficar atualizando se as missões foram concluídas."
+7 | Jogar minigames | Caso erre, pode jogar novamente | O jogo vai da opção de jogar o minigame novamente até conseguir"
 
 Esses testes garantem que as principais mecânicas do jogo estejam funcionando corretamente ao longo do desenvolvimento e das iterações nas sprints 2 a 4.
 
