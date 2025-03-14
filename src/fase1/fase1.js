@@ -2741,9 +2741,8 @@ if (window.fase1Initialized) {
         
         // Array de possíveis caminhos para o minigame.js
         const possiblePaths = [
-          'src/fase/minigame.js',
-          'src/fase1/minigame.js',     // Caminho absoluto na raiz do servidor
-          'minigame.js',                // Último recurso (caminho relativo simples)
+          'src/fase1/minigame.js',
+          'src/fase1/minigame.js',     // Caminho absoluto
         ];
         
         // Função para tentar o próximo caminho
