@@ -500,6 +500,7 @@ function iniciarFase1() {
   try {
     // Tentar várias versões do caminho'; // Caminho absoluto em vez de relativo
     const possiblePaths = [
+      '../fase1/fase1.js',
       '/src/fase1/fase1.js',
       '../fase1/fase1.js',
       'src/fase1/fase1.js',
