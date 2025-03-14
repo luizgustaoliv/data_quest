@@ -370,26 +370,58 @@ function createFaseCard(fase) {
             }
           } else {
             // Carregar o script da fase 1 dinamicamente
-            const scriptElement = document.createElement('script');
-            // Usar caminho absoluto para evitar erros de resolução
-            scriptElement.src = 'src/fase1/fase1.js';
-            scriptElement.onload = () => {
-              console.log('Script da Fase 1 carregado com sucesso!');
-              if (!window.Phaser) {
-                const phaserScript = document.createElement('script');
-                phaserScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js';
-                phaserScript.onload = () => iniciarFase1();
-                document.head.appendChild(phaserScript);
-              } else {
-                iniciarFase1();
+            // Detectar o caminho base para GitHub Pages ou ambiente local
+            const baseUrl = window.location.pathname.includes('.github.io/') 
+              ? '/' + window.location.pathname.split('/')[1] 
+              : '';
+            
+            // Tentar várias versões do caminho
+            const possiblePaths = [
+              `${baseUrl}/src/fase1/fase1.js`,
+              './src/fase1/fase1.js',
+              '../fase1/fase1.js',
+              'src/fase1/fase1.js',
+              './fase1/fase1.js',
+              window.location.origin + `${baseUrl}/src/fase1/fase1.js`
+            ];
+            
+            console.log("Tentando carregar fase1.js com os seguintes caminhos:", possiblePaths);
+            
+            // Função para tentar cada caminho
+            const tryLoadScript = (paths, index) => {
+              if (index >= paths.length) {
+                console.error("Todos os caminhos falharam ao carregar fase1.js");
+                alert("Erro ao carregar a Fase 1. Por favor, tente novamente.");
+                overlay.classList.remove('active');
+                return;
               }
+              
+              const scriptElement = document.createElement('script');
+              scriptElement.src = paths[index];
+              
+              scriptElement.onload = () => {
+                console.log(`Script da Fase 1 carregado com sucesso de ${paths[index]}!`);
+                if (!window.Phaser) {
+                  const phaserScript = document.createElement('script');
+                  phaserScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js';
+                  phaserScript.onload = () => iniciarFase1();
+                  document.head.appendChild(phaserScript);
+                } else {
+                  iniciarFase1();
+                }
+              };
+              
+              scriptElement.onerror = () => {
+                console.error(`Erro ao carregar o script da Fase 1 de ${paths[index]}! Tentando próximo caminho...`);
+                // Tentar o próximo caminho
+                tryLoadScript(paths, index + 1);
+              };
+              
+              document.head.appendChild(scriptElement);
             };
-            scriptElement.onerror = () => {
-              console.error('Erro ao carregar o script da Fase 1!');
-              alert('Ocorreu um erro ao carregar a Fase 1. Por favor, tente novamente.');
-              overlay.classList.remove('active');
-            };
-            document.body.appendChild(scriptElement);
+            
+            // Iniciar tentativa de caminhos
+            tryLoadScript(possiblePaths, 0);
           }
         } 
         else if (fase.number === 2) {
@@ -465,14 +497,25 @@ function createFaseCard(fase) {
   status.className = `fase-status ${fase.status}`;
   
   const statusText = document.createElement('span');
-  statusText.className = 'status-text';
-  statusText.textContent = fase.status === 'available' ? 'DISPONÍVEL' : 'BLOQUEADA';
+  try {
+    // Detectar o caminho base para GitHub Pages ou ambiente local
+    const baseUrl = window.location.pathname.includes('.github.io/') 
+      ? '/' + window.location.pathname.split('/')[1] 
+      : '';
+    
+    // Tentar várias versões do caminho com base no ambiente
+    const possiblePaths = [
+      `${baseUrl}/src/fase1/fase1.js`,
+      './src/fase1/fase1.js',
+      '../fase1/fase1.js',
+      'src/fase1/fase1.js',
+      './fase1/fase1.js',
+      window.location.origin + `${baseUrl}/src/fase1/fase1.js`
+    ];
+  } catch (e) {
+    console.error("Erro ao determinar caminhos:", e);
+  }
   
-  status.appendChild(statusText);
-  
-  // Montar o card
-  card.appendChild(header);
-  card.appendChild(preview);
   card.appendChild(description);
   card.appendChild(status);
   
@@ -500,11 +543,10 @@ function iniciarFase1() {
   try {
     // Tentar várias versões do caminho'; // Caminho absoluto em vez de relativo
     const possiblePaths = [
-      'src/fase1/fase1.js',
       '/src/fase1/fase1.js',
       '../fase1/fase1.js',
       'src/fase1/fase1.js',
-      window.location.origin + 'src/fase1/fase1.js'
+      window.location.origin + '/src/fase1/fase1.js'
     ];
     
     // Função para tentar cada caminho
