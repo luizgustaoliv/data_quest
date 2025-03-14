@@ -372,7 +372,7 @@ function createFaseCard(fase) {
             // Carregar o script da fase 1 dinamicamente
             const scriptElement = document.createElement('script');
             // Usar caminho relativo para evitar erros de resolução
-            scriptElement.src = './src/fase1/fase1.js';
+            scriptElement.src = 'src/fase1/fase1.js';
             scriptElement.onload = () => {
               console.log('Script da Fase 1 carregado com sucesso!');
               if (!window.Phaser) {
@@ -403,6 +403,44 @@ function createFaseCard(fase) {
           console.log("Fase 3 ainda não implementada");
           alert("Fase 3 em desenvolvimento!");
           overlay.classList.remove('active');
+        }
+        else if (fase.number === 4) {
+          console.log("Carregando Minigame como cena...");
+          
+          // Verifica se o script do minigame já foi carregado
+          if (window.minigameInitialized) {
+            console.log("Minigame.js já carregado, iniciando o minigame imediatamente.");
+            if (!window.Phaser) {
+              const phaserScript = document.createElement('script');
+              phaserScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js';
+              phaserScript.onload = () => iniciarMinigame();
+              document.head.appendChild(phaserScript);
+            } else {
+              iniciarMinigame();
+            }
+          } else {
+            // Carregar o script do minigame dinamicamente
+            const scriptElement = document.createElement('script');
+            // Usar caminho relativo para evitar erros de resolução
+            scriptElement.src = './src/minigame/minigame.js';
+            scriptElement.onload = () => {
+              console.log('Script do Minigame carregado com sucesso!');
+              if (!window.Phaser) {
+                const phaserScript = document.createElement('script');
+                phaserScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js';
+                phaserScript.onload = () => iniciarMinigame();
+                document.head.appendChild(phaserScript);
+              } else {
+                iniciarMinigame();
+              }
+            };
+            scriptElement.onerror = () => {
+              console.error('Erro ao carregar o script do Minigame!');
+              alert('Ocorreu um erro ao carregar o Minigame. Por favor, tente novamente.');
+              overlay.classList.remove('active');
+            };
+            document.body.appendChild(scriptElement);
+          }
         }
         else {
           console.log(`Selecionada fase ${fase.number}`);
@@ -500,10 +538,10 @@ function iniciarFase1() {
   try {
     // Tentar várias versões do caminho'; // Caminho absoluto em vez de relativo
     const possiblePaths = [
-      '/src/fase1/fase1.js',
-      '../fase1/fase1.js',
       'src/fase1/fase1.js',
-      window.location.origin + '/src/fase1/fase1.js'
+      '..fase1/fase1.js',
+      'src/fase1/fase1.js',
+      window.location.origin + 'src/fase1/fase1.js'
     ];
     
     // Função para tentar cada caminho
