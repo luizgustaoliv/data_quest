@@ -372,7 +372,7 @@ function createFaseCard(fase) {
             // Carregar o script da fase 1 dinamicamente
             const scriptElement = document.createElement('script');
             // Usar caminho absoluto para evitar erros de resolução
-            scriptElement.src = '/src/fase1/fase1.js';
+            scriptElement.src = '../fase1/fase1.js';
             scriptElement.onload = () => {
               console.log('Script da Fase 1 carregado com sucesso!');
               if (!window.Phaser) {
