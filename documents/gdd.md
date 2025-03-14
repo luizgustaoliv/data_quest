@@ -434,9 +434,7 @@ código de texto dos diálogos com o faxineiro
 
 ## HUD
 
-
-<img src="../assets/hud.png" width="500">
-<img src="../assets/hud2.png" width="500">
+<img src="../assets/hud2.png" width="250"> <img src="../assets/hud.png" width="500">
 Código da implementação da Hud de missões
 
 ## Próximos passos
