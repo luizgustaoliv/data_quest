@@ -427,12 +427,16 @@ código de implementação dos mini games
 ## Diálogos dos npcs
 
 Na construção dos diálogo
+
+
 <img src="../assets/diálogos.png" width="500">
 código de texto dos diálogos com o faxineiro
 
 ## HUD
 
 Na construção da Hud do jogo buscamos um desingn
+
+
 <img src="../assets/hud2.png" width="250"> <img src="../assets/hud.png" width="500">
 Código da implementação da Hud de missões
 
