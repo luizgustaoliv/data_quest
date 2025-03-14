@@ -371,10 +371,26 @@ function createFaseCard(fase) {
           } else {
             // Carregar o script da fase 1 dinamicamente
             const scriptElement = document.createElement('script');
-            // Usar caminho absoluto para evitar erros de resolução
-            scriptElement.src = '/src/fase1/fase1.js';
+            
+            // Detectar base URL para funcionar tanto localmente quanto no GitHub Pages
+            const baseUrl = window.location.pathname.includes('2025-1A-T19-IN01-G04') 
+              ? '/2025-1A-T19-IN01-G04' // Adiciona prefixo do repositório para GitHub Pages
+              : '';
+            
+            // Tentar múltiplos caminhos possíveis
+            const tryPaths = [
+              `${baseUrl}/src/fase1/fase1.js`,
+              'src/fase1/fase1.js',
+              '../fase1/fase1.js',
+              './fase1/fase1.js',
+              `${window.location.origin}${baseUrl}/src/fase1/fase1.js`
+            ];
+            
+            console.log('Tentando carregar fase1.js de:', tryPaths[0]);
+            scriptElement.src = tryPaths[0];
+            
             scriptElement.onload = () => {
-              console.log('Script da Fase 1 carregado com sucesso!');
+              console.log(`Script da Fase 1 carregado com sucesso de ${scriptElement.src}!`);
               if (!window.Phaser) {
                 const phaserScript = document.createElement('script');
                 phaserScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js';
@@ -384,10 +400,18 @@ function createFaseCard(fase) {
                 iniciarFase1();
               }
             };
+            
+            // Contador para tentar caminhos alternativos
+            let pathIndex = 1;
             scriptElement.onerror = () => {
-              console.error('Erro ao carregar o script da Fase 1!');
-              alert('Ocorreu um erro ao carregar a Fase 1. Por favor, tente novamente.');
-              overlay.classList.remove('active');
+              if (pathIndex < tryPaths.length) {
+                console.log(`Falha ao carregar de ${scriptElement.src}, tentando próximo caminho: ${tryPaths[pathIndex]}`);
+                scriptElement.src = tryPaths[pathIndex++];
+              } else {
+                console.error('Erro ao carregar o script da Fase 1! Todos os caminhos falharam.');
+                alert('Ocorreu um erro ao carregar a Fase 1. Por favor, tente novamente.');
+                overlay.classList.remove('active');
+              }
             };
             document.body.appendChild(scriptElement);
           }
