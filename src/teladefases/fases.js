@@ -503,7 +503,7 @@ function iniciarFase1() {
       '/src/fase1/fase1.js',
       '../fase1/fase1.js',
       'src/fase1/fase1.js',
-      window.location.origin + '/src/fase1/fase1.js'
+      window.location.origin + '../fase1/fase1.js'
     ];
     
     // Função para tentar cada caminho
