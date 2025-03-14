@@ -417,14 +417,32 @@ Ilustrações do Desenvolvimento:
 
 *Descreva e ilustre aqui o desenvolvimento da versão intermediária do jogo, explicando brevemente o que foi entregue em termos de código e jogo. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
 
-Em termos de código, no decorrer da sprint, os principais pontos do desenvolvimento foram:
-## HUD
-
-<img src="../assets/hud.png" width="500">
-Código da implementação da Hud de missões
+Em termos de código, os principais pontos do desenvolvimento foram:
 
 ## Minigames
+
+O jogo ja se encontra com 4 mini games na fase 1
+<img src="../assets/minigame.png" width="500">
+código de implementação dos mini games
+
 ## Diálogos dos npcs
+
+
+<img src="../assets/diálogos.png" width="500">
+código de texto dos diálogos com o faxineiro
+
+## HUD
+
+
+<img src="../assets/hud.png" width="500">
+<img src="../assets/hud2.png" width="500">
+Código da implementação da Hud de missões
+
+## Próximos passos
+
+Para a próxima sprint, até o momento, a ideia é focar no desenvolvimento de um sistema de criação de personagens para aumentar a diversidade, além da implementação de efeitos sonoros e músicas que se encaixam na arte do jogo.
+
+Além disso, vamos definir as mecânicas principais da fase 2, que se passa na biblioteca.
 
 ## 4.4. Desenvolvimento final do MVP (sprint 4)
 
