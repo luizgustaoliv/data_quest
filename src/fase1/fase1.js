@@ -784,7 +784,7 @@ if (window.fase1Initialized) {
     this.load.image("professorNpc4", "assets/sprite_prof.png");
     this.load.image("elevator", "assets/animated_elevator_door_entrance_2_32x32.gif");
     this.load.image("background", "assets/fase1/background.png");
-    this.load.tilemapTiledJSON("map", ".assets/fase1/tileset.json");
+    this.load.tilemapTiledJSON("map", "assets/fase1/tileset.json");
     this.load.image("player1big", "assets/personagem/personagem1Big.png");
     this.load.image("keycard", "assets/fase1/Spritegrande.png");
     this.load.image("key", "assets/fase1/chavesprite.png");
