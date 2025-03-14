@@ -20,7 +20,7 @@ if (window.fase1Initialized) {
   // Adicionar referências ao CSS e à fonte - estas não dependem do Phaser
   const styleLink = document.createElement('link');
   styleLink.rel = 'stylesheet';
-  styleLink.href = '../../assets/fase1/style.css';
+  styleLink.href = 'assets/fase1/style.css';
   document.head.appendChild(styleLink);
 
   // Adicionar título e meta tags ao head
@@ -189,10 +189,10 @@ if (window.fase1Initialized) {
   }
 
   // Criar cards de personagens
-  charactersGrid.appendChild(createCharacterCard('1', 'Personagem 1', '../../assets/personagem/personagem1Big.png', 'player1'));
-  charactersGrid.appendChild(createCharacterCard('2', 'Personagem 2', '../../assets/personagem/personagem2Big.png', 'player2'));
-  charactersGrid.appendChild(createCharacterCard('3', 'Personagem 3', '../../assets/personagem/personagem3Big.png', 'player3'));
-  charactersGrid.appendChild(createCharacterCard('4', 'Personagem 4', '../../assets/personagem/personagem4Big.png', 'player4'));
+  charactersGrid.appendChild(createCharacterCard('1', 'Personagem 1', 'assets/personagem/personagem1Big.png', 'player1'));
+  charactersGrid.appendChild(createCharacterCard('2', 'Personagem 2', 'assets/personagem/personagem2Big.png', 'player2'));
+  charactersGrid.appendChild(createCharacterCard('3', 'Personagem 3', 'assets/personagem/personagem3Big.png', 'player3'));
+  charactersGrid.appendChild(createCharacterCard('4', 'Personagem 4', 'assets/personagem/personagem4Big.png', 'player4'));
 
   characterSelect.appendChild(charactersGrid);
 
@@ -204,7 +204,7 @@ if (window.fase1Initialized) {
   backButton.id = 'back-button';
   backButton.textContent = 'VOLTAR';
   backButton.onclick = function() {
-    window.location.href = '../teladefases/fases.html';
+    window.location.href = 'teladefases/fases.js';
   };
   navigationButtons.appendChild(backButton);
 
@@ -217,7 +217,7 @@ if (window.fase1Initialized) {
 
   const keycardIconElement = document.createElement('img');
   keycardIconElement.id = 'keycard-icon';
-  keycardIconElement.src = '../../assets/fase1/Spritegrande.png';
+  keycardIconElement.src = 'assets/fase1/Spritegrande.png';
   keycardIconElement.alt = 'Keycard';
   keycardContainer.appendChild(keycardIconElement);
 
@@ -234,7 +234,7 @@ if (window.fase1Initialized) {
 
   const keyIcon = document.createElement('img');
   keyIcon.id = 'key-icon';
-  keyIcon.src = '../../assets/fase1/chavesprite.png';
+  keyIcon.src = 'assets/fase1/chavesprite.png';
   keyIcon.alt = 'Key';
   keyContainer.appendChild(keyIcon);
 
@@ -737,100 +737,100 @@ if (window.fase1Initialized) {
 
   // Função para pré-carregar os assets do jogo
   function preload() {
-    this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", {
+    this.load.spritesheet("player1", "assets/fase1/players/player1.png", {
       frameWidth: 64,
       frameHeight: 64,
     });
-    this.load.spritesheet("player2", "../../assets/fase1/players/player2.png", {
+    this.load.spritesheet("player2", "assets/fase1/players/player2.png", {
       frameWidth: 64,
       frameHeight: 64,
     });
-    this.load.spritesheet("player3", "../../assets/fase1/players/player3.png", {
+    this.load.spritesheet("player3", "assets/fase1/players/player3.png", {
       frameWidth: 64,
       frameHeight: 64,
     });
-    this.load.spritesheet("player4", "../../assets/fase1/players/player4.png", {
+    this.load.spritesheet("player4", "assets/fase1/players/player4.png", {
       frameWidth: 64,
       frameHeight: 64,
     });
-    this.load.spritesheet("personagemDialogo1", "../../assets/dialogos/personagemDialogo1.png", {
+    this.load.spritesheet("personagemDialogo1", "assets/dialogos/personagemDialogo1.png", {
       frameWidth: 225,  // Reduzido novamente
       frameHeight: 300  // Também ajuste a altura
     });
-    this.load.spritesheet("personagemDialogo2", "../../assets/dialogos/personagemDialogo2.png", {
+    this.load.spritesheet("personagemDialogo2", "assets/dialogos/personagemDialogo2.png", {
       frameWidth: 225,
       frameHeight: 300
     });
-    this.load.spritesheet("personagemDialogo3", "../../assets/dialogos/personagemDialogo3.png", {
+    this.load.spritesheet("personagemDialogo3", "assets/dialogos/personagemDialogo3.png", {
       frameWidth: 225,
       frameHeight: 300
     });
-    this.load.spritesheet("personagemDialogo4", "../../assets/dialogos/personagemDialogo4.png", {
+    this.load.spritesheet("personagemDialogo4", "assets/dialogos/personagemDialogo4.png", {
       frameWidth: 225,
       frameHeight: 300
     });
-    this.load.spritesheet("door1", "../../assets/fase1/door.png", {
+    this.load.spritesheet("door1", "assets/fase1/door.png", {
       frameWidth: 32,
       frameHeight: 64
     });
-    this.load.spritesheet("door2", "../../assets/fase1/door.png", {
+    this.load.spritesheet("door2", "assets/fase1/door.png", {
       frameWidth: 32,
       frameHeight: 64
     });
-    this.load.image("npc1", "../../assets/npc.png");
-    this.load.image("professorNpc", "../../assets/sprite_prof.png");
-    this.load.image("professorNpc2", "../../assets/sprite_prof.png");
-    this.load.image("professorNpc3", "../../assets/sprite_prof.png");
-    this.load.image("professorNpc4", "../../assets/sprite_prof.png");
-    this.load.image("elevator", "../../assets/animated_elevator_door_entrance_2_32x32.gif");
-    this.load.image("background", "../../assets/fase1/background.png");
-    this.load.tilemapTiledJSON("map", "../../assets/fase1/tileset.json");
-    this.load.image("player1big", "../../assets/personagem/personagem1Big.png");
-    this.load.image("keycard", "../../assets/fase1/Spritegrande.png");
-    this.load.image("key", "../../assets/fase1/chavesprite.png");
+    this.load.image("npc1", "assets/npc.png");
+    this.load.image("professorNpc", "assets/sprite_prof.png");
+    this.load.image("professorNpc2", "assets/sprite_prof.png");
+    this.load.image("professorNpc3", "assets/sprite_prof.png");
+    this.load.image("professorNpc4", "assets/sprite_prof.png");
+    this.load.image("elevator", "assets/animated_elevator_door_entrance_2_32x32.gif");
+    this.load.image("background", "assets/fase1/background.png");
+    this.load.tilemapTiledJSON("map", ".assets/fase1/tileset.json");
+    this.load.image("player1big", "assets/personagem/personagem1Big.png");
+    this.load.image("keycard", "assets/fase1/Spritegrande.png");
+    this.load.image("key", "assets/fase1/chavesprite.png");
     this.load.image(
       "3_Bathroom_32x32",
-      "../../assets/fase1/3_Bathroom_32x32.png"
+      "assets/fase1/3_Bathroom_32x32.png"
     );
     this.load.image(
       "5_Classroom_and_library_32x32",
-      "../../assets/fase1/5_Classroom_and_library_32x32.png" // Added .png
+      "assets/fase1/5_Classroom_and_library_32x32.png" // Added .png
     );
     this.load.image(
       "13_Conference_Hall_32x32",
-      "../../assets/fase1/13_Conference_Hall_32x32.png" // Added .png
+      "assets/fase1/13_Conference_Hall_32x32.png" // Added .png
     );
     this.load.image(
       "14_Basement_32x32",
-      "../../assets/fase1/14_Basement_32x32.png" // Added .png
+      "assets/fase1/14_Basement_32x32.png" // Added .png
     );
     this.load.image(
       "16_Grocery_store_32x32",
-      "../../assets/fase1/16_Grocery_store_32x32.png" // Added .png
+      "assets/fase1/16_Grocery_store_32x32.png" // Added .png
     );
     this.load.image(
       "18_Jail_32x32",
-      "../../assets/fase1/18_Jail_32x32.png"
+      "assets/fase1/18_Jail_32x32.png"
     );
     this.load.image(
       "19_Hospital_32x32",
-      "../../assets/fase1/19_Hospital_32x32.png"
+      "assets/fase1/19_Hospital_32x32.png"
     );
     this.load.image(
       "23_Television_and_Film_Studio_32x32",
-      "../../assets/fase1/23_Television_and_Film_Studio_32x32.png" // Added .png
+      "assets/fase1/23_Television_and_Film_Studio_32x32.png" // Added .png
     );
     this.load.image(
       "25_Shooting_Range_32x32",
-      "../../assets/fase1/25_Shooting_Range_32x32.png" // Added .png
+      "assets/fase1/25_Shooting_Range_32x32.png" // Added .png
     );
     this.load.image(
       "Room_Builder_32x32",
-      "../../assets/fase1/Room_Builder_32x32.png" // Added .png
+      "assets/fase1/Room_Builder_32x32.png" // Added .png
     );
     // Carregar sprite do professor para o diálogo
     // Se houver apenas 1 frame para o faxineiro, use um .image ao invés do .spritesheet
-    this.load.image("faxineiroDialogo", "../../assets/dialogos/faxineiro.png");
+    this.load.image("faxineiroDialogo", "assets/dialogos/faxineiro.png");
   }
 
   // Função para criar a cena principal do jogo
@@ -1042,7 +1042,7 @@ if (window.fase1Initialized) {
           localStorage.setItem("selectedCharacter", selectedCharacter);
           document.body.classList.add("fade-out");
           setTimeout(() => {
-            window.location.replace("../fase2/fase2.html");
+            window.location.replace("fase2.html");
           }, 1200);
         } else {
           // Mostrar mensagem informando que precisa da chave
@@ -2742,9 +2742,9 @@ if (window.fase1Initialized) {
         // Array de possíveis caminhos para o minigame.js
         const possiblePaths = [
           './minigame.js',                                  // Mesmo diretório
-          '../../src/fase1/minigame.js',                    // A partir da raiz
-          '../minigame/minigame.js',                        // Diretório irmão 
-          '../minigames/minigame.js',                       // Diretório irmão (plural)
+          '.src/fase1/minigame.js',                    // A partir da raiz
+          'minigame/minigame.js',                        // Diretório irmão 
+          'minigames/minigame.js',                       // Diretório irmão (plural)
           '/src/fase1/minigame.js',                         // Caminho absoluto na raiz do servidor
           'minigame.js'                                     // Último recurso (caminho relativo simples)
         ];
@@ -4506,10 +4506,10 @@ function startMinigame(scene, professorId) {
 // Garantir que o script minigame.js seja carregado corretamente
 function loadMinigameScript(callback) {
     const script = document.createElement('script');
-    script.src = '../../src/fase1/minigame.js'; // Corrigir o caminho do script
+    script.src = 'src/fase1/minigame.js'; // Corrigir o caminho do script
     script.onload = callback;
     script.onerror = function() {
-        console.error("Erro ao carregar o script do caminho: ../../src/fase1/minigame.js");
+        console.error("Erro ao carregar o script do caminho: src/fase1/minigame.js");
     };
     document.head.appendChild(script);
 }
