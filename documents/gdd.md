@@ -422,6 +422,7 @@ Em termos de código, os principais pontos do desenvolvimento foram:
 ## Minigames
 
 O jogo ja se encontra com 4 mini games na fase 1
+
 <img src="../assets/minigame.png" width="500">
 código de implementação dos mini games
 
