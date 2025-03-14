@@ -1,0 +1,462 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Remover pseudo-elemento para não conflitar com nosso background */
+body::before {
+    display: none !important;
+}
+
+/* Background com múltiplas opções de caminho para garantir que carregue */
+#background-image-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/telafases/fundofases.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(2px) brightness(0.7);
+    z-index: -2;
+    animation: slowPulse 10s infinite alternate;
+}
+
+/* Background image fallback */
+.background-fallback {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(2px) brightness(0.7);
+    z-index: -3;
+}
+
+/* Background overlay */
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+    z-index: -1;
+}
+
+/* Game container */
+#game-container {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: transparent;
+}
+
+/* Partículas */
+#particles-container-back, #particles-container-front {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#particles-container-back {
+    z-index: -1;
+}
+
+#particles-container-front {
+    z-index: 1;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float linear infinite;
+}
+
+.particle.blur {
+    filter: blur(1px);
+}
+
+.particle.glow {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.mouse-particle {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.8;
+    transition: transform 0.5s, opacity 1s;
+}
+
+/* Logo */
+#logo-container {
+    text-align: center;
+    margin-bottom: 15px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.5s ease-out;
+    position: relative;
+    z-index: 2;
+}
+
+#logo-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#logo-container h2 {
+    color: #fff;
+    font-size: 32px;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+/* Contêiner principal */
+#fase-container {
+    width: 90%;
+    max-width: 1200px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #6c8fd6;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(76, 175, 80, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-out;
+    position: relative;
+    z-index: 2;
+}
+
+#fase-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#fase-container::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 1px solid rgba(108, 143, 214, 0.5);
+    border-radius: 7px;
+    pointer-events: none;
+}
+
+/* Título */
+#fase-title {
+    font-size: 22px;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #4CAF50;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    letter-spacing: 2px;
+}
+
+/* Grid de fases */
+.botoes-fase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+/* Cards de fase */
+.fase-card {
+    background: rgba(35, 35, 60, 0.8);
+    border: 2px solid #4a6eb5;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.fase-card:not(.locked):hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(74, 110, 181, 0.4);
+    border-color: #6c8fd6;
+}
+
+.fase-card.locked {
+    filter: grayscale(60%);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Cabeçalho do card */
+.fase-header {
+    background: linear-gradient(to right, #4a6eb5, #2a4e95);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #1a3e85;
+}
+
+.fase-number {
+    background: #fff;
+    color: #000;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-right: 15px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.fase-header h2 {
+    font-size: 16px;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+/* Preview da fase */
+.fase-preview {
+    position: relative;
+    height: 340px;
+    overflow: hidden;
+}
+
+.fase-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.fase-card:not(.locked):hover .fase-preview img {
+    transform: scale(1.05);
+}
+
+/* Overlay de bloqueio */
+.lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cadeado {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    animation: pulse 2s infinite alternate;
+}
+
+/* Descrição da fase */
+.fase-description {
+    padding: 12px;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+.fase-description p {
+    font-size: 10px;
+    line-height: 1.6;
+    color: #ccc;
+}
+
+/* Status da fase */
+.fase-status {
+    padding: 10px;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.fase-status.available {
+    background: #4CAF50;
+}
+
+.fase-status.locked {
+    background: #FF5252;
+}
+
+/* Botões de navegação */
+.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#back-button {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid #555;
+}
+
+#back-button:hover {
+    background: #555;
+    transform: translateY(-2px);
+}
+
+/* Efeito de transição */
+#transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
+
+#transition-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Animações */
+@keyframes pulse {
+    0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5)); }
+    100% { transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)); }
+}
+
+@keyframes slowPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh) translateX(-10px); }
+    100% { transform: translateY(-10vh) translateX(10px); }
+}
+
+.transition-in {
+    animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsividade - manter igual ao original */
+@media (max-width: 768px) {
+    .botoes-fase {
+        grid-template-columns: 1fr;
+    }
+    
+    #game-logo {
+        max-width: 80%;
+    }
+    
+    #fase-title {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    
+    .fase-preview {
+        height: 200px;
+    }
+    
+    .fase-header {
+        padding: 10px;
+    }
+    
+    .fase-header h2 {
+        font-size: 12px;
+    }
+    
+    .fase-description p {
+        font-size: 8px;
+    }
+    
+    .navigation-buttons {
+        margin-top: 10px;
+    }
+    
+    #back-button {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+}
+
+/* Para telas muito pequenas */
+@media (max-height: 650px) {
+    #fase-container {
+        padding: 15px;
+    }
+    
+    #fase-title {
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+    
+    .botoes-fase {
+        gap: 15px;
+    }
+    
+    .fase-preview {
+        height: 160px;
+    }
+    
+    .fase-description {
+        min-height: 50px;
+    }
+    
+    #logo-container {
+        margin-bottom: 10px;
+    }
+    
+    #back-button {
+        padding: 8px 15px;
+    }
+}
