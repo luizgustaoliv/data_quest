@@ -372,7 +372,7 @@ function createFaseCard(fase) {
             // Carregar o script da fase 1 dinamicamente
             const scriptElement = document.createElement('script');
             // Usar caminho absoluto para evitar erros de resolução
-            scriptElement.src = '../fase1/fase1.js';
+            scriptElement.src = 'src/fase1/fase1.js';
             scriptElement.onload = () => {
               console.log('Script da Fase 1 carregado com sucesso!');
               if (!window.Phaser) {
@@ -500,11 +500,11 @@ function iniciarFase1() {
   try {
     // Tentar várias versões do caminho'; // Caminho absoluto em vez de relativo
     const possiblePaths = [
-      '../fase1/fase1.js',
+      'src/fase1/fase1.js',
       '/src/fase1/fase1.js',
       '../fase1/fase1.js',
       'src/fase1/fase1.js',
-      window.location.origin + '../fase1/fase1.js'
+      window.location.origin + 'src/fase1/fase1.js'
     ];
     
     // Função para tentar cada caminho
