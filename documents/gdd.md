@@ -415,31 +415,30 @@ Ilustrações do Desenvolvimento:
 
 ## 4.3. Desenvolvimento intermediário do jogo (sprint 3)
 
-*Descreva e ilustre aqui o desenvolvimento da versão intermediária do jogo, explicando brevemente o que foi entregue em termos de código e jogo. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
-
 Em termos de código, os principais pontos do desenvolvimento foram:
 
 ## Minigames
 
-O jogo ja se encontra com 4 mini games na fase 1
+O jogo ja se encontra com 4 mini games na fase 1, buscamos realizar com jogos clássicos para que seja mais intuitivo de joga_los, os 4 mini games são: perguntas sobre conceitos gerais da LGPD, jogo da forca com termos da LGPD, jogo da memória em que o jogador deve relacionar dois pares de palavras com um sendo um termo e o outro o conceito e um jogo de classificação de conteudo pessoal ou conteúdo sensível dada as informações do mini game.
 
 <img src="../assets/minigame.png" width="500">
 código de implementação dos mini games
 
 ## Diálogos dos npcs
 
-
+Na construção dos diálogo
 <img src="../assets/diálogos.png" width="500">
 código de texto dos diálogos com o faxineiro
 
 ## HUD
 
+Na construção da Hud do jogo buscamos um desingn
 <img src="../assets/hud2.png" width="250"> <img src="../assets/hud.png" width="500">
 Código da implementação da Hud de missões
 
 ## Próximos passos
 
-Para a próxima sprint, até o momento, a ideia é focar no desenvolvimento de um sistema de criação de personagens para aumentar a diversidade, além da implementação de efeitos sonoros e músicas que se encaixam na arte do jogo.
+Para a próxima sprint, até o momento, a ideia é focar no desenvolvimento de um sistema de criação de personagens para aumentar a diversidade, implementação de efeitos sonoros e músicas que se encaixam na arte do jogo, além de organização do código como um todo, já que durante o decorrer dessa sprint, percebemos que algumas linha de código não estavam fáceis de compreender
 
 Além disso, vamos definir as mecânicas principais da fase 2, que se passa na biblioteca.
 
