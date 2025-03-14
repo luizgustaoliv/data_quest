@@ -44,7 +44,7 @@ Além das batalhas, há elementos de exploração e furtividade. Os corredores d
 ### 🏗 Status do Projeto
 O jogo ainda está em desenvolvimento, com a estrutura principal e mecânicas sendo refinadas. Estamos trabalhando na criação das fases, batalhas e sistema de perguntas para tornar a experiência envolvente e educativa.
 
-Link para o jogo: (https://inteli-college.github.io/2025-1A-T19-IN01-G04/inicial.html)
+Link para o jogo: (https://inteli-college.github.io/2025-1A-T19-IN01-G04/index.html)
 
 ## 📁 Estrutura de pastas
 
