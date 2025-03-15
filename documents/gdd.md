@@ -417,7 +417,7 @@ Ilustrações do Desenvolvimento:
 
 Em termos de código, os principais pontos do desenvolvimento foram:
 
-## Minigames
+### Minigames
 
 O jogo ja se encontra com 4 mini games na fase 1, buscamos realizar com jogos clássicos para que seja mais intuitivo de joga_los, os 4 mini games são: perguntas sobre conceitos gerais da LGPD, jogo da forca com termos da LGPD, jogo da memória em que o jogador deve relacionar dois pares de palavras com um sendo um termo e o outro o conceito e um jogo de classificação de conteudo pessoal ou conteúdo sensível dada as informações do mini game.
 
@@ -448,7 +448,7 @@ Código de implementação dos mini games:
         
 ```
 
-## Diálogos dos npcs
+### Diálogos dos npcs
 
 Na construção dos diálogo:
 
@@ -503,7 +503,6 @@ Na construção dos diálogo:
 ```
 
 
-<img src="../assets/diálogos.png" width="500">
 código de texto dos diálogos com o faxineiro:
 
 ```javascript
@@ -560,11 +559,12 @@ código de texto dos diálogos com o faxineiro:
       ];
 ```
 
-## HUD
+### HUD
 
 Na construção da Hud do jogo buscamos um design simples e eficaz.
 
 <img src="../assets/hud2.png" width="250"> <img src="../assets/hud.png" width="500">
+
 Código da implementação da Hud de missões:
 
 ```javascript
@@ -702,11 +702,11 @@ Código da implementação da Hud de missões:
   }, 2000);
 ```
 
-## Próximos passos
+## Dificuldades e Próximos passos
 
-Para a próxima sprint, até o momento, a ideia é focar no desenvolvimento de um sistema de criação de personagens para aumentar a diversidade, implementação de efeitos sonoros e músicas que se encaixam na arte do jogo, além de organização do código como um todo, já que durante o decorrer dessa sprint, percebemos que algumas linha de código não estavam fáceis de compreender
+Sobre o desenvolvimento do código na sprint, encontramos algumas dificuldades, tais como a implementação da animação da porta e o funcionamento de sua colisão. Outra dificuldade que tomou muito do nosso tempo, foi a organização do código em html para javascript, porém esses problemas já foram solucionados
 
-Além disso, vamos definir as mecânicas principais da fase 2, que se passa na biblioteca.
+Para a próxima sprint, até o momento, a ideia é focar no desenvolvimento de um sistema de criação de personagens para aumentar a diversidade, implementação de efeitos sonoros e músicas que se encaixam na arte do jogo, além de organização do código como um todo, já que durante o decorrer dessa sprint, percebemos que algumas linha de código não estavam fáceis de compreender. Além disso, vamos definir as mecânicas principais da fase 2, que se passa na biblioteca.
 
 ## 4.4. Desenvolvimento final do MVP (sprint 4)
 
