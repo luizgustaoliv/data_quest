@@ -1496,6 +1496,20 @@ if (window.fase1Initialized) {
       addCollisionRect(this, 484, 182, 38, 38, 0x00ff00);  // mesas (verde)
       addCollisionRect(this, 484, 245, 38, 38, 0x00ff00);  // mesas (verde)
       addCollisionRect(this, 420, 245, 38, 38, 0x00ff00);  // mesas (verde)
+      addCollisionRect(this, 80, 710, 30, 70, 0x00ff00);  // mesa com agulha (verde)
+      addCollisionRect(this, 80, 610, 30, 70, 0x00ff00);  // mesa com agulha (verde)
+      addCollisionRect(this, 145, 544, 20, 30, 0x00ff00);  // esqueleto sala 2 (verde)
+      addCollisionRect(this, 273, 544, 20, 30, 0x00ff00);  // esqueleto sala 2 (verde)
+      addCollisionRect(this, 423, 555, 65, 30, 0x00ff00);  // mesa de lab, sala 2 (verde)
+      addCollisionRect(this, 497, 544, 20, 30, 0x00ff00);  // esqueleto sala 2 (verde)
+      addCollisionRect(this, 592, 544, 30, 33, 0x00ff00);  // mesinha sala 2 (verde)
+      addCollisionRect(this, 447, 604, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 545, 604, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 545, 670, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 447, 670, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 353, 670, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 353, 604, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 257, 604, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
       addCollisionRect(this, 160, 604, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
       addCollisionRect(this, 257, 670, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
       addCollisionRect(this, 160, 670, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
@@ -1504,17 +1518,30 @@ if (window.fase1Initialized) {
       addCollisionRect(this, 353, 733, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
       addCollisionRect(this, 450, 733, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
       addCollisionRect(this, 544, 733, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
-      
+      addCollisionRect(this, 880, 763, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 945, 763, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1008, 763, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1073, 763, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1136, 763, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1199, 763, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1199, 700, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1136, 700, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1073, 700, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1008, 700, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 945, 700, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 880, 700, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1199, 635, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1136, 635, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1073, 635, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 1008, 635, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 945, 635, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 880, 635, 32, 32, 0x00ff00);  // MESA sala 3 (verde)
+      addCollisionRect(this, 815, 680, 35, 38, 0x00ff00);  // camera sala 3 (verde)
+      addCollisionRect(this, 863, 550, 120, 38, 0x00ff00);  // monitores sala 3 (verde)
+      addCollisionRect(this, 1213, 550, 120, 38, 0x00ff00);  // monitores sala 3 (verde)
+      addCollisionRect(this, 1268, 640, 35, 45, 0x00ff00);  // camera sala 3 (verde)
       // Adicionar colisões para as bordas do mapa se necessário - Azul para bordas
       // Borda superior
-      addCollisionRect(this, map.widthInPixels / 2, -10, map.widthInPixels, 20, 0x0000ff);
-      // Borda inferior
-      addCollisionRect(this, map.widthInPixels / 2, map.heightInPixels + 10, map.widthInPixels, 20, 0x0000ff);
-      // Borda esquerda
-      addCollisionRect(this, -10, map.heightInPixels / 2, 20, map.heightInPixels, 0x0000ff);
-      // Borda direita
-      addCollisionRect(this, map.widthInPixels + 10, map.heightInPixels / 2, 20, map.heightInPixels, 0x0000ff);
-      
       // Instrução de debug no console
       console.log("Debug: pressione F9 para mostrar/ocultar colisões");
 
