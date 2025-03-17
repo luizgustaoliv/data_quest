@@ -44,7 +44,7 @@ function criarInterface() {
   
   const logo = document.createElement('img');
   logo.className = 'logo';
-  logo.src = 'assets/telainicial/logo.png';
+  logo.src = 'assets/loading/logo_data_quest.png';
   
   title.appendChild(logo);
   document.body.appendChild(title);

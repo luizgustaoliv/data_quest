@@ -470,6 +470,102 @@ if (window.fase1Initialized) {
     // Adicionar efeito de transição
     document.getElementById('transition-overlay').classList.add('active');
     
+    // Definir a função setupMissionButtonDirectly antes de usá-la
+    function setupMissionButtonDirectly() {
+      const missionsButton = document.getElementById('missions-button');
+      const missionsPanel = document.getElementById('missions-panel');
+      const missionsOverlay = document.getElementById('missions-overlay');
+      const closeButton = document.getElementById('close-missions');
+      
+      console.log("Configurando botão de missões diretamente:", {
+        botãoEncontrado: !!missionsButton,
+        painelEncontrado: !!missionsPanel,
+        overlayEncontrado: !!missionsOverlay,
+        botãoFecharEncontrado: !!closeButton
+      });
+      
+      if (missionsButton && missionsPanel && missionsOverlay && closeButton) {
+        // Remover todos os event listeners existentes
+        const newMissionsButton = missionsButton.cloneNode(true);
+        missionsButton.parentNode.replaceChild(newMissionsButton, missionsButton);
+        
+        const newCloseButton = closeButton.cloneNode(true);
+        closeButton.parentNode.replaceChild(newCloseButton, closeButton);
+        
+        const newOverlay = missionsOverlay.cloneNode(true);
+        missionsOverlay.parentNode.replaceChild(newOverlay, missionsOverlay);
+        
+        // Configurar o painel e o overlay com estilos fixos
+        missionsPanel.style.display = 'none';
+        missionsPanel.style.position = 'fixed';
+        missionsPanel.style.zIndex = '100000';
+        missionsPanel.style.top = '50%';
+        missionsPanel.style.left = '50%';
+        missionsPanel.style.transform = 'translate(-50%, -50%)';
+        missionsPanel.style.visibility = 'hidden';
+        
+        newOverlay.style.display = 'none';
+        newOverlay.style.position = 'fixed';
+        newOverlay.style.zIndex = '99999';
+        newOverlay.style.top = '0';
+        newOverlay.style.left = '0';
+        newOverlay.style.width = '100%';
+        newOverlay.style.height = '100%';
+        newOverlay.style.visibility = 'hidden';
+        
+        // Configurar novos event listeners
+        function showPanel() {
+          console.log("Botão de missões clicado!");
+          missionsPanel.style.display = 'block';
+          missionsPanel.style.visibility = 'visible';
+          newOverlay.style.display = 'block';
+          newOverlay.style.visibility = 'visible';
+          
+          // Atualizar missões
+          if (typeof window.updateMissions === 'function') {
+            window.updateMissions();
+          }
+        }
+        
+        function hidePanel() {
+          console.log("Fechando painel de missões");
+          missionsPanel.style.display = 'none';
+          missionsPanel.style.visibility = 'hidden';
+          newOverlay.style.display = 'none';
+          newOverlay.style.visibility = 'hidden';
+        }
+        
+        // Adicionar com múltiplos métodos para garantir funcionamento
+        newMissionsButton.addEventListener('click', showPanel);
+        newMissionsButton.onclick = showPanel;
+        
+        newCloseButton.addEventListener('click', hidePanel);
+        newCloseButton.onclick = hidePanel;
+        
+        newOverlay.addEventListener('click', hidePanel);
+        newOverlay.onclick = hidePanel;
+        
+        // Adicionar mensagem visual quando o botão for clicado
+        newMissionsButton.addEventListener('mousedown', function() {
+          console.log("Botão pressionado");
+          this.style.backgroundColor = '#334477';
+        });
+        
+        newMissionsButton.addEventListener('mouseup', function() {
+          console.log("Botão solto");
+          this.style.backgroundColor = '#4a6eb5';
+        });
+        
+        // Também adicionar um método global para depuração
+        window.openMissions = showPanel;
+        window.closeMissions = hidePanel;
+        
+        console.log("Sistema de missões reconfigurado com sucesso!");
+      } else {
+        console.error("Não foi possível encontrar todos os elementos necessários para o sistema de missões");
+      }
+    }
+    
     setTimeout(() => {
       // Esconder elementos da seleção
       document.getElementById("character-select").style.display = "none";
@@ -513,6 +609,12 @@ if (window.fase1Initialized) {
               update: updateMain,
             }
           });
+          
+          // Configurar o sistema de missões após o jogo iniciar
+          setTimeout(() => {
+            console.log("Reconfigurando sistema de missões...");
+            setupMissionButtonDirectly();
+          }, 2000);
         } else {
           console.error("Phaser não está disponível!");
           alert("Erro ao inicializar o jogo. Por favor, recarregue a página.");
@@ -976,10 +1078,11 @@ if (window.fase1Initialized) {
         obj2ColisaoLayer: !!obj2ColisaoLayer
       });
 
-      // Definindo colisões para as camadas COM VERIFICAÇÃO
-      if (colisaoLayer) colisaoLayer.setCollisionByProperty({ collider: true });
-      if (obj2ColisaoLayer) obj2ColisaoLayer.setCollisionByProperty({ collider: true });
+      // Manter colisão apenas para a camada de paredes
       if (paredeLayer) paredeLayer.setCollisionByProperty({ collider: true });
+
+      // NÃO definimos mais colisão para as outras camadas (colisaoLayer, obj2ColisaoLayer)
+      // Em vez disso, vamos criar retângulos de colisão manualmente
 
       // Definir escala apenas para camadas que existem
       if (chaoLayer) chaoLayer.setScale(1);
@@ -1291,8 +1394,132 @@ if (window.fase1Initialized) {
         });
       }
 
+      // Criar grupo de colisões manuais
+      const manualColliders = this.physics.add.staticGroup();
+      
+      // Função para adicionar retângulos de colisão
+      function addCollisionRect(scene, x, y, width, height) {
+        const rect = scene.add.rectangle(x, y, width, height);
+        scene.physics.add.existing(rect, true); // true para estático
+        rect.body.immovable = true;
+        
+        // Adicionar debugging visual se necessário
+        if (scene.physics.config.debug) {
+          rect.setStrokeStyle(2, 0xff0000);
+        } else {
+          rect.setVisible(false); // Invisível em produção
+        }
+        
+        manualColliders.add(rect);
+        return rect;
+      }
+      
+      // Adicionar colisões manuais - ajuste estas coordenadas conforme necessário
+      // Debug flag - Set to true to see collision rectangles
+      const debugCollisions = true;
+
+      // Função modificada para adicionar retângulos de colisão com suporte a debug
+      function addCollisionRect(scene, x, y, width, height, color = 0xff0000) {
+        const rect = scene.add.rectangle(x, y, width, height);
+        scene.physics.add.existing(rect, true); // true para estático
+        rect.body.immovable = true;
+        
+        // Configuração de debug visual
+        if (debugCollisions) {
+          rect.setStrokeStyle(2, color);
+          rect.setFillStyle(color, 0.2);
+          rect.setVisible(true); // Visível no modo debug
+        } else {
+          rect.setVisible(false); // Invisível em produção
+        }
+        
+        manualColliders.add(rect);
+        return rect;
+      }
+      
+      // Adicionar tecla para alternar o modo debug (F9)
+      const debugKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F9);
+      debugKey.on('down', () => {
+        // Alternar visibilidade de todos os colisores
+        manualColliders.getChildren().forEach(rect => {
+          rect.setVisible(!rect.visible);
+        });
+        console.log('Debug collision mode:', !manualColliders.getChildren()[0].visible);
+      });
+      function mapX(x){
+        //427 = 385a + b
+        //337 = 290a + b
+        //427 - 337 = 95a
+        //90 = 95a
+        //a = 90 / 95
+        //427 = 385*(90/95)+ b
+        //b = 427 - 385*(18/19)
+        let a = 90/95;
+        let b = 427 - 385*a;
+        return a*x + b;
+      }
+      function mapY(y){
+        //365 = 330a + b
+        //80 = 70a + b
+        //275 = 260a
+        //a = 275 / 260
+        //b = 365 - 330*(275/260)
+        let a = 275/260;
+        let b = 365 - 330*(275/260);
+        return a*y + b;
+      }
+      // 290 -> 337
+      // 385 -> 427
+      
+      // 330 -> 365
+      // 70 -> 80
+      // Exemplo: Móveis, mesas, etc. - Com cores diferentes para tipos diferentes
+      //posição x //posião y // largura // altura
+      addCollisionRect(this, 160, 200, 60, 70, 0xff0000);  // estante zeladoria
+      addCollisionRect(this, 160, 265, 40, 40, 0xff0000);  // carrinho zeladoria limpeza
+      addCollisionRect(this, 145, 365, 90, 80, 0xff0000);   // armários 1 - perto zelaSdoria
+      addCollisionRect(this, mapX(289), mapY(335), 90, 80, 0xff0000);   // armários 2 - perto sala de aula 1
+      addCollisionRect(this, 497, 365, 90, 80, 0xff0000);   // geladeiras 3 - perto da sala e elevador
+      addCollisionRect(this, 605, 368, 45, 65, 0xff0000);   // máquina de bebida - sala 4
+      addCollisionRect(this, 832, 365, 63, 70, 0xff0000);   // geladeiras 4 - perto da sala e elevador
+      addCollisionRect(this, 962, 365, 63, 70, 0xff0000);   // geladeiras 5 - perto da sala 4
+      addCollisionRect(this, 1058, 365, 63, 70, 0xff0000);   // geladeiras 6 - perto da sala 4
+      addCollisionRect(this, 1248, 368, 40, 65, 0xff0000);   // máquina de bebida - sala 4
+      addCollisionRect(this, 280, 125, 130, 40, 0x00ff00);  // armário sala 1(verde)
+      addCollisionRect(this, 570, 280, 50, 70, 0x00ff00);  // mesa verde sala 1(verde)
+      addCollisionRect(this, 590, 195, 5, 100, 0xfff);  // TV sala 1(azul)
+      addCollisionRect(this, 292, 182, 42, 40, 0x00ff00);  // mesas (verde)
+      addCollisionRect(this, 292, 245, 38, 38, 0x00ff00);  // mesas (verde)
+      addCollisionRect(this, 357, 245, 38, 38, 0x00ff00);  // mesas (verde)
+      addCollisionRect(this, 354, 182, 38, 38, 0x00ff00);  // mesas (verde)
+      addCollisionRect(this, 420, 182, 38, 38, 0x00ff00);  // mesas (verde)
+      addCollisionRect(this, 484, 182, 38, 38, 0x00ff00);  // mesas (verde)
+      addCollisionRect(this, 484, 245, 38, 38, 0x00ff00);  // mesas (verde)
+      addCollisionRect(this, 420, 245, 38, 38, 0x00ff00);  // mesas (verde)
+      addCollisionRect(this, 160, 604, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 257, 670, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 160, 670, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 160, 733, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 257, 733, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 353, 733, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 450, 733, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      addCollisionRect(this, 544, 733, 52, 37, 0x00ff00);  // mesa sala 2 (verde)
+      
+      // Adicionar colisões para as bordas do mapa se necessário - Azul para bordas
+      // Borda superior
+      addCollisionRect(this, map.widthInPixels / 2, -10, map.widthInPixels, 20, 0x0000ff);
+      // Borda inferior
+      addCollisionRect(this, map.widthInPixels / 2, map.heightInPixels + 10, map.widthInPixels, 20, 0x0000ff);
+      // Borda esquerda
+      addCollisionRect(this, -10, map.heightInPixels / 2, 20, map.heightInPixels, 0x0000ff);
+      // Borda direita
+      addCollisionRect(this, map.widthInPixels + 10, map.heightInPixels / 2, 20, map.heightInPixels, 0x0000ff);
+      
+      // Instrução de debug no console
+      console.log("Debug: pressione F9 para mostrar/ocultar colisões");
+
       // Adiciona colisões entre o jogador e as camadas de colisão COM VERIFICAÇÃO
-      const layers = [colisaoLayer, obj2ColisaoLayer, paredeLayer].filter(layer => layer !== null);
+      const layers = [paredeLayer].filter(layer => layer !== null);
       
       layers.forEach((layer) => {
         if (layer) {
@@ -1300,6 +1527,9 @@ if (window.fase1Initialized) {
           this.physics.add.collider(player, layer);
         }
       });
+
+      // Adicionar colisão com os retângulos manuais
+      this.physics.add.collider(player, manualColliders);
 
       player.body.setBounce(0);
       player.body.setMaxVelocity(200);
