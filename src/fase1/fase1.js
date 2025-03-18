@@ -1619,6 +1619,21 @@ if (window.fase1Initialized) {
       addCollisionRect(this, 863, 550, 120, 38, 0x00ff00); // monitores sala 3 (verde)
       addCollisionRect(this, 1213, 550, 120, 38, 0x00ff00); // monitores sala 3 (verde)
       addCollisionRect(this, 1268, 640, 35, 45, 0x00ff00); // camera sala 3 (verde)
+      addCollisionRect(this, 1155, 245, 47, 38, 0x00ff00); // mesa sala 4
+      addCollisionRect(this, 1092, 183, 47, 38, 0x00ff00); // mesa sala 4
+      addCollisionRect(this, 1028, 183, 47, 38, 0x00ff00); // mesa sala 4 
+      addCollisionRect(this, 900, 183, 47, 38, 0x00ff00); // mesa sala 4 
+      addCollisionRect(this, 1157, 183, 47, 38, 0x00ff00); // mesa sala 4 
+      addCollisionRect(this, 962, 183, 47, 38, 0x00ff00); // mesa sala 4 
+      addCollisionRect(this, 932, 245, 44, 38, 0x00ff00); // mesa sala 4
+      addCollisionRect(this, 806, 211, 34, 150, 0x00ff00); // mesa
+      addCollisionRect(this, 996, 245, 44, 38, 0x00ff00); // mesa sala 4
+      addCollisionRect(this, 1092, 245, 47, 38, 0x00ff00); // mesa sala 4
+      addCollisionRect(this, 829, 90, 130, 50, 0x00ff00); // mesa 
+      addCollisionRect(this, 1005, 86, 150, 50, 0x00ff00); // mesa 
+      addCollisionRect(this, 1168, 102, 115, 70, 0x00ff00); // mesa 
+      addCollisionRect(this, 1250, 98, 20, 20, 0x00ff00); // mesa 
+      addCollisionRect(this, 1263, 200, 8, 114, 0x00ff00); // mesa 
       // Adicionar colisões para as bordas do mapa se necessário - Azul para bordas
       // Borda superior
       // Instrução de debug no console
