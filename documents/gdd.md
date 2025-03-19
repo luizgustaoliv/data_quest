@@ -1,4 +1,4 @@
-<img src="../assets/logointeli.png">
+<img src="../assets/concepts&gdd/logointeli.png">
 
 
 # GDD - Game Design Document - Módulo 1 - Inteli
@@ -170,32 +170,32 @@ Os jogadores poderão escolher entre seis personagens disponíveis, que represen
 
 Conceitos iniciais da face do personagem:
 <br>
-<img src ="../assets/concepts/protagonista_conceito2.png" width="200">
+<img src ="../assets/concepts&gdd/concepts&gdd/protagonista_conceito2.png" width="200">
 
 Desenhos de maior qualidade feitos do personagem:
 <br>
-<img src ="../assets/concepts/protag_doodles.png" width="400">
+<img src ="../assets/concepts&gdd/concepts&gdd/protag_doodles.png" width="400">
 
 Spritesheet desenvolvida para a Sprint 1. Personagem não tinha cores definidas:
 <br>
-<img src ="../assets/concepts/protag_sprites_semcor.png">
+<img src ="../assets/concepts&gdd/concepts&gdd/protag_sprites_semcor.png">
 
 ### 3.2.2. Non-Playable Characters (NPC)
 
 O Hacker Anônimo: Um criminoso cibernético que arquitetou o ataque na escola Bitshine. Seu principal objetivo é obter lucros substanciais por meio da venda de dados roubados, comprometendo a privacidade e a segurança das vítimas no processo.
 <br>
-<img src ="../assets/concepts/hacker_concept.png" width="400">
+<img src ="../assets/concepts&gdd/concepts&gdd/hacker_concept.png" width="400">
 
 
 Faxineiro: Primeiro personagem que o protagonista vai interagir no jogo. Dará informações sobre o conflito e ensinará o protagonista sobre conceitos básicos das leis LGPD.
 <br>
-<img src ="../assets/concepts/faxineiro_concept.png" width="400">
-<img src ="../assets/npc.png" width="300">
+<img src ="../assets/concepts&gdd/concepts&gdd/faxineiro_concept.png" width="400">
+<img src ="../assets/concepts&gdd/npc.png" width="300">
 
 Professora Rôbo: Segundo NPC da primeira fase do jogo. Ela será outra fonte de informações sobre conceitos básicos das leis LGPD.
 <br>
-<img src ="../assets/concepts/teacher_concept.png" width="400">
-<img src ="../assets/sprite_prof.png" width="300">
+<img src ="../assets/concepts&gdd/concepts&gdd/teacher_concept.png" width="400">
+<img src ="../assets/concepts&gdd/sprite_prof.png" width="300">
 
 (Terão outros personagens coadjuvantes que são aunos e professores da escola, mas esses não foram definidos ainda)
 
@@ -214,20 +214,20 @@ O cenário do jogo se passa na escola Bitshine, que foi invadida e hackeada por 
 <br>
 Fotos da escola Bitshine por fora:
 <p>
-<img src="../assets/concepts/escola_normal.png" width="400">
-<img src="../assets/concepts/escola_hack.png" width="400">
+<img src="../assets/concepts&gdd/concepts&gdd/escola_normal.png" width="400">
+<img src="../assets/concepts&gdd/concepts&gdd/escola_hack.png" width="400">
 <p>
 
 <br>
 Mapa da primeira fase do jogo, situado no primeiro andar da escola:
 <p>
-<img src="../assets/concepts/fase1.jpeg" width="500">
+<img src="../assets/concepts&gdd/concepts&gdd/fase1.jpeg" width="500">
 <p>
 
 <br>
 Mapa da segunda fase do jogo, um labirinto situado no segundo andar, onde fica a biblioteca da escola:
 <p>
-<img src="../assets/concepts/fase2.jpeg" width="500">
+<img src="../assets/concepts&gdd/concepts&gdd/fase2.jpeg" width="500">
 <p>
 
 
@@ -248,33 +248,33 @@ Além disso, o jogo não incluirá variações climáticas, já que a narrativa 
 ### 3.3.4. Concept Art (sprint 2)
 <br>
 <p align="center">
-<img src="../assets/concepts/conceitos_escola_data_quest_hackeada1.png" width="400">
-<img src="../assets/concepts/conceitos_escola_data_quest_hackeada2.png" width="400">
+<img src="../assets/concepts&gdd/concepts&gdd/conceitos_escola_data_quest_hackeada1.png" width="400">
+<img src="../assets/concepts&gdd/concepts&gdd/conceitos_escola_data_quest_hackeada2.png" width="400">
 <p>
 
 Figuras 1 e 2: Conceitos iniciais da aparência externa da escola Bitshine. Figura 1 representa a escola em seu estado de normalidade e a Figura 2 representa a escola hackeada.
 
-<img src="../assets/concepts/conceitos_protagonista.png" width="300">
+<img src="../assets/concepts&gdd/concepts&gdd/conceitos_protagonista.png" width="300">
 
 Figura 3: Conceitos iniciais do protagonista, que o jogador poderá nomear.
 
-<img src="../assets/concepts/dialogue_concept.png" width="300">
+<img src="../assets/concepts&gdd/concepts&gdd/dialogue_concept.png" width="300">
 
 Figura 4: Conceito inicial do estilo visual do diálogo do jogo.
 
-<img src="../assets/concepts/more_robot_concepts.png" width="300">
+<img src="../assets/concepts&gdd/concepts&gdd/more_robot_concepts.png" width="300">
 
 Figura 5: Conceitos de ataques feitos pelos inimigos robôs.
 
-<img src="../assets/concepts/robo_concept.png" width="300">
+<img src="../assets/concepts&gdd/concepts&gdd/robo_concept.png" width="300">
 
 Figura 6: Ilustração do inimigo robô com suas cores definidas.
 
-<img src="../assets/concepts/protag_genero.png" width="300">
+<img src="../assets/concepts&gdd/concepts&gdd/protag_genero.png" width="300">
 
 Figura 7: Primeira concept da aprimoração do protagonista.
 
-<img src="../assets/concepts/teste_generos.png" width="300">
+<img src="../assets/concepts&gdd/concepts&gdd/teste_generos.png" width="300">
 
 Figura 8: Esboços dos designs aprimorados do protagonista.
 
@@ -296,22 +296,22 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 \# | item |  | como obter | função | efeito sonoro
 --- | --- | --- | --- | --- | ---
-1 | Cartão de Identificação (KeyCard) | <img src="../assets/keycard.png" width="200"> | você o obtém após ajudar cada professor-robô a recuperar o controle de sua consciência | Com o acúmulo de quatro deles, dá acesso a áreas restritas dentro da escola e permite o acesso à ultima sala da fase 1 | Som de leitura de cartão
-2 | Chave | <img src="../assets/fase1/chavesprite.png" width="170"> | Ela fica disponível na última sala da fase 1 após todos os 4 keycards serem coletados | É utilizada para entrar no elevador para acessar a fase 2 | Som de chave
+1 | Cartão de Identificação (KeyCard) | <img src="../assets/concepts&gdd/keycard.png" width="200"> | você o obtém após ajudar cada professor-robô a recuperar o controle de sua consciência | Com o acúmulo de quatro deles, dá acesso a áreas restritas dentro da escola e permite o acesso à ultima sala da fase 1 | Som de leitura de cartão
+2 | Chave | <img src="../assets/concepts&gdd/fase1/chavesprite.png" width="170"> | Ela fica disponível na última sala da fase 1 após todos os 4 keycards serem coletados | É utilizada para entrar no elevador para acessar a fase 2 | Som de chave
 3 | ... 
 
 ### 3.4.2. Bestiário
 
 \# | inimigo |  | ocorrências | função | impacto | efeito sonoro
 --- | --- | --- | --- | --- | --- | ---
-1 | professora-robô | <img src="../assets/sprite_prof.png" width="1000"> |  a partir da fase 1 | aparece e bloqueia o caminho do jogador, soltando ameaças sobre vazar dados da escola. Após alguns segundos de diálogo, o jogador recebe um questionário sobre a LGPD para "desbloqueá-la" e restaurar seu sistema para que ela volte ao normal | se o jogador acerta todas as perguntas, a professora volta ao normal e o jogador aprende mais sobre a LGPD; se o jogador erra, ele precisa refazer até acertar | sons de sistema corrompido (bipes, estática, glitch)
+1 | professora-robô | <img src="../assets/concepts&gdd/sprite_prof.png" width="1000"> |  a partir da fase 1 | aparece e bloqueia o caminho do jogador, soltando ameaças sobre vazar dados da escola. Após alguns segundos de diálogo, o jogador recebe um questionário sobre a LGPD para "desbloqueá-la" e restaurar seu sistema para que ela volte ao normal | se o jogador acerta todas as perguntas, a professora volta ao normal e o jogador aprende mais sobre a LGPD; se o jogador erra, ele precisa refazer até acertar | sons de sistema corrompido (bipes, estática, glitch)
 2 | ...
 
 ## 3.5. Gameflow (Diagrama de cenas) (sprint 2)
 
 <div align="center">
   <sub>Diagrama de cenas</sub><br>
-  <img src="https://github.com/Inteli-College/2025-1A-T19-IN01-G04/blob/main/assets/Fluxograma.jpg" width="100%" 
+  <img src="https://github.com/Inteli-College/2025-1A-T19-IN01-G04/blob/main/assets/concepts&gdd/Fluxograma.jpg" width="100%" 
   alt="Diagrama de cenas"><br>
 </div>
 
@@ -374,10 +374,10 @@ A estrutura das fases foi pensada para representar os três andares de uma escol
 
 ### Ilustrações e Prints de Tela
 <p align="center">
-  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/telainicial.jpeg" width="500">
-  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/teladefases.jpeg" width="500">
-  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/telacomojogar.png" width="500">
-  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/telajogocenario.png" width="500">
+  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/concepts&gdd/telainicial.jpeg" width="500">
+  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/concepts&gdd/teladefases.jpeg" width="500">
+  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/concepts&gdd/telacomojogar.png" width="500">
+  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/concepts&gdd/telajogocenario.png" width="500">
   
 </p>
 
@@ -407,11 +407,11 @@ Próximos Passos:
 
 Ilustrações do Desenvolvimento:
 <br>
-<img src="../assets/ft_protags.png" width="500">
-<img src="../assets/concepts/protags_spritesheets.png" width="500">
+<img src="../assets/concepts&gdd/ft_protags.png" width="500">
+<img src="../assets/concepts&gdd/concepts&gdd/protags_spritesheets.png" width="500">
 <br>
-<img src="../assets/ft_fase1.png" width="500">
-<img src="../assets/ft_dialogos.png" width="500">
+<img src="../assets/concepts&gdd/ft_fase1.png" width="500">
+<img src="../assets/concepts&gdd/ft_dialogos.png" width="500">
 
 ## 4.3. Desenvolvimento intermediário do jogo (sprint 3)
 
@@ -421,7 +421,7 @@ Em termos de código, os principais pontos do desenvolvimento foram:
 
 O jogo ja se encontra com 4 mini games na fase 1, buscamos realizar com jogos clássicos para que seja mais intuitivo de joga_los, os 4 mini games são: perguntas sobre conceitos gerais da LGPD, jogo da forca com termos da LGPD, jogo da memória em que o jogador deve relacionar dois pares de palavras com um sendo um termo e o outro o conceito e um jogo de classificação de conteudo pessoal ou conteúdo sensível dada as informações do mini game.
 
-<img src="../assets/minigame.png" width="500">
+<img src="../assets/concepts&gdd/minigame.png" width="500">
 Código de implementação dos mini games:
 
 ```javascript
@@ -563,7 +563,7 @@ código de texto dos diálogos com o faxineiro:
 
 Na construção da Hud do jogo buscamos um design simples e eficaz.
 
-<img src="../assets/hud2.png" width="250"> <img src="../assets/hud.png" width="500">
+<img src="../assets/concepts&gdd/hud2.png" width="250"> <img src="../assets/concepts&gdd/hud.png" width="500">
 
 Código da implementação da Hud de missões:
 

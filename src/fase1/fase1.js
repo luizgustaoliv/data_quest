@@ -958,14 +958,14 @@ if (window.fase1Initialized) {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.image("npc1", "assets/npc.png");
-    this.load.image("professorNpc", "assets/sprite_prof.png");
-    this.load.image("professorNpc2", "assets/sprite_prof.png");
-    this.load.image("professorNpc3", "assets/sprite_prof.png");
-    this.load.image("professorNpc4", "assets/sprite_prof.png");
+    this.load.image("npc1", "assets/fase1/npc.png");
+    this.load.image("professorNpc", "assets/fase1/sprite_prof.png");
+    this.load.image("professorNpc2", "assets/fase1/sprite_prof.png");
+    this.load.image("professorNpc3", "assets/fase1/sprite_prof.png");
+    this.load.image("professorNpc4", "assets/fase1/sprite_prof.png");
     this.load.image(
       "elevator",
-      "assets/animated_elevator_door_entrance_2_32x32.gif"
+      "assets/animações/elevator.gif"
     );
     this.load.image("background", "assets/fase1/background.png");
     this.load.tilemapTiledJSON("map", "assets/fase1/tileset.json");
@@ -1220,7 +1220,7 @@ if (window.fase1Initialized) {
           localStorage.setItem("selectedCharacter", selectedCharacter);
           document.body.classList.add("fade-out");
           setTimeout(() => {
-            window.location.replace("fase2.html");
+            window.location.replace("fase2.js");
           }, 1200);
         } else {
           // Mostrar mensagem informando que precisa da chave
