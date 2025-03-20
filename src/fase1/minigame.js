@@ -76,17 +76,26 @@ const MEMORY_STYLES = {
   ...MINIGAME_STYLES,
   colors: {
     ...MINIGAME_STYLES.colors,
-    panel: 0x2d3a4a, // Fundo mais claro para jogo da memória
+    panel: 0x2d3a4a, // Fundo mais escuro para jogo da memória
     card: 0x3366cc, // Cor dos cartões
     cardRevealed: 0x5588ee, // Cor quando cartão é revelado
+    correct: 0x30503A, // Verde para correspondências corretas
   },
   sizes: {
     ...MINIGAME_STYLES.sizes,
-    panelWidth: 0.51, // Painel mais largo para comportar as cartas
-    panelHeight: 0.6,
-    cardWidth: 80, // Tamanho dos cartões
-    cardHeight: 90,
-    cardSpacing: 15,
+    panelWidth: 0.70, // Reduzido para 70% da largura da tela
+    panelHeight: 0.65, // Reduzido para 70% da altura da tela
+    cardWidth: 120, // Cartões menores para caber melhor na tela
+    cardHeight: 40, // Altura reduzida para melhor visualização
+    cardSpacing: 9, // Espaçamento reduzido para economizar espaço
+  },
+  positions: {
+    // Posições mais equilibradas
+    instructionsY: 130, // Instruções mais próximas ao topo
+    cardStartY: -(MINIGAME_STYLES.sizes.panelHeight * 0.5) + -10, // Dinamicamente ajustado para centralizar os cartões no painel
+    cardStartX: -200, // Modificado para mover os cartões mais para a esquerda
+    panelOffset: 0, // Sem deslocamento do painel
+    buttonY: 170, // Botões posicionados mais acima
   },
 };
 
@@ -192,6 +201,107 @@ function createImprovedQuizMinigame(scene, data, callback) {
   // Variáveis de controle
   let currentQuestionIndex = 0;
   let correctAnswers = 0;
+  
+  // Atualizar com as novas perguntas
+  data.questions = [
+    {
+      question: "O que significa a sigla LGPD?",
+      options: [
+        "Lei Geral da Prefeitura de Diadema",
+        "Lei de Garantia e Proteção de Dados",
+        "Liderança Governamental de Proteção de Dados",
+        "Lei Geral de Proteção de Dados Pessoais",
+      ],
+      correct: 3,
+      feedback:
+        "A LGPD (Lei Geral de Proteção de Dados Pessoais) é a legislação brasileira que regula as atividades de tratamento de dados pessoais. Ela foi inspirada na GDPR europeia e garante maior controle dos cidadãos sobre suas informações pessoais.",
+    },
+    {
+      question: "Qual o principal objetivo da LGPD?",
+      options: [
+        "Liberar o uso de dados pessoais",
+        "Divulgar vídeos de gatos na internet",
+        "Proteger os direitos fundamentais de liberdade e privacidade",
+        "Restringir o uso da internet",
+      ],
+      correct: 2,
+      feedback:
+        "A LGPD tem como principal objetivo proteger os direitos fundamentais de liberdade e privacidade, criando regras para o tratamento de dados pessoais por empresas e órgãos públicos, garantindo maior transparência e segurança para os titulares dos dados.",
+    },
+    {
+      question: "O que são considerados dados pessoais pela LGPD?",
+      options: [
+        "Apenas nome e CPF",
+        "Somente dados bancários",
+        "Informações relacionadas à pessoa identificada ou identificável",
+        "Apenas o que está nas redes socias",
+      ],
+      correct: 2,
+      feedback:
+        "De acordo com a LGPD, dados pessoais são todas as informações relacionadas a uma pessoa identificada ou identificável. Isso inclui nome, endereço, e-mail, dados biométricos, histórico médico, dados de localização e qualquer outra informação que possa identificar uma pessoa.",
+    },
+    {
+      question: "O que são dados sensíveis segundo a LGPD?",
+      options: [
+        "Todos os dados pessoais",
+        "Apenas dados financeiros",
+        "Dados sobre origem racial, saúde, biometria, orientação religiosa, etc.",
+        "Apenas dados compartilhados na internet",
+      ],
+      correct: 2,
+      feedback:
+        "Dados sensíveis são uma categoria especial que inclui informações sobre origem racial ou étnica, convicção religiosa, opinião política, dados referentes à saúde ou à vida sexual, dados genéticos ou biométricos. Estes dados recebem proteção adicional pela LGPD.",
+    },
+    {
+      question: "Qual é o papel do Encarregado (DPO) na LGPD?",
+      options: [
+        "Apenas atender reclamações dos consumidores",
+        "Ser o canal de comunicação entre o controlador, os titulares e a ANPD",
+        "Coletar dados pessoais para a empresa",
+        "Bloquear o acesso a dados pessoais",
+      ],
+      correct: 1,
+      feedback:
+        "O Encarregado ou DPO (Data Protection Officer) é responsável por ser o canal de comunicação entre o controlador, os titulares dos dados e a Autoridade Nacional de Proteção de Dados (ANPD). Ele também orienta funcionários sobre práticas de proteção de dados e executa outras atribuições determinadas pelo controlador.",
+    },
+    {
+      question: "Qual a idade mínima para consentimento válido na LGPD?",
+      options: [
+        "12 anos",
+        "16 anos",
+        "18 anos",
+        "21 anos",
+      ],
+      correct: 2,
+      feedback:
+        "Segundo a LGPD, o tratamento de dados pessoais de crianças e adolescentes menores de 18 anos deve ser realizado com o consentimento específico de pelo menos um dos pais ou responsável legal. Menores de 18 anos não podem fornecer consentimento válido por si próprios.",
+    },
+    {
+      question: "Quais são as penalidades previstas em caso de violação da LGPD?",
+      options: [
+        "Apenas advertência",
+        "Apenas multa simples de 2% do faturamento",
+        "Somente bloqueio dos dados",
+        "Advertência, multa, bloqueio ou eliminação dos dados, entre outras",
+      ],
+      correct: 3,
+      feedback:
+        "A LGPD prevê diversas sanções administrativas, incluindo advertência, multa simples de até 2% do faturamento (limitada a R$50 milhões por infração), multa diária, publicização da infração, bloqueio ou eliminação dos dados, suspensão parcial do funcionamento do banco de dados, entre outras.",
+    },
+    {
+      question: "O que é a ANPD?",
+      options: [
+        "Autoridade Nacional de Proteção de Dados",
+        "Associação Nacional de Processamento Digital",
+        "Agência Nacional de Prevenção Digital",
+        "Administração Nacional de Projetos Digitais",
+      ],
+      correct: 0,
+      feedback:
+        "A ANPD (Autoridade Nacional de Proteção de Dados) é o órgão da administração pública responsável por zelar, implementar e fiscalizar o cumprimento da LGPD em todo o território nacional. É o principal órgão regulador da proteção de dados no Brasil.",
+    },
+  ];
+  
   const totalQuestions = data.questions.length;
 
   // Mostrar contador de perguntas
@@ -274,7 +384,7 @@ function createImprovedQuizMinigame(scene, data, callback) {
           titleText.destroy(); // Garantir que o título é destruído ao final do quiz
 
           // Garantir que 2/3 (66.67%) é suficiente para passar
-          const success = correctAnswers >= 2; // Mudado para critério explícito
+          const success = correctAnswers >= Math.ceil(totalQuestions * 0.6); // Ajustado para 60% com base no novo total de perguntas
           const resultMessage = `Você acertou ${correctAnswers} de ${totalQuestions} questões e liberou a professora!`;
 
           console.log(
@@ -300,13 +410,13 @@ function createImprovedQuizMinigame(scene, data, callback) {
   showCurrentQuestion();
 }
 
-// 2. JOGO DA MEMÓRIA (Professor 2)
+// 2. JOGO DE CORRESPONDÊNCIA DE TERMOS (Professor 2)
 function startMemoryGame(scene, callback) {
-  console.log("Iniciando jogo da memória...");
+  console.log("Iniciando jogo de correspondência de termos...");
 
   // Verificar se o callback é uma função
   if (typeof callback !== "function") {
-    console.error("Callback inválido para o jogo da memória");
+    console.error("Callback inválido para o jogo de correspondência");
     callback = function (success) {
       console.log("Usando callback padrão, resultado:", success);
     };
@@ -320,222 +430,422 @@ function startMemoryGame(scene, callback) {
     scene,
     width,
     height,
-    "Jogo da Memória - LGPD",
+    "Correspondência de Termos - LGPD",
     MEMORY_STYLES
   );
 
-  // Variáveis de controle
-  const cardCount = 10; // 5 pares
-  const cards = [];
-  const cardValues = [];
-  let selectedCards = [];
-  let canFlip = false; // Inicialmente não pode virar
-  let matchesFound = 0;
-  const totalMatches = cardCount / 2;
-  let attempts = 0;
-
-  // Dados relacionados à LGPD
-  const lgpdPairs = [
-    { term: "DADOS PESSOAIS", description: "COISAS SIGILOSAS" },
-    { term: "LGPD", description: "LEI GERAL DE PROTEÇÃO DE DADOS PESSOAIS" },
-    { term: "CONSENTIMENTO", description: "PERMISSÃO PARA USO DE DADOS" },
-    { term: "SEGURANÇA", description: "PROTEÇÃO CONTRA ACESSO NÃO AUTORIZADO" },
-    {
-      term: "PRIVACIDADE",
-      description: "DIREITO DE MANTER INFORMAÇÕES PESSOAIS",
-    },
+  // Variáveis de controle de níveis
+  let currentLevel = 0;
+  const totalLevels = 3;
+  let totalAttempts = 0;
+  let totalMatchesFound = 0;
+  
+  // Dados relacionados à LGPD - três conjuntos diferentes
+  const allLevelsData = [
+    // Nível 1 - Conceitos básicos
+    [
+      { term: "DADOS PESSOAIS", description: "INFORMAÇÕES QUE IDENTIFICAM UMA PESSOA" },
+      { term: "LGPD", description: "LEI GERAL DE PROTEÇÃO DE DADOS PESSOAIS" },
+      { term: "CONSENTIMENTO", description: "PERMISSÃO PARA USO DE DADOS" },
+      { term: "SEGURANÇA", description: "PROTEÇÃO CONTRA ACESSO NÃO AUTORIZADO" },
+      { term: "PRIVACIDADE", description: "DIREITO DE MANTER INFORMAÇÕES PESSOAIS" },
+    ],
+    // Nível 2 - Conceitos intermediários
+    [
+      { term: "CONTROLADOR", description: "QUEM TOMA DECISÕES SOBRE TRATAMENTO DE DADOS" },
+      { term: "OPERADOR", description: "QUEM REALIZA O TRATAMENTO DE DADOS" },
+      { term: "ANONIMIZAÇÃO", description: "TORNAR IMPOSSÍVEL IDENTIFICAR O TITULAR" },
+      { term: "TITULAR", description: "PESSOA A QUEM OS DADOS SE REFEREM" },
+      { term: "TRATAMENTO", description: "OPERAÇÃO REALIZADA COM DADOS PESSOAIS" },
+    ],
+    // Nível 3 - Conceitos avançados
+    [
+      { term: "ENCARREGADO", description: "DPO - RESPONSÁVEL PELA CONFORMIDADE" },
+      { term: "BANCO DE DADOS", description: "CONJUNTO ESTRUTURADO DE DADOS PESSOAIS" },
+      { term: "RELATÓRIO DE IMPACTO", description: "DOCUMENTAÇÃO DE RISCOS À PRIVACIDADE" },
+      { term: "PSEUDONIMIZAÇÃO", description: "PROCESSAMENTO QUE IMPEDE IDENTIFICAÇÃO DIRETA" },
+      { term: "TRANSFERÊNCIA INTERNACIONAL", description: "ENVIO DE DADOS PARA OUTRO PAÍS" },
+      { term: "AUTORIDADE NACIONAL", description: "ANPD - ÓRGÃO FISCALIZADOR DA LGPD" },
+    ]
   ];
 
-  // Gerar valores para os pares de cartas
-  lgpdPairs.forEach((pair) => {
-    cardValues.push(pair.term);
-    cardValues.push(pair.description);
-  });
+  // Guardar elementos do level
+  let gameContainer = null;
+  let graphics = null;
+  let instructionsText = null;
+  let levelText = null;
 
-  // Embaralhar
-  shuffleArray(cardValues);
+  // Iniciar o primeiro nível
+  startLevel(currentLevel);
 
-  // Criar container para cartas
-  const gameContainer = scene.add
-    .container(width / 2, height / 2)
-    .setDepth(9002);
+  function startLevel(level) {
+    // Limpar nível anterior se existir
+    if (gameContainer) gameContainer.destroy();
+    if (instructionsText) instructionsText.destroy();
+    if (levelText) levelText.destroy();
 
-  // Calcular layout de grade - Layout ajustado para caber no container
-  const columns = 5; // Reduzido para 3 colunas para melhor visibilidade
-  const cardWidth = MEMORY_STYLES.sizes.cardWidth; // Cards menores
-  const cardHeight = MEMORY_STYLES.sizes.cardHeight; // Cards menores
-  const spacing = MEMORY_STYLES.sizes.cardSpacing; // Espaçamento reduzido
-  const offsetX =
-    -(columns * cardWidth + (columns - 1) * spacing) / 2 + cardWidth / 2 - 220; // Movido mais para esquerda
-  const offsetY = -40; // Ajustado para centralizar melhor
+    // Atualizar título para mostrar o nível atual
+    titleText.setText(`Correspondência de Termos - Nível ${level + 1}/${totalLevels}`);
 
-  // Criar cartas - inicialmente viradas para cima (com texto visível)
-  for (let i = 0; i < cardCount; i++) {
-    const col = i % columns;
-    const row = Math.floor(i / columns);
+    // Variáveis de controle para este nível
+    const lgpdPairs = allLevelsData[level];
+    const cardCount = lgpdPairs.length * 2;
+    const cards = [];
+    let startCard = null;
+    let currentLine = null;
+    let matchesFound = 0;
+    const totalMatches = lgpdPairs.length;
+    let attempts = 0;
+    const matchLines = [];
 
-    const x = offsetX + col * (cardWidth + spacing);
-    const y = offsetY + row * (cardHeight + spacing);
+    // Criar container para cartas
+    gameContainer = scene.add
+      .container(width / 2, height / 2)
+      .setDepth(9002);
 
-    // Card back (inicialmente virado para cima)
-    const card = scene.add
-      .rectangle(x, y, cardWidth, cardHeight, MEMORY_STYLES.colors.card)
-      .setStrokeStyle(2, 0xffffff)
-      .setInteractive({ useHandCursor: true });
+    // Graphics object para desenhar as linhas
+    graphics = scene.add.graphics().setDepth(9003);
+    gameContainer.add(graphics);
 
-    // Valor da carta (inicialmente visível)
-    const cardText = scene.add
-      .text(x, y, cardValues[i], {
-        fontFamily: "Arial",
-        fontSize: "10px",
-        color: "#ffffff",
-        fontWeight: "bold",
-        wordWrap: { width: cardWidth - 10 },
-        align: "center",
-      })
-      .setOrigin(0.5)
-      .setAlpha(1); // Inicialmente visível
+    // Configuração do layout em duas colunas
+    const cardWidth = MEMORY_STYLES.sizes.cardWidth;
+    const cardHeight = MEMORY_STYLES.sizes.cardHeight;
+    const spacing = MEMORY_STYLES.sizes.cardSpacing;
 
-    // Armazenar valor da carta como propriedade
-    card.value = cardValues[i];
-    card.revealed = true; // Inicialmente revelada
+    // Posição da coluna esquerda (termos)
+    const leftColumnX = MEMORY_STYLES.positions.cardStartX - 150;
+    // Posição da coluna direita (descrições)
+    const rightColumnX = MEMORY_STYLES.positions.cardStartX + 150;
+    
+    // Offset para subir os cards (ajustado para cima)
+    const verticalOffset = -50;
 
-    gameContainer.add([card, cardText]);
-    cards.push({ card, text: cardText, value: cardValues[i], matched: false });
+    // Embaralhar a ordem dos pares
+    const shuffledPairs = [...lgpdPairs];
+    shuffleArray(shuffledPairs);
 
-    // Evento de clique
-    card.on("pointerdown", function () {
-      if (!canFlip || card.revealed) return;
+    // Criar as cartas - Coluna da esquerda (Termos)
+    const leftCards = [];
+    for (let i = 0; i < shuffledPairs.length; i++) {
+      // Ajuste dinâmico do espaçamento Y baseado no número de cards
+      const yOffset = (level === 2 && shuffledPairs.length > 5) ? 10 : spacing;
+      const y = MEMORY_STYLES.positions.cardStartY + i * (cardHeight + yOffset) + verticalOffset;
 
-      // Revelar carta
-      card.setFillStyle(MEMORY_STYLES.colors.cardRevealed);
-      cardText.setAlpha(1);
-      card.revealed = true;
+      // Card de termo (esquerda)
+      const card = scene.add
+        .rectangle(leftColumnX, y, cardWidth, cardHeight, MEMORY_STYLES.colors.card)
+        .setStrokeStyle(2, 0xffffff)
+        .setInteractive({ useHandCursor: true });
 
-      // Adicionar à seleção
-      selectedCards.push({ card, index: i });
+      const cardText = scene.add
+        .text(leftColumnX, y, shuffledPairs[i].term, {
+          fontFamily: "Arial",
+          fontSize: "8px",
+          color: "#ffffff",
+          fontWeight: "bold",
+          wordWrap: { width: cardWidth - 10 },
+          align: "center",
+        })
+        .setOrigin(0.5);
 
-      // Se temos duas cartas selecionadas
-      if (selectedCards.length === 2) {
-        canFlip = false;
-        attempts++;
+      card.value = shuffledPairs[i].term;
+      card.pairIndex = i;
+      card.isLeftCard = true;
+      card.matched = false;
+      card.cardX = leftColumnX;
+      card.cardY = y;
 
-        // Verificar se é um par
-        const card1 = selectedCards[0].card.value;
-        const card2 = selectedCards[1].card.value;
-        const isMatch = lgpdPairs.some(
-          (pair) =>
-            (pair.term === card1 && pair.description === card2) ||
-            (pair.term === card2 && pair.description === card1)
-        );
+      gameContainer.add([card, cardText]);
+      leftCards.push({ card, text: cardText, value: shuffledPairs[i].term, matched: false, x: leftColumnX, y });
+      cards.push({ card, text: cardText, value: shuffledPairs[i].term, matched: false, x: leftColumnX, y });
 
-        if (isMatch) {
-          // Match!
-          scene.time.delayedCall(500, function () {
-            selectedCards.forEach((selected) => {
-              selected.card.setFillStyle(MEMORY_STYLES.colors.correct); // Verde para cartas encontradas
-              cards[selected.index].matched = true;
-            });
+      // Eventos para desenhar linhas
+      card.on('pointerdown', function (pointer) {
+        if (card.matched) return;
+        startCard = card;
+        graphics.clear();
+        graphics.lineStyle(3, 0xffff00);
+        graphics.beginPath();
+        graphics.moveTo(card.cardX, card.cardY);
+        currentLine = { x1: card.cardX, y1: card.cardY };
+      });
+    }
 
-            matchesFound++;
-            selectedCards = [];
-            canFlip = true;
+    // Embaralhar a ordem das descrições para dificultar
+    const shuffledDescriptions = [...shuffledPairs];
+    shuffleArray(shuffledDescriptions);
 
-            // Verificar se o jogo terminou
-            if (matchesFound === totalMatches) {
-              scene.time.delayedCall(500, function () {
-                gameContainer.destroy();
-                titleText.destroy();
-                instructionsText.destroy(); // Destruir o texto de instruções também
+    // Criar as cartas - Coluna da direita (Descrições)
+    const rightCards = [];
+    for (let i = 0; i < shuffledDescriptions.length; i++) {
+      const yOffset = (level === 2 && shuffledDescriptions.length > 5) ? 10 : spacing;
+      const y = MEMORY_STYLES.positions.cardStartY + i * (cardHeight + yOffset) + verticalOffset;
 
-                // Determinar resultado
-                const efficiency = matchesFound / attempts;
-                const success = efficiency >= 0.3; // 30% eficiência mínima para passar
+      // Card de descrição (direita)
+      const card = scene.add
+        .rectangle(rightColumnX, y, cardWidth, cardHeight, MEMORY_STYLES.colors.card)
+        .setStrokeStyle(2, 0xffffff)
+        .setInteractive({ useHandCursor: true });
 
-                // Mensagens customizadas conforme solicitado
-                let resultMessage;
-                if (success) {
-                  resultMessage = `Parabéns, você conseguiu em ${attempts} alternativas, e libertou a professora`;
-                } else {
-                  resultMessage =
-                    "você usou muitas tentativas, tente novamente";
-                }
+      const cardText = scene.add
+        .text(rightColumnX, y, shuffledDescriptions[i].description, {
+          fontFamily: "Arial",
+          fontSize: "8px",
+          color: "#ffffff",
+          fontWeight: "bold",
+          wordWrap: { width: cardWidth - 10 },
+          align: "center",
+        })
+        .setOrigin(0.5);
 
-                cleanupAndShowResult(
-                  scene,
-                  background,
-                  panel,
-                  success,
-                  resultMessage,
-                  callback,
-                  MEMORY_STYLES
-                );
-              });
-            }
-          });
-        } else {
-          // Não é par, esconder novamente
-          scene.time.delayedCall(1000, function () {
-            selectedCards.forEach((selected) => {
-              selected.card.setFillStyle(MEMORY_STYLES.colors.card);
-              selected.card.revealed = false;
-              cards[selected.index].text.setAlpha(0);
-            });
-
-            selectedCards = [];
-            canFlip = true;
-          });
+      card.value = shuffledDescriptions[i].description;
+      // Encontrar o índice correto do par
+      for (let j = 0; j < shuffledPairs.length; j++) {
+        if (shuffledPairs[j].description === shuffledDescriptions[i].description) {
+          card.pairIndex = j;
+          break;
         }
       }
-    });
-  }
+      card.isLeftCard = false;
+      card.matched = false;
+      card.cardX = rightColumnX;
+      card.cardY = y;
 
-  // Mostrar todas as cartas por 5 segundos e depois virar
-  scene.time.delayedCall(5000, () => {
-    // Adicionar texto de aviso que as cartas serão viradas
-    const warningText = scene.add
-      .text(width / 2, height / 2 - 125, "Memorizando...", {
-        fontFamily: "Arial",
-        fontSize: "16px",
-        color: "#ffff00",
-        align: "center",
-      })
+      gameContainer.add([card, cardText]);
+      rightCards.push({ card, text: cardText, value: shuffledDescriptions[i].description, matched: false, x: rightColumnX, y });
+      cards.push({ card, text: cardText, value: shuffledDescriptions[i].description, matched: false, x: rightColumnX, y });
+
+      // Eventos para desenhar linhas
+      card.on('pointerdown', function (pointer) {
+        if (card.matched) return;
+        startCard = card;
+        graphics.clear();
+        graphics.lineStyle(3, 0xffff00);
+        graphics.beginPath();
+        graphics.moveTo(card.cardX, card.cardY);
+        currentLine = { x1: card.cardX, y1: card.cardY };
+      });
+    }
+
+    // Eventos para controlar o movimento da linha
+    scene.input.on('pointermove', function (pointer) {
+      if (startCard && currentLine) {
+        const pointerX = pointer.x - gameContainer.x;
+        const pointerY = pointer.y - gameContainer.y;
+
+        graphics.clear();
+        graphics.lineStyle(3, 0xffff00);
+        graphics.beginPath();
+        graphics.moveTo(currentLine.x1, currentLine.y1);
+        graphics.lineTo(pointerX, pointerY);
+        graphics.strokePath();
+      }
+    });
+
+    scene.input.on('pointerup', function (pointer) {
+      if (startCard) {
+        // Verificar se terminou em outra carta
+        let endCard = null;
+        let endCardIndex = -1;
+
+        // Converter posição do pointer para coordenadas relativas ao container
+        let pointerX = pointer.x - gameContainer.x;
+        let pointerY = pointer.y - gameContainer.y;
+
+        // Verificar se o pointer está sobre alguma carta
+        for (let i = 0; i < cards.length; i++) {
+          const cardItem = cards[i];
+          if (
+            !cardItem.card.matched &&
+            cardItem.card !== startCard &&
+            cardItem.card.isLeftCard !== startCard.isLeftCard &&
+            Math.abs(cardItem.x - pointerX) < cardWidth / 2 &&
+            Math.abs(cardItem.y - pointerY) < cardHeight / 2
+          ) {
+            endCard = cardItem.card;
+            endCardIndex = i;
+            break;
+          }
+        }
+
+        if (endCard) {
+          attempts++;
+          totalAttempts++;
+
+          // Verificar se é um par correto
+          const isMatch = startCard.pairIndex === endCard.pairIndex;
+
+          if (isMatch) {
+            // Match!
+            const line = scene.add.graphics().setDepth(9002);
+            line.lineStyle(3, MEMORY_STYLES.colors.correct);
+            line.beginPath();
+            line.moveTo(startCard.cardX, startCard.cardY);
+            line.lineTo(endCard.cardX, endCard.cardY);
+            line.strokePath();
+            gameContainer.add(line);
+            matchLines.push(line);
+
+            // Marcar cartas como combinadas
+            startCard.matched = true;
+            endCard.matched = true;
+
+            startCard.setFillStyle(MEMORY_STYLES.colors.correct);
+            endCard.setFillStyle(MEMORY_STYLES.colors.correct);
+
+            matchesFound++;
+            totalMatchesFound++;
+
+            // Verificar se o nível terminou
+            if (matchesFound === totalMatches) {
+              scene.time.delayedCall(800, function () {
+                // Avançar para o próximo nível ou finalizar o jogo
+                currentLevel++;
+                
+                if (currentLevel < totalLevels) {
+                  // Mostrar mensagem de transição de nível
+                  const levelCompleteText = scene.add
+                    .text(
+                      width / 2,
+                      height / 2,
+                      `Nível ${currentLevel} completo!\nPronto para o próximo nível?`,
+                      {
+                        fontFamily: "Arial",
+                        fontSize: "24px",
+                        color: "#ffffff",
+                        align: "center",
+                        stroke: "#000000",
+                        strokeThickness: 4
+                      }
+                    )
+                    .setOrigin(0.5)
+                    .setScrollFactor(0)
+                    .setDepth(9010);
+                  
+                  // Botão para continuar
+                  const continueButton = scene.add
+                    .rectangle(
+                      width / 2,
+                      height / 2 + 60,
+                      150,
+                      40,
+                      MEMORY_STYLES.colors.buttonPrimary
+                    )
+                    .setScrollFactor(0)
+                    .setDepth(9010)
+                    .setInteractive({ useHandCursor: true })
+                    .setStrokeStyle(2, 0xffffff);
+                  
+                  const continueText = scene.add
+                    .text(
+                      width / 2,
+                      height / 2 + 60,
+                      "Continuar",
+                      {
+                        fontFamily: "Arial",
+                        fontSize: "18px",
+                        color: "#ffffff"
+                      }
+                    )
+                    .setScrollFactor(0)
+                    .setDepth(9010)
+                    .setOrigin(0.5);
+                  
+                  continueButton.on('pointerdown', function() {
+                    levelCompleteText.destroy();
+                    continueButton.destroy();
+                    continueText.destroy();
+                    startLevel(currentLevel);
+                  });
+                } else {
+                  // Jogo completo - mostrar resultado final
+                  gameContainer.destroy();
+                  titleText.destroy();
+                  if (instructionsText) instructionsText.destroy();
+                  if (levelText) levelText.destroy();
+
+                  // Calcular eficiência total
+                  const efficiency = totalMatchesFound / totalAttempts;
+                  const success = efficiency >= 0.3; // 30% eficiência mínima para passar
+
+                  let resultMessage;
+                  if (success) {
+                    resultMessage = `Parabéns! Você completou todos os níveis em ${totalAttempts} tentativas e libertou a professora!`;
+                  } else {
+                    resultMessage = "Você usou muitas tentativas. Tente praticar mais sobre LGPD!";
+                  }
+
+                  cleanupAndShowResult(
+                    scene,
+                    background,
+                    panel,
+                    success,
+                    resultMessage,
+                    callback,
+                    MEMORY_STYLES
+                  );
+                }
+              });
+            }
+          } else {
+            // Desenhar linha vermelha temporária para mostrar erro
+            const errorLine = scene.add.graphics().setDepth(9003);
+            errorLine.lineStyle(3, MEMORY_STYLES.colors.incorrect);
+            errorLine.beginPath();
+            errorLine.moveTo(startCard.cardX, startCard.cardY);
+            errorLine.lineTo(endCard.cardX, endCard.cardY);
+            errorLine.strokePath();
+            gameContainer.add(errorLine);
+
+            // Remover após um tempo
+            scene.time.delayedCall(800, function () {
+              errorLine.destroy();
+            });
+          }
+        }
+
+        // Limpar a linha temporária e redefinir carta inicial
+        graphics.clear();
+        startCard = null;
+        currentLine = null;
+      }
+    });
+
+    // Instruções para o nível atual (ajustado para subir também)
+    instructionsText = scene.add
+      .text(
+        width / 2,
+        height / 2 + 143, // Subido de 130 para 100
+        "Arraste uma linha para conectar os termos às suas descrições correspondentes",
+        {
+          fontFamily: "Arial",
+          fontSize: "12px",
+          color: "#ffffff",
+          align: "center",
+        }
+      )
       .setOrigin(0.5)
       .setScrollFactor(0)
-      .setDepth(9003);
+      .setDepth(9002);
 
-    // Desaparecer com o aviso e virar as cartas após mais 2 segundos
-    scene.time.delayedCall(2000, () => {
-      warningText.destroy();
-
-      // Virar todas as cartas para baixo
-      cards.forEach((card) => {
-        card.card.setFillStyle(MEMORY_STYLES.colors.card);
-        card.text.setAlpha(0);
-        card.card.revealed = false;
-      });
-
-      // Agora o jogador pode começar a virar as cartas
-      canFlip = true;
-    });
-  });
-
-  // Instruções - Ajustadas para nova posição
-  const instructionsText = scene.add
-    .text(
-      width / 2,
-      height / 2 + 130,
-      "Encontre os pares de termos e suas descrições relacionadas",
-      {
-        fontFamily: "Arial",
-        fontSize: "14px",
-        color: "#ffffff",
-        align: "center",
-      }
-    )
-    .setOrigin(0.5)
-    .setScrollFactor(0)
-    .setDepth(9002);
+    // Texto mostrando o nível atual (ajustado para subir também)
+    levelText = scene.add
+      .text(
+        width / 2,
+        height / 2 + 160, // Subido de 160 para 130
+        `Nível ${currentLevel + 1} de ${totalLevels}`,
+        {
+          fontFamily: "Arial",
+          fontSize: "13px",
+          color: "#ffcc00",
+          align: "center",
+          fontWeight: "bold"
+        }
+      )
+      .setOrigin(0.5)
+      .setScrollFactor(0)
+      .setDepth(9002);
+  }
 
   // Função para embaralhar array
   function shuffleArray(array) {
@@ -1005,13 +1315,31 @@ function startCustomGame(scene, callback) {
       explanation:
         "É um dado sensível porque revela aspectos íntimos da vida privada e pode gerar discriminação.",
     },
+    {
+      text: "Origem racial ou étnica",
+      category: "sensivel",
+      explanation:
+        "É um dado sensível porque revela características étnicas que podem levar à discriminação.",
+    },
+    {
+      text: "Filiação sindical",
+      category: "sensivel",
+      explanation:
+        "É um dado sensível porque revela associação a sindicatos e pode gerar discriminação trabalhista.",
+    },
+    {
+      text: "Geolocalização",
+      category: "pessoal",
+      explanation:
+        "É um dado pessoal porque revela onde a pessoa está ou esteve, mas não é considerado sensível pela LGPD.",
+    },
   ];
 
   // Embaralhar itens
   shuffle(dataItems);
 
-  // Limitar a 6 itens para o jogo não ficar muito longo
-  const gameItems = dataItems.slice(0, 6);
+  // Limitar a 10 itens para o minigame
+  const gameItems = dataItems.slice(0, 10);
 
   // Variáveis de controle
   let currentItemIndex = 0;
