@@ -1635,7 +1635,6 @@ if (window.fase1Initialized) {
       addCollisionRect(this, 1250, 98, 20, 20, 0x00ff00); // mesa 
       addCollisionRect(this, 1263, 200, 8, 114, 0x00ff00); // mesa 
       // Adicionar colisões para as bordas do mapa se necessário - Azul para bordas
-      // Borda superior
       // Instrução de debug no console
       console.log("Debug: pressione F9 para mostrar/ocultar colisões");
 
@@ -1663,42 +1662,28 @@ if (window.fase1Initialized) {
       this.cameras.main.startFollow(player);
       this.cameras.main.setZoom(1.5);
 
-      // Criar o botão de ajuda aqui
-      helpButton = this.add
-        .text(400, 300, "Ajudar Professora", {
-          fontFamily: "Arial",
-          fontSize: "32px",
-          color: "#ffffff",
-          backgroundColor: "#ff0000",
-          padding: { x: 20, y: 10 },
-          fixedWidth: 300,
-          align: "center",
-        })
-        .setScrollFactor(0)
-        .setDepth(1000)
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on("pointerdown", () => {
-          console.log("Botão clicado!");
-          startMinigame(this);
-        });
-
-      helpButton.setVisible(false);
-      console.log("Botão criado:", helpButton);
-
-      // Criação do aviso de interação
-      avisoTexto = this.add.text(0, 0, " Aperte (E) para interagir", {
+      avisoTexto = this.add.text(0, 0, ">E<", {
         fontFamily: "Arial",
-        fontSize: "12px",
-        color: "#FFFF",
-        stroke: "#000000",
-        strokeThickness: 2,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        padding: { left: 5, right: 5, top: 2, bottom: 2 },
+        fontSize: "10px",
+        fontStyle: "bold",
+        color: "#000000", // Preto
+        stroke: "#FFFFFF", // Borda branca para simular o fundo
+        strokeThickness: 6, // Faz a borda parecer um fundo
+        align: "center",
+      })
+      .setOrigin(0.5)
+      .setVisible(false);
+      
+      // Adicionar animação de pulsar (aumentar e diminuir)
+      this.tweens.add({
+        targets: avisoTexto,
+        scale: { from: 1, to: 1.3 },
+        duration: 800,
+        yoyo: true, // Faz a animação voltar ao estado inicial
+        repeat: -1, // Repetir infinitamente
+        ease: 'Sine.easeInOut' // Easing suave para o movimento
       });
-      avisoTexto.setOrigin(0.5);
-      avisoTexto.setVisible(false);
-
+      
       // Determinamos qual sprite de diálogo usar com base no personagem selecionado
       let dialogCharacterKey;
       console.log("Criando diálogo para personagem:", selectedCharacter); // Log para debug
@@ -2095,27 +2080,7 @@ if (window.fase1Initialized) {
           podeIniciarDialogo
         );
 
-        // Verifica se o jogador pode iniciar diálogo e se o diálogo não foi concluído anteriormente
-        if (
-          (!podeIniciarDialogo &&
-            !dialogoIniciado &&
-            !dialogoProfessorIniciado &&
-            !dialogoProfessor2Iniciado &&
-            !dialogoProfessor3Iniciado &&
-            !dialogoProfessor4Iniciado) ||
-          (dialogoNpc1Concluido &&
-            dialogoProfessorConcluido &&
-            dialogoProfessor2Concluido &&
-            dialogoProfessor3Concluido &&
-            dialogoProfessor4Concluido)
-        ) {
-          console.log(
-            "Não pode iniciar diálogo - não está perto do NPC ou diálogo já foi concluído"
-          );
-          return;
-        }
-
-        // Primeiro, verificamos a distância com o NPC1 (faxineiro)
+        // Calcular distâncias para todos os NPCs
         let distanceToNpc1 = Phaser.Math.Distance.Between(
           player.x,
           player.y,
@@ -2147,24 +2112,30 @@ if (window.fase1Initialized) {
           professorNpc4.y
         );
 
-        // Determina qual diálogo iniciar com base na proximidade
-        let proximoAoFaxineiro = distanceToNpc1 < 70 && !dialogoNpc1Concluido;
-        let proximoAoProfessor =
-          distanceToProfessor < 70 && !dialogoProfessorConcluido;
-        let proximoAoProfessor2 =
-          distanceToProfessor2 < 70 && !dialogoProfessor2Concluido;
-        let proximoAoProfessor3 =
-          distanceToProfessor3 < 70 && !dialogoProfessor3Concluido;
-        let proximoAoProfessor4 =
-          distanceToProfessor4 < 70 && !dialogoProfessor4Concluido;
+        // Verificar proximidade para todos os NPCs, independente se já conversou
+        let proximoAoFaxineiro = distanceToNpc1 < 70;
+        let proximoAoProfessor = distanceToProfessor < 70;
+        let proximoAoProfessor2 = distanceToProfessor2 < 70;
+        let proximoAoProfessor3 = distanceToProfessor3 < 70;
+        let proximoAoProfessor4 = distanceToProfessor4 < 70;
+      
+        // A lógica de mostrar o avisoTexto foi movida para updateMain
+        // Aqui apenas verificamos para iniciar diálogos
 
-        // Se não está próximo de nenhum NPC ou diálogo já foi iniciado, retorna
+        // Verificações para iniciar diálogos - mantemos a lógica original
+        let podeDialogarFaxineiro = proximoAoFaxineiro && !dialogoNpc1Concluido;
+        let podeDialogarProfessor = proximoAoProfessor && !dialogoProfessorConcluido;
+        let podeDialogarProfessor2 = proximoAoProfessor2 && !dialogoProfessor2Concluido;
+        let podeDialogarProfessor3 = proximoAoProfessor3 && !dialogoProfessor3Concluido;
+        let podeDialogarProfessor4 = proximoAoProfessor4 && !dialogoProfessor4Concluido;
+
+        // Se não está próximo de nenhum NPC não concluído ou diálogo já foi iniciado, retorna
         if (
-          !proximoAoFaxineiro &&
-          !proximoAoProfessor &&
-          !proximoAoProfessor2 &&
-          !proximoAoProfessor3 &&
-          !proximoAoProfessor4 &&
+          !podeDialogarFaxineiro &&
+          !podeDialogarProfessor &&
+          !podeDialogarProfessor2 &&
+          !podeDialogarProfessor3 &&
+          !podeDialogarProfessor4 &&
           !dialogoIniciado &&
           !dialogoProfessorIniciado &&
           !dialogoProfessor2Iniciado &&
@@ -2172,13 +2143,13 @@ if (window.fase1Initialized) {
           !dialogoProfessor4Iniciado
         ) {
           console.log(
-            "Não pode iniciar diálogo - não está perto de nenhum NPC"
+        "Não pode iniciar diálogo - não está perto de nenhum NPC ativo"
           );
           return;
         }
 
         // Diálogo com o Faxineiro
-        if (proximoAoFaxineiro && !dialogoIniciado) {
+        if (podeDialogarFaxineiro && !dialogoIniciado) {
           // Inicia diálogo com o faxineiro
           console.log("Iniciando diálogo com faxineiro");
           dialogoIniciado = true;
@@ -2188,7 +2159,7 @@ if (window.fase1Initialized) {
           processoDialogo(this, "faxineiro", dialogosPersonalizados);
         }
         // Diálogo com o Professor
-        else if (proximoAoProfessor && !dialogoProfessorIniciado) {
+        else if (podeDialogarProfessor && !dialogoProfessorIniciado) {
           // Inicia diálogo com o professor
           console.log("Iniciando diálogo com professor");
           dialogoProfessorIniciado = true;
@@ -2198,7 +2169,7 @@ if (window.fase1Initialized) {
           processoDialogo(this, "professor", dialogosProfessor);
         }
         // Diálogo com o Professor2
-        else if (proximoAoProfessor2 && !dialogoProfessor2Iniciado) {
+        else if (podeDialogarProfessor2 && !dialogoProfessor2Iniciado) {
           // Inicia diálogo com o professor2
           console.log("Iniciando diálogo com professor 2");
           dialogoProfessor2Iniciado = true;
@@ -2208,7 +2179,7 @@ if (window.fase1Initialized) {
           processoDialogo(this, "professor2", dialogosProfessor2);
         }
         // Diálogo com o Professor3
-        else if (proximoAoProfessor3 && !dialogoProfessor3Iniciado) {
+        else if (podeDialogarProfessor3 && !dialogoProfessor3Iniciado) {
           // Inicia diálogo com o professor3
           console.log("Iniciando diálogo com professor 3");
           dialogoProfessor3Iniciado = true;
@@ -2218,7 +2189,7 @@ if (window.fase1Initialized) {
           processoDialogo(this, "professor3", dialogosProfessor3);
         }
         // Diálogo com o Professor4
-        else if (proximoAoProfessor4 && !dialogoProfessor4Iniciado) {
+        else if (podeDialogarProfessor4 && !dialogoProfessor4Iniciado) {
           // Inicia diálogo com o professor4
           console.log("Iniciando diálogo com professor 4");
           dialogoProfessor4Iniciado = true;
@@ -2537,16 +2508,6 @@ if (window.fase1Initialized) {
             const centerX = gameWidth / 2;
             const centerY = gameHeight / 2;
 
-            // Atualizar posição do botão para o centro exato da tela
-            helpButton.setPosition(centerX, centerY);
-            helpButton.setStyle({
-              fontSize: "32px",
-              backgroundColor: "#ff4500",
-              padding: { x: 30, y: 20 },
-              fixedWidth: 300,
-            });
-            helpButton.setText("Ajudar Professora");
-
             // MODIFICADO: Atualiza o click handler para usar o ID correto
             helpButton.removeListener("pointerdown");
             helpButton.on("pointerdown", () => {
@@ -2569,15 +2530,6 @@ if (window.fase1Initialized) {
             const centerY = gameHeight / 2;
 
             // Atualizar posição do botão para o centro exato da tela
-            helpButton.setPosition(centerX, centerY);
-            helpButton.setStyle({
-              fontSize: "32px",
-              backgroundColor: "#ff4500",
-              padding: { x: 30, y: 20 },
-              fixedWidth: 350,
-              align: "center",
-            });
-            helpButton.setText("Ajudar Professora");
 
             // MODIFICADO: Atualiza o click handler para usar o ID correto
             helpButton.removeListener("pointerdown");
@@ -2603,18 +2555,6 @@ if (window.fase1Initialized) {
             const centerX = gameWidth / 2;
             const centerY = gameHeight / 2;
 
-            // Atualizar posição do botão para o centro exato da tela
-            helpButton.setPosition(centerX, centerY);
-            helpButton.setStyle({
-              fontSize: "32px",
-              backgroundColor: "#ff4500",
-              padding: { x: 30, y: 20 },
-              fixedWidth: 350,
-              align: "center",
-            });
-            helpButton.setText("Ajudar Professora");
-            currentProfessor = "professor3"; // Define o professor atual
-
             // MODIFICADO: Atualiza o click handler para usar o ID correto
             helpButton.removeListener("pointerdown");
             helpButton.on("pointerdown", () => {
@@ -2639,18 +2579,6 @@ if (window.fase1Initialized) {
             const gameHeight = scene.cameras.main.height;
             const centerX = gameWidth / 2;
             const centerY = gameHeight / 2;
-
-            // Atualizar posição do botão para o centro exato da tela
-            helpButton.setPosition(centerX, centerY);
-            helpButton.setStyle({
-              fontSize: "32px",
-              backgroundColor: "#ff4500",
-              padding: { x: 30, y: 20 },
-              fixedWidth: 350,
-              align: "center",
-            });
-            helpButton.setText("Ajudar Professora");
-            currentProfessor = "professor4"; // Define o professor atual
 
             // MODIFICADO: Atualiza o click handler para usar o ID correto
             helpButton.removeListener("pointerdown");
@@ -2924,6 +2852,8 @@ if (window.fase1Initialized) {
               door1.anims.stop();
               door1.setFrame(0);
               door1.play("doorOpening");
+
+              // Quando a animação terminar, desativar a colisão e garantir o frame correto
               door1.once("animationcomplete", () => {
                 door1.anims.stop();
                 door1.setFrame(4); // Último frame fixo
@@ -2948,49 +2878,71 @@ if (window.fase1Initialized) {
         this.doorCreated = true;
       }
 
-      // Crie o botão de ajuda (inicialmente invisível)
-      helpButton = this.add
-        .text(
-          this.cameras.main.width / 2,
-          this.cameras.main.height / 2 + 50,
-          "Ajudar Professora",
-          {
-            fontFamily: "Press Start 2P", // Fonte pixelizada
-            fontSize: "16px",
-            color: "#FFFFFF",
-            backgroundColor: "#4a6eb5",
-            padding: { left: 25, right: 25, top: 15, bottom: 15 },
-            align: "center",
-            shadow: {
-              offsetX: 3,
-              offsetY: 3,
-              color: "#2a4e95",
-              blur: 0,
-              fill: true,
-            },
+    // Crie o botão de ajuda (inicialmente invisível) com visual profissional e cantos arredondados
+    helpButton = this.add
+      .text(
+        this.cameras.main.width / 2,
+        this.cameras.main.height / 2 + 50,
+        "★ Ajudar Professora ★",
+        {
+          fontFamily: "Arial",
+          fontSize: "18px",
+          color: "#FFFFFF",
+          backgroundColor: "#2C3E50",
+          padding: { left: 30, right: 30, top: 20, bottom: 20 },
+          align: "center",
+          shadow: {
+            offsetX: 3,
+            offsetY: 3,
+            color: 'rgba(0,0,0,0.5)',
+            blur: 5
           }
-        )
-        .setOrigin(0.5)
-        .setScrollFactor(0)
-        .setDepth(9999)
-        .setInteractive({ useHandCursor: true })
-        .on("pointerover", () => {
-          helpButton.setStyle({
-            backgroundColor: "#5a7ec5",
-            shadow: { color: "#3a5ea5" },
-          });
-        })
-        .on("pointerout", () => {
-          helpButton.setStyle({
-            backgroundColor: "#4a6eb5",
-            shadow: { color: "#2a4e95" },
-          });
-        })
-        .on("pointerdown", () => {
-          console.log("Botão de ajuda clicado - comportamento padrão");
-          startMinigame(this, currentProfessor || "professor1");
-        })
-        .setVisible(false); // Começa invisível
+        }
+      )
+      .setOrigin(0.5)
+      .setScrollFactor(0)
+      .setDepth(9999)
+      .setInteractive({ useHandCursor: true })
+      .on("pointerover", () => {
+        helpButton.setStyle({
+          backgroundColor: "#34495E",
+          color: "#FFD700",
+        });
+        helpButton.setScale(1.05);
+      })
+      .on("pointerout", () => {
+        helpButton.setStyle({
+          backgroundColor: "#2C3E50",
+          color: "#FFFFFF",
+        });
+        helpButton.setScale(1);
+      })
+      .on("pointerdown", () => {
+        helpButton.setStyle({
+          backgroundColor: "#1A2530",
+          color: "#FFFFFF", 
+        });
+        helpButton.setScale(0.95);
+        console.log("Botão de ajuda clicado - comportamento padrão");
+        startMinigame(this, currentProfessor || "professor1");
+      })
+      .on("pointerup", () => {
+        helpButton.setStyle({
+          backgroundColor: "#34495E",
+          color: "#FFD700",
+        });
+        helpButton.setScale(1.05);
+      })
+      .setVisible(false);
+
+    // Adicionar um método de debug para testar se o botão está funcionando
+    window.showHelpButton = function() {
+      if (helpButton) {
+        helpButton.setVisible(true);
+        console.log("Help button should be visible now");
+      }
+    };
+
 
       // Certifique-se de que o botão tenha prioridade de exibição alta
       helpButton.setDepth(9999); // Maior que qualquer outra coisa na tela
@@ -3613,114 +3565,96 @@ if (window.fase1Initialized) {
       professorNpc4.y
     );
 
-    // Verifica proximidade com o faxineiro
-    if (distanceToNpc1 < 70 && !dialogoNpc1Concluido) {
+    // Check if any dialogue is currently active
+    const anyDialogueActive = dialogoIniciado || 
+           dialogoProfessorIniciado || 
+           dialogoProfessor2Iniciado || 
+           dialogoProfessor3Iniciado || 
+           dialogoProfessor4Iniciado;
+
+    // Track if player is near any NPC to prevent overlapping prompts
+    let isNearNPC = false;
+
+    // Show prompt for NPCs only if no dialogue is currently active
+    if (!anyDialogueActive) {
+      // Verify proximity to janitor
+      if (distanceToNpc1 < 40) {
       podeIniciarDialogo = true;
-      if (!dialogoIniciado) {
-        avisoTexto.setPosition(npc1.x, npc1.y - 10);
-        avisoTexto.setVisible(true);
+      avisoTexto.setText(">E<");
+      avisoTexto.setPosition(npc1.x + 20, npc1.y - 20);
+      avisoTexto.setVisible(true);
+      isNearNPC = true;
       }
-    }
-    // Verifica proximidade com o professor
-    else if (distanceToProfessor < 70 && !dialogoProfessorConcluido) {
+      // Verify proximity to professor 1
+      else if (distanceToProfessor < 40) {
       podeIniciarDialogo = true;
-      if (!dialogoProfessorIniciado) {
-        avisoTexto.setPosition(professorNpc.x, professorNpc.y - 10);
-        avisoTexto.setVisible(true);
+      avisoTexto.setText(">E<");
+      avisoTexto.setPosition(professorNpc.x + 20, professorNpc.y - 30);
+      avisoTexto.setVisible(true);
+      isNearNPC = true;
       }
-    }
-    // Verifica proximidade com o professor2
-    else if (distanceToProfessor2 < 70 && !dialogoProfessor2Concluido) {
+      // Verify proximity to professor 2
+      else if (distanceToProfessor2 < 40) {
       podeIniciarDialogo = true;
-      if (!dialogoProfessor2Iniciado) {
-        avisoTexto.setPosition(professorNpc2.x, professorNpc2.y - 10);
-        avisoTexto.setVisible(true);
+      avisoTexto.setText(">E<");
+      avisoTexto.setPosition(professorNpc2.x + 20, professorNpc2.y - 20);
+      avisoTexto.setVisible(true);
+      isNearNPC = true;
       }
-    }
-    // Verifica proximidade com o professor3
-    else if (distanceToProfessor3 < 70 && !dialogoProfessor3Concluido) {
+      // Verify proximity to professor 3
+      else if (distanceToProfessor3 < 40) {
       podeIniciarDialogo = true;
-      if (!dialogoProfessor3Iniciado) {
-        avisoTexto.setPosition(professorNpc3.x, professorNpc3.y - 10);
-        avisoTexto.setVisible(true);
+      avisoTexto.setText(">E<");
+      avisoTexto.setPosition(professorNpc3.x + 20, professorNpc3.y - 20);
+      avisoTexto.setVisible(true);
+      isNearNPC = true;
       }
-    }
-    // Verifica proximidade com o professor4
-    else if (distanceToProfessor4 < 70 && !dialogoProfessor4Concluido) {
+      // Verify proximity to professor 4
+      else if (distanceToProfessor4 < 70) {
       podeIniciarDialogo = true;
-      if (!dialogoProfessor4Iniciado) {
-        avisoTexto.setPosition(professorNpc4.x, professorNpc4.y - 10);
-        avisoTexto.setVisible(true);
+      avisoTexto.setText(">E<");
+      avisoTexto.setPosition(professorNpc4.x + 20, professorNpc4.y - 20);
+      avisoTexto.setVisible(true);
+      isNearNPC = true;
       }
-    } else {
+      else {
       podeIniciarDialogo = false;
-      if (
-        !dialogoIniciado &&
-        !dialogoProfessorIniciado &&
-        !dialogoProfessor2Iniciado &&
-        !dialogoProfessor3Iniciado &&
-        !dialogoProfessor4Iniciado
-      ) {
-        avisoTexto.setVisible(false);
+      avisoTexto.setVisible(false);
       }
+
+      // Check proximity to the door ONLY if not near any NPC
+      let distanceToDoor = Phaser.Math.Distance.Between(
+      player.x,
+      player.y,
+      door1.x,
+      door1.y
+      );
+
+      if (distanceToDoor < 50 && !isDoorOpen && !isNearNPC) {
+      avisoTexto.setText(">Espaço<");
+      avisoTexto.setPosition(door1.x, door1.y - 0);
+      avisoTexto.setVisible(true);
+      }
+    }
+    else {
+      // Hide prompt if any dialogue is active
+      avisoTexto.setVisible(false);
     }
 
-    // Se a chave foi coletada, faz com que ela siga o jogador
+    // If the key was collected, make it follow the player
     if (collectedKey) {
       collectedKey.x = Phaser.Math.Linear(collectedKey.x, player.x, 0.1);
       collectedKey.y = Phaser.Math.Linear(collectedKey.y, player.y - 20, 0.1);
     }
 
-    // Bloquear movimento durante diálogo OU minigame
-    if (
-      dialogoIniciado ||
-      dialogoProfessorIniciado ||
-      dialogoProfessor2Iniciado ||
-      dialogoProfessor3Iniciado ||
-      dialogoProfessor4Iniciado ||
-      minigameActive ||
-      helpButton.visible
-    ) {
+    // Block movement during dialogue OR minigame
+    if (anyDialogueActive || minigameActive || helpButton.visible) {
       player.setFrame(0);
       player.setVelocity(0);
       return;
     }
 
-    // Verificar proximidade com a porta
-    let distanceToDoor = Phaser.Math.Distance.Between(
-      player.x,
-      player.y,
-      door1.x,
-      door1.y
-    );
-
-    if (distanceToDoor < 50 && !isDoorOpen) {
-      // Se não estamos em diálogo e não há aviso de interação com NPCs
-      if (
-        !dialogoIniciado &&
-        !dialogoProfessorIniciado &&
-        !dialogoProfessor2Iniciado &&
-        !dialogoProfessor3Iniciado &&
-        !dialogoProfessor4Iniciado &&
-        !avisoTexto.visible
-      ) {
-        avisoTexto.setText("Aperte (Espaço) para interagir");
-        avisoTexto.setPosition(door1.x, door1.y - 10);
-        avisoTexto.setVisible(true);
-      }
-    } else {
-      if (
-        !dialogoIniciado &&
-        !dialogoProfessorIniciado &&
-        !dialogoProfessor2Iniciado &&
-        !dialogoProfessor3Iniciado &&
-        !dialogoProfessor4Iniciado
-      ) {
-        avisoTexto.setVisible(false);
-      }
-    }
-
-    // Verificar se a door2 deve ser aberta (keycard count = 4)
+    // Check if door2 should be opened (keycard count = 4)
     if (keycardCount >= 4 && !isDoor2Open) {
       openDoor2(this);
     }
@@ -4479,26 +4413,7 @@ function avancaDialogo(scene, tipo, dialogos) {
       const gameHeight = scene.cameras.main.height;
       const centerX = gameWidth / 2;
       const centerY = gameHeight / 2;
-
-      // Atualizar posição do botão para o centro exato da tela
-      helpButton.setPosition(centerX, centerY);
-      helpButton.setStyle({
-        fontSize: "32px",
-        backgroundColor: "#ff4500",
-        padding: { x: 30, y: 20 },
-        fixedWidth: 300,
-      });
-      helpButton.setText("Ajudar Professora");
-
-      // MODIFICADO: Atualiza o click handler para usar o ID correto
-      helpButton.removeListener("pointerdown");
-      helpButton.on("pointerdown", () => {
-        console.log("Iniciando minigame do Professor 1");
-        startMinigame(scene, "professor1");
-      });
-
-      helpButton.setVisible(true);
-
+  
       console.log("Botão centralizado em:", centerX, centerY);
     } else if (tipo === "professor2") {
       dialogoProfessor2Iniciado = false;
@@ -4511,16 +4426,6 @@ function avancaDialogo(scene, tipo, dialogos) {
       const centerX = gameWidth / 2;
       const centerY = gameHeight / 2;
 
-      // Atualizar posição do botão para o centro exato da tela
-      helpButton.setPosition(centerX, centerY);
-      helpButton.setStyle({
-        fontSize: "32px",
-        backgroundColor: "#ff4500",
-        padding: { x: 30, y: 20 },
-        fixedWidth: 350,
-        align: "center",
-      });
-      helpButton.setText("Ajudar Professora");
 
       // MODIFICADO: Atualiza o click handler para usar o ID correto
       helpButton.removeListener("pointerdown");
@@ -4546,16 +4451,6 @@ function avancaDialogo(scene, tipo, dialogos) {
       const centerX = gameWidth / 2;
       const centerY = gameHeight / 2;
 
-      // Atualizar posição do botão para o centro exato da tela
-      helpButton.setPosition(centerX, centerY);
-      helpButton.setStyle({
-        fontSize: "32px",
-        backgroundColor: "#ff4500",
-        padding: { x: 30, y: 20 },
-        fixedWidth: 350,
-        align: "center",
-      });
-      helpButton.setText("Ajudar Professora");
       currentProfessor = "professor3"; // Define o professor atual
 
       // MODIFICADO: Atualiza o click handler para usar o ID correto
@@ -4582,18 +4477,6 @@ function avancaDialogo(scene, tipo, dialogos) {
       const gameHeight = scene.cameras.main.height;
       const centerX = gameWidth / 2;
       const centerY = gameHeight / 2;
-
-      // Atualizar posição do botão para o centro exato da tela
-      helpButton.setPosition(centerX, centerY);
-      helpButton.setStyle({
-        fontSize: "32px",
-        backgroundColor: "#ff4500",
-        padding: { x: 30, y: 20 },
-        fixedWidth: 350,
-        align: "center",
-      });
-      helpButton.setText("Ajudar Professora");
-      currentProfessor = "professor4"; // Define o professor atual
 
       // MODIFICADO: Atualiza o click handler para usar o ID correto
       helpButton.removeListener("pointerdown");
@@ -4918,23 +4801,6 @@ function setupMissionsSystem() {
     this.style.backgroundColor = "";
     this.style.transform = "scale(1)";
   });
-
-  // Create a debug button that's always visible
-  console.log("Adding debug trigger for missions panel");
-  const debugTrigger = document.createElement("div");
-  debugTrigger.textContent = "⚠️ Debug: Open Missions";
-  debugTrigger.style.position = "fixed";
-  debugTrigger.style.bottom = "10px";
-  debugTrigger.style.right = "10px";
-  debugTrigger.style.backgroundColor = "red";
-  debugTrigger.style.color = "white";
-  debugTrigger.style.padding = "5px 10px";
-  debugTrigger.style.borderRadius = "5px";
-  debugTrigger.style.zIndex = "20000";
-  debugTrigger.style.cursor = "pointer";
-  debugTrigger.style.display = "none"; // Hide in production, uncomment for debugging
-  debugTrigger.onclick = showMissionsPanel;
-  document.body.appendChild(debugTrigger);
 
   // Add a global access method for the missions panel
   window.showMissions = showMissionsPanel;
