@@ -262,7 +262,6 @@ body::before {
     width: 90%;
     max-width: 1200px;
     max-height: 85vh; /* Limita a altura para garantir que caiba na tela */
-    overflow-y: auto; /* Permite rolagem se necessário */
     background: rgba(0, 0, 0, 0.8);
     border: 2px solid #6c8fd6;
     border-radius: 10px;
@@ -301,17 +300,23 @@ body::before {
     letter-spacing: 2px;
 }
 
-/* Grid de personagens - ajustado para melhor responsividade */
+/* Grid de personagens - configurado para scroll horizontal apenas */
 .characters-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); /* Reduzido para caber melhor */
-    gap: 15px; /* Espaço reduzido entre cards */
+    display: flex; /* Alterado para flex para melhor controle horizontal */
+    flex-wrap: nowrap; /* Impede que os itens quebrem para a próxima linha */
+    gap: 15px; /* Espaço entre cards */
     margin-bottom: 20px;
-    justify-content: center;
+    overflow-x: auto; /* Permite rolagem horizontal */
+    overflow-y: hidden; /* Impede rolagem vertical */
+    padding-bottom: 10px; /* Espaço para a barra de rolagem */
+    scroll-snap-type: x mandatory; /* Melhora experiência de rolagem */
+    width: 100%;
 }
 
 /* Cards de personagem - ajustes de tamanho */
 .character-card {
+    flex: 0 0 260px; /* Largura fixa, não encolhe, não cresce */
+    scroll-snap-align: start; /* Alinha cards quando rolar */
     background: rgba(35, 35, 60, 0.8);
     border: 2px solid #4a6eb5;
     border-radius: 8px;
@@ -714,6 +719,7 @@ canvas {
     .characters-grid {
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 10px;
+        overflow-x: scroll;
     }
     
     #logo-container h1 {

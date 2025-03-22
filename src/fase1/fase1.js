@@ -228,6 +228,22 @@ if (window.fase1Initialized) {
       "player4"
     )
   );
+  charactersGrid.appendChild(
+    createCharacterCard(
+      "5",
+      "Personagem 5",
+      "assets/personagem/personagem5Big.png",
+      "player5"
+    )
+  );
+  charactersGrid.appendChild(
+    createCharacterCard(
+      "6",
+      "Personagem 6",
+      "assets/personagem/personagem6Big.png",
+      "player6"
+    )
+  );
 
   characterSelect.appendChild(charactersGrid);
 
@@ -918,6 +934,14 @@ if (window.fase1Initialized) {
       frameWidth: 64,
       frameHeight: 64,
     });
+    this.load.spritesheet("player5", "assets/fase1/players/player5.png", {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    this.load.spritesheet("player6", "assets/fase1/players/player6.png", {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
     this.load.spritesheet(
       "personagemDialogo1",
       "assets/dialogos/personagemDialogo1.png",
@@ -945,6 +969,22 @@ if (window.fase1Initialized) {
     this.load.spritesheet(
       "personagemDialogo4",
       "assets/dialogos/personagemDialogo4.png",
+      {
+        frameWidth: 225,
+        frameHeight: 300,
+      }
+    );
+    this.load.spritesheet(
+      "personagemDialogo5",
+      "assets/dialogos/personagemDialogo5.png",
+      {
+        frameWidth: 225,
+        frameHeight: 300,
+      }
+    );
+    this.load.spritesheet(
+      "personagemDialogo6",
+      "assets/dialogos/personagemDialogo6.png",
       {
         frameWidth: 225,
         frameHeight: 300,
@@ -1696,6 +1736,10 @@ if (window.fase1Initialized) {
         dialogCharacterKey = "personagemDialogo3";
       } else if (selectedCharacter === "player4") {
         dialogCharacterKey = "personagemDialogo4";
+      } else if (selectedCharacter === "player5") {
+        dialogCharacterKey = "personagemDialogo5";
+      } else if (selectedCharacter === "player6") {
+        dialogCharacterKey = "personagemDialogo6";
       } else {
         dialogCharacterKey = "personagemDialogo1"; // Fallback
         console.warn(
