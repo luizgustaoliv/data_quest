@@ -3000,7 +3000,7 @@ if (window.fase1Initialized) {
       keycardIcon = this.add
         .image(50, 50, "keycard")
         .setScrollFactor(0)
-        .setDepth(9999)
+        .setDepth(9998)
         .setScale(0.15); // Ajuste a escala conforme necessário
 
       // Criar o texto do contador
@@ -3014,13 +3014,13 @@ if (window.fase1Initialized) {
           padding: { x: 5, y: 5 },
         })
         .setScrollFactor(0)
-        .setDepth(9999);
+        .setDepth(9998);
 
       // Create UI elements BEFORE any other game elements
       const uiConfig = {
         x: 20,
         y: 20,
-        depth: 10000, // Highest depth to ensure visibility
+        depth: 9998, // Highest depth to ensure visibility
         scale: {
           icon: 0.12,
           text: 1,
@@ -3031,7 +3031,7 @@ if (window.fase1Initialized) {
       const uiContainer = this.add
         .container(0, 0)
         .setScrollFactor(0)
-        .setDepth(uiConfig.depth);
+        .setDepth(9998);
       uiContainer.setPosition(this.cameras.main.width - 180, 10);
 
       // Create keycard icon with absolute positioning
@@ -3040,7 +3040,7 @@ if (window.fase1Initialized) {
         .setOrigin(0, 0)
         .setScale(uiConfig.scale.icon)
         .setScrollFactor(0)
-        .setDepth(uiConfig.depth);
+        .setDepth(9998);
 
       // Create counter text with absolute positioning and improved visibility
       keycardText = this.add
@@ -3062,7 +3062,7 @@ if (window.fase1Initialized) {
         })
         .setOrigin(0, 0)
         .setScrollFactor(0)
-        .setDepth(uiConfig.depth);
+        .setDepth(9998);
 
       // Add both elements to the container
       uiContainer.add([keycardIcon, keycardText]);
@@ -3623,40 +3623,40 @@ if (window.fase1Initialized) {
     if (!anyDialogueActive) {
       // Verify proximity to janitor
       if (distanceToNpc1 < 40) {
-      podeIniciarDialogo = true;
-      avisoTexto.setText(">E<");
+      podeIniciarDialogo = !dialogoNpc1Concluido; // Can only initiate if not completed
+      avisoTexto.setText(dialogoNpc1Concluido ? "Você já conversou" : ">E<");
       avisoTexto.setPosition(npc1.x + 20, npc1.y - 20);
       avisoTexto.setVisible(true);
       isNearNPC = true;
       }
       // Verify proximity to professor 1
       else if (distanceToProfessor < 40) {
-      podeIniciarDialogo = true;
-      avisoTexto.setText(">E<");
+      podeIniciarDialogo = !dialogoProfessorConcluido;
+      avisoTexto.setText(dialogoProfessorConcluido ? "Você já conversou" : ">E<");
       avisoTexto.setPosition(professorNpc.x + 20, professorNpc.y - 30);
       avisoTexto.setVisible(true);
       isNearNPC = true;
       }
       // Verify proximity to professor 2
       else if (distanceToProfessor2 < 40) {
-      podeIniciarDialogo = true;
-      avisoTexto.setText(">E<");
+      podeIniciarDialogo = !dialogoProfessor2Concluido;
+      avisoTexto.setText(dialogoProfessor2Concluido ? "Você já conversou" : ">E<");
       avisoTexto.setPosition(professorNpc2.x + 20, professorNpc2.y - 20);
       avisoTexto.setVisible(true);
       isNearNPC = true;
       }
       // Verify proximity to professor 3
       else if (distanceToProfessor3 < 40) {
-      podeIniciarDialogo = true;
-      avisoTexto.setText(">E<");
+      podeIniciarDialogo = !dialogoProfessor3Concluido;
+      avisoTexto.setText(dialogoProfessor3Concluido ? "Você já conversou" : ">E<");
       avisoTexto.setPosition(professorNpc3.x + 20, professorNpc3.y - 20);
       avisoTexto.setVisible(true);
       isNearNPC = true;
       }
       // Verify proximity to professor 4
       else if (distanceToProfessor4 < 70) {
-      podeIniciarDialogo = true;
-      avisoTexto.setText(">E<");
+      podeIniciarDialogo = !dialogoProfessor4Concluido;
+      avisoTexto.setText(dialogoProfessor4Concluido ? "Você já conversou" : ">E<");
       avisoTexto.setPosition(professorNpc4.x + 20, professorNpc4.y - 20);
       avisoTexto.setVisible(true);
       isNearNPC = true;

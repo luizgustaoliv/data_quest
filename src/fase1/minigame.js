@@ -383,9 +383,14 @@ function createImprovedQuizMinigame(scene, data, callback) {
           progressText.destroy();
           titleText.destroy(); // Garantir que o título é destruído ao final do quiz
 
-          // Garantir que 2/3 (66.67%) é suficiente para passar
-          const success = correctAnswers >= Math.ceil(totalQuestions * 0.6); // Ajustado para 60% com base no novo total de perguntas
-          const resultMessage = `Você acertou ${correctAnswers} de ${totalQuestions} questões e liberou a professora!`;
+         // Garantir que 60% é suficiente para passar
+         const success = correctAnswers >= Math.ceil(totalQuestions * 0.6);
+         
+         // Definir mensagem apropriada baseada no resultado
+         const resultMessage = success 
+           ? `Você acertou ${correctAnswers} de ${totalQuestions} questões e liberou a professora!` 
+           : `Você acertou ${correctAnswers} de ${totalQuestions} questões. Tente novamente!`;
+
 
           console.log(
             `Quiz completed - Score: ${correctAnswers}/${totalQuestions}, Success: ${success}`
@@ -1626,9 +1631,13 @@ function startCustomGame(scene, callback) {
       scene.time.delayedCall(500, () => {
         gameContainer.destroy();
         titleText.destroy();
-
         const success = correctAnswers / gameItems.length >= 0.7; // 70% de acerto mínimo
-        const resultMessage = `Você acertou ${correctAnswers} de ${gameItems.length} classificações!`;
+        let resultMessage;
+        if (success) {
+          resultMessage = `Você acertou ${correctAnswers} de ${gameItems.length} classificações e liberou a professora!`;
+        } else {
+          resultMessage = `Você acertou apenas ${correctAnswers} de ${gameItems.length} classificações. Tente novamente!`;
+        }
 
         cleanupAndShowResult(
           scene,
