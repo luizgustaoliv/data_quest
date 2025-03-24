@@ -409,7 +409,7 @@ Próximos Passos:
 Ilustrações do Desenvolvimento:
 <br>
 <img src="../assets/concepts&gdd/ft_protags.png" width="500">
-<img src="../assets/concepts&gdd/concepts&gdd/protags_spritesheets.png" width="500">
+<img src="../assets/concepts&gdd/protags_spritesheets.png" width="500">
 <br>
 <img src="../assets/concepts&gdd/ft_fase1.png" width="500">
 <img src="../assets/concepts&gdd/ft_dialogos.png" width="500">
