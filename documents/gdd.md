@@ -125,13 +125,13 @@ De acordo com o nosso parceiro, nosso público abrange alunos, com idades entre 
 
 ## 2.1. Objetivos do Jogo (sprint 2)
 
-O jogo está distribuído em 3 fases. O objetivo final é levar o protagonista até o Data Center da escola, localizado no quinto andar, para impedir que um grupo de hackers faça o upload dos dados de todos. Para avançar, cada fase contém 4 keycards espalhados pelo mapa, protegidos por robôs inimigos. O jogador precisa coletar todos os keycards para desbloquear a última sala da fase, onde encontrará a chave que permite o acesso à próxima fase. Durante essa jornada, será necessário enfrentar batalhas contra inimigos e superar diversos obstáculos enquanto explora a escola.
+O jogo está distribuído em 3 fases. O objetivo final é levar o protagonista até o Data Center da escola, localizado no terceiro andar, para impedir que um hacker faça o upload dos dados de todos. Para avançar, cada fase terá seu próprio item coletável que o jogador vai usar para desbloquear acesso ao elevador da escola, o levando até o próximo piso da escola. Por exemplo: a primeira fase contém 4 keycards espalhados pelo mapa, protegidos por professores robôs que foram hackeados. O jogador precisa coletar todos os keycards para desbloquear a última sala da fase, onde encontrará a chave que permite o acesso à próxima fase.
 
 ## 2.2. Características do Jogo (sprint 2)
 
 ### 2.2.1. Gênero do Jogo (sprint 2)
 
-O jogo Data Quest se enquadra no gênero RPG (Role-Playing Game), no qual os jogadores assumem o papel de um protagonista e avançam na história ao enfrentar desafios e interagir com o ambiente. O sistema de combate adotado é o turn-based combat (combate baseado em turnos), onde as batalhas ocorrem de forma estratégica, permitindo que o jogador escolha suas ações dentro de cada turno, considerando habilidades, recursos e a melhor abordagem para derrotar os inimigos.
+O jogo Data Quest se enquadra no gênero RPG (Role-Playing Game), no qual os jogadores assumem o papel de um protagonista aluno e avançam na história ao enfrentar desafios e interagir com o ambiente. O jogador vai enfrentar desafios na forma de minigames, que podem variar entre um quiz e um jogo de classificar tipos específicos de dados.
 
 ### 2.2.2. Plataforma do Jogo (sprint 2)
 
@@ -139,13 +139,13 @@ O jogo Data Quest será desenvolvido para garantir compatibilidade tanto com des
 
 ### 2.2.3. Número de jogadores (sprint 2)
 
-O jogo Data Quest foi projetado para ser uma experiência single-player, oferecendo suporte exclusivo para um único jogador. Todo o desenvolvimento do jogo, incluindo mecânicas, progressão e desafios, foi pensado para proporcionar uma jornada individual imersiva, permitindo que o jogador explore a narrativa, enfrente inimigos e supere obstáculos sem a necessidade de interação com outros jogadores em tempo real.
+O jogo Data Quest foi projetado para ser uma experiência single-player, oferecendo suporte exclusivo para um único jogador. Todo o desenvolvimento do jogo, incluindo as mecânicas, a progressão e os desafios foi pensado para proporcionar uma jornada individual imersiva. Isso permite que o jogador explore a narrativa, enfrente inimigos e supere obstáculos sem a necessidade de interação com outros jogadores em tempo real.
 
 ### 2.2.4. Títulos semelhantes e inspirações (sprint 2)
 
 O desenvolvimento de Data Quest foi inspirado em títulos específicos que serviram como referência tanto para a mecânica quanto para a estética do projeto. As principais influências incluem:
 
-- Pokémon: O sistema de combate por turnos de Data Quest foi inspirado na série de jogos Pokémon, adotando uma abordagem estratégica em que o jogador pode escolher suas ações dentro de cada turno, tornando as batalhas mais táticas e dinâmicas.
+- Pokémon: O estilo visual dos mapas do jogo e a trilha sonora foram inspiradas por jogos mais antigos da franquia, como Pokémon Fire Red e Pokémon Emerald. Achamos que seria bom para o nosso jogo se pudermos nos basear em um dos RPGs mais acessíveis do mundo, que conta uma estética visual retro, que é algo que queremos emular.
 - Undertale: A estética visual do jogo, incluindo o design gráfico e as animações das sprites do protagonista, foi influenciada por Undertale. Elementos como pixel art e expressões dinâmicas foram utilizados para trazer personalidade e carisma ao personagem principal, criando uma experiência visual única e envolvente.
 
 ### 2.2.5. Tempo estimado de jogo (sprint 5)
@@ -160,7 +160,7 @@ Em um dia comum de aula na escola Bitshine, um hacker com um plano bem elaborado
 
 Nosso protagonista, estudante da Bitshine, perde a hora e é acordado apressadamente para se dirigir à escola. Chegando lá, não encontra opções de entrada, mas percebe uma janela que está aberta que leva até a sala do faxineiro da escola. Dentro da sala, o protagonista e o faxineiro tem uma conversa que contextualiza o conflito da Bitshine e ensina os básicos da LGPD para o jogador.
 
-Desse ponto, o jogador, controlando o protagonista, vai progredir por cada andar coletando key-cards protegidos pelos professores robôs, controlados pelo hacker, que lhe dá acesso aos diferentes andares da instituição. Ao longo do enredo, o jogador vai encontrar alunos e professores diferentes que o ajudarão a enfrentar os inimigos e que ajudarão a passar conhecimentos das leis LGPD, necessárias para a solução do problema. O objetivo final do protagonista é impedir o sucesso dos planos do hacker e libertar os alunos e professores das salas trancadas, enquanto o jogador aprende sobre a LGPD e a importância da proteção de dados pessoais.
+Desse ponto, o jogador, controlando o protagonista, vai progredir por cada andar coletando itens que lhe dará acesso aos diferentes andares da instituição. Ao longo do enredo, o jogador vai encontrar novos desafios que testarão seus conhecimentos sobre a LGPD. O objetivo final do protagonista é impedir o sucesso dos planos do hacker e libertar os alunos e professores das salas trancadas, enquanto o jogador aprende sobre a LGPD e a importância da proteção de dados pessoais.
 
 ## 3.2. Personagens (sprints 2 e 3)
 
@@ -170,32 +170,32 @@ Os jogadores poderão escolher entre seis personagens disponíveis, que represen
 
 Conceitos iniciais da face do personagem:
 <br>
-<img src ="../assets/concepts&gdd/concepts&gdd/protagonista_conceito2.png" width="200">
+<img src ="../assets/concepts&gdd/protagonista_conceito2.png" width="200">
 
 Desenhos de maior qualidade feitos do personagem:
 <br>
-<img src ="../assets/concepts&gdd/concepts&gdd/protag_doodles.png" width="400">
+<img src ="../assets/concepts&gdd/protag_doodles.png" width="400">
 
 Spritesheet desenvolvida para a Sprint 1. Personagem não tinha cores definidas:
 <br>
-<img src ="../assets/concepts&gdd/concepts&gdd/protag_sprites_semcor.png">
+<img src ="../assets/concepts&gdd/protag_sprites_semcor.png">
 
 ### 3.2.2. Non-Playable Characters (NPC)
 
 O Hacker Anônimo: Um criminoso cibernético que arquitetou o ataque na escola Bitshine. Seu principal objetivo é obter lucros substanciais por meio da venda de dados roubados, comprometendo a privacidade e a segurança das vítimas no processo.
 <br>
-<img src ="../assets/concepts&gdd/concepts&gdd/hacker_concept.png" width="400">
+<img src ="../assets/concepts&gdd/hacker_concept.png" width="400">
 
 
 Faxineiro: Primeiro personagem que o protagonista vai interagir no jogo. Dará informações sobre o conflito e ensinará o protagonista sobre conceitos básicos das leis LGPD.
 <br>
-<img src ="../assets/concepts&gdd/concepts&gdd/faxineiro_concept.png" width="400">
-<img src ="../assets/concepts&gdd/npc.png" width="300">
+<img src ="../assets/concepts&gdd/faxineiro_concept.png" width="400">
+<img src ="../assets/fase1/npc.png" width="300">
 
 Professora Rôbo: Segundo NPC da primeira fase do jogo. Ela será outra fonte de informações sobre conceitos básicos das leis LGPD.
 <br>
-<img src ="../assets/concepts&gdd/concepts&gdd/teacher_concept.png" width="400">
-<img src ="../assets/concepts&gdd/sprite_prof.png" width="300">
+<img src ="../assets/concepts&gdd/teacher_concept.png" width="400">
+<img src ="../assets/fase1/sprite_prof.png" width="300">
 
 (Terão outros personagens coadjuvantes que são aunos e professores da escola, mas esses não foram definidos ainda)
 
