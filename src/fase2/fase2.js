@@ -70,7 +70,6 @@ function preloadMain() {
 }
 
 function createMain() {
-
   try {
     // Carregar o mapa
     map2 = this.make.tilemap({ key: "map2json" });
@@ -187,9 +186,18 @@ function createMain() {
     this.physics.add.collider(player, estantes3Layer);
     this.physics.add.collider(player, estantes4Layer);
 
-    if (map2 && map2.layers && map2.layers.length > 0) {
-      startGame.call(this);
-    }
+      // After creating all layers and the player, set up the camera correctly
+      if (map2 && player) {
+        // Configure camera to follow player
+        this.cameras.main.setBounds(0, 0, map2.widthInPixels, map2.heightInPixels);
+        this.physics.world.setBounds(0, 0, map2.widthInPixels, map2.heightInPixels);
+        this.cameras.main.startFollow(player);
+        this.cameras.main.setZoom(1.5);
+      }
+
+      if (map2 && map2.layers && map2.layers.length > 0) {
+        startGame.call(this);
+      }
   } catch (error) {
     console.error("Erro ao carregar o mapa:", error);
   }
