@@ -385,6 +385,492 @@ if (window.fase1Initialized) {
   transitionOverlay.id = "transition-overlay";
   document.body.appendChild(transitionOverlay);
 
+ // Função para inicializar o menu do jogo
+function initGameMenu() {
+  // Verificar se o menu já foi inicializado para evitar duplicatas
+  if (window.menuInitialized) {
+      console.log("Menu já inicializado, ignorando segunda chamada");
+      return;
+  }
+  
+  console.log("Inicializando menu do jogo...");
+  window.menuInitialized = true;
+
+  // Remover qualquer botão de menu existente para evitar duplicatas
+  const existingButton = document.getElementById("game-menu-button");
+  if (existingButton) existingButton.remove();
+  
+  const existingEmergencyButton = document.getElementById("game-menu-button-emergency");
+  if (existingEmergencyButton) existingEmergencyButton.remove();
+
+  // Criar o botão de menu
+  const menuButton = document.createElement("button");
+  menuButton.id = "game-menu-button";
+  menuButton.innerHTML = "≡";
+  menuButton.style.position = "fixed";
+  menuButton.style.top = "20px";
+  menuButton.style.left = "20px";
+  menuButton.style.zIndex = "999999"; // Aumentado para ficar acima de tudo
+  menuButton.style.padding = "3px 10px";
+  menuButton.style.backgroundColor = "#00000";
+  menuButton.style.color = "white";
+  menuButton.style.border = "none";
+  menuButton.style.borderRadius = "5px";
+  menuButton.style.fontFamily = "Arial, sans-serif";
+  menuButton.style.fontWeight = "bold";
+  menuButton.style.fontSize = "23px";
+  menuButton.style.cursor = "pointer";
+  menuButton.style.boxShadow = "0 2px 4px rgba(0,0,0,0.3)";
+  menuButton.style.transition = "background-color 0.2s";
+  // Garantir que o botão seja exibido
+  menuButton.style.display = "block !important";
+  menuButton.style.visibility = "visible !important";
+  menuButton.style.opacity = "1 !important";
+
+  // Adicionar efeitos de hover
+  menuButton.addEventListener("mouseover", function() {
+      this.style.backgroundColor = "#3d5c96";
+  });
+  menuButton.addEventListener("mouseout", function() {
+      this.style.backgroundColor = "#4a6eb5";
+  });
+
+  // Adicionar o botão diretamente ao início do body para garantir máxima prioridade
+  document.body.insertBefore(menuButton, document.body.firstChild);
+  console.log("Botão do menu adicionado ao DOM:", menuButton);
+
+  // Remover qualquer overlay existente para evitar duplicatas
+  const existingOverlay = document.getElementById("game-menu-overlay");
+  if (existingOverlay) existingOverlay.remove();
+  
+  // Criar o overlay do menu (inicialmente oculto)
+  const menuOverlay = document.createElement("div");
+  menuOverlay.id = "game-menu-overlay";
+  menuOverlay.style.position = "fixed";
+  menuOverlay.style.top = "0";
+  menuOverlay.style.left = "0";
+  menuOverlay.style.width = "100%";
+  menuOverlay.style.height = "100%";
+  menuOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+  menuOverlay.style.zIndex = "999990"; // Aumentado para ficar acima de tudo, exceto o menu
+  menuOverlay.style.display = "none";
+  menuOverlay.style.justifyContent = "center";
+  menuOverlay.style.alignItems = "center";
+  document.body.insertBefore(menuOverlay, document.body.firstChild);
+
+  // Criar o painel do menu
+  const menuPanel = document.createElement("div");
+  menuPanel.id = "game-menu-panel";
+  menuPanel.style.width = "300px";
+  menuPanel.style.backgroundColor = "#222";
+  menuPanel.style.borderRadius = "10px";
+  menuPanel.style.padding = "20px";
+  menuPanel.style.boxShadow = "0 0 20px rgba(0, 0, 0, 0.5)";
+  menuOverlay.appendChild(menuPanel);
+
+  // Título do menu
+  const menuTitle = document.createElement("h2");
+  menuTitle.textContent = "MENU DO JOGO";
+  menuTitle.style.color = "white";
+  menuTitle.style.textAlign = "center";
+  menuTitle.style.margin = "0 0 20px 0";
+  menuTitle.style.fontFamily = "'Press Start 2P', Arial, sans-serif";
+  menuTitle.style.fontSize = "24px";
+  menuPanel.appendChild(menuTitle);
+
+  // Função para criar botões do menu
+  function createMenuButton(text, onClick) {
+      const button = document.createElement("button");
+      button.textContent = text;
+      button.style.display = "block";
+      button.style.width = "100%";
+      button.style.padding = "12px";
+      button.style.margin = "10px 0";
+      button.style.backgroundColor = "#4a6eb5";
+      button.style.color = "white";
+      button.style.border = "none";
+      button.style.borderRadius = "5px";
+      button.style.fontSize = "16px";
+      button.style.fontWeight = "bold";
+      button.style.cursor = "pointer";
+      button.style.transition = "transform 0.1s, background-color 0.2s";
+      
+      // Efeitos de hover e click
+      button.addEventListener("mouseover", function() {
+          this.style.backgroundColor = "#3d5c96";
+      });
+      button.addEventListener("mouseout", function() {
+          this.style.backgroundColor = "#4a6eb5";
+      });
+      button.addEventListener("mousedown", function() {
+          this.style.transform = "scale(0.98)";
+      });
+      button.addEventListener("mouseup", function() {
+          this.style.transform = "scale(1)";
+      });
+      
+      button.addEventListener("click", onClick);
+      return button;
+  }
+
+  // Botão Continuar
+  const continueButton = createMenuButton("Continuar Jogo", function() {
+      closeMenu();
+  });
+  menuPanel.appendChild(continueButton);
+
+  // Botão Reiniciar
+  const restartButton = createMenuButton("Reiniciar Fase", function() {
+      if (confirm("Tem certeza que deseja reiniciar a fase? Todo o progresso desta fase será perdido.")) {
+          closeMenu();
+          // Resetar o estado do jogo
+          window.dialogoNpc1Concluido = false;
+          window.keycardCount = 0;
+          window.isDoor2Open = false;
+          window.keyCollected = false;
+          
+          if (typeof showCharacterSelect === 'function') {
+              showCharacterSelect();
+          } else {
+              // Fallback se a função não estiver disponível
+              window.location.href = "../../index.html";
+          }
+      }
+  });
+  menuPanel.appendChild(restartButton);
+
+  // Botão Voltar para Tela Principal
+  const mainMenuButton = createMenuButton("Voltar para Tela Principal", function() {
+      if (confirm("Tem certeza que deseja voltar para a tela principal? Todo o progresso será perdido.")) {
+          closeMenu();
+          // Recarregar a página para reiniciar a fase
+          window.location.reload();
+      }
+  });
+  menuPanel.appendChild(mainMenuButton);
+
+  // Função para abrir o menu
+  function openMenu() {
+      console.log("Abrindo menu...");
+      menuOverlay.style.display = "flex";
+      
+      // Pausar o jogo
+      if (window.game && window.game.scene) {
+          const activeScenes = window.game.scene.getScenes(true);
+          activeScenes.forEach(scene => {
+              scene.scene.pause();
+          });
+      }
+  }
+
+  // Função para fechar o menu
+  function closeMenu() {
+      console.log("Fechando menu...");
+      menuOverlay.style.display = "none";
+      
+      // Retomar o jogo
+      if (window.game && window.game.scene) {
+          const pausedScenes = window.game.scene.getScenes(false);
+          pausedScenes.forEach(scene => {
+              if (scene.scene.isPaused()) {
+                  scene.scene.resume();
+              }
+          });
+      }
+  }
+
+  // Evento de clique para o botão do menu
+  menuButton.onclick = function() {
+      console.log("Botão do menu clicado");
+      openMenu();
+  };
+
+  // Implementar a função handleEscKey corretamente
+  function handleEscKey(event) {
+      if (event.key === "Escape") {
+          console.log("Tecla ESC pressionada");
+          if (menuOverlay.style.display === "none") {
+              openMenu();
+          } else {
+              closeMenu();
+          }
+      }
+  }
+  
+  // Remover qualquer listener de ESC existente para evitar duplicação
+  document.removeEventListener("keydown", handleEscKey);
+  // Adicionar o novo listener
+  document.addEventListener("keydown", handleEscKey);
+
+  // Adicionar listener para o documento principal também (para maior garantia)
+  window.addEventListener("keydown", handleEscKey);
+
+  // Expor funções para uso global
+  window.gameMenu = {
+      open: openMenu,
+      close: closeMenu,
+      handleEscKey: handleEscKey
+  };
+
+  console.log("Menu do jogo inicializado com sucesso!");
+}
+
+// Exportar a função de inicialização
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { 
+      initGameMenu,
+      // Exportar também a função handleEscKey para uso externo
+      handleEscKey: function(event) {
+          if (event.key === "Escape" && window.gameMenu) {
+              if (document.getElementById("game-menu-overlay").style.display === "none") {
+                  window.gameMenu.open();
+              } else {
+                  window.gameMenu.close();
+              }
+          }
+      }
+  };
+} else {
+  // Para uso direto no navegador
+  window.initGameMenu = initGameMenu;
+}
+
+// Executar a inicialização se o script for carregado diretamente
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  setTimeout(initGameMenu, 1000);
+} else {
+  document.addEventListener("DOMContentLoaded", function() {
+      setTimeout(initGameMenu, 1000);
+  });
+}
+
+// Adicionar um listener global para ESC que sempre estará disponível
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") {
+      console.log("ESC pressionado (listener global)");
+      const menuOverlay = document.getElementById("game-menu-overlay");
+      
+      if (menuOverlay) {
+          if (menuOverlay.style.display === "none") {
+              if (window.gameMenu && typeof window.gameMenu.open === 'function') {
+                  window.gameMenu.open();
+              } else {
+                  menuOverlay.style.display = "flex";
+              }
+          } else {
+              if (window.gameMenu && typeof window.gameMenu.close === 'function') {
+                  window.gameMenu.close();
+              } else {
+                  menuOverlay.style.display = "none";
+              }
+          }
+      } else {
+          // Tentar inicializar o menu se ainda não existir
+          console.log("Menu overlay não encontrado, tentando inicializar...");
+          if (typeof initGameMenu === 'function') {
+              initGameMenu();
+          }
+      }
+  }
+});
+
+// Add debug logging to help identify issues
+const originalInitGameMenu = initGameMenu;
+
+// Replace the original function with a more robust version
+initGameMenu = function() {
+  console.log("Enhanced initGameMenu called");
+  
+  try {
+      // Call the original implementation
+      originalInitGameMenu();
+      
+      // Extra verification to ensure menu was created
+      const menuButton = document.getElementById("game-menu-button");
+      const menuOverlay = document.getElementById("game-menu-overlay");
+      
+      console.log("Menu elements after initialization:", {
+          buttonExists: !!menuButton,
+          overlayExists: !!menuOverlay
+      });
+      
+      if (!menuButton || !menuOverlay) {
+          console.warn("Menu elements not created properly, fixing");
+          fixMissingMenuElements();
+      }
+      
+      // Make sure ESC key is handled at the document level
+      document.addEventListener("keydown", function(e) {
+          if (e.key === "Escape") {
+              console.log("ESC key detected in enhanced menu handler");
+              const overlay = document.getElementById("game-menu-overlay");
+              if (overlay) {
+                  if (overlay.style.display === "none" || overlay.style.display === "") {
+                      overlay.style.display = "flex";
+                  } else {
+                      overlay.style.display = "none";
+                  }
+              }
+              e.preventDefault();
+              e.stopPropagation();
+          }
+      }, true); // Use capture to get event first
+      
+  } catch (err) {
+      console.error("Error in enhanced initGameMenu:", err);
+      // Create emergency menu as fallback
+      if (typeof createEmergencyMenu === 'function') {
+          createEmergencyMenu();
+      } else {
+          console.error("createEmergencyMenu function not available");
+      }
+  }
+};
+
+// Function to fix missing menu elements
+function fixMissingMenuElements() {
+  // Remove any partially created elements
+  const oldButton = document.getElementById("game-menu-button");
+  if (oldButton) oldButton.remove();
+  
+  const oldOverlay = document.getElementById("game-menu-overlay");
+  if (oldOverlay) oldOverlay.remove();
+  
+  // Create a minimal but functional menu button
+  const menuButton = document.createElement("button");
+  menuButton.id = "game-menu-button";
+  menuButton.textContent = "≡ Menu";
+  menuButton.style.position = "fixed";
+  menuButton.style.top = "20px";
+  menuButton.style.left = "20px";
+  menuButton.style.zIndex = "9999999";
+  menuButton.style.padding = "8px 15px";
+  menuButton.style.backgroundColor = "#ff0000"; // Red to indicate emergency creation
+  menuButton.style.color = "white";
+  menuButton.style.border = "none";
+  menuButton.style.borderRadius = "5px";
+  menuButton.style.fontFamily = "Arial, sans-serif";
+  menuButton.style.fontWeight = "bold";
+  menuButton.style.fontSize = "16px";
+  menuButton.style.cursor = "pointer";
+  
+  document.body.appendChild(menuButton);
+  
+  // Create minimal overlay
+  const menuOverlay = document.createElement("div");
+  menuOverlay.id = "game-menu-overlay";
+  menuOverlay.style.position = "fixed";
+  menuOverlay.style.top = "0";
+  menuOverlay.style.left = "0";
+  menuOverlay.style.width = "100%";
+  menuOverlay.style.height = "100%";
+  menuOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+  menuOverlay.style.zIndex = "9999998";
+  menuOverlay.style.display = "none";
+  menuOverlay.style.justifyContent = "center";
+  menuOverlay.style.alignItems = "center";
+  
+  // Create panel with minimal buttons
+  const panel = document.createElement("div");
+  panel.style.width = "300px";
+  panel.style.backgroundColor = "#222";
+  panel.style.padding = "20px";
+  panel.style.borderRadius = "10px";
+  panel.style.color = "white";
+  
+  // Add restart button
+  const restartButton = document.createElement("button");
+  restartButton.textContent = "Restart Game";
+  restartButton.style.display = "block";
+  restartButton.style.width = "100%";
+  restartButton.style.padding = "10px";
+  restartButton.style.margin = "10px 0";
+  restartButton.style.backgroundColor = "#4a6eb5";
+  restartButton.style.color = "white";
+  restartButton.style.border = "none";
+  restartButton.style.borderRadius = "5px";
+  restartButton.style.cursor = "pointer";
+  
+  restartButton.onclick = function() {
+      if (confirm("Restart game? All progress will be lost.")) {
+          window.location.reload();
+      }
+  };
+  
+  // Add back button
+  const backButton = document.createElement("button");
+  backButton.textContent = "Back to Main Menu";
+  backButton.style.display = "block";
+  backButton.style.width = "100%";
+  backButton.style.padding = "10px";
+  backButton.style.margin = "10px 0";
+  backButton.style.backgroundColor = "#4a6eb5";
+  backButton.style.color = "white";
+  backButton.style.border = "none";
+  backButton.style.borderRadius = "5px";
+  backButton.style.cursor = "pointer";
+  
+  backButton.onclick = function() {
+      if (confirm("Return to main menu? All progress will be lost.")) {
+          window.location.href = "../../index.html";
+      }
+  };
+  
+  // Close button
+  const closeButton = document.createElement("button");
+  closeButton.textContent = "Close Menu";
+  closeButton.style.display = "block";
+  closeButton.style.width = "100%";
+  closeButton.style.padding = "10px";
+  closeButton.style.margin = "10px 0";
+  closeButton.style.backgroundColor = "#555";
+  closeButton.style.color = "white";
+  closeButton.style.border = "none";
+  closeButton.style.borderRadius = "5px";
+  closeButton.style.cursor = "pointer";
+  
+  closeButton.onclick = function() {
+      menuOverlay.style.display = "none";
+  };
+  
+  // Assemble panel
+  panel.appendChild(restartButton);
+  panel.appendChild(backButton);
+  panel.appendChild(closeButton);
+  menuOverlay.appendChild(panel);
+  document.body.appendChild(menuOverlay);
+  
+  // Set up the button click
+  menuButton.onclick = function() {
+      menuOverlay.style.display = "flex";
+  };
+  
+  console.log("Emergency menu created successfully");
+}
+
+// Add this code at the end to ensure it runs
+console.log("Menu.js enhanced version loaded");
+
+// Self-executing function to add ESC key handler
+(function() {
+  // Add another ESC handler directly to document
+  document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+          console.log("ESC key detected in menu.js global handler");
+          const overlay = document.getElementById("game-menu-overlay");
+          if (overlay) {
+              if (overlay.style.display === "none" || overlay.style.display === "") {
+                  overlay.style.display = "flex";
+              } else {
+                  overlay.style.display = "none";
+              }
+          }
+      }
+  }, true);
+})();
+
+console.log("Script menu.js carregado");
+
   // Variáveis globais
   let selectedCharacter;
   let player;
@@ -856,6 +1342,15 @@ if (window.fase1Initialized) {
     document.body.classList.add("transition-in");
     createParticles();
     addMissionStyles(); // Add our mission styles
+    
+    // Carregar e inicializar o menu do jogo
+    loadMenuScript(function() {
+      if (typeof window.initGameMenu === 'function') {
+        window.initGameMenu();
+      } else {
+        console.error("Função initGameMenu não encontrada após carregar o script.");
+      }
+    });
 
     // Add null checks before accessing elements
     const logoContainer = document.getElementById("logo-container");
@@ -1003,6 +1498,7 @@ if (window.fase1Initialized) {
     this.load.image("professorNpc2", "assets/fase1/sprite_prof.png");
     this.load.image("professorNpc3", "assets/fase1/sprite_prof.png");
     this.load.image("professorNpc4", "assets/fase1/sprite_prof.png");
+    this.load.image("professorNpcBig", "assets/fase1/sprite_profBig.png");
     this.load.image(
       "elevator",
       "assets/animações/elevator.gif"
@@ -1775,8 +2271,8 @@ if (window.fase1Initialized) {
       npc1Image.setScrollFactor(0); // Fixa na câmera
 
       // Adicione uma imagem do professor para o diálogo
-      professorImage = this.add.sprite(750, 420, "professorNpc", 0);
-      professorImage.setScale(2.0);
+      professorImage = this.add.sprite(750, 420, "professorNpcBig", 0);
+      professorImage.setScale(1.0);
       professorImage.setOrigin(0.5, 0.5);
       professorImage.setVisible(false);
       professorImage.setScrollFactor(0); // Fixa na câmera
@@ -3237,7 +3733,7 @@ if (window.fase1Initialized) {
               door1.setFrame(0);
               door1.play("doorOpeningFixed");
 
-              // Quando a animação terminar, DESTRUIR a porta completamente
+              // Quando a animação terminar, desativar a colisão e garantir o frame correto
               door1.once("animationcomplete", () => {
                 console.log(
                   "Animação completa - removendo porta COMPLETAMENTE"
@@ -5216,3 +5712,259 @@ function shuffleArray(array) {
   }
   return array;
 }
+
+// Adicionar um Event Listener global para a tecla ESC
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") {
+    console.log("ESC pressionado (listener global em fase1.js)");
+    
+    // Tentar usar o menu padrão primeiro
+    if (window.gameMenu && typeof window.gameMenu.open === 'function') {
+      try {
+        const menuOverlay = document.getElementById("game-menu-overlay");
+        if (menuOverlay.style.display === "none") {
+          window.gameMenu.open();
+        } else {
+          window.gameMenu.close();
+        }
+        return;
+      } catch (e) {
+        console.warn("Erro ao manipular menu padrão:", e);
+      }
+    }
+    
+    // Fallback: verificar se existe um overlay de menu de emergência
+    const emergencyOverlay = document.getElementById("game-menu-overlay-emergency");
+    if (emergencyOverlay) {
+      if (emergencyOverlay.style.display === "none") {
+        emergencyOverlay.style.display = "flex";
+      } else {
+        emergencyOverlay.style.display = "none";
+      }
+    } else {
+      // Se nem o menu normal nem o de emergência existirem, criar um menu de emergência
+      createEmergencyMenu();
+      const newOverlay = document.getElementById("game-menu-overlay-emergency");
+      if (newOverlay) newOverlay.style.display = "flex";
+    }
+  }
+});
+
+// Add a highly visible menu button that's always available
+function addEmergencyMenuButton() {
+  console.log("Adding emergency menu button");
+  
+  // Check if button already exists to avoid duplicates
+  if (document.getElementById("emergency-menu-button")) {
+    return;
+  }
+  
+  const emergencyButton = document.createElement("button");
+  emergencyButton.id = "emergency-menu-button";
+  emergencyButton.textContent = "MENU (ESC)";
+  emergencyButton.style.position = "fixed";
+  emergencyButton.style.top = "10px";
+  emergencyButton.style.left = "10px";
+  emergencyButton.style.zIndex = "99999999"; // Ultra high z-index
+  emergencyButton.style.backgroundColor = "#ff5500";
+  emergencyButton.style.color = "white";
+  emergencyButton.style.border = "3px solid white";
+  emergencyButton.style.borderRadius = "5px";
+  emergencyButton.style.padding = "8px 15px";
+  emergencyButton.style.fontWeight = "bold";
+  emergencyButton.style.fontSize = "14px";
+  emergencyButton.style.cursor = "pointer";
+  emergencyButton.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+  
+  // Add pulsing animation to make it obvious
+  emergencyButton.style.animation = "pulse 2s infinite";
+  const styleElement = document.createElement("style");
+  styleElement.textContent = `
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  `;
+  document.head.appendChild(styleElement);
+  
+  // Add click event to open menu
+  emergencyButton.addEventListener("click", function() {
+    console.log("Emergency menu button clicked");
+    openAnyAvailableMenu();
+  });
+  
+  // Add to the document body with highest priority
+  document.body.insertBefore(emergencyButton, document.body.firstChild);
+  
+  // Auto-hide after 5 seconds if menu is working
+  setTimeout(function() {
+    const regularMenuVisible = document.getElementById("game-menu-button") && 
+                              window.getComputedStyle(document.getElementById("game-menu-button")).display !== "none";
+    if (regularMenuVisible) {
+      emergencyButton.style.display = "none";
+    }
+  }, 5000);
+}
+
+// Function to ensure some menu opens, trying all possible approaches
+function openAnyAvailableMenu() {
+  console.log("Attempting to open any available menu");
+  
+  // Try method 1: Using gameMenu global object
+  if (window.gameMenu && typeof window.gameMenu.open === 'function') {
+    console.log("Opening menu using gameMenu.open()");
+    try {
+      window.gameMenu.open();
+      return;
+    } catch (e) {
+      console.error("Error using gameMenu.open():", e);
+    }
+  }
+  
+  // Try method 2: Looking for standard menu overlay
+  const menuOverlay = document.getElementById("game-menu-overlay");
+  if (menuOverlay) {
+    console.log("Found standard menu overlay, showing it");
+    menuOverlay.style.display = "flex";
+    return;
+  }
+  
+  // Try method 3: Looking for emergency menu overlay
+  const emergencyOverlay = document.getElementById("game-menu-overlay-emergency");
+  if (emergencyOverlay) {
+    console.log("Found emergency menu overlay, showing it");
+    emergencyOverlay.style.display = "flex";
+    return;
+  }
+  
+  // Method 4: Create a new emergency menu as last resort
+  console.log("No menu found, creating emergency menu");
+  createEmergencyMenu();
+  
+  // Show the newly created emergency menu
+  const newEmergencyOverlay = document.getElementById("game-menu-overlay-emergency");
+  if (newEmergencyOverlay) {
+    newEmergencyOverlay.style.display = "flex";
+  }
+}
+
+// Replace the previous ESC key handler with this more robust version
+function setupEscKeyHandler() {
+  // Remove any existing handlers to avoid conflicts
+  document.removeEventListener("keydown", escKeyHandler);
+  
+  // Add our handler with high priority
+  document.addEventListener("keydown", escKeyHandler, true);
+  
+  // Also add to window for redundancy
+  window.removeEventListener("keydown", escKeyHandler);
+  window.addEventListener("keydown", escKeyHandler, true);
+  
+  console.log("ESC key handler set up with high priority");
+}
+
+// The ESC key handler function
+function escKeyHandler(event) {
+  if (event.key === "Escape") {
+    console.log("ESC key pressed - high priority handler");
+    event.preventDefault(); // Prevent other handlers
+    event.stopPropagation(); // Stop event propagation
+    
+    openAnyAvailableMenu();
+    return false;
+  }
+}
+
+// Enhanced function to load the menu script with better error handling
+function loadMenuScriptEnhanced(retryCount = 0) {
+  console.log(`Attempting to load menu script (attempt ${retryCount + 1})`);
+  
+  // List of possible paths to try
+  const possiblePaths = [
+    "src/fase1/menu.js",
+    "menu.js",
+    "./menu.js",
+    "../menu.js",
+    "../../menu.js",
+    "/src/fase1/menu.js",
+    "../fase1/menu.js"
+  ];
+  
+  // If we've exhausted our retry attempts, create emergency menu
+  if (retryCount >= possiblePaths.length) {
+    console.error("Failed to load menu.js after multiple attempts");
+    console.log("Creating emergency menu instead");
+    createEmergencyMenu();
+    setupEscKeyHandler();
+    addEmergencyMenuButton();
+    return;
+  }
+  
+  const path = possiblePaths[retryCount];
+  console.log(`Trying to load menu from path: ${path}`);
+  
+  const script = document.createElement("script");
+  script.src = path;
+  
+  script.onload = function() {
+    console.log(`Successfully loaded menu script from ${path}`);
+    
+    // Initialize the menu if the function exists
+    if (typeof window.initGameMenu === 'function') {
+      console.log("Initializing game menu");
+      window.initGameMenu();
+    } else {
+      console.warn("initGameMenu function not found in loaded script");
+      createEmergencyMenu();
+    }
+    
+    // Set up ESC key handler as backup
+    setupEscKeyHandler();
+  };
+  
+  script.onerror = function() {
+    console.warn(`Failed to load menu from ${path}, trying next path`);
+    // Try the next path
+    loadMenuScriptEnhanced(retryCount + 1);
+  };
+  
+  document.head.appendChild(script);
+}
+
+// Execute on page load
+window.addEventListener("DOMContentLoaded", function() {
+  console.log("DOM loaded, setting up menu systems");
+  
+  // Try to load the menu script
+  loadMenuScriptEnhanced();
+  
+  // Add emergency menu button
+  addEmergencyMenuButton();
+  
+  // Set up ESC key handler
+  setupEscKeyHandler();
+  
+  // Also set up a delayed check to ensure menu is working
+  setTimeout(function() {
+    const menuButton = document.getElementById("game-menu-button");
+    const emergencyMenuButton = document.getElementById("game-menu-button-emergency");
+    
+    if (!menuButton && !emergencyMenuButton) {
+      console.warn("No menu button found after delay, creating emergency menu");
+      createEmergencyMenu();
+    }
+  }, 3000);
+});
+
+// Make sure this runs immediately without waiting for any event
+(function immediateInit() {
+  console.log("Running immediate menu initialization");
+  // Add an extreme fallback ESC key handler
+  document.addEventListener("keyup", function(event) {
+    if (event.key === "Escape") {
+      console.log("ESC key detected on keyup event");
+      openAnyAvailableMenu();
+    }
+  }, true);
+})();

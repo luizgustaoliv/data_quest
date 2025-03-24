@@ -118,6 +118,7 @@ const HANGMAN_STYLES = {
     wordDisplayY: 400, // Palavra no topo
     wordDisplayX: -200, // Palavra deslocada para a direita
     hangmanX: -400, // Forca mais à esquerda
+    leftArmX: -10, // Braço esquerdo mais para a esquerda
     hangmanY: 360, // Forca mais acima
     keyboardTopY: 450, // Teclado começando mais abaixo
     keyboardX: -200, // Teclado deslocado para a direita
@@ -509,7 +510,7 @@ function startMemoryGame(scene, callback) {
       .setDepth(9002);
 
     // Graphics object para desenhar as linhas
-    graphics = scene.add.graphics().setDepth(9003);
+    graphics = scene.add.graphics().setDepth(8999);
     gameContainer.add(graphics);
 
     // Configuração do layout em duas colunas
@@ -590,7 +591,8 @@ function startMemoryGame(scene, callback) {
       const card = scene.add
         .rectangle(rightColumnX, y, cardWidth, cardHeight, MEMORY_STYLES.colors.card)
         .setStrokeStyle(2, 0xffffff)
-        .setInteractive({ useHandCursor: true });
+        .setInteractive({ useHandCursor: true })
+        .setDepth(9004);
 
       const cardText = scene.add
         .text(rightColumnX, y, shuffledDescriptions[i].description, {
@@ -601,6 +603,7 @@ function startMemoryGame(scene, callback) {
           wordWrap: { width: cardWidth - 10 },
           align: "center",
         })
+        .setDepth(9005)
         .setOrigin(0.5);
 
       card.value = shuffledDescriptions[i].description;
@@ -682,7 +685,7 @@ function startMemoryGame(scene, callback) {
 
           if (isMatch) {
             // Match!
-            const line = scene.add.graphics().setDepth(9002);
+            const line = scene.add.graphics().setDepth(8999);
             line.lineStyle(3, MEMORY_STYLES.colors.correct);
             line.beginPath();
             line.moveTo(startCard.cardX, startCard.cardY);
@@ -794,7 +797,7 @@ function startMemoryGame(scene, callback) {
             }
           } else {
             // Desenhar linha vermelha temporária para mostrar erro
-            const errorLine = scene.add.graphics().setDepth(9003);
+            const errorLine = scene.add.graphics().setDepth(8999);
             errorLine.lineStyle(3, MEMORY_STYLES.colors.incorrect);
             errorLine.beginPath();
             errorLine.moveTo(startCard.cardX, startCard.cardY);
@@ -1048,7 +1051,7 @@ function startHangmanGame(scene, callback) {
 
   // Adicionando partes extras para ter 9 tentativas
   // Mão esquerda
-  const leftHand = scene.add.circle(hangmanX, hangmanY + 20, 3, 0xffffff);
+  const leftHand = scene.add.circle(hangmanX, hangmanY + 30, 3, 0xffffff);
   leftHand.setVisible(false);
   gameContainer.add(leftHand);
   hangmanGraphics.push(leftHand);
