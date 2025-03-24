@@ -190,12 +190,12 @@ O Hacker Anônimo: Um criminoso cibernético que arquitetou o ataque na escola B
 Faxineiro: Primeiro personagem que o protagonista vai interagir no jogo. Dará informações sobre o conflito e ensinará o protagonista sobre conceitos básicos das leis LGPD.
 <br>
 <img src ="../assets/concepts&gdd/faxineiro_concept.png" width="400">
-<img src ="../assets/concepts&gdd/npc.png" width="300">
+<img src ="../assets/fase1/npc.png" width="300">
 
 Professora Rôbo: Segundo NPC da primeira fase do jogo. Ela será outra fonte de informações sobre conceitos básicos das leis LGPD.
 <br>
-<img src ="../assets/concepts&gdd/concepts&gdd/teacher_concept.png" width="400">
-<img src ="../assets/concepts&gdd/sprite_prof.png" width="300">
+<img src ="../assets/concepts&gdd/teacher_concept.png" width="400">
+<img src ="../assets/fase1/sprite_prof.png" width="300">
 
 (Terão outros personagens coadjuvantes que são aunos e professores da escola, mas esses não foram definidos ainda)
 
