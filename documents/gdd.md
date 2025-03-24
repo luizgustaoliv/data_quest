@@ -203,7 +203,7 @@ Professora Rôbo: Segundo NPC da primeira fase do jogo. Ela será outra fonte de
 
 Alinhamento com o público-alvo: Quando o cenário e o enredo do jogo foram concebidos, pensamos em um mundo ficcional que tem uma sociedade tecnologicamente mais avançada e que pode englobar qualquer cultura. O ambiente escolar da escola Bitshine tem uma arquitetura futurista que aborda a Lei Geral de Proteção de Dados (LGPD), que é uma matéria essencial para estudantes que crescem nesse mundo mais digital. Assim, o mundo do jogo é um pouco desconectado da realidade do Brasil, mas todos os personagens enfrentam desafios comuns, como atrasos e desatenção nas aulas, o que facilita a identificação do público jovem com eles.
 
-Diversidade dentro da realidade do Brasil e impacto esperado: Os estudantes da escola Bitshine são um reflexo da diversidade presente na realidade do Brasil, com personagens que representam diferentes etnias e gêneros. O jogo, em seu estado atual, oferece aos jogadores a possibilidade de escolher entre quatro personagens distintos e nomeá-lo da maneira que quiserem, permitindo que se identifiquem com aquele que mais se aproxima de sua própria realidade. O impacto esperado é reforçar a importância da inclusão tanto na educação quanto no setor da tecnologia.
+Diversidade dentro da realidade do Brasil e impacto esperado: Os estudantes da escola Bitshine são um reflexo da diversidade presente na realidade do Brasil, com personagens que representam diferentes etnias e gêneros. O jogo, em seu estado atual, oferece aos jogadores a possibilidade de escolher entre seis personagens distintos e nomeá-lo da maneira que quiserem, permitindo que se identifiquem com aquele que mais se aproxima de sua própria realidade. Quanto ao estilo visual dos personagens, há um elemento de humor na criação dos personagens porque o estilo escolhido se aproxima daquele de um desenho animado, tanto para a aparência e para as roupas. As escolhas feitas na criação dos personagens foi feito com o intuito de respeitar a diversidade do Brasil, já que uma pesquisa foi feita sobre os grupos étnicos mais presentes no país. Pensando em um MVP e na nossa capacidade de produzir assets, pegamos 3 dos grupos mais presentes, que são os brancos, negros e amarelos. O impacto esperado é reforçar a importância da inclusão tanto na educação quanto no setor da tecnologia.
 
 ## 3.3. Mundo do jogo (sprints 2 e 3)
 
@@ -214,20 +214,20 @@ O cenário do jogo se passa na escola Bitshine, que foi invadida e hackeada por 
 <br>
 Fotos da escola Bitshine por fora:
 <p>
-<img src="../assets/concepts&gdd/concepts&gdd/escola_normal.png" width="400">
-<img src="../assets/concepts&gdd/concepts&gdd/escola_hack.png" width="400">
+<img src="../assets/concepts&gdd/escola_normal.png" width="400">
+<img src="../assets/concepts&gdd/escola_hack.png" width="400">
 <p>
 
 <br>
 Mapa da primeira fase do jogo, situado no primeiro andar da escola:
 <p>
-<img src="../assets/concepts&gdd/concepts&gdd/fase1.jpeg" width="500">
+<img src="../assets/concepts&gdd/fase1.jpeg" width="500">
 <p>
 
 <br>
 Mapa da segunda fase do jogo, um labirinto situado no segundo andar, onde fica a biblioteca da escola:
 <p>
-<img src="../assets/concepts&gdd/concepts&gdd/fase2.jpeg" width="500">
+<img src="../assets/concepts&gdd/fase2.jpeg" width="500">
 <p>
 
 
@@ -235,8 +235,8 @@ Mapa da segunda fase do jogo, um labirinto situado no segundo andar, onde fica a
 
 - As 3 fases do jogo vão se passar nos 3 andares diferentes da escola.
 - O protagonista explorará cada andar, entrando em salas diferentes tentando encontrar objetos colecionáveis que ajudarão na progressão de cada fase.
-- Cada andar terá um key-card e a coleção desses cards é essencial para a progressão no jogo.
-- Uma fase se encerra quando o protagonista encontrar a chave contida no andar atual e voltar para o elevador.
+- Cada andar terá um item colecionável, como pedaços de um key-card, e a coleção desses itens é essencial para a progressão no jogo.
+- Uma fase se encerra quando o protagonista encontrar um item chave contido no andar atual e voltar para o elevador.
 - Assim, o acesso para o próximo andar é liberado e a próxima fase é desbloqueada.
 
 ### 3.3.3. Condições climáticas e temporais (sprints 2 e 3)
@@ -248,33 +248,33 @@ Além disso, o jogo não incluirá variações climáticas, já que a narrativa 
 ### 3.3.4. Concept Art (sprint 2)
 <br>
 <p align="center">
-<img src="../assets/concepts&gdd/concepts&gdd/conceitos_escola_data_quest_hackeada1.png" width="400">
-<img src="../assets/concepts&gdd/concepts&gdd/conceitos_escola_data_quest_hackeada2.png" width="400">
+<img src="../assets/concepts&gdd/conceitos_escola_data_quest_hackeada1.png" width="400">
+<img src="../assets/concepts&gdd/conceitos_escola_data_quest_hackeada2.png" width="400">
 <p>
 
 Figuras 1 e 2: Conceitos iniciais da aparência externa da escola Bitshine. Figura 1 representa a escola em seu estado de normalidade e a Figura 2 representa a escola hackeada.
 
-<img src="../assets/concepts&gdd/concepts&gdd/conceitos_protagonista.png" width="300">
+<img src="../assets/concepts&gdd/conceitos_protagonista.png" width="300">
 
 Figura 3: Conceitos iniciais do protagonista, que o jogador poderá nomear.
 
-<img src="../assets/concepts&gdd/concepts&gdd/dialogue_concept.png" width="300">
+<img src="../assets/concepts&gdd/dialogue_concept.png" width="300">
 
 Figura 4: Conceito inicial do estilo visual do diálogo do jogo.
 
-<img src="../assets/concepts&gdd/concepts&gdd/more_robot_concepts.png" width="300">
+<img src="../assets/concepts&gdd/more_robot_concepts.png" width="300">
 
 Figura 5: Conceitos de ataques feitos pelos inimigos robôs.
 
-<img src="../assets/concepts&gdd/concepts&gdd/robo_concept.png" width="300">
+<img src="../assets/concepts&gdd/robo_concept.png" width="300">
 
 Figura 6: Ilustração do inimigo robô com suas cores definidas.
 
-<img src="../assets/concepts&gdd/concepts&gdd/protag_genero.png" width="300">
+<img src="../assets/concepts&gdd/protag_genero.png" width="300">
 
 Figura 7: Primeira concept da aprimoração do protagonista.
 
-<img src="../assets/concepts&gdd/concepts&gdd/teste_generos.png" width="300">
+<img src="../assets/concepts&gdd/teste_generos.png" width="300">
 
 Figura 8: Esboços dos designs aprimorados do protagonista.
 
@@ -297,14 +297,14 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 \# | item |  | como obter | função | efeito sonoro
 --- | --- | --- | --- | --- | ---
 1 | Cartão de Identificação (KeyCard) | <img src="../assets/concepts&gdd/keycard.png" width="200"> | você o obtém após ajudar cada professor-robô a recuperar o controle de sua consciência | Com o acúmulo de quatro deles, dá acesso a áreas restritas dentro da escola e permite o acesso à ultima sala da fase 1 | Som de leitura de cartão
-2 | Chave | <img src="../assets/concepts&gdd/fase1/chavesprite.png" width="170"> | Ela fica disponível na última sala da fase 1 após todos os 4 keycards serem coletados | É utilizada para entrar no elevador para acessar a fase 2 | Som de chave
+2 | Chave | <img src="../assets/fase1/chavesprite.png" width="170"> | Ela fica disponível na última sala da fase 1 após todos os 4 keycards serem coletados | É utilizada para entrar no elevador para acessar a fase 2 | Som de chave
 3 | ... 
 
 ### 3.4.2. Bestiário
 
 \# | inimigo |  | ocorrências | função | impacto | efeito sonoro
 --- | --- | --- | --- | --- | --- | ---
-1 | professora-robô | <img src="../assets/concepts&gdd/sprite_prof.png" width="1000"> |  a partir da fase 1 | aparece e bloqueia o caminho do jogador, soltando ameaças sobre vazar dados da escola. Após alguns segundos de diálogo, o jogador recebe um questionário sobre a LGPD para "desbloqueá-la" e restaurar seu sistema para que ela volte ao normal | se o jogador acerta todas as perguntas, a professora volta ao normal e o jogador aprende mais sobre a LGPD; se o jogador erra, ele precisa refazer até acertar | sons de sistema corrompido (bipes, estática, glitch)
+1 | professora-robô | <img src="../assets/fase1/sprite_prof.png" width="1000"> |  a partir da fase 1 | aparece e bloqueia o caminho do jogador, soltando ameaças sobre vazar dados da escola. Após alguns segundos de diálogo, o jogador recebe um questionário sobre a LGPD para "desbloqueá-la" e restaurar seu sistema para que ela volte ao normal | se o jogador acerta todas as perguntas, a professora volta ao normal e o jogador aprende mais sobre a LGPD; se o jogador erra, ele precisa refazer até acertar | sons de sistema corrompido (bipes, estática, glitch)
 2 | ...
 
 ## 3.5. Gameflow (Diagrama de cenas) (sprint 2)
@@ -321,26 +321,28 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
  - O jogador precisa superar cada fase completando as tarefas específicas para progredir na história. Seu objetivo final é libertar a escola da invasão hacker.
 
 #### Regras gerais do jogo:
- - O jogador precisa concluir os minigames de uma fase para ter acesso a fase seguinte.
- - Caso o jogador fracasse ao concluir um minigame, ele terá a chance de fazer novamente até acertar.
+ - O jogador precisa concluir os minigames de uma fase para ganhar itens colecionáveis que lhe dará acesso a fase seguinte.
+ - Caso o jogador fracasse ao concluir um minigame, ele terá a chance de fazê-lo novamente até acertar.
  - O jogo só vai ser finalizado caso todas as fases e objetivos forem concluídos.
  - Ao decorrer das fases o jogador terá contato com novos conceitos e conhecimentos sobre a LGPD.
 
 #### Regras da **Fase 1**:
- - O jogador deverá interagir com os professores e responder às perguntas com base nos conhecimentos adquiridos anteriormente ao interagir com o faxineiro no início da fase. Para cada resposta correta, ele receberá um keycard. Ao coletar quatro keycards, uma sala especial será desbloqueada, onde encontrará uma chave. Essa chave será utilizada no elevador para acessar a próxima fase.
- - O jogador só irá conseguir um keycard caso ele responda certo duas de três perguntas feitas pelos NPCs.
- - Caso o jogador erre duas perguntas ele terá a chance de respondê-las novamente, até acertar no mínimo duas.
- - Ao conseguir 4 keycards a sala com a chave deverá ser liberada.
- - Para acessar a próxima fase o jogador deve se aproximar da chave e após isso ir até o elevador, automaticamente a transição entre fases ocorrerá.
+ - O jogador deverá interagir com os professores e conquistar desafios na forma de minigames com base nos conhecimentos adquiridos anteriormente ao interagir com o faxineiro no início da fase. Para cada minigame concluído, ele receberá uma parte de um key-card.
+ - Ao coletar quatro partes, uma sala especial será desbloqueada, onde encontrará uma chave. Essa chave será utilizada para desbloquear o elevador que dá acesso à próxima fase.
+ - O jogador só conseguirá uma parte de keycard caso ele conclua um minigame, respeitando as regras de cada um. Por exemplo, se o jogador acertar a maioria das perguntas em um quiz, ganhará uma parte de keycard.
+ - Para acessar a próxima fase o jogador deve se aproximar da chave e após isso ir até o elevador, onde a transição entre fases ocorrerá automaticamente.
 
 ## 3.7. Mecânicas do jogo (sprint 3)
 
 #### Teclas de movimentação: **W A S D** ou **Setas do Teclado**:
- - **W** ou **Seta para cima**: Movimentação para cima; **S** ou **Seta para baixo**: Movimentação para baixo; **A** ou **Seta para esquerda**: Movimentação para esquerda; **D** ou **Seta para direita**: Movimentação para direita.
+ - **W** ou **Seta para cima**: Movimentação para cima
+ - **S** ou **Seta para baixo**: Movimentação para baixo
+ - **A** ou **Seta para esquerda**: Movimentação para esquerda
+ - **D** ou **Seta para direita**: Movimentação para direita.
 
 #### Tecla de interação com o cenário (portas e objetos): **"Espaço"**: 
  - Use a tecla **"Espaço"** para abrir portas, coletar itens e para demais interações com o cenário.
- - Na primeira fase você deverá user a tecla "espaço" para abrir a porta da sala de faxina, para poder ter acesso ao restante do mapa.
+ - Na primeira fase você deverá user a tecla "espaço" para abrir a porta da sala de faxina após ter falado com o faxineiro, para poder ter acesso ao restante do mapa.
 
 #### Tecla de interação com NPCs: **"E"**:
  - Use a tecla **"E"** para interagir com os NPCs.
@@ -351,12 +353,11 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 #### Mecânicas da primeira fase:
  - O jogador deve interagir com o NPC do faxineiro para entender o contexto da fase.
- - Após a interação, deverá abrir a porta da sala (pressionando "espaço") e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
- - Ao encontrar os professores, deverá interagir com eles (pressionando "e") e participar de um minigame de perguntas e respostas para que possa "reiniciar seus sistemas" e caso seja feito com sucesso, o jogador ganhará 1 keycard.
- - O jogador deverá ajudar os 4 professores para ganhar o total de 4 keycards, para que ele possa acessar uma sala.
- - Ao acessar a sala haverá uma chave, ao se aproximar dela o jogador irá coletá-la automaticamente e deverá ir até o elevador, que dará acesso a fase 2.
+ - Após a interação, deverá abrir a porta da sala (pressionando "Espaço") e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
+ - Ao encontrar os professores, o jogador deverá interagir com eles (pressionando "E") e participar de um minigame, que pode variar entre um perguntas e respostas ou um que é jogo da forca, para que o professor possa "reiniciar seus sistemas". Caso o minigame seja feito com sucesso, o jogador ganhará 1 pedaço de um keycard.
+ - O jogador deverá ajudar os 4 professores para ganhar o total de 4 pedaços de um keycard, para que ele possa acessar uma sala que vai conter uma chave.
+ - Ao acessar a sala com a chave, o jogador deve se aproximar dela para coletá-la e depois andar em direção até o elevador, que lhe dará acesso a fase 2.
 
-   
 
 ## 3.8. Implementação Matemática de Animação/Movimento (sprint 4)
 
@@ -408,7 +409,7 @@ Próximos Passos:
 Ilustrações do Desenvolvimento:
 <br>
 <img src="../assets/concepts&gdd/ft_protags.png" width="500">
-<img src="../assets/concepts&gdd/concepts&gdd/protags_spritesheets.png" width="500">
+<img src="../assets/concepts&gdd/protags_spritesheets.png" width="500">
 <br>
 <img src="../assets/concepts&gdd/ft_fase1.png" width="500">
 <img src="../assets/concepts&gdd/ft_dialogos.png" width="500">
@@ -771,6 +772,8 @@ Abstartups. Disponível em: [Art](https://abstartups.com.br/wp-content/uploads/2
 
 LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
 SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
+
+Governo Brasileiro. Etnias e miscigenação. Disponível em: [Art](https://www.gov.br/mre/pt-br/embaixada-porto-principe/porto-principe-arquivos/portugues/o-brasil/etnias-e-miscigenacao) Acesso em: 24/3/2025
 
 INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
 SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
