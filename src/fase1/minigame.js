@@ -477,7 +477,6 @@ function startMemoryGame(scene, callback) {
 
   // Guardar elementos do level
   let gameContainer = null;
-  let graphics = null;
   let instructionsText = null;
   let levelText = null;
 
@@ -495,23 +494,17 @@ function startMemoryGame(scene, callback) {
 
     // Variáveis de controle para este nível
     const lgpdPairs = allLevelsData[level];
-    const cardCount = lgpdPairs.length * 2;
     const cards = [];
-    let startCard = null;
-    let currentLine = null;
+    let selectedCard = null;
     let matchesFound = 0;
     const totalMatches = lgpdPairs.length;
     let attempts = 0;
-    const matchLines = [];
+    const matchedPairs = [];
 
     // Criar container para cartas
     gameContainer = scene.add
       .container(width / 2, height / 2)
       .setDepth(9002);
-
-    // Graphics object para desenhar as linhas
-    graphics = scene.add.graphics().setDepth(8999);
-    gameContainer.add(graphics);
 
     // Configuração do layout em duas colunas
     const cardWidth = MEMORY_STYLES.sizes.cardWidth;
@@ -525,6 +518,9 @@ function startMemoryGame(scene, callback) {
     
     // Offset para subir os cards (ajustado para cima)
     const verticalOffset = -50;
+
+    // Definir uma cor mais destacada para cards selecionados
+    const selectedCardColor = 0x5599ff; // Azul mais brilhante e distinto
 
     // Embaralhar a ordem dos pares
     const shuffledPairs = [...lgpdPairs];
@@ -558,22 +554,15 @@ function startMemoryGame(scene, callback) {
       card.pairIndex = i;
       card.isLeftCard = true;
       card.matched = false;
-      card.cardX = leftColumnX;
-      card.cardY = y;
+      card.cardText = cardText;
 
       gameContainer.add([card, cardText]);
-      leftCards.push({ card, text: cardText, value: shuffledPairs[i].term, matched: false, x: leftColumnX, y });
-      cards.push({ card, text: cardText, value: shuffledPairs[i].term, matched: false, x: leftColumnX, y });
+      leftCards.push({ card, text: cardText, value: shuffledPairs[i].term, matched: false });
+      cards.push({ card, text: cardText, value: shuffledPairs[i].term, matched: false });
 
-      // Eventos para desenhar linhas
-      card.on('pointerdown', function (pointer) {
-        if (card.matched) return;
-        startCard = card;
-        graphics.clear();
-        graphics.lineStyle(3, 0xffff00);
-        graphics.beginPath();
-        graphics.moveTo(card.cardX, card.cardY);
-        currentLine = { x1: card.cardX, y1: card.cardY };
+      // Evento de clique nos cards
+      card.on('pointerdown', function() {
+        handleCardClick(card);
       });
     }
 
@@ -607,6 +596,8 @@ function startMemoryGame(scene, callback) {
         .setOrigin(0.5);
 
       card.value = shuffledDescriptions[i].description;
+      card.cardText = cardText;
+      
       // Encontrar o índice correto do par
       for (let j = 0; j < shuffledPairs.length; j++) {
         if (shuffledPairs[j].description === shuffledDescriptions[i].description) {
@@ -616,215 +607,421 @@ function startMemoryGame(scene, callback) {
       }
       card.isLeftCard = false;
       card.matched = false;
-      card.cardX = rightColumnX;
-      card.cardY = y;
 
       gameContainer.add([card, cardText]);
-      rightCards.push({ card, text: cardText, value: shuffledDescriptions[i].description, matched: false, x: rightColumnX, y });
-      cards.push({ card, text: cardText, value: shuffledDescriptions[i].description, matched: false, x: rightColumnX, y });
+      rightCards.push({ card, text: cardText, value: shuffledDescriptions[i].description, matched: false });
+      cards.push({ card, text: cardText, value: shuffledDescriptions[i].description, matched: false });
 
-      // Eventos para desenhar linhas
-      card.on('pointerdown', function (pointer) {
-        if (card.matched) return;
-        startCard = card;
-        graphics.clear();
-        graphics.lineStyle(3, 0xffff00);
-        graphics.beginPath();
-        graphics.moveTo(card.cardX, card.cardY);
-        currentLine = { x1: card.cardX, y1: card.cardY };
+      // Evento de clique nos cards
+      card.on('pointerdown', function() {
+        handleCardClick(card);
       });
     }
 
-    // Eventos para controlar o movimento da linha
-    scene.input.on('pointermove', function (pointer) {
-      if (startCard && currentLine) {
-        const pointerX = pointer.x - gameContainer.x;
-        const pointerY = pointer.y - gameContainer.y;
+    // Função para destacar um card selecionado
+    function highlightCard(card) {
+      // Mudar a cor para uma bem mais destacada
+      card.setFillStyle(selectedCardColor);
+      
+      // Adicionar efeito de escala para destacar ainda mais
+      scene.tweens.add({
+        targets: [card, card.cardText],
+        scaleX: 1.1,
+        scaleY: 1.1,
+        duration: 150,
+        ease: 'Power1'
+      });
+    }
 
-        graphics.clear();
-        graphics.lineStyle(3, 0xffff00);
-        graphics.beginPath();
-        graphics.moveTo(currentLine.x1, currentLine.y1);
-        graphics.lineTo(pointerX, pointerY);
-        graphics.strokePath();
+    // Função para remover destaque de um card
+    function unhighlightCard(card) {
+      if (!card.matched) {
+        card.setFillStyle(MEMORY_STYLES.colors.card);
+        
+        // Retornar ao tamanho original
+        scene.tweens.add({
+          targets: [card, card.cardText],
+          scaleX: 1,
+          scaleY: 1,
+          duration: 150,
+          ease: 'Power1'
+        });
       }
-    });
+    }
 
-    scene.input.on('pointerup', function (pointer) {
-      if (startCard) {
-        // Verificar se terminou em outra carta
-        let endCard = null;
-        let endCardIndex = -1;
-
-        // Converter posição do pointer para coordenadas relativas ao container
-        let pointerX = pointer.x - gameContainer.x;
-        let pointerY = pointer.y - gameContainer.y;
-
-        // Verificar se o pointer está sobre alguma carta
-        for (let i = 0; i < cards.length; i++) {
-          const cardItem = cards[i];
-          if (
-            !cardItem.card.matched &&
-            cardItem.card !== startCard &&
-            cardItem.card.isLeftCard !== startCard.isLeftCard &&
-            Math.abs(cardItem.x - pointerX) < cardWidth / 2 &&
-            Math.abs(cardItem.y - pointerY) < cardHeight / 2
-          ) {
-            endCard = cardItem.card;
-            endCardIndex = i;
-            break;
-          }
-        }
-
-        if (endCard) {
-          attempts++;
-          totalAttempts++;
-
-          // Verificar se é um par correto
-          const isMatch = startCard.pairIndex === endCard.pairIndex;
-
-          if (isMatch) {
-            // Match!
-            const line = scene.add.graphics().setDepth(8999);
-            line.lineStyle(3, MEMORY_STYLES.colors.correct);
-            line.beginPath();
-            line.moveTo(startCard.cardX, startCard.cardY);
-            line.lineTo(endCard.cardX, endCard.cardY);
-            line.strokePath();
-            gameContainer.add(line);
-            matchLines.push(line);
-
-            // Marcar cartas como combinadas
-            startCard.matched = true;
-            endCard.matched = true;
-
-            startCard.setFillStyle(MEMORY_STYLES.colors.correct);
-            endCard.setFillStyle(MEMORY_STYLES.colors.correct);
-
-            matchesFound++;
-            totalMatchesFound++;
-
-            // Verificar se o nível terminou
-            if (matchesFound === totalMatches) {
-              scene.time.delayedCall(800, function () {
-                // Avançar para o próximo nível ou finalizar o jogo
-                currentLevel++;
-                
-                if (currentLevel < totalLevels) {
-                  // Mostrar mensagem de transição de nível
-                  const levelCompleteText = scene.add
-                    .text(
-                      width / 2,
-                      height / 2,
-                      `Nível ${currentLevel} completo!\nPronto para o próximo nível?`,
-                      {
-                        fontFamily: "Arial",
-                        fontSize: "24px",
-                        color: "#ffffff",
-                        align: "center",
-                        stroke: "#000000",
-                        strokeThickness: 4
-                      }
-                    )
-                    .setOrigin(0.5)
-                    .setScrollFactor(0)
-                    .setDepth(9010);
-                  
-                  // Botão para continuar
-                  const continueButton = scene.add
-                    .rectangle(
-                      width / 2,
-                      height / 2 + 60,
-                      150,
-                      40,
-                      MEMORY_STYLES.colors.buttonPrimary
-                    )
-                    .setScrollFactor(0)
-                    .setDepth(9010)
-                    .setInteractive({ useHandCursor: true })
-                    .setStrokeStyle(2, 0xffffff);
-                  
-                  const continueText = scene.add
-                    .text(
-                      width / 2,
-                      height / 2 + 60,
-                      "Continuar",
-                      {
-                        fontFamily: "Arial",
-                        fontSize: "18px",
-                        color: "#ffffff"
-                      }
-                    )
-                    .setScrollFactor(0)
-                    .setDepth(9010)
-                    .setOrigin(0.5);
-                  
-                  continueButton.on('pointerdown', function() {
-                    levelCompleteText.destroy();
-                    continueButton.destroy();
-                    continueText.destroy();
-                    startLevel(currentLevel);
-                  });
-                } else {
-                  // Jogo completo - mostrar resultado final
-                  gameContainer.destroy();
-                  titleText.destroy();
-                  if (instructionsText) instructionsText.destroy();
-                  if (levelText) levelText.destroy();
-
-                  // Calcular eficiência total
-                  const efficiency = totalMatchesFound / totalAttempts;
-                  const success = efficiency >= 0.3; // 30% eficiência mínima para passar
-
-                  let resultMessage;
-                  if (success) {
-                    resultMessage = `Parabéns! Você completou todos os níveis em ${totalAttempts} tentativas e libertou a professora!`;
-                  } else {
-                    resultMessage = "Você usou muitas tentativas. Tente praticar mais sobre LGPD!";
-                  }
-
-                  cleanupAndShowResult(
-                    scene,
-                    background,
-                    panel,
-                    success,
-                    resultMessage,
-                    callback,
-                    MEMORY_STYLES
-                  );
+    // Função para lidar com o clique nos cards
+    function handleCardClick(card) {
+      // Ignorar cliques em cartas já combinadas
+      if (card.matched) return;
+      
+      // Se nenhuma carta estiver selecionada
+      if (!selectedCard) {
+        // Selecionar esta carta
+        selectedCard = card;
+        highlightCard(card);
+        return;
+      }
+      
+      // Se uma carta já estiver selecionada
+      
+      // Ignorar clique na mesma carta
+      if (selectedCard === card) return;
+      
+      // Ignorar se tentar selecionar duas cartas do mesmo lado
+      if (selectedCard.isLeftCard === card.isLeftCard) {
+        // Desseleciona a carta anterior
+        unhighlightCard(selectedCard);
+        selectedCard = card;
+        highlightCard(card);
+        return;
+      }
+      
+      // Chegamos aqui, é uma seleção válida de cartas de lados diferentes
+      attempts++;
+      totalAttempts++;
+      
+      // Destacar o segundo card selecionado
+      highlightCard(card);
+      
+      // Verificar se é um par correto
+      const isMatch = selectedCard.pairIndex === card.pairIndex;
+      
+      if (isMatch) {
+        // Acertou o par!
+        selectedCard.matched = true;
+        card.matched = true;
+        
+        // Mudar cor das cartas que formam par
+        selectedCard.setFillStyle(MEMORY_STYLES.colors.correct);
+        card.setFillStyle(MEMORY_STYLES.colors.correct);
+        
+        // Retornar ao tamanho normal com animação
+        scene.tweens.add({
+          targets: [selectedCard, selectedCard.cardText, card, card.cardText],
+          scaleX: 1,
+          scaleY: 1,
+          duration: 300,
+          ease: 'Power1'
+        });
+        
+        matchesFound++;
+        totalMatchesFound++;
+        
+        // Limpar seleção atual
+        selectedCard = null;
+        
+        // Verificar se o nível terminou
+        if (matchesFound === totalMatches) {
+          scene.time.delayedCall(800, function() {
+        // Avançar para o próximo nível ou finalizar o jogo
+        currentLevel++;
+        
+        if (currentLevel < totalLevels) {
+          // Limpar elementos atuais
+          gameContainer.destroy();
+          if (instructionsText) instructionsText.destroy();
+          if (levelText) levelText.destroy();
+            // Criar um painel de transição com animação
+            const transitionPanel = scene.add
+            .rectangle(
+            width / 2,
+            height / 2,
+            panel.width * 0.7,
+            panel.height * 0.5,
+            0x1a365d
+            )
+            .setScrollFactor(0)
+            .setDepth(9010)
+            .setStrokeStyle(3, 0xffffff)
+            .setOrigin(0.5)
+            .setAlpha(0)
+            .setScale(1);
+            
+            // Criar textura de estrela com forma corrigida
+            if (!scene.textures.exists('star')) {
+            const starGraphics = scene.make.graphics();
+            starGraphics.clear();
+            
+            // Definir aparência da estrela
+            starGraphics.lineStyle(2, 0xff9900, 1);
+            starGraphics.fillStyle(0xffcc00, 1);
+            
+            // Desenhar estrela com 5 pontas - com raios diferentes para forma correta
+            const outerRadius = 15;
+            const innerRadius = 7;  // Inner radius deve ser menor que outer
+            const cx = 20;  // Centro X da estrela
+            const cy = 20;  // Centro Y da estrela
+            
+            starGraphics.beginPath();
+            
+            // Desenhar os 10 pontos da estrela (5 externos, 5 internos)
+            for (let i = 0; i < 10; i++) {
+            // Alternar entre raio externo e interno
+            const radius = i % 2 === 0 ? outerRadius : innerRadius;
+            // Ângulo ajustado para 5 pontas
+            const angle = Math.PI * 2 * (i / 10) - Math.PI / 2;
+            
+            const x = cx + Math.cos(angle) * radius;
+            const y = cy + Math.sin(angle) * radius;
+            
+            if (i === 0) {
+            starGraphics.moveTo(x, y);
+            } else {
+            starGraphics.lineTo(x, y);
+            }
+            }
+            
+            starGraphics.closePath();
+            starGraphics.fillPath();
+            starGraphics.strokePath();
+            
+            // Gerar textura maior para melhor visualização
+            starGraphics.generateTexture('star', 40, 40);
+            }
+            
+            // Centralizar melhor as estrelas
+            const starCount = 5;
+            const starSpacing = 50; // Reduzido para estrelas mais próximas
+            const totalWidth = starCount * starSpacing;
+            const startX = width / 2.8 - (totalWidth / 2); // Removido offset extra
+            
+            // Adicionar estrelas
+            const stars = [];
+            for (let i = 0; i < starCount; i++) {
+            const star = scene.add.image(
+            startX + i * starSpacing,
+            height / 2 - 60,
+            'star'
+            ).setScale(0).setDepth(9011);
+            
+            stars.push(star);
+            }
+              // Texto de nível completo com sombra e estilo melhorado
+              const levelCompleteText = scene.add
+              .text(
+                width / 2,
+                height / 2 - 20,
+                `Nível ${currentLevel} Completo!`,
+                {
+                fontFamily: "Arial",
+                fontSize: "28px",
+                color: "#ffffff",
+                align: "center",
+                fontWeight: "bold",
+                stroke: "#000000",
+                strokeThickness: 4
+                }
+              )
+              .setOrigin(0.5)
+              .setScrollFactor(0)
+              .setDepth(9011)
+              .setAlpha(0);
+              
+              // Texto secundário com descrição
+              const subText = scene.add
+              .text(
+                width / 2,
+                height / 2 + 20,
+                `Prepare-se para o Nível ${currentLevel + 1}`,
+                {
+                fontFamily: "Arial",
+                fontSize: "18px",
+                color: "#bbffbb",
+                align: "center",
+                }
+              )
+              .setOrigin(0.5)
+              .setScrollFactor(0)
+              .setDepth(9011)
+              .setAlpha(0);
+              
+              // Botão para continuar com efeito de brilho
+              const continueButton = scene.add
+              .rectangle(
+                width / 2,
+                height / 2 + 70,
+                160,
+                45,
+                MEMORY_STYLES.colors.buttonPrimary
+              )
+              .setScrollFactor(0)
+              .setDepth(9011)
+              .setInteractive({ useHandCursor: true })
+              .setStrokeStyle(2, 0xffffff)
+              .setAlpha(0);
+              
+              const continueText = scene.add
+              .text(
+                width / 2,
+                height / 2 + 70,
+                "Continuar",
+                {
+                fontFamily: "Arial",
+                fontSize: "18px",
+                color: "#ffffff",
+                fontWeight: "bold"
+                }
+              )
+              .setScrollFactor(0)
+              .setDepth(9012)
+              .setOrigin(0.5)
+              .setAlpha(0);
+              
+              // Animação de entrada para o painel
+              scene.tweens.add({
+              targets: transitionPanel,
+              alpha: 1,
+              scale: 1,
+              duration: 400,
+              ease: 'Back.easeOut'
+              });
+              
+              // Animação do texto principal
+              scene.tweens.add({
+              targets: [levelCompleteText, subText],
+              alpha: 1,
+              y: '-=10',
+              duration: 500,
+              delay: 200,
+              ease: 'Power2'
+              });
+              
+              // Animação das estrelas
+              stars.forEach((star, i) => {
+              scene.tweens.add({
+                targets: star,
+                scale: 1,
+                y: height / 2 - 60,
+                duration: 400,
+                delay: 300 + i * 100,
+                ease: 'Back.easeOut'
+              });
+              
+              // Efeito de girar
+              scene.tweens.add({
+                targets: star,
+                angle: 360,
+                duration: 1500,
+                delay: 300 + i * 100,
+                ease: 'Sine.easeInOut'
+              });
+              });
+              
+              // Animação do botão
+              scene.tweens.add({
+              targets: [continueButton, continueText],
+              alpha: 1,
+              duration: 400,
+              delay: 600,
+              ease: 'Power2'
+              });
+              
+              // Efeito de pulsar no botão
+              scene.tweens.add({
+              targets: continueButton,
+              scaleX: 1.05,
+              scaleY: 1.05,
+              yoyo: true,
+              repeat: -1,
+              duration: 800,
+              ease: 'Sine.easeInOut'
+              });
+              
+              // Efeito ao passar o mouse
+              continueButton.on('pointerover', function() {
+              continueButton.setFillStyle(MEMORY_STYLES.colors.buttonHover);
+              continueText.setScale(1.05);
+              });
+              
+              continueButton.on('pointerout', function() {
+              continueButton.setFillStyle(MEMORY_STYLES.colors.buttonPrimary);
+              continueText.setScale(1);
+              });
+              
+              // Efeito ao clicar
+              continueButton.on('pointerdown', function() {
+              // Sons se disponíveis
+              if (scene.sound && scene.sound.add) {
+                try {
+                const clickSound = scene.sound.add('click', { volume: 0.5 });
+                clickSound.play();
+                } catch(e) {
+                console.log("Som não disponível");
+                }
+              }
+              
+              // Animação de saída
+              scene.tweens.add({
+                targets: [transitionPanel, levelCompleteText, subText, continueButton, continueText, ...stars],
+                alpha: 0,
+                scale: 0.8,
+                duration: 300,
+                ease: 'Power2',
+                onComplete: function() {
+                transitionPanel.destroy();
+                levelCompleteText.destroy();
+                subText.destroy();
+                continueButton.destroy();
+                continueText.destroy();
+                stars.forEach(star => star.destroy());
+                startLevel(currentLevel);
                 }
               });
+              });
+            } else {
+              // Jogo completo - mostrar resultado final
+              gameContainer.destroy();
+              titleText.destroy();
+              if (instructionsText) instructionsText.destroy();
+              if (levelText) levelText.destroy();
+
+              // Calcular eficiência total
+              const efficiency = totalMatchesFound / totalAttempts;
+              const success = efficiency >= 0.3; // 30% eficiência mínima para passar
+
+              let resultMessage;
+              if (success) {
+                resultMessage = `Parabéns! Você completou todos os níveis em ${totalAttempts} tentativas e libertou a professora!`;
+              } else {
+                resultMessage = "Você usou muitas tentativas. Tente praticar mais sobre LGPD!";
+              }
+
+              cleanupAndShowResult(
+                scene,
+                background,
+                panel,
+                success,
+                resultMessage,
+                callback,
+                MEMORY_STYLES
+              );
             }
-          } else {
-            // Desenhar linha vermelha temporária para mostrar erro
-            const errorLine = scene.add.graphics().setDepth(8999);
-            errorLine.lineStyle(3, MEMORY_STYLES.colors.incorrect);
-            errorLine.beginPath();
-            errorLine.moveTo(startCard.cardX, startCard.cardY);
-            errorLine.lineTo(endCard.cardX, endCard.cardY);
-            errorLine.strokePath();
-            gameContainer.add(errorLine);
-
-            // Remover após um tempo
-            scene.time.delayedCall(800, function () {
-              errorLine.destroy();
-            });
-          }
+          });
         }
-
-        // Limpar a linha temporária e redefinir carta inicial
-        graphics.clear();
-        startCard = null;
-        currentLine = null;
+      } else {
+        // Errou o par
+        // Flash vermelho temporário
+        card.setFillStyle(MEMORY_STYLES.colors.incorrect);
+        
+        // Desselecionar ambas as cartas após um breve intervalo
+        scene.time.delayedCall(800, function() {
+          if (selectedCard && !selectedCard.matched) {
+            unhighlightCard(selectedCard);
+          }
+          if (!card.matched) {
+            unhighlightCard(card);
+          }
+          selectedCard = null;
+        });
       }
-    });
+    }
 
-    // Instruções para o nível atual (ajustado para subir também)
+    // Instruções para o nível atual (ajustado para refletir o novo gameplay)
     instructionsText = scene.add
       .text(
         width / 2,
-        height / 2 + 143, // Subido de 130 para 100
-        "Arraste uma linha para conectar os termos às suas descrições correspondentes",
+        height / 2 + 143,
+        "Clique em um termo e depois na descrição correspondente",
         {
           fontFamily: "Arial",
           fontSize: "12px",
@@ -836,11 +1033,11 @@ function startMemoryGame(scene, callback) {
       .setScrollFactor(0)
       .setDepth(9002);
 
-    // Texto mostrando o nível atual (ajustado para subir também)
+    // Texto mostrando o nível atual
     levelText = scene.add
       .text(
         width / 2,
-        height / 2 + 160, // Subido de 160 para 130
+        height / 2 + 160,
         `Nível ${currentLevel + 1} de ${totalLevels}`,
         {
           fontFamily: "Arial",
