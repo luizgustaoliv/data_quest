@@ -1073,46 +1073,34 @@ function startHangmanGame(scene, callback) {
     scene,
     width,
     height,
-    "Jogo da Forca",
+    "Acerte a palavra",
     HANGMAN_STYLES
   );
 
   // Lista de palavras sobre privacidade e proteção de dados
-  const words = [
-    "PRIVACIDADE",
-    "LGPD",
-    "DADOS",
-    "SEGURANCA",
-    "PROTECAO",
-    "CONSENTIMENTO",
-  ];
+  const words = ["PRIVACIDADE", "LGPD", "DADOS", "SEGURANCA", "PROTECAO", "CONSENTIMENTO"];
   const selectedWord = words[Math.floor(Math.random() * words.length)];
 
   // Variáveis de controle
   let guesses = [];
-  const maxAttempts = 9; // Alterado para 9 tentativas
+  const maxAttempts = 6;
   let attempts = 0;
   let gameResult = null;
 
-  // Container para centralizarmos todos os elementos do jogo
-  const gameContainer = scene.add
-    .container(width / 2, height / 2)
-    .setDepth(9002);
+  // Container para elementos do jogo
+  const gameContainer = scene.add.container(width / 2, height / 2).setDepth(9002);
 
-  // Elementos para exibir a palavra - ajustado para topo/direita
+  // Elementos para exibir a palavra
   const wordDisplay = [];
-  const letterSpacing = 23; // Espaçamento menor
-  const startX =
-    HANGMAN_STYLES.positions.wordDisplayX -
-    (selectedWord.length * letterSpacing) / 2 +
-    letterSpacing / 2;
+  const letterSpacing = 23;
+  const startX = HANGMAN_STYLES.positions.wordDisplayX - (selectedWord.length * letterSpacing) / 2 + letterSpacing / 2;
 
-  // Criar espaços para cada letra - posição ajustada
+  // Criar espaços para cada letra
   for (let i = 0; i < selectedWord.length; i++) {
     const letterBg = scene.add.rectangle(
       startX + i * letterSpacing,
       HANGMAN_STYLES.positions.wordDisplayY,
-      20, // Largura menor
+      20,
       3,
       0xffffff
     );
@@ -1130,159 +1118,64 @@ function startHangmanGame(scene, callback) {
     wordDisplay.push(letterText);
   }
 
-  // Forca (representação completa) - reposicionada à esquerda
-  const hangmanGraphics = [];
-  const hangmanX = HANGMAN_STYLES.positions.hangmanX;
-  const hangmanY = HANGMAN_STYLES.positions.hangmanY;
-
-  // Base da forca - reposicionada
-  const base = scene.add.rectangle(hangmanX, hangmanY + 40, 100, 5, 0xffffff);
-  gameContainer.add(base);
-  hangmanGraphics.push(base);
-
-  // Poste vertical - reposicionado
-  const pole = scene.add.rectangle(hangmanX - 40, hangmanY, 5, 80, 0xffffff);
-  pole.setVisible(false);
-  gameContainer.add(pole);
-  hangmanGraphics.push(pole);
-
-  // Travessa superior - reposicionada
-  const top = scene.add.rectangle(
-    hangmanX - 10,
-    hangmanY - 40,
-    65,
-    5,
-    0xffffff
+  // Contador de tentativas visual - reposicionado 70px à esquerda e 30px acima da palavra
+  const attemptsContainer = scene.add.container(
+    HANGMAN_STYLES.positions.wordDisplayX - 200,
+    HANGMAN_STYLES.positions.wordDisplayY - 60
   );
-  top.setVisible(false);
-  gameContainer.add(top);
-  hangmanGraphics.push(top);
+  gameContainer.add(attemptsContainer);
+  
+  // Círculo de fundo para o contador
+  const attemptsBg = scene.add.circle(0, 0, 40, 0x333333)
+    .setStrokeStyle(3, 0x4488cc);
+  attemptsContainer.add(attemptsBg);
+  
+  // Texto principal para o número
+  const attemptsNumber = scene.add.text(
+    0, -8, 
+    `${maxAttempts - attempts}`, 
+    {
+      fontFamily: "Arial", fontSize: "28px", 
+      color: "#ffffff", fontWeight: "bold"
+    }
+  ).setOrigin(0.5);
+  attemptsContainer.add(attemptsNumber);
+  
+  // Texto secundário "tentativas"
+  const attemptsLabel = scene.add.text(
+    0, 12, "tentativas", 
+    { fontFamily: "Arial", fontSize: "12px", color: "#cccccc" }
+  ).setOrigin(0.5);
+  attemptsContainer.add(attemptsLabel);
+  
+  // Indicadores visuais simplificados
+  const indicators = [];
+  const indicatorRadius = 50;
+  for (let i = 0; i < maxAttempts; i++) {
+    const angle = (i * (2 * Math.PI / maxAttempts)) - Math.PI/2;
+    const x = Math.cos(angle) * indicatorRadius;
+    const y = Math.sin(angle) * indicatorRadius;
+    
+    const indicator = scene.add.circle(x, y, 4, 0x4488cc);
+    indicators.push(indicator);
+    attemptsContainer.add(indicator);
+  }
 
-  // Corda - reposicionada
-  const rope = scene.add.rectangle(
-    hangmanX + 20,
-    hangmanY - 30,
-    3,
-    20,
-    0xffffff
-  );
-  rope.setVisible(false);
-  gameContainer.add(rope);
-  hangmanGraphics.push(rope);
-
-  // Cabeça - reposicionada
-  const head = scene.add.circle(hangmanX + 20, hangmanY - 15, 12, 0xffffff);
-  head.setStrokeStyle(2, 0xffffff);
-  head.setFillStyle(); // Sem preenchimento
-  head.setVisible(false);
-  gameContainer.add(head);
-  hangmanGraphics.push(head);
-
-  // Corpo - reposicionado
-  const body = scene.add.rectangle(
-    hangmanX + 20,
-    hangmanY + 10,
-    2,
-    30,
-    0xffffff
-  );
-  body.setVisible(false);
-  gameContainer.add(body);
-  hangmanGraphics.push(body);
-
-  // Braço esquerdo - corrigido para conectar ao corpo corretamente
-  const leftArm = scene.add.line(
-    0,
-    0,
-    hangmanX + 20,
-    hangmanY + 10,
-    hangmanX,
-    hangmanY + 20,
-    0xffffff
-  );
-  leftArm.setVisible(false);
-  gameContainer.add(leftArm);
-  hangmanGraphics.push(leftArm);
-
-  // Braço direito - corrigido para conectar ao corpo corretamente
-  const rightArm = scene.add.line(
-    0,
-    0,
-    hangmanX + 20,
-    hangmanY + 10,
-    hangmanX + 40,
-    hangmanY + 20,
-    0xffffff
-  );
-  rightArm.setVisible(false);
-  gameContainer.add(rightArm);
-  hangmanGraphics.push(rightArm);
-
-  // Perna esquerda - corrigida para conectar ao corpo corretamente
-  const leftLeg = scene.add.line(
-    0,
-    0,
-    hangmanX + 20,
-    hangmanY + 25,
-    hangmanX + 5,
-    hangmanY + 40,
-    0xffffff
-  );
-  leftLeg.setVisible(false);
-  gameContainer.add(leftLeg);
-  hangmanGraphics.push(leftLeg);
-
-  // Perna direita - corrigida para conectar ao corpo corretamente
-  const rightLeg = scene.add.line(
-    0,
-    0,
-    hangmanX + 20,
-    hangmanY + 25,
-    hangmanX + 35,
-    hangmanY + 40,
-    0xffffff
-  );
-  rightLeg.setVisible(false);
-  gameContainer.add(rightLeg);
-  hangmanGraphics.push(rightLeg);
-
-  // Adicionando partes extras para ter 9 tentativas
-  // Mão esquerda
-  const leftHand = scene.add.circle(hangmanX, hangmanY + 30, 3, 0xffffff);
-  leftHand.setVisible(false);
-  gameContainer.add(leftHand);
-  hangmanGraphics.push(leftHand);
-
-  // Mão direita
-  const rightHand = scene.add.circle(hangmanX + 40, hangmanY + 20, 3, 0xffffff);
-  rightHand.setVisible(false);
-  gameContainer.add(rightHand);
-  hangmanGraphics.push(rightHand);
-
-  // Pé esquerdo (adicionado como nona parte)
-  const leftFoot = scene.add.circle(hangmanX + 5, hangmanY + 40, 3, 0xffffff);
-  leftFoot.setVisible(false);
-  gameContainer.add(leftFoot);
-  hangmanGraphics.push(leftFoot);
-
-  // Criar teclado virtual - ajustando posição e tamanho para a direita
+  // Teclado virtual
   const keyboardRows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
-
   const keyboard = [];
   const keySize = HANGMAN_STYLES.sizes.keySize;
   const keySpacing = HANGMAN_STYLES.sizes.keySpacing;
-  const keyboardX = HANGMAN_STYLES.positions.keyboardX; // Deslocamento horizontal
+  const keyboardX = HANGMAN_STYLES.positions.keyboardX;
 
   keyboardRows.forEach((row, rowIndex) => {
     const rowLetters = row.split("");
     const rowWidth = rowLetters.length * (keySize + keySpacing) - keySpacing;
-    const rowStartX = keyboardX - rowWidth / 2; // Ajustado para direita
+    const rowStartX = keyboardX - rowWidth / 2;
 
     rowLetters.forEach((letter, letterIndex) => {
       const x = rowStartX + letterIndex * (keySize + keySpacing) + keySize / 2;
-      const y =
-        HANGMAN_STYLES.positions.keyboardTopY +
-        rowIndex * (keySize + keySpacing);
+      const y = HANGMAN_STYLES.positions.keyboardTopY + rowIndex * (keySize + keySpacing);
 
       const keyBg = scene.add
         .rectangle(x, y, keySize, keySize, HANGMAN_STYLES.colors.keyboardBg)
@@ -1291,10 +1184,8 @@ function startHangmanGame(scene, callback) {
 
       const keyText = scene.add
         .text(x, y, letter, {
-          fontFamily: "Arial",
-          fontSize: "14px",
-          color: "#ffffff",
-          fontWeight: "bold",
+          fontFamily: "Arial", fontSize: "14px", 
+          color: "#ffffff", fontWeight: "bold",
         })
         .setOrigin(0.5);
 
@@ -1303,16 +1194,10 @@ function startHangmanGame(scene, callback) {
 
       // Evento de clique
       keyBg.on("pointerdown", () => {
-        // Impedir seleções quando o jogo já terminou
-        if (gameResult !== null) return;
+        if (gameResult !== null || guesses.includes(letter)) return;
 
-        // Impedir seleções duplicadas
-        if (guesses.includes(letter)) return;
-
-        // Desativar letra
         keyBg.setFillStyle(0x666666);
         keyBg.disableInteractive();
-
         guesses.push(letter);
 
         // Verificar se a letra está na palavra
@@ -1325,21 +1210,45 @@ function startHangmanGame(scene, callback) {
         }
 
         if (!correctGuess) {
-          // Letra incorreta
           attempts++;
-
-          // Mostrar parte da forca
-          if (attempts < hangmanGraphics.length) {
-            hangmanGraphics[attempts].setVisible(true);
+          attemptsNumber.setText(`${maxAttempts - attempts}`);
+          
+          // Desativar indicador
+          if (attempts <= indicators.length) {
+            scene.tweens.add({
+              targets: indicators[indicators.length - attempts],
+              alpha: 0.3, scale: 0.8, duration: 300
+            });
+          }
+          
+          // Efeito de shake e mudança de cor com base nas tentativas restantes
+          scene.tweens.add({
+            targets: attemptsContainer,
+            x: { from: attemptsContainer.x - 5, to: attemptsContainer.x },
+            duration: 300
+          });
+          
+          if (maxAttempts - attempts <= 2) {
+            attemptsBg.setStrokeStyle(3, 0xff4444);
+            attemptsNumber.setColor('#ff6666');
+          } else if (maxAttempts - attempts <= 3) {
+            attemptsBg.setStrokeStyle(3, 0xffaa44);
+            attemptsNumber.setColor('#ffcc66');
           }
 
-          // Verificar se perdeu - agora após a nona tentativa errada
+          // Verificar se perdeu
           if (attempts >= maxAttempts) {
-            // Desativar todas as teclas para evitar mais tentativas
             keyboard.forEach((k) => k.key.disableInteractive());
             endGame(false);
           }
         } else {
+          // Flash verde para acerto
+          scene.tweens.add({
+            targets: attemptsBg,
+            fillColor: 0x44aa44,
+            yoyo: true, duration: 200
+          });
+          
           // Verificar se ganhou
           let wordComplete = true;
           for (let i = 0; i < selectedWord.length; i++) {
@@ -1350,7 +1259,6 @@ function startHangmanGame(scene, callback) {
           }
 
           if (wordComplete) {
-            // Desativar todas as teclas para evitar mais tentativas
             keyboard.forEach((k) => k.key.disableInteractive());
             endGame(true);
           }
@@ -1359,18 +1267,13 @@ function startHangmanGame(scene, callback) {
     });
   });
 
-  // Instruções - atualizadas para indicar número máximo de erros
+  // Instruções
   const instructionsText = scene.add
     .text(
       width / 2,
       height / 2 + HANGMAN_STYLES.positions.instructionsY,
-      "Adivinhe a palavra sobre proteção de dados - Você só pode errar até 9 vezes",
-      {
-        fontFamily: "Arial",
-        fontSize: "14px",
-        color: "#ffffff",
-        align: "center",
-      }
+      `Adivinhe a palavra - Você tem ${maxAttempts} tentativas`,
+      { fontFamily: "Arial", fontSize: "14px", color: "#ffffff", align: "center" }
     )
     .setOrigin(0.5)
     .setScrollFactor(0)
