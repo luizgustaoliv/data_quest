@@ -173,7 +173,7 @@ function createMain() {
  
     // Adiciona o sprite do personagem no mapa - posição inicial
     player = this.physics.add.sprite(670, 1000, "player");
-    player.setScale(1.0);
+    player.setScale(0.8 );
 
     // Ajusta o tamanho da hitbox do player
     player.body.setSize(27, 8);
@@ -255,8 +255,43 @@ function createMain() {
           );
         });
 
-        addCollisionRect(this, 160, 200, 60, 70, 0xff0000); // estante zeladoria
-        addCollisionRect(this, 160, 265, 40, 40, 0xff0000); // carrinho zeladoria limpezq
+        addCollisionRect(this, 1018, 1010, 560, 160, 0xff0000); // parede
+        addCollisionRect(this, 314, 1010, 460, 160, 0xff0000); // parede
+        addCollisionRect(this, 668, 1100, 150, 20, 0xff0000); // parede
+        addCollisionRect(this, 576, 1010, 60, 160, 0xff0000); // parede
+        addCollisionRect(this, 608, 960, 60, 60, 0xff0000); // parede
+        addCollisionRect(this, 735, 960, 60, 60, 0xff0000); // parede
+        addCollisionRect(this, 108, 530, 20, 800, 0xff0000); // parede
+        addCollisionRect(this, 607, 192, 60, 60, 0xff0000); // parede
+        addCollisionRect(this, 737, 192, 60, 60, 0xff0000); // parede
+        addCollisionRect(this, 576, 80, 60, 160, 0xff0000); // parede
+        addCollisionRect(this, 769, 80, 60, 160, 0xff0000); // parede
+        addCollisionRect(this, 669, 22, 200, 80, 0xff0000); // parede 
+        addCollisionRect(this, 345, 142, 460, 160, 0xff0000); // parede
+        addCollisionRect(this, 1030, 142, 560, 160, 0xff0000); // parede
+        addCollisionRect(this, 1237, 530, 20, 800, 0xff0000); // parede
+        addCollisionRect(this, 755, 865, 18, 130, 0xff0000); // parede
+        addCollisionRect(this, 590, 865, 18, 130, 0xff0000); // parede
+        addCollisionRect(this, 452, 810, 373, 70, 0xff0000); // parede
+        addCollisionRect(this, 274, 737, 20, 243, 0xff0000); // parede
+        addCollisionRect(this, 178, 787, 20, 283, 0xff0000); // parede
+        addCollisionRect(this, 398, 580, 20, 245, 0xff0000); // parede
+        addCollisionRect(this, 494, 580, 20, 245, 0xff0000); // parede
+        addCollisionRect(this, 460, 483, 147, 88, 0xff0000); // parede
+        addCollisionRect(this, 220, 463, 200, 78, 0xff0000); // parede
+        addCollisionRect(this, 352, 333, 314, 78, 0xff0000); // parede
+        addCollisionRect(this, 209, 250, 16, 78, 0xff0000); // parede
+        addCollisionRect(this, 588, 265, 20, 88, 0xff0000); // parede
+        addCollisionRect(this, 845, 355, 530, 90, 0xff0000); // parede
+        addCollisionRect(this, 975, 200, 457, 80, 0xff0000); // parede
+        addCollisionRect(this, 400, 200, 325, 80, 0xff0000); // parede
+        addCollisionRect(this, 1123, 810, 325, 70, 0xff0000); // parede
+        addCollisionRect(this, 783, 810, 150, 70, 0xff0000); // parede
+        addCollisionRect(this, 800, 642, 357, 90, 0xff0000); // parede
+        addCollisionRect(this, 820, 492, 340, 70, 0xff0000); // parede
+        addCollisionRect(this, 658, 470, 20, 140, 0xff0000); // parede
+        addCollisionRect(this, 1102, 470, 20, 140, 0xff0000); // parede
+        addCollisionRect(this, 1102, 695, 20, 160, 0xff0000); // parede
 
         console.log("Debug: pressione F9 para mostrar/ocultar colisões");
 
