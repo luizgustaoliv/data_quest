@@ -176,15 +176,12 @@ function createMain() {
     player.setScale(1.0);
 
     // Ajusta o tamanho da hitbox do player
-    player.body.setSize(32, 32);
-    player.body.setOffset(16, 32);
-    
-    // Adicionar colisões entre player e camadas
-    this.physics.add.collider(player, paredeLayer);
-    this.physics.add.collider(player, estantes1Layer);
-    this.physics.add.collider(player, estantes2Layer);
-    this.physics.add.collider(player, estantes3Layer);
-    this.physics.add.collider(player, estantes4Layer);
+    player.body.setSize(27, 8);
+    player.body.setOffset(19, 55.4);
+
+    // Ativa o modo de debug para visualizar a hitbox
+    this.physics.world.drawDebug = true;
+    this.physics.world.debugGraphic = this.add.graphics();
 
       // After creating all layers and the player, set up the camera correctly
       if (map2 && player) {
@@ -201,6 +198,80 @@ function createMain() {
   } catch (error) {
     console.error("Erro ao carregar o mapa:", error);
   }
+
+        // Criar grupo de colisões manuais
+        const manualColliders = this.physics.add.staticGroup();
+
+        // Função para adicionar retângulos de colisão
+        function addCollisionRect(scene, x, y, width, height) {
+          const rect = scene.add.rectangle(x, y, width, height);
+          scene.physics.add.existing(rect, true); // true para estático
+          rect.body.immovable = true;
+  
+          // Adicionar debugging visual se necessário
+          if (scene.physics.config.debug) {
+            rect.setStrokeStyle(2, 0xff0000);
+          } else {
+            rect.setVisible(false); // Invisível em produção
+          }
+  
+          manualColliders.add(rect);
+          return rect;
+        }
+
+  const debugCollisions = true;
+
+   // Função modificada para adicionar retângulos de colisão com suporte a debug
+   function addCollisionRect(scene, x, y, width, height, color = 0xff0000) {
+    const rect = scene.add.rectangle(x, y, width, height);
+    scene.physics.add.existing(rect, true); // true para estático
+    rect.body.immovable = true;
+
+    // Configuração de debug visual
+    if (debugCollisions) {
+      rect.setStrokeStyle(2, color);
+      rect.setFillStyle(color, 0.2);
+      rect.setVisible(true); // Visível no modo debug
+    } else {
+      rect.setVisible(false); // Invisível em produção
+    }
+
+    manualColliders.add(rect);
+    return rect;
+  }
+
+  // Adicionar tecla para alternar o modo debug (F9)
+   const debugKey = this.input.keyboard.addKey(
+   Phaser.Input.Keyboard.KeyCodes.F9
+        );
+        debugKey.on("down", () => {
+          // Alternar visibilidade de todos os colisores
+          manualColliders.getChildren().forEach((rect) => {
+            rect.setVisible(!rect.visible);
+          });
+          console.log(
+            "Debug collision mode:",
+            !manualColliders.getChildren()[0].visible
+          );
+        });
+
+        addCollisionRect(this, 160, 200, 60, 70, 0xff0000); // estante zeladoria
+        addCollisionRect(this, 160, 265, 40, 40, 0xff0000); // carrinho zeladoria limpezq
+
+        console.log("Debug: pressione F9 para mostrar/ocultar colisões");
+
+      // Adiciona colisões entre o jogador e as camadas de colisão COM VERIFICAÇÃO
+      const layers = [paredeLayer].filter((layer) => layer !== null);
+
+      layers.forEach((layer) => {
+        if (layer) {
+          layer.setCollisionByProperty({ collider: true });
+          this.physics.add.collider(player, layer);
+        }
+      });
+
+      // Adicionar colisão com os retângulos manuais
+      this.physics.add.collider(player, manualColliders);
 }
 
 function updateMain() {

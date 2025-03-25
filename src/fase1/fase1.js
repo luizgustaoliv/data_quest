@@ -1787,7 +1787,7 @@ if (window.fase1Initialized) {
           localStorage.setItem("selectedCharacter", selectedCharacter);
           document.body.classList.add("fade-out");
           setTimeout(() => {
-            window.location.replace("fase2.js");
+            window.location.replace("src/fase2/fase2.html");
           }, 1200);
         } else {
           // Mostrar mensagem informando que precisa da chave
@@ -1899,7 +1899,7 @@ if (window.fase1Initialized) {
       professorNpc4.body.setImmovable(true);
 
       // Criação da chave
-      key = this.physics.add.sprite(1000, 320, "key", 0);
+      key = this.physics.add.sprite(1000, 420, "key", 0);
       key.setCollideWorldBounds(true);
       key.setScale(0.8);
       key.setOrigin(0.2, 1);
@@ -2092,6 +2092,8 @@ if (window.fase1Initialized) {
           !manualColliders.getChildren()[0].visible
         );
       });
+
+      
       function mapX(x) {
         //427 = 385a + b
         //337 = 290a + b
