@@ -311,7 +311,7 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 <div align="center">
   <sub>Diagrama de cenas</sub><br>
-  <img src="https://github.com/Inteli-College/2025-1A-T19-IN01-G04/blob/main/assets/concepts&gdd/Fluxograma.jpg" width="100%" 
+  <img src="../assets/concepts&gdd/Fluxograma.jpg" width="100%" 
   alt="Diagrama de cenas"><br>
 </div>
 
@@ -375,10 +375,10 @@ A estrutura das fases foi pensada para representar os três andares de uma escol
 
 ### Ilustrações e Prints de Tela
 <p align="center">
-  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/concepts&gdd/telainicial.jpeg" width="500">
-  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/concepts&gdd/teladefases.jpeg" width="500">
-  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/concepts&gdd/telacomojogar.png" width="500">
-  <img src="https://github.com/Daniel00Meiches/DataQuest-M1/blob/main/assets/concepts&gdd/telajogocenario.png" width="500">
+  <img src="../assets/concepts&gdd/telainicial.jpeg" width="500">
+  <img src="../assets/concepts&gdd/teladefases.jpeg" width="500">
+  <img src="../assets/concepts&gdd/telacomojogar.png" width="500">
+  <img src="../assets/concepts&gdd/telajogocenario.png" width="500">
   
 </p>
 
