@@ -67,7 +67,7 @@ A missão deste projeto é educar alunos e professores de forma divertida e envo
 
 ### 1.1.4. Proposta de Valor (sprint 4)
 
-*Posicione aqui o canvas de proposta de valor. Descreva os aspectos essenciais para a criação de valor da ideia do produto com o objetivo de ajudar a entender melhor a realidade do cliente e entregar uma solução que está alinhado com o que ele espera.*
+<img src="/assets/concepts&gdd/canvasproposta.jpg" width="1000">
 
 ### 1.1.5. Descrição da Solução Desenvolvida (sprint 4)
 
