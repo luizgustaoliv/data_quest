@@ -1,6 +1,41 @@
 // Variável global para controlar o minigame
 window.minigameActive = false;
 
+// Adicione estilos CSS para o spinner de carregamento
+(function () {
+  const style = document.createElement("style");
+  style.textContent = `
+        .minigame-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    `;
+  document.head.appendChild(style);
+})();
+
+
 // Constantes de estilo base para minigames - servirá como padrão
 const MINIGAME_STYLES = {
   colors: {
@@ -115,14 +150,11 @@ const HANGMAN_STYLES = {
     keySpacing: 3, // Espaçamento mínimo
   },
   positions: {
-    wordDisplayY: 400, // Palavra no topo
-    wordDisplayX: -200, // Palavra deslocada para a direita
-    hangmanX: -400, // Forca mais à esquerda
-    leftArmX: -10, // Braço esquerdo mais para a esquerda
-    hangmanY: 360, // Forca mais acima
-    keyboardTopY: 450, // Teclado começando mais abaixo
-    keyboardX: -200, // Teclado deslocado para a direita
-    instructionsY: 130, // Instruções mais para baixo
+    wordDisplayY: 0, // Palavra no topo
+    wordDisplayX: -100, // Palavra deslocada para a direita
+    keyboardTopY: 100, // Teclado começando mais abaixo
+    keyboardX: 0, // Teclado deslocado para a direita
+    instructionsY: -100, // Instruções mais para baixo
   },
 };
 
@@ -137,18 +169,21 @@ const CATEGORIZATION_STYLES = {
   },
   sizes: {
     ...MINIGAME_STYLES.sizes,
-    panelWidth: 0.6, // Aumentado para acomodar melhor todo o conteúdo
-    panelHeight: 0.65, // Aumentado para dar mais espaço vertical
+    panelWidth: 0.6, // Proporção da largura da tela
+    panelHeight: 0.65, // Proporção da altura da tela
   },
   positions: {
-    instructionsY: -130, // Ajustado para ficar dentro do painel
-    dataTextY: -70, // Ajustado
-    progressTextY: -30, // Ajustado
-    buttonY: 20, // Ajustado
-    buttonSpacing: 160, // Mantido
-    explanationY: 80, // Mantido
-    feedbackY: 130, // Ajustado
-    nextButtonY: 170, // Ajustado
+    instructionsY: -130, // Posição relativa ao centro do container
+    dataTextY: 0, // Centro do container
+    progressTextX: 0, // Centro do container
+    progressTextY: -160, // Posição relativa ao centro do container
+    buttonPersonalX: -100, // Posição relativa ao centro do container
+    buttonSensitiveX: 100, // Posição relativa ao centro do container
+    buttonY: 30, // Posição relativa ao centro do container
+    buttonSpacing: 160, // Espaçamento entre botões
+    explanationY: 90, // Posição relativa ao centro do container
+    feedbackY: 130, // Posição relativa ao centro do container
+    nextButtonY: 150, // Posição relativa ao centro do container
   },
 };
 
@@ -308,8 +343,8 @@ function createImprovedQuizMinigame(scene, data, callback) {
   // Mostrar contador de perguntas
   const progressText = scene.add
     .text(
-      width / 2,
-      height / 2 - panel.height / 2 + 70,
+      0, // Centralizado no container (era width/2)
+      -panel.height / 2 + 70, // Posição relativa ao centro do container
       `Pergunta 1 de ${totalQuestions}`,
       QUIZ_STYLES.fonts.subtitle
     )
@@ -327,6 +362,15 @@ function createImprovedQuizMinigame(scene, data, callback) {
 
   // Container para elementos da pergunta atual
   const questionElements = [];
+
+  // Criar um container principal para todos os elementos do quiz para melhor controle
+  const quizContainer = scene.add
+    .container(width / 2, height / 2)
+    .setDepth(9002)
+    .setScrollFactor(0); // Garante que o container não se move com scrolling/zoom
+
+  // Adicionar o progressText ao container
+  quizContainer.add(progressText);
 
   // Função para mostrar a pergunta atual - com limpeza melhorada
   function showCurrentQuestion() {
@@ -356,8 +400,8 @@ function createImprovedQuizMinigame(scene, data, callback) {
     showQuestionUI(
       scene,
       questionData,
-      width,
-      height,
+      0, // Posição X relativa ao container (era width/2)
+      0, // Posição Y relativa ao container (era height/2)
       panel,
       (correct) => {
         // Limpar imediatamente todos os elementos após responder
@@ -408,7 +452,8 @@ function createImprovedQuizMinigame(scene, data, callback) {
         }
       },
       questionElements,
-      QUIZ_STYLES
+      QUIZ_STYLES,
+      quizContainer // Passar o container principal
     );
   }
 
@@ -501,26 +546,75 @@ function startMemoryGame(scene, callback) {
     let attempts = 0;
     const matchedPairs = [];
 
-    // Criar container para cartas
+    // Criar container para cartas - ALTERAÇÃO IMPORTANTE: Fixar o container na câmera
     gameContainer = scene.add
       .container(width / 2, height / 2)
-      .setDepth(9002);
+      .setDepth(9002)
+      .setScrollFactor(0); // Garante que o container não se move com scrolling/zoom
 
-    // Configuração do layout em duas colunas
+    // Configuração adaptativa para o layout dos cards
     const cardWidth = MEMORY_STYLES.sizes.cardWidth;
     const cardHeight = MEMORY_STYLES.sizes.cardHeight;
-    const spacing = MEMORY_STYLES.sizes.cardSpacing;
-
-    // Posição da coluna esquerda (termos)
-    const leftColumnX = MEMORY_STYLES.positions.cardStartX - 150;
-    // Posição da coluna direita (descrições)
-    const rightColumnX = MEMORY_STYLES.positions.cardStartX + 150;
     
-    // Offset para subir os cards (ajustado para cima)
-    const verticalOffset = -50;
-
-    // Definir uma cor mais destacada para cards selecionados
-    const selectedCardColor = 0x5599ff; // Azul mais brilhante e distinto
+    // Calcular o espaço disponível dentro do painel
+    const availableWidth = panel.width * 0.85;  // Usar 85% da largura do painel
+    const availableHeight = panel.height * 0.7; // Usar 70% da altura do painel
+    
+    // Definir a quantidade de pares e verificar se precisamos ajustar o tamanho dos cards
+    const numPairs = lgpdPairs.length;
+    
+    // Espaçamento inicial entre colunas
+    let columnSpacing = cardWidth * 1.5;
+    
+    // Verificar se a largura total ficará dentro do espaço disponível
+    if (columnSpacing > availableWidth * 0.8) {
+      // Reduzir o espaçamento se for muito grande
+      columnSpacing = availableWidth * 0.7;
+    }
+    
+    // Calcular posições horizontais das colunas garantindo que caibam no painel
+    const leftColumnX = -columnSpacing / 2;
+    const rightColumnX = columnSpacing / 2;
+    
+    // Calcular o espaçamento vertical adequado
+    const maxCardsTotalHeight = numPairs * cardHeight; // Altura total que os cards ocupariam sem espaçamento
+    
+    // Verificar se os cards cabem na altura disponível
+    const isOverflowing = maxCardsTotalHeight > availableHeight;
+    
+    // Ajustar o espaçamento ou tamanho dos cards, se necessário
+    let adjustedSpacing;
+    let scaleFactor = 1;
+    
+    if (isOverflowing) {
+      // Se não couberem todos os cards, ajustar o espaçamento ao mínimo
+      adjustedSpacing = 4; // Mínimo de 4px entre cards
+      
+      // Se mesmo com espaçamento mínimo ainda não couber, reduzir o tamanho dos cards
+      const availableSpaceWithMinSpacing = availableHeight - ((numPairs - 1) * adjustedSpacing);
+      if (maxCardsTotalHeight > availableSpaceWithMinSpacing) {
+        scaleFactor = availableSpaceWithMinSpacing / maxCardsTotalHeight;
+        // Limitar a redução para não ficar muito pequeno
+        scaleFactor = Math.max(0.7, scaleFactor);
+      }
+    } else {
+      // Se couber, distribuir o espaço restante como espaçamento
+      const remainingSpace = availableHeight - maxCardsTotalHeight;
+      adjustedSpacing = remainingSpace / (numPairs - 1 || 1); // Evitar divisão por zero
+      
+      // Limitar o espaçamento para não ficar muito grande
+      adjustedSpacing = Math.min(20, adjustedSpacing);
+    }
+    
+    // Calcular a altura total que os cards ocuparão com o espaçamento ajustado
+    const totalContentHeight = (cardHeight * scaleFactor * numPairs) + 
+                              ((numPairs - 1) * adjustedSpacing);
+    
+    // Calcular a posição Y inicial para centralizar verticalmente
+    const startY = -totalContentHeight / 2 + (cardHeight * scaleFactor / 2);
+    
+    // Definir uma cor para cards selecionados
+    const selectedCardColor = 0x5599ff;
 
     // Embaralhar a ordem dos pares
     const shuffledPairs = [...lgpdPairs];
@@ -529,26 +623,31 @@ function startMemoryGame(scene, callback) {
     // Criar as cartas - Coluna da esquerda (Termos)
     const leftCards = [];
     for (let i = 0; i < shuffledPairs.length; i++) {
-      // Ajuste dinâmico do espaçamento Y baseado no número de cards
-      const yOffset = (level === 2 && shuffledPairs.length > 5) ? 10 : spacing;
-      const y = MEMORY_STYLES.positions.cardStartY + i * (cardHeight + yOffset) + verticalOffset;
+      // Calcular posição Y garantindo que fique dentro do painel
+      const y = startY + i * (cardHeight * scaleFactor + adjustedSpacing);
 
       // Card de termo (esquerda)
       const card = scene.add
-        .rectangle(leftColumnX, y, cardWidth, cardHeight, MEMORY_STYLES.colors.card)
+        .rectangle(leftColumnX, y, cardWidth * scaleFactor, cardHeight * scaleFactor, MEMORY_STYLES.colors.card)
         .setStrokeStyle(2, 0xffffff)
-        .setInteractive({ useHandCursor: true });
+        .setInteractive({ useHandCursor: true })
+        .setOrigin(0.5)
+        .setScrollFactor(0); // Impede que o card se mova com o zoom
 
+      // Ajustar fonte de acordo com o scaleFactor
+      const fontSize = Math.max(8 * scaleFactor, 7); // Mínimo de 7px
+      
       const cardText = scene.add
         .text(leftColumnX, y, shuffledPairs[i].term, {
           fontFamily: "Arial",
-          fontSize: "8px",
+          fontSize: `${fontSize}px`,
           color: "#ffffff",
           fontWeight: "bold",
-          wordWrap: { width: cardWidth - 10 },
+          wordWrap: { width: cardWidth * scaleFactor - 10 },
           align: "center",
         })
-        .setOrigin(0.5);
+        .setOrigin(0.5)
+        .setScrollFactor(0); // Impede que o texto se mova com o zoom
 
       card.value = shuffledPairs[i].term;
       card.pairIndex = i;
@@ -570,30 +669,34 @@ function startMemoryGame(scene, callback) {
     const shuffledDescriptions = [...shuffledPairs];
     shuffleArray(shuffledDescriptions);
 
-    // Criar as cartas - Coluna da direita (Descrições)
+    // Criar as cartas - Coluna da direita (Descrições) com as mesmas adaptações
     const rightCards = [];
     for (let i = 0; i < shuffledDescriptions.length; i++) {
-      const yOffset = (level === 2 && shuffledDescriptions.length > 5) ? 10 : spacing;
-      const y = MEMORY_STYLES.positions.cardStartY + i * (cardHeight + yOffset) + verticalOffset;
+      const y = startY + i * (cardHeight * scaleFactor + adjustedSpacing);
 
-      // Card de descrição (direita)
       const card = scene.add
-        .rectangle(rightColumnX, y, cardWidth, cardHeight, MEMORY_STYLES.colors.card)
+        .rectangle(rightColumnX, y, cardWidth * scaleFactor, cardHeight * scaleFactor, MEMORY_STYLES.colors.card)
         .setStrokeStyle(2, 0xffffff)
         .setInteractive({ useHandCursor: true })
-        .setDepth(9004);
+        .setDepth(9004)
+        .setOrigin(0.5)
+        .setScrollFactor(0); // Impede que o card se mova com o zoom
 
+      // Ajustar fonte de acordo com o scaleFactor
+      const fontSize = Math.max(8 * scaleFactor, 7); // Mínimo de 7px
+      
       const cardText = scene.add
         .text(rightColumnX, y, shuffledDescriptions[i].description, {
           fontFamily: "Arial",
-          fontSize: "8px",
+          fontSize: `${fontSize}px`,
           color: "#ffffff",
           fontWeight: "bold",
-          wordWrap: { width: cardWidth - 10 },
+          wordWrap: { width: cardWidth * scaleFactor - 10 },
           align: "center",
         })
         .setDepth(9005)
-        .setOrigin(0.5);
+        .setOrigin(0.5)
+        .setScrollFactor(0); // Impede que o texto se mova com o zoom
 
       card.value = shuffledDescriptions[i].description;
       card.cardText = cardText;
@@ -1020,7 +1123,7 @@ function startMemoryGame(scene, callback) {
     instructionsText = scene.add
       .text(
         width / 2,
-        height / 2 + 143,
+        height / 2 + panel.height / 2 - 40, // Garantir que fique na parte de baixo dentro do painel
         "Clique em um termo e depois na descrição correspondente",
         {
           fontFamily: "Arial",
@@ -1037,7 +1140,7 @@ function startMemoryGame(scene, callback) {
     levelText = scene.add
       .text(
         width / 2,
-        height / 2 + 160,
+        height / 2 + panel.height / 2 - 20, // Colocar abaixo das instruções
         `Nível ${currentLevel + 1} de ${totalLevels}`,
         {
           fontFamily: "Arial",
@@ -1078,8 +1181,11 @@ function startHangmanGame(scene, callback) {
   );
 
   // Lista de palavras sobre privacidade e proteção de dados
-  const words = ["PRIVACIDADE", "LGPD", "DADOS", "SEGURANCA", "PROTECAO", "CONSENTIMENTO"];
-  const selectedWord = words[Math.floor(Math.random() * words.length)];
+  const words = ["PESSOAL", "SENSIVEL", "PRIVACIDADE", "LGPD", "DADOS", "SEGURANCA", "PROTECAO", "CONSENTIMENTO"];
+  // Adicionar timestamp para garantir uma seleção verdadeiramente aleatória
+  const randomIndex = Math.floor(Math.random() * Date.now()) % words.length;
+  const selectedWord = words[randomIndex];
+  console.log("Palavra selecionada: " + selectedWord); // Para depuração
 
   // Variáveis de controle
   let guesses = [];
@@ -1087,107 +1193,149 @@ function startHangmanGame(scene, callback) {
   let attempts = 0;
   let gameResult = null;
 
-  // Container para elementos do jogo
-  const gameContainer = scene.add.container(width / 2, height / 2).setDepth(9002);
+  // Container para elementos do jogo - IMPORTANTE: Posição central de referência
+  const gameContainer = scene.add
+    .container(width / 2, height / 2)
+    .setDepth(9002)
+    .setScrollFactor(0); // Impedir movimento com zoom
 
   // Elementos para exibir a palavra
   const wordDisplay = [];
   const letterSpacing = 23;
-  const startX = HANGMAN_STYLES.positions.wordDisplayX - (selectedWord.length * letterSpacing) / 2 + letterSpacing / 2;
+  
+  // Calcular startX para centralizar a palavra - ALTERADO: usar wordDisplayX do style
+  const startX = HANGMAN_STYLES.positions.wordDisplayX;
 
-  // Criar espaços para cada letra
+  // Criar espaços para cada letra com posições relativas ao container
   for (let i = 0; i < selectedWord.length; i++) {
-    const letterBg = scene.add.rectangle(
-      startX + i * letterSpacing,
-      HANGMAN_STYLES.positions.wordDisplayY,
-      20,
-      3,
-      0xffffff
-    );
+    const letterBg = scene.add
+      .rectangle(
+        startX + i * letterSpacing,
+        HANGMAN_STYLES.positions.wordDisplayY, // ALTERADO: usar wordDisplayY do style
+        20,
+        3,
+        0xffffff
+      )
+      .setScrollFactor(0);
 
     const letterText = scene.add
       .text(
         startX + i * letterSpacing,
-        HANGMAN_STYLES.positions.wordDisplayY - 15,
+        HANGMAN_STYLES.positions.wordDisplayY - 15, // Posicionar o texto 15px acima da linha
         "",
         { fontFamily: "Arial", fontSize: "18px", color: "#ffffff" }
       )
-      .setOrigin(0.5);
+      .setOrigin(0.5)
+      .setScrollFactor(0);
 
     gameContainer.add([letterBg, letterText]);
     wordDisplay.push(letterText);
   }
 
-  // Contador de tentativas visual - reposicionado 70px à esquerda e 30px acima da palavra
-  const attemptsContainer = scene.add.container(
-    HANGMAN_STYLES.positions.wordDisplayX - 200,
-    HANGMAN_STYLES.positions.wordDisplayY - 60
-  );
+  // Contador de tentativas - posição ajustada para ser visível
+  const attemptsContainer = scene.add.container(HANGMAN_STYLES.positions.wordDisplayX + -80, -50);
   gameContainer.add(attemptsContainer);
   
-  // Círculo de fundo para o contador
-  const attemptsBg = scene.add.circle(0, 0, 40, 0x333333)
-    .setStrokeStyle(3, 0x4488cc);
-  attemptsContainer.add(attemptsBg);
+  // Contador de tentativas estilizado com design aprimorado
+  // Container principal com gradiente de fundo
+  const attemptsBg = scene.add.circle(0, 0, 42, 0x333333)
+    .setStrokeStyle(4, 0x4488cc, 1)
+    .setAlpha(0.9);
   
-  // Texto principal para o número
-  const attemptsNumber = scene.add.text(
-    0, -8, 
+  // Adicionar gradiente ao fundo para mais profundidade visual
+  const bgGradient = scene.add.graphics();
+  bgGradient.fillGradientStyle(0x3a4963, 0x1a2432, 0x3a4963, 0x1a2432, 1);
+  bgGradient.fillCircle(0, 0, 38);
+  attemptsContainer.add([attemptsBg, bgGradient]);
+  
+  // Contador de tentativas restantes com melhor contraste e sombra de texto
+  const remainingAttemptsText = scene.add.text(
+    0, -10, 
     `${maxAttempts - attempts}`, 
     {
-      fontFamily: "Arial", fontSize: "28px", 
-      color: "#ffffff", fontWeight: "bold"
+      fontFamily: "'Trebuchet MS', Arial, sans-serif", 
+      fontSize: "32px", 
+      color: "#ffffff", 
+      fontWeight: "bold",
+      stroke: '#000000',
+      strokeThickness: 2
+    }
+  ).setOrigin(0.5).setShadow(1, 1, '#000000', 3, true);
+  
+  // Label semântico para clareza ("tentativas restantes")
+  const attemptsLabel = scene.add.text(
+    0, 14, "restantes", 
+    { 
+      fontFamily: "'Trebuchet MS', Arial, sans-serif", 
+      fontSize: "11px", 
+      color: "#dddddd",
+      fontStyle: "italic"
     }
   ).setOrigin(0.5);
-  attemptsContainer.add(attemptsNumber);
   
-  // Texto secundário "tentativas"
-  const attemptsLabel = scene.add.text(
-    0, 12, "tentativas", 
-    { fontFamily: "Arial", fontSize: "12px", color: "#cccccc" }
-  ).setOrigin(0.5);
-  attemptsContainer.add(attemptsLabel);
+  attemptsContainer.add([remainingAttemptsText, attemptsLabel]);
   
-  // Indicadores visuais simplificados
+  // Indicadores visuais melhorados com animação sutil
   const indicators = [];
-  const indicatorRadius = 50;
+  const indicatorRadius = 56;
+  
   for (let i = 0; i < maxAttempts; i++) {
+    // Distribuir indicadores em círculo com espaçamento uniforme
     const angle = (i * (2 * Math.PI / maxAttempts)) - Math.PI/2;
     const x = Math.cos(angle) * indicatorRadius;
     const y = Math.sin(angle) * indicatorRadius;
     
-    const indicator = scene.add.circle(x, y, 4, 0x4488cc);
+    // Criar indicador com gradiente e borda para parecer mais com "vidas"
+    const indicator = scene.add.circle(x, y, 6, 0x66aaff)
+      .setStrokeStyle(1, 0xffffff, 0.7);
+    
+    // Adicionar brilho pulsante sutil nos indicadores
+    scene.tweens.add({
+      targets: indicator,
+      scaleX: 1.2,
+      scaleY: 1.2,
+      duration: 1500 + (i * 150),
+      yoyo: true,
+      repeat: -1,
+      ease: 'Sine.easeInOut'
+    });
+    
     indicators.push(indicator);
     attemptsContainer.add(indicator);
   }
+  
+  // Definir variável globalmente para referência
+  attemptsNumber = remainingAttemptsText;
 
-  // Teclado virtual
+  // Teclado virtual - posições ajustadas usando valores do style
   const keyboardRows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
   const keyboard = [];
   const keySize = HANGMAN_STYLES.sizes.keySize;
   const keySpacing = HANGMAN_STYLES.sizes.keySpacing;
-  const keyboardX = HANGMAN_STYLES.positions.keyboardX;
 
+  // Gera o teclado virtual e configura o clique nele
   keyboardRows.forEach((row, rowIndex) => {
     const rowLetters = row.split("");
     const rowWidth = rowLetters.length * (keySize + keySpacing) - keySpacing;
-    const rowStartX = keyboardX - rowWidth / 2;
+    const rowStartX = HANGMAN_STYLES.positions.keyboardX - rowWidth / 2; // ALTERADO: usar keyboardX do style
 
     rowLetters.forEach((letter, letterIndex) => {
       const x = rowStartX + letterIndex * (keySize + keySpacing) + keySize / 2;
-      const y = HANGMAN_STYLES.positions.keyboardTopY + rowIndex * (keySize + keySpacing);
+      const y = HANGMAN_STYLES.positions.keyboardTopY + rowIndex * (keySize + keySpacing); // ALTERADO: usar keyboardTopY do style
 
       const keyBg = scene.add
         .rectangle(x, y, keySize, keySize, HANGMAN_STYLES.colors.keyboardBg)
         .setStrokeStyle(1, 0xffffff)
-        .setInteractive({ useHandCursor: true });
+        .setInteractive({ useHandCursor: true })
+        .setScrollFactor(0);
 
       const keyText = scene.add
         .text(x, y, letter, {
           fontFamily: "Arial", fontSize: "14px", 
           color: "#ffffff", fontWeight: "bold",
         })
-        .setOrigin(0.5);
+        .setOrigin(0.5)
+        .setScrollFactor(0);
 
       keyboard.push({ key: keyBg, text: keyText, letter: letter });
       gameContainer.add([keyBg, keyText]);
@@ -1267,17 +1415,25 @@ function startHangmanGame(scene, callback) {
     });
   });
 
-  // Instruções
+  // Faz com que o clique também funcione com o teclado físico
+  scene.input.keyboard.on("keydown", (event) => {
+    const key = event.key.toUpperCase();
+    const keyObj = keyboard.find((k) => k.letter === key);
+    if (keyObj) keyObj.key.emit("pointerdown");
+  });
+
+  // Instruções - Adicionar ao gameContainer com posição ajustada usando o style
   const instructionsText = scene.add
     .text(
-      width / 2,
-      height / 2 + HANGMAN_STYLES.positions.instructionsY,
+      0, // Centro do container
+      HANGMAN_STYLES.positions.instructionsY, // ALTERADO: usar instructionsY do style
       `Adivinhe a palavra - Você tem ${maxAttempts} tentativas`,
       { fontFamily: "Arial", fontSize: "14px", color: "#ffffff", align: "center" }
     )
     .setOrigin(0.5)
-    .setScrollFactor(0)
-    .setDepth(9002);
+    .setScrollFactor(0);
+
+  gameContainer.add(instructionsText);
 
   // Função para finalizar o jogo
   function endGame(success) {
@@ -1300,10 +1456,9 @@ function startHangmanGame(scene, callback) {
     scene.time.delayedCall(1500, () => {
       gameContainer.destroy();
       titleText.destroy();
-      instructionsText.destroy();
 
       const message = success
-        ? "Parabéns! Você adivinhou a palavra."
+        ? "Parabéns! Você adivinhou a palavra e libertou a professora!"
         : `A palavra era ${selectedWord}. Tente novamente!`;
 
       cleanupAndShowResult(
@@ -1319,36 +1474,38 @@ function startHangmanGame(scene, callback) {
   }
 }
 
-// Criando constante com posições explícitas para cada elemento
+// Criando constante com posições explícitas para cada elemento - ATUALIZADAS PARA SEREM RELATIVAS AO CONTAINER
 const CATEGORIZATION_POSITIONS = {
   // Posições do texto de instruções
-  instructions: { x: 300, y: 240 },
+  instructions: { x: 0, y: -130 },
 
   // Posição do texto do dado atual
-  dataText: { x: 300, y: 320 },
+  dataText: { x: 0, y: -70 },
 
   // Posição do texto de progresso
-  progressText: { x: 0, y: 220 },
+  progressText: { x: 0, y: -160 },
 
   // Posições dos botões
-  buttonPersonal: { x: 200, y: 410 },
-  buttonSensitive: { x: 400, y: 410 },
+  buttonPersonal: { x: -100, y: 30 },
+  buttonSensitive: { x: 100, y: 30 },
 
   // Posição do texto explicativo
-  explanationText: { x: 300, y: 490 },
+  explanationText: { x: 0, y: 90 },
 
   // Posições do feedback
-  feedbackPanel: { x: 300, y: 400 },
-  feedbackText: { x: 300, y: 400 },
+  feedbackPanel: { x: 0, y: 30 },
+  feedbackText: { x: 0, y: 30 },
 
   // Posição do botão "próximo"
-  nextButton: { x: 0, y: 450 },
-  nextButtonText: { x: 0, y: 450 },
+  nextButton: { x: 0, y: 170 },
+  nextButtonText: { x: 0, y: 170 },
 };
 
 // 4. JOGO CUSTOMIZADO (Professor 4)
 function startCustomGame(scene, callback) {
   console.log("Iniciando jogo customizado...");
+  
+  // Obter dimensões atuais da tela
   const width = scene.cameras.main.width;
   const height = scene.cameras.main.height;
 
@@ -1456,10 +1613,11 @@ function startCustomGame(scene, callback) {
 
   // Container para o jogo - centralizado na tela
   const gameContainer = scene.add
-    .container(width / 2, height / 2 - 50)
-    .setDepth(9002);
+    .container(width / 2, height / 2)  // Alterado para centralizar exatamente
+    .setDepth(9002)
+    .setScrollFactor(0); // Impedir movimento com zoom
 
-  // Instruções - usando posições explícitas
+  // Instruções - usando posições relativas ao container
   const instructionsText = scene.add
     .text(
       CATEGORIZATION_POSITIONS.instructions.x,
@@ -1473,11 +1631,12 @@ function startCustomGame(scene, callback) {
         fontWeight: "bold",
       }
     )
-    .setOrigin(0.5);
+    .setOrigin(0.5)
+    .setScrollFactor(0);
 
   gameContainer.add(instructionsText);
 
-  // Elemento de dados atual - usando posições explícitas
+  // Elemento de dados atual - usando posições relativas ao container
   const dataText = scene.add
     .text(
       CATEGORIZATION_POSITIONS.dataText.x,
@@ -1491,11 +1650,12 @@ function startCustomGame(scene, callback) {
         fontWeight: "bold",
       }
     )
-    .setOrigin(0.5);
+    .setOrigin(0.5)
+    .setScrollFactor(0);
 
   gameContainer.add(dataText);
 
-  // Contador de progresso - usando posições explícitas
+  // Contador de progresso - usando posições relativas ao container
   const progressText = scene.add
     .text(
       CATEGORIZATION_POSITIONS.progressText.x,
@@ -1508,11 +1668,12 @@ function startCustomGame(scene, callback) {
         align: "center",
       }
     )
-    .setOrigin(0.5);
+    .setOrigin(0.5)
+    .setScrollFactor(0);
 
   gameContainer.add(progressText);
 
-  // Botões de categorias - usando posições explícitas
+  // Botões de categorias - usando posições relativas ao container
   const buttonPersonal = scene.add
     .rectangle(
       CATEGORIZATION_POSITIONS.buttonPersonal.x,
@@ -1522,7 +1683,8 @@ function startCustomGame(scene, callback) {
       CATEGORIZATION_STYLES.colors.optionPersonal
     )
     .setStrokeStyle(2, 0xffffff)
-    .setInteractive({ useHandCursor: true });
+    .setInteractive({ useHandCursor: true })
+    .setScrollFactor(0);
 
   const buttonPersonalText = scene.add
     .text(
@@ -1536,7 +1698,8 @@ function startCustomGame(scene, callback) {
         fontWeight: "bold",
       }
     )
-    .setOrigin(0.5);
+    .setOrigin(0.5)
+    .setScrollFactor(0);
 
   const buttonSensitive = scene.add
     .rectangle(
@@ -1547,7 +1710,8 @@ function startCustomGame(scene, callback) {
       CATEGORIZATION_STYLES.colors.optionSensitive
     )
     .setStrokeStyle(2, 0xffffff)
-    .setInteractive({ useHandCursor: true });
+    .setInteractive({ useHandCursor: true })
+    .setScrollFactor(0);
 
   const buttonSensitiveText = scene.add
     .text(
@@ -1561,7 +1725,8 @@ function startCustomGame(scene, callback) {
         fontWeight: "bold",
       }
     )
-    .setOrigin(0.5);
+    .setOrigin(0.5)
+    .setScrollFactor(0);
 
   gameContainer.add([
     buttonPersonal,
@@ -1570,7 +1735,7 @@ function startCustomGame(scene, callback) {
     buttonSensitiveText,
   ]);
 
-  // Explicação - usando posições explícitas
+  // Explicação - usando posições relativas ao container
   const explanationText = scene.add
     .text(
       CATEGORIZATION_POSITIONS.explanationText.x,
@@ -1583,11 +1748,12 @@ function startCustomGame(scene, callback) {
         align: "center",
       }
     )
-    .setOrigin(0.5);
+    .setOrigin(0.5)
+    .setScrollFactor(0);
 
   gameContainer.add(explanationText);
 
-  // Painel de feedback - usando posições explícitas
+  // Painel de feedback - usando posições relativas ao container
   const feedbackPanel = scene.add
     .rectangle(
       CATEGORIZATION_POSITIONS.feedbackPanel.x,
@@ -1597,7 +1763,8 @@ function startCustomGame(scene, callback) {
       0x333333
     )
     .setStrokeStyle(2, 0xffffff)
-    .setAlpha(0);
+    .setAlpha(0)
+    .setScrollFactor(0);
 
   const feedbackText = scene.add
     .text(
@@ -1613,9 +1780,10 @@ function startCustomGame(scene, callback) {
       }
     )
     .setOrigin(0.5)
-    .setAlpha(0);
+    .setAlpha(0)
+    .setScrollFactor(0);
 
-  // Botão próximo - usando posições explícitas
+  // Botão próximo - usando posições relativas ao container
   const nextButton = scene.add
     .rectangle(
       CATEGORIZATION_POSITIONS.nextButton.x,
@@ -1626,7 +1794,8 @@ function startCustomGame(scene, callback) {
     )
     .setStrokeStyle(1, 0xffffff)
     .setInteractive({ useHandCursor: true })
-    .setAlpha(0);
+    .setAlpha(0)
+    .setScrollFactor(0);
 
   const nextButtonText = scene.add
     .text(
@@ -1640,7 +1809,8 @@ function startCustomGame(scene, callback) {
       }
     )
     .setOrigin(0.5)
-    .setAlpha(0);
+    .setAlpha(0)
+    .setScrollFactor(0);
 
   gameContainer.add([feedbackPanel, feedbackText, nextButton, nextButtonText]);
 
@@ -1890,21 +2060,22 @@ window.initMinigame = initMinigame;
 function createBaseUI(scene, width, height, title, styleObj = MINIGAME_STYLES) {
   // Calcular dimensões proporcionais com base no estilo específico
   const screenHeight = height;
+  const screenWidth = width;
 
-  // Usar tamanhos do estilo específico
-  const panelWidth = Math.min(width * styleObj.sizes.panelWidth, 800);
+  // Usar tamanhos do estilo específico como proporções da tela
+  const panelWidth = Math.min(screenWidth * styleObj.sizes.panelWidth, 800);
   const panelHeight = Math.min(
-    height * styleObj.sizes.panelHeight,
+    screenHeight * styleObj.sizes.panelHeight,
     screenHeight * 0.9
   );
 
   // Criar fundo com cor do estilo específico
   const background = scene.add
     .rectangle(
-      width / 2,
-      height / 2,
-      width,
-      height,
+      screenWidth / 2, // Sempre centralizado horizontalmente
+      screenHeight / 2, // Sempre centralizado verticalmente
+      screenWidth, // Cobre toda a largura
+      screenHeight, // Cobre toda a altura
       styleObj.colors.background,
       0
     )
@@ -1922,15 +2093,15 @@ function createBaseUI(scene, width, height, title, styleObj = MINIGAME_STYLES) {
   // Centralizar perfeitamente o painel na tela
   const panel = scene.add
     .rectangle(
-      width / 2,
-      height / 2, // Centralizar perfeitamente na vertical
+      screenWidth / 2, // Sempre centralizado horizontalmente
+      screenHeight / 2, // Sempre centralizado verticalmente
       panelWidth,
       panelHeight,
       styleObj.colors.panel
     )
     .setScrollFactor(0)
     .setDepth(9001)
-    .setOrigin(0.5)
+    .setOrigin(0.5) // Garante que o centro do painel é o ponto de referência
     .setStrokeStyle(2, 0xffffff)
     .setAlpha(0)
     .setScale(0.9);
@@ -1947,21 +2118,21 @@ function createBaseUI(scene, width, height, title, styleObj = MINIGAME_STYLES) {
   // Título do minigame - posicionado com base no painel
   const titleText = scene.add
     .text(
-      width / 2,
-      height / 2 - panelHeight / 2 + 25,
+      screenWidth / 2, // Sempre centralizado horizontalmente
+      screenHeight / 2 - panelHeight / 2 + 25, // Relativo ao topo do painel
       title,
       styleObj.fonts.title
     )
     .setScrollFactor(0)
     .setDepth(9002)
-    .setOrigin(0.5)
+    .setOrigin(0.5) // Centraliza o texto
     .setAlpha(0);
 
   // Animar entrada do título após o painel
   scene.tweens.add({
     targets: titleText,
     alpha: 1,
-    y: height / 2 - panelHeight / 2 + 25,
+    y: screenHeight / 2 - panelHeight / 2 + 25,
     duration: 300,
     delay: 150,
   });
@@ -2077,13 +2248,18 @@ function showQuestionUI(
   panel,
   callback,
   elementsArray,
-  styleObj = MINIGAME_STYLES
+  styleObj = MINIGAME_STYLES,
+  container = null // Parâmetro opcional para o container
 ) {
+  // Determinar se estamos usando o container (posições relativas) ou posições de tela absoluta
+  const xPos = container ? 0 : width; // Se container existe, use 0 como centro
+  const yPos = container ? -60 : height / 2 - 60; // Ajuste a posição Y relativamente
+  
   // Texto da pergunta - posicionado com ajuste para melhor visualização
   const questionText = scene.add
     .text(
-      width / 2,
-      height / 2 - 60, // Posicionado menos acima para centralizar melhor
+      xPos,
+      yPos, 
       questionData.question,
       {
         fontFamily: "Arial, Helvetica, sans-serif",
@@ -2100,6 +2276,9 @@ function showQuestionUI(
 
   elementsArray.push(questionText);
 
+  // Adicionar ao container se fornecido
+  if (container) container.add(questionText);
+
   // Criar botões para as opções
   const buttons = [];
   const optionLetters = [];
@@ -2110,16 +2289,16 @@ function showQuestionUI(
   const spacing = 12;
 
   // Ajustar posição inicial para garantir que todas as opções sejam visíveis
-  const startY = height / 2 - 10;
+  const startY = container ? -10 : height / 2 - 10; // Relativamente ao container
 
   // Criar botões de forma simplificada
   questionData.options.forEach((option, index) => {
     const y = startY + index * (buttonHeight + spacing);
 
-    // Botão
+    // Botão - posição X ajustada para ser relativa ao container
     const button = scene.add
       .rectangle(
-        width / 2,
+        xPos, // Centro do container ou width/2
         y,
         buttonWidth,
         buttonHeight,
@@ -2130,10 +2309,10 @@ function showQuestionUI(
       .setStrokeStyle(1, 0xffffff)
       .setInteractive({ useHandCursor: true });
 
-    // Letra da opção (A, B, C, D)
+    // Letra da opção (A, B, C, D) - ajustada para posição relativa
     const letter = scene.add
       .text(
-        width / 2 - buttonWidth / 2 + 20,
+        xPos - buttonWidth / 2 + 20, // Relativo ao centro do botão
         y,
         String.fromCharCode(65 + index),
         {
@@ -2147,9 +2326,9 @@ function showQuestionUI(
       .setScrollFactor(0)
       .setDepth(9003);
 
-    // Texto da opção
+    // Texto da opção - ajustado para posição relativa
     const text = scene.add
-      .text(width / 2 - buttonWidth / 2 + 40, y, option, {
+      .text(xPos - buttonWidth / 2 + 40, y, option, {
         fontFamily: "Arial",
         fontSize: "15px",
         color: "#ffffff",
@@ -2166,6 +2345,9 @@ function showQuestionUI(
 
     // Adicionar aos elementos para limpeza posterior
     elementsArray.push(button, letter, text);
+
+    // Adicionar ao container se fornecido
+    if (container) container.add([button, letter, text]);
 
     // Eventos de hover
     button.on("pointerover", () => {
@@ -2208,7 +2390,8 @@ function showQuestionUI(
         isCorrect,
         elementsArray,
         callback,
-        styleObj
+        styleObj,
+        container // Passar o container principal
       );
     });
   });
@@ -2224,15 +2407,20 @@ function showAnswerFeedback(
   isCorrect,
   elementsArray,
   callback,
-  styleObj = MINIGAME_STYLES
+  styleObj = MINIGAME_STYLES,
+  container = null // Parâmetro opcional para o container
 ) {
+  // Determinar posições baseadas no container ou tela
+  const xPos = container ? 0 : width / 2;
+  const yBase = container ? 0 : height / 2;
+  
   // Container para o feedback - maior para acomodar textos longos
   const feedbackPanel = scene.add
     .rectangle(
-      width / 2,
-      height / 2 + 110, // Posicionado mais abaixo
+      xPos,
+      yBase + 110, // Posicionado relativamente
       panel.width * 0.85,
-      200, // Aumentado de 140 para 160 para textos longos
+      200,
       isCorrect ? 0x1e4620 : 0x5c1c1c // Verde escuro para correto, vermelho escuro para incorreto
     )
     .setScrollFactor(0)
@@ -2241,11 +2429,11 @@ function showAnswerFeedback(
     .setStrokeStyle(2, 0xffffff)
     .setAlpha(0);
 
-  // Título do feedback - mais espaço na parte superior
+  // Título do feedback - posição relativa
   const feedbackTitle = scene.add
     .text(
-      width / 2,
-      height / 2 + 25, // Movido mais para cima
+      xPos,
+      yBase + 25, // Relativo ao container ou centro da tela
       isCorrect ? "Correto!" : "Incorreto!",
       {
         fontFamily: "Arial",
@@ -2259,11 +2447,11 @@ function showAnswerFeedback(
     .setOrigin(0.5)
     .setAlpha(0);
 
-  // Texto com explicação detalhada - mais espaço para o texto e posicionado mais acima
+  // Texto com explicação detalhada - posição relativa
   const feedbackText = scene.add
     .text(
-      width / 2,
-      height / 2 + 85,
+      xPos,
+      yBase + 85, // Relativo ao container ou centro da tela
       questionData.feedback || "Resposta registrada.",
       {
         fontFamily: "Arial",
@@ -2278,11 +2466,11 @@ function showAnswerFeedback(
     .setOrigin(0.5)
     .setAlpha(0);
 
-  // Botão "Próxima" - movido ainda mais para baixo
+  // Botão "Próxima" - posição relativa
   const nextButton = scene.add
     .rectangle(
-      width / 2,
-      height / 2 + 160, // Movido mais para baixo para deixar espaço para o texto
+      xPos,
+      yBase + 160, // Relativo ao container ou centro da tela
       120,
       35,
       styleObj.colors.buttonPrimary
@@ -2295,8 +2483,8 @@ function showAnswerFeedback(
 
   const nextButtonText = scene.add
     .text(
-      width / 2,
-      height / 2 + 160, // Movido mais para baixo
+      xPos,
+      yBase + 160, // Relativo ao container ou centro da tela
       "Próxima",
       {
         fontFamily: "Arial",
@@ -2332,6 +2520,9 @@ function showAnswerFeedback(
     nextButton,
     nextButtonText
   );
+
+  // Adicionar ao container se fornecido
+  if (container) container.add([feedbackPanel, feedbackTitle, feedbackText, nextButton, nextButtonText]);
 
   // Eventos do botão
   nextButton.on("pointerover", () =>
@@ -2373,37 +2564,3 @@ function showQuestion(scene, questionData, width, height, panel, callback) {
     []
   );
 }
-
-// Adicione estilos CSS para o spinner de carregamento
-(function () {
-  const style = document.createElement("style");
-  style.textContent = `
-        .minigame-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            transition: opacity 0.3s ease;
-        }
-        
-        .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-    `;
-  document.head.appendChild(style);
-})();
