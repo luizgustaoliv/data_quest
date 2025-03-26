@@ -59,7 +59,7 @@ let estantes1Layer, estantes2Layer, estantes3Layer, estantes4Layer;
 let darkness;
 let lightMask;
 let spotlight;
-let lightRadius = 100; // Raio da luz ao redor do jogador tem que ser 100
+let lightRadius = 10000; // Raio da luz ao redor do jogador tem que ser 100
 
 // Add at the top with other variable declarations
 let isPlayingMinigame = false;
@@ -119,6 +119,13 @@ let questions = [
   }
 ];
 
+// Add a variable at the top with other variable declarations
+let lastRobotPosition = {};
+
+// Add these variables at the top
+let robots = []; // Array to store all robot instances
+let currentCollisionRobot = null; // Track which robot triggered the collision
+
 function preloadMain() {
   // Load all possible player sprites
   this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", {
@@ -146,6 +153,10 @@ function preloadMain() {
     frameHeight: 64,
   });
   this.load.spritesheet("robo1", "../../assets/fase2/sprites/robolado.png", {
+    frameWidth: 64,
+    frameHeight: 64,
+  });
+  this.load.spritesheet("robocima", "../../assets/fase2/sprites/robocima.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
@@ -327,16 +338,18 @@ function createMain() {
     player.body.setOffset(19, 55.4);
     player.setDepth(2);
 
-    robo1 = this.physics.add.sprite(143, 390, "robo1"); //Terminar no X 560 fazer flip
-    robo1.setScale(1);                                //começar no 143
-    robo1.body.setSize(23, 60);
-    robo1.body.setOffset(19, 2);
-    robo1.setImmovable(true);
-    robo1.setDepth(1);
+    // Create multiple robots at different positions
+    createRobot.call(this, 143, 390, 560, 143); // Original robo1
+    createRobot.call(this, 800, 880, 1000, 800); // Robo2
+    createRobot.call(this, 750, 550, 1100, 750); // robo 3
+    
+    createVerticalRobot.call(this, 1195, 300, 730, 300); // robo vertical
 
-        // Ativa o modo de debug para visualizar a hitbox
-        this.physics.world.drawDebug = true;
-        this.physics.world.debugGraphic = this.add.graphics();
+    createVerticalRobot.call(this, 345, 500, 730, 500); // robo vertical
+
+     // Ativa o modo de debug para visualizar a hitbox
+    this.physics.world.drawDebug = true;
+    this.physics.world.debugGraphic = this.add.graphics();
 
       // After creating all layers and the player, set up the camera correctly
       if (map2 && player) {
@@ -469,13 +482,13 @@ function createMain() {
       // Criar elementos do minigame antes de configurar colisões
       const minigameElements = createMinigameElements.call(this);
     
-      // Configurar colisão com o robô
-      this.physics.add.overlap(player, robo1, () => {
-        handleRobotCollision.call(this);
-      }, null, this);
-
-      // Remover a colisão física entre player e robô para permitir overlap
-      // this.physics.add.collider(player, robo1); <- remover ou comentar esta linha
+      // Configure overlap for all robots
+      robots.forEach(robot => {
+        this.physics.add.overlap(player, robot, () => {
+          currentCollisionRobot = robot; // Track which robot triggered the collision
+          handleRobotCollision.call(this);
+        }, null, this);
+      });
 }
 
 function updateMain() {
@@ -541,24 +554,47 @@ function updateMain() {
     spotlight.setPosition(player.x, player.y);
   }
 
-  // Add robot movement
-  if (robo1) {
-    const robotSpeed = 100;
-    
-    if (robo1.movingRight) {
-      robo1.setVelocityX(robotSpeed);
-      robo1.setFlipX(false);
-      if (robo1.x >= 560) {
-        robo1.movingRight = false;
+  // Update all robots with better boundary checking
+  robots.forEach(robot => {
+    if (robot.visible && robot.body.enable) {
+      const robotSpeed = 100;
+      
+      if (robot.isVertical) {
+        // Vertical movement logic
+        if (robot.movingDown) {
+          robot.setVelocityY(robotSpeed);
+          robot.play("robo_walk_down", true);
+          if (robot.y >= robot.bottomBound) {
+            robot.movingDown = false;
+          }
+        } else {
+          robot.setVelocityY(-robotSpeed);
+          robot.play("robo_walk_up", true);
+          if (robot.y <= robot.topBound) {
+            robot.movingDown = true;
+          }
+        }
+      } else {
+        // Horizontal movement logic - existing code
+        if (robot.movingRight) {
+          robot.setVelocityX(robotSpeed);
+          robot.setFlipX(false);
+          if (robot.x >= robot.rightBound) {
+            robot.movingRight = false;
+          }
+        } else {
+          robot.setVelocityX(-robotSpeed);
+          robot.setFlipX(true);
+          if (robot.x <= robot.leftBound) {
+            robot.movingRight = true;
+          }
+        }
       }
     } else {
-      robo1.setVelocityX(-robotSpeed);
-      robo1.setFlipX(true);
-      if (robo1.x <= 143) {
-        robo1.movingRight = true;
-      }
+      // If robot is hidden due to minigame, make sure it doesn't move
+      robot.setVelocity(0, 0);
     }
-  }
+  });
 }
 
 // Função para criar o sistema de iluminação
@@ -580,7 +616,7 @@ function createLightingSystem() {
   lightMask.setVisible(false); // A máscara não precisa ser visível
   
   // Criar spotlight visual (opcional - para dar um efeito de brilho)
-  spotlight = this.add.circle(player.x, player.y, lightRadius, 0xffffff, 0.2);
+  spotlight = this.add.circle(player.x, player.y, lightRadius, 0xffffff, 0.0);
   spotlight.setDepth(999); // Abaixo da escuridão
   
   // Aplicar máscara à camada de escuridão
@@ -662,9 +698,42 @@ function startGame() {
     frameRate: 4,
     repeat: -1
   });
+  
+  // Add vertical robot animations
+  this.anims.create({
+    key: "robo_walk_down",
+    frames: [
+      { key: "robocima", frame: 0 }, // standing frame
+      { key: "robocima", frame: 1 },
+      { key: "robocima", frame: 2 },
+      { key: "robocima", frame: 1 },
+      { key: "robocima", frame: 2 }
+    ],
+    frameRate: 7,
+    repeat: -1
+  });
+  
+  this.anims.create({
+    key: "robo_walk_up",
+    frames: [
+      { key: "robocima", frame: 3 }, // standing frame
+      { key: "robocima", frame: 4 },
+      { key: "robocima", frame: 5 },
+      { key: "robocima", frame: 4 },
+      { key: "robocima", frame: 5 }
+    ],
+    frameRate: 7,
+    repeat: -1
+  });
 
-  robo1.play("robo_walk");
-  robo1.movingRight = true; // Add direction tracking
+  // Play animation for all robots
+  robots.forEach(robot => {
+    if (robot.isVertical) {
+      robot.play(robot.movingDown ? "robo_walk_down" : "robo_walk_up");
+    } else {
+      robot.play("robo_walk");
+    }
+  });
 
   // Inicializa controles
   this.cursors = this.input.keyboard.createCursorKeys();
@@ -677,14 +746,37 @@ function handleRobotCollision() {
   
   isPlayingMinigame = true;
   lastPlayerPosition = { x: player.x, y: player.y };
+  
+  // Save position of ONLY the robot that caused the collision
+  lastRobotPosition = { 
+    x: currentCollisionRobot.x, 
+    y: currentCollisionRobot.y,
+    movingRight: currentCollisionRobot.movingRight,
+    robot: currentCollisionRobot // Store reference to the actual robot
+  };
+  
+  // Freeze ALL robots (disable physics) but only hide the one that caused collision
+  robots.forEach(robot => {
+    // Stop all robots by disabling physics
+    robot.body.enable = false;
+    robot.setVelocity(0, 0);
+    
+    // But only hide the one that collided with player
+    if (robot === currentCollisionRobot) {
+      robot.setVisible(false);
+    }
+  });
+  
+  // Completely disable player movement
   player.setVelocity(0, 0);
+  player.body.moves = false; // This prevents any physics movement
   
   // Mostrar aviso
   if (warningText) {
     warningText.setVisible(true);
     
     // Esconder aviso e mostrar minigame após 5 segundos
-    this.time.delayedCall(5000, () => {
+    this.time.delayedCall(3000, () => {
       warningText.setVisible(false);
       showMinigame.call(this);
     });
@@ -701,7 +793,7 @@ function showMinigame() {
   
   // Clear previous listeners to prevent duplicate handling
   minigameContainer.trueBtn.removeAllListeners('pointerdown');
-  minigameContainer.falseBtn.removeAllListeners('pointerdown');
+  minigameContainer.trueBtn.removeAllListeners('pointerdown');
   
   // Add new click handlers
   minigameContainer.trueBtn.on('pointerdown', () => {
@@ -762,6 +854,9 @@ function handleAnswer(playerAnswer, correctAnswer, questionObj) {
       minigameContainer.setVisible(false);
       isPlayingMinigame = false;
       
+      // Re-enable player movement
+      player.body.moves = true;
+      
       // Reset visibility states for next time
       minigameContainer.questionText.setVisible(true);
       minigameContainer.trueBtn.setVisible(true);
@@ -787,6 +882,22 @@ function handleAnswer(playerAnswer, correctAnswer, questionObj) {
       } else {
         console.log('Correct answer! Continue playing.');
       }
+      
+      // Re-enable ALL robots after 5 seconds
+      this.time.delayedCall(5000, () => {
+        robots.forEach(robot => {
+          // Re-enable physics for all robots
+          robot.body.enable = true;
+          
+          // Only need to make the collision robot visible again
+          if (robot === lastRobotPosition.robot) {
+            robot.setPosition(lastRobotPosition.x, lastRobotPosition.y);
+            robot.movingRight = lastRobotPosition.movingRight;
+            robot.setVisible(true);
+          }
+        });
+        console.log('Robots resumed movement');
+      });
     });
   });
 }
@@ -840,7 +951,7 @@ function createMinigameElements() {
     this.cameras.main.width / 2,
     this.cameras.main.height / 2 - 80,
     '', {
-      fontSize: '20px',
+      fontSize: '16px',
       fill: '#ffffff',
       wordWrap: { width: 500 },
       align: 'center'
@@ -921,7 +1032,7 @@ function createMinigameElements() {
   const feedbackBox = this.add.rectangle(
     this.cameras.main.width / 2, 
     this.cameras.main.height / 2,
-    550, 200, 0x000066, 1
+    550, 250, 0x000066, 1
   );
   feedbackBox.setScrollFactor(0);
   feedbackBox.setStrokeStyle(4, 0xffffff);
@@ -931,7 +1042,7 @@ function createMinigameElements() {
     this.cameras.main.width / 2,
     this.cameras.main.height / 2 - 30,
     '', {
-      fontSize: '15px',
+      fontSize: '14px',
       fill: '#ffffff',
       wordWrap: { width: 500 },
       align: 'center'
@@ -939,12 +1050,11 @@ function createMinigameElements() {
   ).setOrigin(0.5);
   feedbackText.setScrollFactor(0);
   feedbackText.setVisible(false);
-
   // Continue button (shown with feedback)
   const continueBtn = this.add.rectangle(
     this.cameras.main.width / 2,
-    this.cameras.main.height / 2 + 60,
-    200, 50, 0x0066ff, 1
+    this.cameras.main.height / 2 + 80, // Changed from +60 to +73 (13 pixels down)
+    140, 40, 0x0066ff, 1
   );
   continueBtn.setScrollFactor(0);
   continueBtn.setInteractive({ useHandCursor: true });
@@ -1002,6 +1112,48 @@ function createMinigameElements() {
   minigameContainer.resultText = resultText;
 
   return minigameContainer;
+}
+
+// Create a robot with specified position and horizontal movement range
+function createRobot(startX, startY, rightBound, leftBound) {
+  const robot = this.physics.add.sprite(startX, startY, "robo1");
+  robot.setScale(1);
+  robot.body.setSize(23, 60);
+  robot.body.setOffset(19, 2);
+  robot.setImmovable(true);
+  robot.setDepth(1);
+  
+  // Add custom properties for movement
+  robot.rightBound = rightBound;
+  robot.leftBound = leftBound;
+  robot.movingRight = true;
+  robot.isVertical = false; // Flag to indicate this is a horizontal robot
+  
+  // Add to array of robots
+  robots.push(robot);
+  
+  return robot;
+}
+
+// Create a robot that moves vertically
+function createVerticalRobot(startX, startY, bottomBound, topBound) {
+  const robot = this.physics.add.sprite(startX, startY, "robocima");
+  robot.setScale(1);
+  robot.body.setSize(37, 60);
+  robot.body.setOffset(14, 2);
+  robot.setImmovable(true);
+  robot.setDepth(1);
+  
+  // Add custom properties for vertical movement
+  robot.topBound = topBound;
+  robot.bottomBound = bottomBound;
+  robot.movingDown = true; // Start moving down
+  robot.isVertical = true; // Flag to indicate this is a vertical robot
+  
+  // Add to array of robots
+  robots.push(robot);
+  
+  return robot;
 }
 
 // Inicializar a configuração quando o Phaser estiver carregado
