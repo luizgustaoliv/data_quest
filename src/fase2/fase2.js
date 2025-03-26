@@ -68,44 +68,54 @@ let warningText;
 let minigameContainer;
 let questions = [
   {
-    question: "Uma empresa compartilhou dados pessoais de clientes com parceiros sem consentimento para marketing direcionado.",
-    answer: false // errado
+    question: "📱Você finalmente decidiu comprar aquele celular dos seus sonhos e encontrou um bom preço em uma loja virtual. Na hora de se cadastrar, a loja solicita seu CPF para finalizar a compra. Isso está certo ou errado?",
+    answer: true,
+    feedback: "A solicitação do CPF pode ser justificada para a emissão da nota fiscal e para evitar fraudes, conforme permitido pela LGPD. No entanto, a loja deve informar de forma clara o motivo da coleta desse dado e garantir sua segurança. Se o CPF for solicitado sem justificativa válida, pode ser considerado um excesso na coleta de dados."
   },
   {
-    question: "Um hospital mantém prontuários médicos criptografados e exige autorização do paciente para compartilhamento.",
-    answer: true // certo
+    question: "📶 Você está passeando no shopping e decide usar o Wi-Fi gratuito para economizar seu plano de dados. Ao tentar se conectar, a rede pede obrigatoriamente que você informe seu nome, telefone e data de nascimento antes de liberar o acesso. Isso está certo ou errado?",
+    answer: false,
+    feedback: "Embora o shopping possa coletar alguns dados para fins de segurança ou marketing, a LGPD exige que isso seja feito de forma transparente e proporcional. Pedir nome, telefone e data de nascimento pode ser considerado uma coleta excessiva, principalmente se não houver uma explicação clara sobre o uso dessas informações. Além disso, o usuário deve ter a opção de negar a coleta e ainda assim poder acessar o serviço."
   },
   {
-    question: "Uma rede social coleta dados de localização dos usuários sem informar claramente na política de privacidade.",
-    answer: false // errado
+    question: "📰 Você está navegando em um site de notícias quando aparece um pop-up oferecendo descontos exclusivos para assinantes da newsletter. Para se inscrever, o site solicita seu e-mail. Isso está certo ou errado?",
+    answer: true,
+    feedback: "Pedir o e-mail para assinatura de uma newsletter é uma prática comum e legítima, desde que o site informe claramente a finalidade do uso do dado e obtenha seu consentimento. Além disso, a LGPD exige que o usuário tenha a opção de cancelar a assinatura a qualquer momento."
   },
   {
-    question: "Uma empresa implementou sistema de dupla autenticação para acesso aos dados pessoais dos clientes.",
-    answer: true // certo
+    question: "💼 Você se candidatou a uma vaga de emprego e, durante o processo seletivo, a empresa pede que você informe sua religião e orientação política. Isso está certo ou errado?",
+    answer: false,
+    feedback: "De acordo com a LGPD, informações sobre religião e orientação política são dados sensíveis, ou seja, exigem um nível maior de proteção e só podem ser coletados em situações extremamente específicas e justificadas por lei. No contexto de uma entrevista de emprego, essa solicitação não é relevante para a contratação e pode ser considerada uma violação da privacidade do candidato."
   },
   {
-    question: "Um site armazena senhas dos usuários em texto puro (não criptografadas) em seu banco de dados.",
-    answer: false // errado
+    question: "📲 Você baixou um novo aplicativo de rede social e, ao criar sua conta, ele solicita acesso à sua lista de contatos para 'ajudar a encontrar amigos'. Isso está certo ou errado?",
+    answer: false,
+    feedback: "Embora a funcionalidade possa ser útil, a LGPD exige que o aplicativo informe de forma clara para que os contatos serão usados, se serão armazenados e com quem serão compartilhados. Além disso, o usuário deve ter a opção de negar o acesso e ainda assim usar o aplicativo normalmente. Se o app exigir essa permissão sem alternativa, pode estar infringindo a lei."
   },
   {
-    question: "Uma empresa permite que usuários solicitem exclusão de seus dados pessoais do sistema.",
-    answer: true // certo
+    question: "📲 Você baixou um aplicativo de anotações e, ao abrir, ele pede permissão para acessar sua câmera. Isso está certo ou errado?",
+    answer: false,
+    feedback: "Se o app de anotações não tem funcionalidades que justifiquem o uso da câmera, essa solicitação pode ser considerada uma coleta de dados desnecessária, indo contra a LGPD. O aplicativo deve solicitar apenas os dados estritamente necessários para sua funcionalidade."
   },
   {
-    question: "Um aplicativo vende dados de usuários para terceiros sem consentimento explícito.",
-    answer: false // errado
+    question: "🎮 Você baixou um jogo no celular e, ao abrir pela primeira vez, ele pede permissão para acessar o microfone, mesmo sem ter chat por voz. Isso está certo ou errado?",
+    answer: false,
+    feedback: "Se o jogo não tem nenhuma função que use o microfone, não faz sentido ele pedir essa permissão. A LGPD diz que aplicativos só devem coletar dados necessários para o seu funcionamento. Pode ser um sinal de que o jogo está coletando mais informações do que deveria!"
   },
   {
-    question: "Uma empresa mantém registros de acesso aos dados pessoais e notifica usuários em caso de vazamentos.",
-    answer: true // certo
+    question: "📱 Você criou uma conta em uma rede social nova e, antes de começar a usar, ela pede sua data de nascimento. Isso está certo ou errado?",
+    answer: true,
+    feedback: "As redes sociais precisam saber sua idade para garantir que você pode usá-las de acordo com a lei. Algumas plataformas têm restrições para menores de idade, e a LGPD protege crianças e adolescentes de exposições indevidas na internet."
   },
   {
-    question: "Um e-commerce compartilha histórico de compras dos clientes com outras empresas sem autorização.",
-    answer: false // errado
+    question: "🎥 Você gosta de assistir vídeos online, mas percebe que a plataforma sempre recomenda conteúdos parecidos com o que você assistiu antes. Isso significa que ela está coletando seu histórico de vídeos. Isso está certo ou errado?",
+    answer: true,
+    feedback: "A plataforma pode usar seu histórico para sugerir vídeos melhores para você. Mas, pela LGPD, ela deve avisar que está coletando esses dados e permitir que você apague seu histórico ou controle o que pode ser armazenado."
   },
   {
-    question: "Uma empresa realiza backups regulares e criptografados dos dados pessoais dos clientes.",
-    answer: true // certo
+    question: "🎤 Você quer participar de um concurso de talentos online e, para se inscrever, o site pede seu endereço completo. Isso está certo ou errado?",
+    answer: false,
+    feedback: "Para um concurso online, pedir o endereço pode ser um excesso. A LGPD diz que só se deve coletar informações realmente necessárias. Se não houver envio de prêmios físicos, essa informação não deveria ser solicitada."
   }
 ];
 
@@ -686,36 +696,104 @@ function handleRobotCollision() {
 function showMinigame() {
   const randomQuestion = Phaser.Math.RND.pick(questions);
   
-  // Access elements through container properties
+  // Update question text
   minigameContainer.questionText.setText(randomQuestion.question);
+  
+  // Clear previous listeners to prevent duplicate handling
+  minigameContainer.trueBtn.removeAllListeners('pointerdown');
+  minigameContainer.falseBtn.removeAllListeners('pointerdown');
+  
+  // Add new click handlers
+  minigameContainer.trueBtn.on('pointerdown', () => {
+    console.log('TRUE button clicked');
+    handleAnswer.call(this, true, randomQuestion.answer, randomQuestion);
+  });
+  
+  minigameContainer.falseBtn.on('pointerdown', () => {
+    console.log('FALSE button clicked');
+    handleAnswer.call(this, false, randomQuestion.answer, randomQuestion);
+  });
+  
+  // Show the minigame
   minigameContainer.setVisible(true);
-
-  // Clear previous listeners
-  minigameContainer.trueButton.off('pointerdown');
-  minigameContainer.falseButton.off('pointerdown');
-
-  // Add new listeners
-  minigameContainer.trueButton.on('pointerdown', () => handleAnswer.call(this, true, randomQuestion.answer));
-  minigameContainer.falseButton.on('pointerdown', () => handleAnswer.call(this, false, randomQuestion.answer));
 }
 
-function handleAnswer(playerAnswer, correctAnswer) {
-  minigameContainer.setVisible(false);
-  isPlayingMinigame = false;
-
-  if (playerAnswer === correctAnswer) {
-    // Player can continue from current position
-    console.log('Correct answer!');
-  } else {
-    // Return to starting position
-    player.setPosition(670, 1000);
-    console.log('Wrong answer! Back to start.');
-  }
+function handleAnswer(playerAnswer, correctAnswer, questionObj) {
+  console.log(`Button clicked: ${playerAnswer}, correct answer: ${correctAnswer}`);
+  
+  // Prevent multiple clicks
+  minigameContainer.trueBtn.disableInteractive();
+  minigameContainer.falseBtn.disableInteractive();
+  
+  // Provide visual feedback
+  const button = playerAnswer ? minigameContainer.trueBtn : minigameContainer.falseBtn;
+  const color = playerAnswer === correctAnswer ? 0x00ff00 : 0xff0000;
+  
+  button.setFillStyle(color);
+  
+  // Hide question and show feedback
+  this.time.delayedCall(500, () => {
+    // Hide question elements
+    minigameContainer.questionText.setVisible(false);
+    minigameContainer.trueBtn.setVisible(false);
+    minigameContainer.trueText.setVisible(false);
+    minigameContainer.falseBtn.setVisible(false);
+    minigameContainer.falseText.setVisible(false);
+    
+    // Set feedback color based on answer correctness
+    const feedbackBoxColor = playerAnswer === correctAnswer ? 0x006600 : 0x660000;
+    minigameContainer.feedbackBox.setFillStyle(feedbackBoxColor);
+    
+    // Show result text with appropriate message
+    minigameContainer.resultText.setText(playerAnswer === correctAnswer ? "VOCÊ ACERTOU!" : "VOCÊ ERROU!");
+    minigameContainer.resultText.setFill(playerAnswer === correctAnswer ? '#00ff00' : '#ff0000');
+    minigameContainer.resultText.setVisible(true);
+    
+    // Show feedback elements
+    minigameContainer.feedbackBox.setVisible(true);
+    minigameContainer.feedbackText.setText(questionObj.feedback);
+    minigameContainer.feedbackText.setVisible(true);
+    minigameContainer.continueBtn.setVisible(true);
+    minigameContainer.continueText.setVisible(true);
+    
+    // Add click handler to continue button
+    minigameContainer.continueBtn.once('pointerdown', () => {
+      // Hide feedback and minigame
+      minigameContainer.setVisible(false);
+      isPlayingMinigame = false;
+      
+      // Reset visibility states for next time
+      minigameContainer.questionText.setVisible(true);
+      minigameContainer.trueBtn.setVisible(true);
+      minigameContainer.trueText.setVisible(true);
+      minigameContainer.falseBtn.setVisible(true);
+      minigameContainer.falseText.setVisible(true);
+      minigameContainer.feedbackBox.setVisible(false);
+      minigameContainer.feedbackText.setVisible(false);
+      minigameContainer.resultText.setVisible(false);
+      minigameContainer.continueBtn.setVisible(false);
+      minigameContainer.continueText.setVisible(false);
+      
+      // Reset button colors
+      minigameContainer.trueBtn.setFillStyle(0x008000);
+      minigameContainer.falseBtn.setFillStyle(0x800000);
+      minigameContainer.trueBtn.setInteractive();
+      minigameContainer.falseBtn.setInteractive();
+      
+      // Handle player consequence
+      if (playerAnswer !== correctAnswer) {
+        player.setPosition(670, 1000);
+        console.log('Wrong answer! Back to start.');
+      } else {
+        console.log('Correct answer! Continue playing.');
+      }
+    });
+  });
 }
 
 // Add to createMain after physics setup
 function createMinigameElements() {
-  // Warning text - ajustar para ficar fixo na tela
+  // Create fixed position elements that don't scroll with the camera
   warningText = this.add.text(
     this.cameras.main.width / 2,
     this.cameras.main.height / 2,
@@ -729,51 +807,199 @@ function createMinigameElements() {
     }
   ).setOrigin(0.5);
   warningText.setScrollFactor(0);
-  warningText.setDepth(2000);
+  warningText.setDepth(3000);
   warningText.setVisible(false);
 
-  // Minigame container - ajustar para ficar fixo na tela
-  minigameContainer = this.add.container(
-    this.cameras.main.width / 2,
-    this.cameras.main.height / 2
-  );
+  // Create simple minigame container
+  minigameContainer = this.add.container(0, 0);
   minigameContainer.setScrollFactor(0);
-  minigameContainer.setDepth(2000);
+  minigameContainer.setDepth(3000);
+  minigameContainer.setVisible(false);
+
+  // Semi-transparent overlay background
+  const overlay = this.add.rectangle(
+    this.cameras.main.width / 2, 
+    this.cameras.main.height / 2,
+    this.cameras.main.width,
+    this.cameras.main.height,
+    0x000000, 0.8
+  );
+  overlay.setScrollFactor(0);
+
+  // Dialog background
+  const bg = this.add.rectangle(
+    this.cameras.main.width / 2, 
+    this.cameras.main.height / 2,
+    600, 300, 0x333333, 1
+  );
+  bg.setScrollFactor(0);
+  bg.setStrokeStyle(4, 0xffffff);
+
+  // Question text
+  const questionText = this.add.text(
+    this.cameras.main.width / 2,
+    this.cameras.main.height / 2 - 80,
+    '', {
+      fontSize: '20px',
+      fill: '#ffffff',
+      wordWrap: { width: 500 },
+      align: 'center'
+    }
+  ).setOrigin(0.5);
+  questionText.setScrollFactor(0);
+
+  // Simpler button creation - TRUE button
+  const trueBtn = this.add.rectangle(
+    this.cameras.main.width / 2 - 120,
+    this.cameras.main.height / 2 + 80,
+    200, 60, 0x008000
+  );
+  trueBtn.setScrollFactor(0);
+  trueBtn.setInteractive({ useHandCursor: true });
   
-  // Background
-  const bg = this.add.rectangle(0, 0, 600, 300, 0x000000, 0.9);
+  const trueText = this.add.text(
+    trueBtn.x, trueBtn.y,
+    'CERTO', {
+      fontSize: '18px',
+      fill: '#ffffff',
+    }
+  ).setOrigin(0.5);
+  trueText.setScrollFactor(0);
+
+  // FALSE button
+  const falseBtn = this.add.rectangle(
+    this.cameras.main.width / 2 + 120,
+    this.cameras.main.height / 2 + 80,
+    200, 60, 0x800000
+  );
+  falseBtn.setScrollFactor(0);
+  falseBtn.setInteractive({ useHandCursor: true });
   
-  // Create question text
-  const questionText = this.add.text(0, -50, '', {
-    fontSize: '16px',
-    fill: '#ffffff',
-    wordWrap: { width: 500 },
-    align: 'center'
-  }).setOrigin(0.5);
+  const falseText = this.add.text(
+    falseBtn.x, falseBtn.y,
+    'ERRADO', {
+      fontSize: '18px',
+      fill: '#ffffff',
+    }
+  ).setOrigin(0.5);
+  falseText.setScrollFactor(0);
 
-  // Create buttons
-  const trueButton = this.add.text(-100, 50, 'VERDADEIRO', {
-    fontSize: '20px',
-    fill: '#ffffff',
-    backgroundColor: '#008000',
-    padding: { x: 10, y: 5 }
-  }).setInteractive().setOrigin(0.5);
-
-  const falseButton = this.add.text(100, 50, 'FALSO', {
-    fontSize: '20px',
-    fill: '#ffffff',
-    backgroundColor: '#800000',
-    padding: { x: 10, y: 5 }
-  }).setInteractive().setOrigin(0.5);
-
-  // Store references to elements we need to access later
-  minigameContainer.questionText = questionText;
-  minigameContainer.trueButton = trueButton;
-  minigameContainer.falseButton = falseButton;
+  // Add simple hover effects
+  trueBtn.on('pointerover', () => {
+    trueBtn.setScale(1.1);
+    trueText.setScale(1.1);
+    console.log('Hover on TRUE button');
+  });
+  
+  trueBtn.on('pointerout', () => {
+    trueBtn.setScale(1.0);
+    trueText.setScale(1.0);
+  });
+  
+  falseBtn.on('pointerover', () => {
+    falseBtn.setScale(1.1);
+    falseText.setScale(1.1);
+    console.log('Hover on FALSE button');
+  });
+  
+  falseBtn.on('pointerout', () => {
+    falseBtn.setScale(1.0);
+    falseText.setScale(1.0);
+  });
 
   // Add all elements to container
-  minigameContainer.add([bg, questionText, trueButton, falseButton]);
-  minigameContainer.setVisible(false);
+  minigameContainer.add([overlay, bg, questionText, trueBtn, trueText, falseBtn, falseText]);
+
+  // Store references
+  minigameContainer.questionText = questionText;
+  minigameContainer.trueBtn = trueBtn;
+  minigameContainer.trueText = trueText;
+  minigameContainer.falseBtn = falseBtn;
+  minigameContainer.falseText = falseText;
+
+  // Add feedback text element (initially hidden)
+  const feedbackBox = this.add.rectangle(
+    this.cameras.main.width / 2, 
+    this.cameras.main.height / 2,
+    550, 200, 0x000066, 1
+  );
+  feedbackBox.setScrollFactor(0);
+  feedbackBox.setStrokeStyle(4, 0xffffff);
+  feedbackBox.setVisible(false);
+
+  const feedbackText = this.add.text(
+    this.cameras.main.width / 2,
+    this.cameras.main.height / 2 - 30,
+    '', {
+      fontSize: '15px',
+      fill: '#ffffff',
+      wordWrap: { width: 500 },
+      align: 'center'
+    }
+  ).setOrigin(0.5);
+  feedbackText.setScrollFactor(0);
+  feedbackText.setVisible(false);
+
+  // Continue button (shown with feedback)
+  const continueBtn = this.add.rectangle(
+    this.cameras.main.width / 2,
+    this.cameras.main.height / 2 + 60,
+    200, 50, 0x0066ff, 1
+  );
+  continueBtn.setScrollFactor(0);
+  continueBtn.setInteractive({ useHandCursor: true });
+  continueBtn.setVisible(false);
+  
+  const continueText = this.add.text(
+    continueBtn.x, continueBtn.y,
+    'CONTINUAR', {
+      fontSize: '18px',
+      fill: '#ffffff',
+    }
+  ).setOrigin(0.5);
+  continueText.setScrollFactor(0);
+  continueText.setVisible(false);
+
+  // Add hover effect to continue button
+  continueBtn.on('pointerover', () => {
+    continueBtn.setScale(1.1);
+    continueText.setScale(1.1);
+  });
+  
+  continueBtn.on('pointerout', () => {
+    continueBtn.setScale(1.0);
+    continueText.setScale(1.0);
+  });
+
+  // Add feedback elements to the container
+  minigameContainer.add([feedbackBox, feedbackText, continueBtn, continueText]);
+
+  // Store references to feedback elements
+  minigameContainer.feedbackBox = feedbackBox;
+  minigameContainer.feedbackText = feedbackText;
+  minigameContainer.continueBtn = continueBtn;
+  minigameContainer.continueText = continueText;
+
+  // Add result header text above feedback
+  const resultText = this.add.text(
+    this.cameras.main.width / 2,
+    this.cameras.main.height / 2 - 80,
+    '', {
+      fontSize: '18px',
+      fontStyle: 'bold',
+      fill: '#ffffff',
+      align: 'center'
+    }
+  ).setOrigin(0.5);
+  resultText.setScrollFactor(0);
+  resultText.setVisible(false);
+
+  // Adjust the feedback text position to make room for the header
+  feedbackText.setY(this.cameras.main.height / 2 - 10);
+
+  // Add result text to container and store reference
+  minigameContainer.add([resultText]);
+  minigameContainer.resultText = resultText;
 
   return minigameContainer;
 }
