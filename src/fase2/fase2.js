@@ -55,6 +55,59 @@ let obj2ColisaoLayer;
 let cursors;
 let elevator;
 let estantes1Layer, estantes2Layer, estantes3Layer, estantes4Layer;
+// Adicionar variáveis para o sistema de iluminação
+let darkness;
+let lightMask;
+let spotlight;
+let lightRadius = 100; // Raio da luz ao redor do jogador tem que ser 100
+
+// Add at the top with other variable declarations
+let isPlayingMinigame = false;
+let lastPlayerPosition = {};
+let warningText;
+let minigameContainer;
+let questions = [
+  {
+    question: "Uma empresa compartilhou dados pessoais de clientes com parceiros sem consentimento para marketing direcionado.",
+    answer: false // errado
+  },
+  {
+    question: "Um hospital mantém prontuários médicos criptografados e exige autorização do paciente para compartilhamento.",
+    answer: true // certo
+  },
+  {
+    question: "Uma rede social coleta dados de localização dos usuários sem informar claramente na política de privacidade.",
+    answer: false // errado
+  },
+  {
+    question: "Uma empresa implementou sistema de dupla autenticação para acesso aos dados pessoais dos clientes.",
+    answer: true // certo
+  },
+  {
+    question: "Um site armazena senhas dos usuários em texto puro (não criptografadas) em seu banco de dados.",
+    answer: false // errado
+  },
+  {
+    question: "Uma empresa permite que usuários solicitem exclusão de seus dados pessoais do sistema.",
+    answer: true // certo
+  },
+  {
+    question: "Um aplicativo vende dados de usuários para terceiros sem consentimento explícito.",
+    answer: false // errado
+  },
+  {
+    question: "Uma empresa mantém registros de acesso aos dados pessoais e notifica usuários em caso de vazamentos.",
+    answer: true // certo
+  },
+  {
+    question: "Um e-commerce compartilha histórico de compras dos clientes com outras empresas sem autorização.",
+    answer: false // errado
+  },
+  {
+    question: "Uma empresa realiza backups regulares e criptografados dos dados pessoais dos clientes.",
+    answer: true // certo
+  }
+];
 
 function preloadMain() {
   // Load all possible player sprites
@@ -79,6 +132,10 @@ function preloadMain() {
     frameHeight: 64,
   });
   this.load.spritesheet("player6", "../../assets/fase1/players/player6.png", {
+    frameWidth: 64,
+    frameHeight: 64,
+  });
+  this.load.spritesheet("robo1", "../../assets/fase2/sprites/robolado.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
@@ -258,10 +315,18 @@ function createMain() {
     // Ajusta o tamanho da hitbox do player
     player.body.setSize(27, 8);
     player.body.setOffset(19, 55.4);
+    player.setDepth(2);
 
-    // Ativa o modo de debug para visualizar a hitbox
-    this.physics.world.drawDebug = true;
-    this.physics.world.debugGraphic = this.add.graphics();
+    robo1 = this.physics.add.sprite(143, 390, "robo1"); //Terminar no X 560 fazer flip
+    robo1.setScale(1);                                //começar no 143
+    robo1.body.setSize(23, 60);
+    robo1.body.setOffset(19, 2);
+    robo1.setImmovable(true);
+    robo1.setDepth(1);
+
+        // Ativa o modo de debug para visualizar a hitbox
+        this.physics.world.drawDebug = true;
+        this.physics.world.debugGraphic = this.add.graphics();
 
       // After creating all layers and the player, set up the camera correctly
       if (map2 && player) {
@@ -271,6 +336,9 @@ function createMain() {
         this.cameras.main.startFollow(player);
         this.cameras.main.setZoom(1.5);
       }
+
+      // Criar sistema de iluminação após configurar a câmera
+      createLightingSystem.call(this);
 
       if (map2 && map2.layers && map2.layers.length > 0) {
         startGame.call(this);
@@ -387,10 +455,21 @@ function createMain() {
 
       // Adicionar colisão com os retângulos manuais
       this.physics.add.collider(player, manualColliders);
+
+      // Criar elementos do minigame antes de configurar colisões
+      const minigameElements = createMinigameElements.call(this);
+    
+      // Configurar colisão com o robô
+      this.physics.add.overlap(player, robo1, () => {
+        handleRobotCollision.call(this);
+      }, null, this);
+
+      // Remover a colisão física entre player e robô para permitir overlap
+      // this.physics.add.collider(player, robo1); <- remover ou comentar esta linha
 }
 
 function updateMain() {
-  if (!this.cursors || !player || !player.body) return;
+  if (!this.cursors || !player || !player.body || isPlayingMinigame) return;
   const speed = 160;
 
   const leftPressed =
@@ -445,6 +524,59 @@ function updateMain() {
     // Normalize the velocity to prevent faster diagonal movement
     player.body.velocity.normalize().scale(speed);
   }
+
+  // Atualizar posição da luz para seguir o jogador
+  if (lightMask && spotlight) {
+    lightMask.setPosition(player.x, player.y);
+    spotlight.setPosition(player.x, player.y);
+  }
+
+  // Add robot movement
+  if (robo1) {
+    const robotSpeed = 100;
+    
+    if (robo1.movingRight) {
+      robo1.setVelocityX(robotSpeed);
+      robo1.setFlipX(false);
+      if (robo1.x >= 560) {
+        robo1.movingRight = false;
+      }
+    } else {
+      robo1.setVelocityX(-robotSpeed);
+      robo1.setFlipX(true);
+      if (robo1.x <= 143) {
+        robo1.movingRight = true;
+      }
+    }
+  }
+}
+
+// Função para criar o sistema de iluminação
+function createLightingSystem() {
+  // Criar camada de escuridão que cobre toda a área do jogo
+  darkness = this.add.rectangle(
+    0, 
+    0, 
+    map2.widthInPixels * 2, 
+    map2.heightInPixels * 2, 
+    0x000000, 
+    0.95
+  );
+  darkness.setOrigin(0, 0);
+  darkness.setDepth(1000); // Garantir que fique acima de todas as camadas do jogo
+  
+  // Criar máscara de luz circular
+  lightMask = this.add.circle(player.x, player.y, lightRadius, 0xffffff);
+  lightMask.setVisible(false); // A máscara não precisa ser visível
+  
+  // Criar spotlight visual (opcional - para dar um efeito de brilho)
+  spotlight = this.add.circle(player.x, player.y, lightRadius, 0xffffff, 0.2);
+  spotlight.setDepth(999); // Abaixo da escuridão
+  
+  // Aplicar máscara à camada de escuridão
+  const mask = new Phaser.Display.Masks.GeometryMask(this, lightMask);
+  mask.invertAlpha = true; // Inverte a máscara para que ela "corte" a escuridão
+  darkness.setMask(mask);
 }
 
 // Inicializa o jogo após configuração
@@ -510,8 +642,140 @@ function startGame() {
     });
   }
 
+  // Add robo1 animation
+  this.anims.create({
+    key: "robo_walk",
+    frames: [
+      { key: "robo1", frame: 0 },
+      { key: "robo1", frame: 1 }
+    ],
+    frameRate: 4,
+    repeat: -1
+  });
+
+  robo1.play("robo_walk");
+  robo1.movingRight = true; // Add direction tracking
+
   // Inicializa controles
   this.cursors = this.input.keyboard.createCursorKeys();
+}
+
+// Add these new functions
+function handleRobotCollision() {
+  console.log("Colisão com robô detectada!"); // Debug
+  if (isPlayingMinigame) return;
+  
+  isPlayingMinigame = true;
+  lastPlayerPosition = { x: player.x, y: player.y };
+  player.setVelocity(0, 0);
+  
+  // Mostrar aviso
+  if (warningText) {
+    warningText.setVisible(true);
+    
+    // Esconder aviso e mostrar minigame após 5 segundos
+    this.time.delayedCall(5000, () => {
+      warningText.setVisible(false);
+      showMinigame.call(this);
+    });
+  } else {
+    console.error("warningText não foi inicializado!");
+  }
+}
+
+function showMinigame() {
+  const randomQuestion = Phaser.Math.RND.pick(questions);
+  
+  // Access elements through container properties
+  minigameContainer.questionText.setText(randomQuestion.question);
+  minigameContainer.setVisible(true);
+
+  // Clear previous listeners
+  minigameContainer.trueButton.off('pointerdown');
+  minigameContainer.falseButton.off('pointerdown');
+
+  // Add new listeners
+  minigameContainer.trueButton.on('pointerdown', () => handleAnswer.call(this, true, randomQuestion.answer));
+  minigameContainer.falseButton.on('pointerdown', () => handleAnswer.call(this, false, randomQuestion.answer));
+}
+
+function handleAnswer(playerAnswer, correctAnswer) {
+  minigameContainer.setVisible(false);
+  isPlayingMinigame = false;
+
+  if (playerAnswer === correctAnswer) {
+    // Player can continue from current position
+    console.log('Correct answer!');
+  } else {
+    // Return to starting position
+    player.setPosition(670, 1000);
+    console.log('Wrong answer! Back to start.');
+  }
+}
+
+// Add to createMain after physics setup
+function createMinigameElements() {
+  // Warning text - ajustar para ficar fixo na tela
+  warningText = this.add.text(
+    this.cameras.main.width / 2,
+    this.cameras.main.height / 2,
+    "Oh Não, você foi pego pelo robô anti LGPD!\nResponda uma questão a seguir para continuar de onde está,\ncaso erre, vai voltar do inicio do mapa",
+    {
+      fontSize: '20px',
+      fill: '#ffffff',
+      backgroundColor: '#000000',
+      padding: { x: 10, y: 5 },
+      align: 'center'
+    }
+  ).setOrigin(0.5);
+  warningText.setScrollFactor(0);
+  warningText.setDepth(2000);
+  warningText.setVisible(false);
+
+  // Minigame container - ajustar para ficar fixo na tela
+  minigameContainer = this.add.container(
+    this.cameras.main.width / 2,
+    this.cameras.main.height / 2
+  );
+  minigameContainer.setScrollFactor(0);
+  minigameContainer.setDepth(2000);
+  
+  // Background
+  const bg = this.add.rectangle(0, 0, 600, 300, 0x000000, 0.9);
+  
+  // Create question text
+  const questionText = this.add.text(0, -50, '', {
+    fontSize: '16px',
+    fill: '#ffffff',
+    wordWrap: { width: 500 },
+    align: 'center'
+  }).setOrigin(0.5);
+
+  // Create buttons
+  const trueButton = this.add.text(-100, 50, 'VERDADEIRO', {
+    fontSize: '20px',
+    fill: '#ffffff',
+    backgroundColor: '#008000',
+    padding: { x: 10, y: 5 }
+  }).setInteractive().setOrigin(0.5);
+
+  const falseButton = this.add.text(100, 50, 'FALSO', {
+    fontSize: '20px',
+    fill: '#ffffff',
+    backgroundColor: '#800000',
+    padding: { x: 10, y: 5 }
+  }).setInteractive().setOrigin(0.5);
+
+  // Store references to elements we need to access later
+  minigameContainer.questionText = questionText;
+  minigameContainer.trueButton = trueButton;
+  minigameContainer.falseButton = falseButton;
+
+  // Add all elements to container
+  minigameContainer.add([bg, questionText, trueButton, falseButton]);
+  minigameContainer.setVisible(false);
+
+  return minigameContainer;
 }
 
 // Inicializar a configuração quando o Phaser estiver carregado
