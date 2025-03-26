@@ -1742,30 +1742,43 @@ if (window.fase1Initialized) {
       player.setOrigin(0.5, 1);
       player.body.setSize(27, 10);
       player.body.setOffset(18, 55);
-
-      // Após criar o jogador e antes de configurar a câmera, adicione o nome sobre o jogador
+      
+      // Get player name from localStorage or use default
+      const playerName = localStorage.getItem("playerName") || "Jogador";
+      
+      // Make sure the name is saved in localStorage for persistence
+      if (!localStorage.getItem("playerName")) {
+        localStorage.setItem("playerName", playerName);
+      }
+      
+      // Create name tag display
       const nameTag = this.add.text(0, -32, playerName, {
-        // Movido para cima (de -35 para -25)
         fontFamily: "Arial",
-        fontSize: "9px", // Diminuído ainda mais (de 9px para 7px)
+        fontSize: "9px",
         color: "#ffffff",
         stroke: "#000000",
-        strokeThickness: 2, // Reduzido de 3 para 2 para ficar mais proporcional
+        strokeThickness: 2,
         align: "center",
       });
       nameTag.setOrigin(0.5, 0.5);
 
-      // Criar um container que inclui o jogador e sua nameTag
+      // Create container for player and name tag
       const playerContainer = this.add.container(player.x, player.y);
       playerContainer.add([nameTag]);
 
-      // Atribuir o container ao player para fácil acesso
+      // Assign container to player for easy access
       player.nameContainer = playerContainer;
 
-      // Configurar a profundidade do container
+      // Set container depth
       playerContainer.setDepth(1005); // DEPTHS.PLAYER + 1
 
-      // Não precisamos de event listener aqui, vamos fazer a atualização em updateMain
+      // Add a reference to update the name if it changes
+      player.updateName = function(newName) {
+        nameTag.setText(newName);
+        localStorage.setItem("playerName", newName);
+      };
+
+      console.log("Player name loaded from localStorage:", playerName);
 
       // Criação do elevador
       elevator = this.physics.add.sprite(680, 363, "elevator", 0);

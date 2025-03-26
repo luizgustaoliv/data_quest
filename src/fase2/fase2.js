@@ -57,10 +57,38 @@ let elevator;
 let estantes1Layer, estantes2Layer, estantes3Layer, estantes4Layer;
 
 function preloadMain() {
+  // Load all possible player sprites
+  this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", {
+    frameWidth: 64,
+    frameHeight: 64,
+  });
+  this.load.spritesheet("player2", "../../assets/fase1/players/player2.png", {
+    frameWidth: 64,
+    frameHeight: 64,
+  });
+  this.load.spritesheet("player3", "../../assets/fase1/players/player3.png", {
+    frameWidth: 64,
+    frameHeight: 64,
+  });
+  this.load.spritesheet("player4", "../../assets/fase1/players/player4.png", {
+    frameWidth: 64,
+    frameHeight: 64,
+  });
+  this.load.spritesheet("player5", "../../assets/fase1/players/player5.png", {
+    frameWidth: 64,
+    frameHeight: 64,
+  });
+  this.load.spritesheet("player6", "../../assets/fase1/players/player6.png", {
+    frameWidth: 64,
+    frameHeight: 64,
+  });
+  
+  // Keep default player as fallback
   this.load.spritesheet("player", "../../assets/fase1/players/player1.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
+  
   this.load.tilemapTiledJSON("map2json", "../../assets/fase2/fase2.json");
   this.load.image("fase2", "../../assets/fase2/fase2.png");
   this.load.image("5_Classroom_and_library_32x32", "../../assets/fase2/5_Classroom_and_library_32x32.png");
@@ -71,6 +99,58 @@ function preloadMain() {
 
 function createMain() {
   try {
+    // Pegar o personagem selecionado do LocalStorage
+    const selectedCharacter = localStorage.getItem("currentCharacter") || "player1";
+    console.log("Character loaded from fase1:", selectedCharacter);
+
+    // Get player name from localStorage or use default
+    const playerName = localStorage.getItem("playerName") || "Jogador";
+    console.log("Player name loaded from localStorage:", playerName);
+    
+    // Make sure the name is saved in localStorage for persistence
+    if (!localStorage.getItem("playerName")) {
+    localStorage.setItem("playerName", playerName);
+    }
+
+
+      // More animations will be created in startGame function
+
+      // We'll create the name tag after player is created
+      this.events.on('create', () => {
+        if (player) {
+        // Create name tag display
+        const nameTag = this.add.text(0, -32, playerName, {
+          fontFamily: "Arial",
+          fontSize: "10px",
+          color: "#ffffff",
+          stroke: "#000000",
+          strokeThickness: 2,
+          align: "center",
+        });
+        nameTag.setOrigin(0.5, 0.5);
+        
+        // Create container for player and name tag
+        const playerContainer = this.add.container(player.x, player.y);
+        playerContainer.add([nameTag]);
+        playerContainer.setDepth(1005);
+        
+        // Assign container to player for easy access
+        player.nameContainer = playerContainer;
+        
+        // Add a reference to update the name if it changes
+        player.updateName = function(newName) {
+          nameTag.setText(newName);
+          localStorage.setItem("playerName", newName);
+        };
+        
+        // Update container position in update function
+        this.events.on('update', () => {
+          if (player && player.nameContainer) {
+          player.nameContainer.setPosition(player.x, player.y);
+          }
+        });
+        }
+      });
     // Carregar o mapa
     map2 = this.make.tilemap({ key: "map2json" });
 
@@ -172,7 +252,7 @@ function createMain() {
           if (estantes4Layer) estantes4Layer.setScale(1.0);   
  
     // Adiciona o sprite do personagem no mapa - posição inicial
-    player = this.physics.add.sprite(670, 1000, "player");
+    player = this.physics.add.sprite(670, 1000, selectedCharacter);
     player.setScale(0.8 );
 
     // Ajusta o tamanho da hitbox do player
@@ -369,64 +449,66 @@ function updateMain() {
 
 // Inicializa o jogo após configuração
 function startGame() {
+  // Get the selected character from localStorage
+  const selectedCharacter = localStorage.getItem("currentCharacter") || "player1";
+  
   // Configuração das animações
-      // Criação de animações para o personagem
-      if ("idle_front") {
-        this.anims.create({
-          key: "idle_front",
-          frames: [{ key: "player", frame: 0 }],
-          frameRate: 1,
-          repeat: -1,
-        });
+  if (!this.anims.exists(`idle_front`)) {
+    this.anims.create({
+      key: "idle_front",
+      frames: [{ key: selectedCharacter, frame: 0 }],
+      frameRate: 1,
+      repeat: -1,
+    });
 
-        this.anims.create({
-          key: "idle_back",
-          frames: [{ key: "player", frame: 5 }],
-          frameRate: 1,
-          repeat: -1,
-        });
+    this.anims.create({
+      key: "idle_back",
+      frames: [{ key: selectedCharacter, frame: 5 }],
+      frameRate: 1,
+      repeat: -1,
+    });
 
-        this.anims.create({
-          key: "idle_side",
-          frames: [{ key: "player", frame: 3 }],
-          frameRate: 1,
-          repeat: -1,
-        });
+    this.anims.create({
+      key: "idle_side",
+      frames: [{ key: selectedCharacter, frame: 3 }],
+      frameRate: 1,
+      repeat: -1,
+    });
 
-        this.anims.create({
-          key: "walk_down",
-          frames: [
-            { key: "player", frame: 0 },
-            { key: "player", frame: 1 },
-            { key: "player", frame: 0 },
-            { key: "player", frame: 2 },
-          ],
-          frameRate: 7,
-          repeat: -1,
-        });
+    this.anims.create({
+      key: "walk_down",
+      frames: [
+        { key: selectedCharacter, frame: 0 },
+        { key: selectedCharacter, frame: 1 },
+        { key: selectedCharacter, frame: 0 },
+        { key: selectedCharacter, frame: 2 },
+      ],
+      frameRate: 7,
+      repeat: -1,
+    });
 
-        this.anims.create({
-          key: "walk_side",
-          frames: [
-            { key: "player", frame: 3 },
-            { key: "player", frame: 4 },
-          ],
-          frameRate: 7,
-          repeat: -1,
-        });
+    this.anims.create({
+      key: "walk_side",
+      frames: [
+        { key: selectedCharacter, frame: 3 },
+        { key: selectedCharacter, frame: 4 },
+      ],
+      frameRate: 7,
+      repeat: -1,
+    });
 
-        this.anims.create({
-          key: "walk_up",
-          frames: [
-            { key: "player", frame: 5 },
-            { key: "player", frame: 6 },
-            { key: "player", frame: 5 },
-            { key: "player", frame: 7 },
-          ],
-          frameRate: 7,
-          repeat: -1,
-        });
-  };
+    this.anims.create({
+      key: "walk_up",
+      frames: [
+        { key: selectedCharacter, frame: 5 },
+        { key: selectedCharacter, frame: 6 },
+        { key: selectedCharacter, frame: 5 },
+        { key: selectedCharacter, frame: 7 },
+      ],
+      frameRate: 7,
+      repeat: -1,
+    });
+  }
 
   // Inicializa controles
   this.cursors = this.input.keyboard.createCursorKeys();
