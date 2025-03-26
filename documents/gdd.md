@@ -100,7 +100,8 @@ Pensando na dor do parceiro, foi desenvolvido um jogo 2D do gênero RPG, visando
 
 ### 1.1.7. Objetivos, Metas e Indicadores (sprint 4)
 
-*Definição de metas SMART (específicas, mensuráveis, alcançáveis, relevantes e temporais) para seu projeto, com indicadores claros para mensuração*
+### Uma meta S.M.A.R.T para nosso projeto: 
+- Desenvolver o MVP de um jogo educativo 2D que ensine sobre a LGPD, voltado para alunos e professores de escolas públicas, contendo no mínimo três fases interativas com minigames que transmitam o conteúdo de forma atrativa e didática, com prazo até o dia 11 de abril de 2025, e alcançando uma nota média mínima de 8,5 nos artefatos que compõem este projeto.
 
 ## 1.2. Requisitos do Projeto (sprints 1 e 2)
 
