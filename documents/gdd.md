@@ -75,6 +75,29 @@ Pensando na dor do parceiro, foi desenvolvido um jogo 2D de RPG, visando educar 
 
 ### 1.1.6. Matriz de Riscos (sprint 4)
 
+<img src="/assets/concepts%26gdd/Matrizrisco.jpeg" width="1000">
+
+| \#  | Ameaças | Impacto | Plano de Ação |
+| --- | --- | --- | --- |
+| 1: | Má gestão de tempo. | Atraso na conclusão de tarefas e entrega nos prazos. | Seguir à risca o planejamento feito nas Dailies e seguir a planilha de organização de tarefas e prazos.
+| 2: | Falta de comunicação. | Desperdício de tempo em tarefas já designadas e discussão de ideias já definidas. | Fazer uma retrospectiva do dia anterior durante as Dailies, alinhando o que foi feito e o que será feito durante o dia.
+| 3: | Falta de foco. | Baixa produtividade e desperdício de tempo em assuntos paralelos em horário de desenvolvimento, desrespeitando os prazos. | O Scrum Master deve ter a habilidade de perceber quando o grupo está se distraindo e conseguir voltar a atenção de todos ao trabalho novamente.
+| 4: | Ferramentas ficarem off-line. | Impossibilidade de fazer "commits", continuar o código ou salvar alguma informação. | Fazer cópias locais dos arquivos e deixar o que foi interrompido organizado para dar continuidade quando possível.
+| 5: | Ausência nos momentos de desenvolvimento. | Atraso nas realizações de tarefas e sobrecarga de outros membros do grupo. | Evitar faltar por motivos que poderiam ser evitados e caso seja necessário avisar com antecedência para o grupo poder se organizar. 
+| 6: | Quedas de Internet. | Risco de perder algum progresso não salvo e não conseguir enviar alguma tarefa. | Fazer "saves" do progresso durante o processo e não apenas na finalização. Caso seja necessário enviar algo, avisar o grupo para alguém assumir a função de envio.
+| 7: | Atraso na entrega de um artefato. | Queda na reputação com o parceiro, atraso relevante na entrega final e perda de nota do artefato. | O grupo deve estar sempre alinhado com os prazos, caso um membro enfrente alguma dificuldade que "trave" o desenvolvimento, deverá consultar os membros do grupo ou os professores.
+| 8: | Chuvas. | As chuvas podem causar quedas de energia impossibilitando o trabalho e dificuldade de chegar até a faculdade. | Caso a energia caia e o membro não consiga dar continuidade às tarefas, o membro deverá comunicar o grupo e se organizar para pôr tudo em ordem o quanto antes para não haver atrasos.
+
+| \#  | Oportunidades | Impacto | Plano de Ação |
+| --- | --- | --- | --- |
+| 9: | Aprendizado. | O desenvolvimento e o aprendizado estão extremamente ligados pois à medida que aprendemos desenvolvemos e quando desenvolvemos aprendemos, sempre através de aulas, autoestudos, cursos, etc. | Todos os membros do grupo devem identificar quais áreas têm dificuldade e quais têm facilidade e assim sempre dando prioridade a cumprir tarefas nas áreas que tem dificuladade, assim gerando necessidade de aprender.
+| 10: | Engajamento. | Quando o grupo está engajado todos estão cumprindo com suas obrigações, realizando as tarefas e as entregando dentro dos prazos, isso faz com que o projeto ande e que todos possam evoluir juntos. | Designar as tarefas pensando em deixar cada membro responsável por tarefas que sejam de áreas que os façam com que se sintam desafiados, para que saiam da sua zona de conforto e possam se sentir engajados a aprender.
+| 11: | Workshops/Aulas para aprimoramento de habilidades técnicas. | Ter orientações extras sobre temas que são necessários para o desenvolvimento é uma ótima maneira para evoluir tecnicamente, podendo revisar conteúdos que possam ter passado e deixado dúvidas. | Sempre ir atrás de identificar áreas que temos dificuldade e caso tenha, passar isso para a orientação para poderem analisar a possibilidade de termos algum tipo de instrução extra sobre o tema.
+| 12: | Boa liderança. | Quando há um bom Scrum Master a sprint anda de maneira fluida e organizada, com todos os membros do grupo cumprindo com suas obrigações para a conclusão do projeto.| Para ser um bom Scrum Master é necessário identificar as dificuldades do grupo e poder ter uma visão crítica sobre isso, visando superar as adversidades.
+| 13: | Consultar professores. | Caso tenha algum impasse no grupo ou dificuldade para o cumprimento de alguma tarefa ou entendimento de algum conteúdo os professores sempre estão à prontidão para nos ajudar e para solucionar nossas dúvidas. | Devemos sempre deixar o grupo ciente das dificuldades enfrentadas para que possamos analisar e caso seja necessário consultar algum professor.
+| 14: | Utilizar métodos ágeis. | Utilizar métodos ágeis permite que nossa organização seja mais eficiente e que possamos otimizar nosso tempo. | Estar sempre atento aos métodos apresentados pela orientadora e quando for a hora de botá-los em prática devemos fazer com atenção. 
+| 15: | Aproveitamento dos momentos de Dailies. | Aproveitar os momentos de Dailies permite que o grupo esteja alinhado nas tarefas, prazos, dúvidas e tudo que abranje o projeto, possibilitando uma maior fluidez no cumprimento das tarefas. | Devemos sempre manter o foco durante esses encontros e caso o scrum master perceba que o grupo não está engajado no momento deverá ser capaz de atrair a atenção de todos de volta. Caso algum membro do grupo esteja ausente durante a daily, o que foi dito deverá ser passado para ele por meio de mensagens.
+
 *Registre na matriz os riscos identificados no projeto, visando avaliar situações que possam representar ameaças e oportunidades, bem como os impactos relevantes sobre o projeto. Apresente os riscos, ressaltando, para cada um, impactos e probabilidades com plano de ação e respostas.*
 
 ### 1.1.7. Objetivos, Metas e Indicadores (sprint 4)
