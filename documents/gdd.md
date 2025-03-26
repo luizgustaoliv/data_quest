@@ -98,8 +98,6 @@ Pensando na dor do parceiro, foi desenvolvido um jogo 2D de RPG, visando educar 
 | 14: | Utilizar métodos ágeis. | Utilizar métodos ágeis permite que nossa organização seja mais eficiente e que possamos otimizar nosso tempo. | Estar sempre atento aos métodos apresentados pela orientadora e quando for a hora de botá-los em prática devemos fazer com atenção. 
 | 15: | Aproveitamento dos momentos de Dailies. | Aproveitar os momentos de Dailies permite que o grupo esteja alinhado nas tarefas, prazos, dúvidas e tudo que abranje o projeto, possibilitando uma maior fluidez no cumprimento das tarefas. | Devemos sempre manter o foco durante esses encontros e caso o scrum master perceba que o grupo não está engajado no momento deverá ser capaz de atrair a atenção de todos de volta. Caso algum membro do grupo esteja ausente durante a daily, o que foi dito deverá ser passado para ele por meio de mensagens.
 
-*Registre na matriz os riscos identificados no projeto, visando avaliar situações que possam representar ameaças e oportunidades, bem como os impactos relevantes sobre o projeto. Apresente os riscos, ressaltando, para cada um, impactos e probabilidades com plano de ação e respostas.*
-
 ### 1.1.7. Objetivos, Metas e Indicadores (sprint 4)
 
 *Definição de metas SMART (específicas, mensuráveis, alcançáveis, relevantes e temporais) para seu projeto, com indicadores claros para mensuração*
