@@ -2312,21 +2312,21 @@ if (window.fase1Initialized) {
       professorImage.setScrollFactor(0); // Fixa na câmera
 
       // Adicione a imagem para o diálogo do professor2, logo depois da criação do professorImage
-      professor2Image = this.add.sprite(750, 420, "professorNpc2", 0);
+      professor2Image = this.add.sprite(750, 420, "professorNpcBig", 0);
       professor2Image.setScale(2.0);
       professor2Image.setOrigin(0.5, 0.5);
       professor2Image.setVisible(false);
       professor2Image.setScrollFactor(0); // Fixa na câmera
 
       // Adicione a imagem para o diálogo do professor3
-      professor3Image = this.add.sprite(750, 420, "professorNpc3", 0);
+      professor3Image = this.add.sprite(750, 420, "professorNpcBig", 0);
       professor3Image.setScale(2.0);
       professor3Image.setOrigin(0.5, 0.5);
       professor3Image.setVisible(false);
       professor3Image.setScrollFactor(0);
 
       // Adicione a imagem para o diálogo do professor4
-      professor4Image = this.add.sprite(750, 420, "professorNpc4", 0);
+      professor4Image = this.add.sprite(750, 420, "professorNpcBig", 0);
       professor4Image.setScale(2.0);
       professor4Image.setOrigin(0.5, 0.5);
       professor4Image.setVisible(false);
