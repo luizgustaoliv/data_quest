@@ -59,7 +59,7 @@ let estantes1Layer, estantes2Layer, estantes3Layer, estantes4Layer;
 let darkness;
 let lightMask;
 let spotlight;
-let lightRadius = 10000; // Raio da luz ao redor do jogador tem que ser 100
+let lightRadius = 100; // Raio da luz ao redor do jogador tem que ser 100
 
 // Add at the top with other variable declarations
 let isPlayingMinigame = false;
@@ -126,6 +126,20 @@ let lastRobotPosition = {};
 let robots = []; // Array to store all robot instances
 let currentCollisionRobot = null; // Track which robot triggered the collision
 
+// Adicionar variáveis para o tutorial
+let tutorialContainer;
+let tutorialActive = false;
+let tutorialStep = 0;
+let tutorialMessages = [
+  "Parabéns por salvar as professoras-robôs! Você foi muito bem",
+  "Sua missão aqui é navegar pela biblioteca enquanto evita os robôs. Se um robô te pegar, você terá que responder a uma pergunta sobre LGPD.",
+  "Acerte a pergunta para continuar de onde parou. Se errar, voltará ao início da fase :(",
+  "Cuidado, o hacker apagou a luz e agora você só pode ver o que está próximo a você!",
+  "Você deve achar o caminho certo até o próximo elevador.",
+  "Boa sorte em sua missão para proteger os dados pessoais!"
+];
+let tutorialShown = false; // Controlar se o tutorial já foi mostrado
+
 function preloadMain() {
   // Load all possible player sprites
   this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", {
@@ -166,6 +180,10 @@ function preloadMain() {
     frameWidth: 64,
     frameHeight: 64,
   });
+  
+  this.load.tilemapTiledJSON("Zelador", "../../assets/dialogos/faxineiro.png");
+  // Carregar apenas a imagem do zelador para o tutorial
+  this.load.image("zelador", "../../assets/dialogos/faxineiro.png");
   
   this.load.tilemapTiledJSON("map2json", "../../assets/fase2/fase2.json");
   this.load.image("fase2", "../../assets/fase2/fase2.png");
@@ -489,10 +507,22 @@ function createMain() {
           handleRobotCollision.call(this);
         }, null, this);
       });
+
+      // Criar elementos do tutorial após configurar câmera e interface
+      createTutorialElements.call(this);
+    
+      // Mostrar tutorial após um pequeno delay para dar tempo de carregar tudo
+      this.time.delayedCall(500, () => {
+        if (!tutorialShown) {
+          showTutorial.call(this);
+          tutorialShown = true;
+        }
+      });
 }
 
 function updateMain() {
-  if (!this.cursors || !player || !player.body || isPlayingMinigame) return;
+  // Se o tutorial estiver ativo, não permitir movimento
+  if (tutorialActive || !this.cursors || !player || !player.body || isPlayingMinigame) return;
   const speed = 160;
 
   const leftPressed =
@@ -776,7 +806,7 @@ function handleRobotCollision() {
     warningText.setVisible(true);
     
     // Esconder aviso e mostrar minigame após 5 segundos
-    this.time.delayedCall(3000, () => {
+    this.time.delayedCall(5000, () => {
       warningText.setVisible(false);
       showMinigame.call(this);
     });
@@ -884,7 +914,7 @@ function handleAnswer(playerAnswer, correctAnswer, questionObj) {
       }
       
       // Re-enable ALL robots after 5 seconds
-      this.time.delayedCall(5000, () => {
+      this.time.delayedCall(3000, () => {
         robots.forEach(robot => {
           // Re-enable physics for all robots
           robot.body.enable = true;
@@ -1156,6 +1186,438 @@ function createVerticalRobot(startX, startY, bottomBound, topBound) {
   return robot;
 }
 
+// Função para criar os elementos do tutorial
+function createTutorialElements() {
+  // Criar um container que ficará centralizado na tela
+  tutorialContainer = this.add.container(this.cameras.main.centerX, this.cameras.main.centerY);
+  tutorialContainer.setScrollFactor(0); 
+  tutorialContainer.setDepth(4000);
+  tutorialContainer.setVisible(false);
+  
+  // Overlay escuro para dar destaque ao tutorial
+  const overlay = this.add.rectangle(
+    0, 
+    0,
+    this.cameras.main.width,
+    this.cameras.main.height,
+    0x000000, 0.8
+  );
+  overlay.setScrollFactor(0);
+  overlay.setPosition(0, 0);
+  overlay.setOrigin(0.5);
+  
+  // Calcular largura e altura do painel
+  const panelWidth = this.cameras.main.width * 0.7;
+  const panelHeight = this.cameras.main.height * 0.7;
+  
+  // Painel de fundo do tutorial com gradiente
+  const tutorialPanel = this.add.rectangle(
+    0, 
+    0,
+    panelWidth, 
+    panelHeight,
+    0x263871, 1
+  );
+  // Adicionar borda mais elaborada
+  tutorialPanel.setStrokeStyle(6, 0x4a6db5);
+  
+  // Adicionar sombra ao painel principal
+  const panelShadow = this.add.rectangle(
+    4, 
+    4,
+    panelWidth, 
+    panelHeight,
+    0x000000, 0.4
+  );
+  panelShadow.setScrollFactor(0);
+  
+  // Barra de título na parte superior
+  const titleBar = this.add.rectangle(
+    0,
+    -panelHeight * 0.4,
+    panelWidth * 0.9,
+    50,
+    0x3854a8, 1
+  );
+  titleBar.setStrokeStyle(2, 0x6f8fd3);
+  
+  // Título do tutorial com efeito visual
+  const tutorialTitle = this.add.text(
+    0,
+    -panelHeight * 0.4,
+    'TUTORIAL - FASE 2',
+    {
+      fontFamily: 'Arial',
+      fontSize: '26px',
+      color: '#ffffff',
+      fontStyle: 'bold',
+      align: 'center'
+    }
+  );
+  tutorialTitle.setOrigin(0.5);
+  tutorialTitle.setShadow(2, 2, '#000000', 3, true, true);
+  
+  // Caixa de texto retangular para dar destaque ao conteúdo
+  const textBox = this.add.rectangle(
+    0,
+    0,
+    panelWidth * 0.42,
+    panelHeight * 0.5,
+    0x1a2a56, 0.8
+  );
+  textBox.setStrokeStyle(3, 0x4a6db5);
+  
+  // Texto do tutorial com fundo destacado
+  const tutorialText = this.add.text(
+    0,
+    0,
+    '', 
+    {
+      fontFamily: 'Arial',
+      fontSize: '18px',
+      color: '#ffffff',
+      align: 'left',
+      wordWrap: { width: panelWidth * 0.36 }
+    }
+  );
+  tutorialText.setOrigin(0.5);
+  
+  // Imagem do zelador com efeito de borda
+  const zeladorImage = this.add.image(
+    panelWidth * 0.25,
+    0,
+    'zelador'
+  );
+  
+  // Ajustar escala do zelador
+  const zeladorMaxHeight = panelHeight * 0.65;
+  if (zeladorImage.height > zeladorMaxHeight) {
+    const scale = zeladorMaxHeight / zeladorImage.height;
+    zeladorImage.setScale(scale);
+  }
+  
+  // Adicionar borda decorativa ao redor da imagem
+  const zeladorBorder = this.add.rectangle(
+    panelWidth * 0.25,
+    0,
+    zeladorImage.displayWidth + 20,
+    zeladorImage.displayHeight + 20,
+    0x4a6db5, 0.5
+  );
+  zeladorBorder.setStrokeStyle(3, 0x8aa3d8);
+  
+  // Botão de próximo mais atraente
+  const nextBtn = this.add.rectangle(
+    0,
+    panelHeight * 0.35,
+    180, 50, 0x3854a8
+  );
+  nextBtn.setStrokeStyle(3, 0x8aa3d8);
+  nextBtn.setScrollFactor(0);
+  nextBtn.setInteractive({ useHandCursor: true });
+  
+  // Texto do botão com destaque
+  const nextText = this.add.text(
+    nextBtn.x,
+    nextBtn.y,
+    'PRÓXIMO',
+    {
+      fontFamily: 'Arial',
+      fontSize: '18px',
+      color: '#ffffff',
+      fontStyle: 'bold'
+    }
+  );
+  nextText.setOrigin(0.5);
+  nextText.setShadow(1, 1, '#000000', 2, true, true);
+  
+  // Botão para pular o tutorial com visual melhorado
+  const skipBtn = this.add.rectangle(
+    panelWidth * 0.4,
+    -panelHeight * 0.4,
+    150, 35, 0x555555
+  );
+  skipBtn.setStrokeStyle(2, 0x888888);
+  skipBtn.setScrollFactor(0);
+  skipBtn.setInteractive({ useHandCursor: true });
+  
+  // Texto do botão pular com destaque
+  const skipText = this.add.text(
+    skipBtn.x,
+    skipBtn.y,
+    'PULAR TUTORIAL',
+    {
+      fontFamily: 'Arial',
+      fontSize: '14px',
+      color: '#ffffff'
+    }
+  );
+  skipText.setOrigin(0.5);
+  skipText.setShadow(1, 1, '#000000', 1);
+  
+  // Efeitos de hover melhorados
+  nextBtn.on('pointerover', () => {
+    nextBtn.setFillStyle(0x4f6dc5);
+    nextBtn.setScale(1.05);
+    nextText.setScale(1.05);
+  });
+  
+  nextBtn.on('pointerout', () => {
+    nextBtn.setFillStyle(0x3854a8);
+    nextBtn.setScale(1.0);
+    nextText.setScale(1.0);
+  });
+  
+  skipBtn.on('pointerover', () => {
+    skipBtn.setFillStyle(0x777777);
+    skipBtn.setScale(1.05);
+    skipText.setScale(1.05);
+  });
+  
+  skipBtn.on('pointerout', () => {
+    skipBtn.setFillStyle(0x555555);
+    skipBtn.setScale(1.0);
+    skipText.setScale(1.0);
+  });
+  
+  // Lógica para avançar no tutorial
+  nextBtn.on('pointerdown', () => {
+    // Efeito de clique
+    nextBtn.setFillStyle(0x2a3b7a);
+    nextBtn.setScale(0.95);
+    nextText.setScale(0.95);
+    
+    // Restaurar após 100ms
+    this.time.delayedCall(100, () => {
+      nextBtn.setFillStyle(0x3854a8);
+      nextBtn.setScale(1.0);
+      nextText.setScale(1.0);
+      advanceTutorial.call(this);
+    });
+  });
+  
+  // Lógica para pular o tutorial
+  skipBtn.on('pointerdown', () => {
+    skipBtn.setFillStyle(0x444444);
+    skipBtn.setScale(0.95);
+    skipText.setScale(0.95);
+    
+    this.time.delayedCall(100, () => {
+      hideTutorial.call(this);
+    });
+  });
+  
+  // Adicionar elementos ao container na ordem correta para camadas
+  tutorialContainer.add([
+    overlay, 
+    panelShadow, 
+    tutorialPanel, 
+    titleBar,
+    tutorialTitle, 
+    zeladorBorder,
+    zeladorImage, 
+    textBox,
+    tutorialText, 
+    nextBtn, 
+    nextText, 
+    skipBtn, 
+    skipText
+  ]);
+  
+  // Guardar referências para fácil acesso
+  tutorialContainer.tutorialText = tutorialText;
+  tutorialContainer.zeladorImage = zeladorImage;
+  tutorialContainer.zeladorBorder = zeladorBorder;
+  tutorialContainer.textBox = textBox;
+  tutorialContainer.nextBtn = nextBtn;
+  tutorialContainer.nextText = nextText;
+  tutorialContainer.skipBtn = skipBtn;
+  tutorialContainer.skipText = skipText;
+  tutorialContainer.panelWidth = panelWidth;
+  
+  // Ajustar o container para ficar sempre no centro da tela
+  this.scale.on('resize', () => {
+    tutorialContainer.setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+    overlay.width = this.cameras.main.width;
+    overlay.height = this.cameras.main.height;
+  });
+}
+
+// Função para mostrar o tutorial
+function showTutorial() {
+  // Desativar movimento do jogador durante o tutorial
+  if (player && player.body) {
+    player.body.moves = false;
+  }
+  
+  // Desativar movimento de todos os robôs durante o tutorial
+  robots.forEach(robot => {
+    if (robot && robot.body) {
+      robot.body.enable = false;
+      robot.setVelocity(0, 0);
+    }
+  });
+  
+  tutorialActive = true;
+  tutorialStep = 0;
+  
+  // Atualizar o texto com a primeira mensagem
+  tutorialContainer.tutorialText.setText(tutorialMessages[tutorialStep]);
+  
+  // Posicionar NPC e texto para o primeiro passo
+  updateNPCPosition.call(this, true);
+  
+  // Mostrar o container do tutorial com efeito de fade
+  tutorialContainer.setVisible(true);
+  tutorialContainer.alpha = 0;
+  this.tweens.add({
+    targets: tutorialContainer,
+    alpha: 1,
+    duration: 800,
+    ease: 'Power2'
+  });
+  
+  // Entrada com efeito para elementos
+  this.tweens.add({
+    targets: [tutorialContainer.tutorialText, tutorialContainer.textBox],
+    y: { from: 30, to: 0 },
+    alpha: { from: 0, to: 1 },
+    duration: 800,
+    ease: 'Back.out'
+  });
+  
+  // Atualizar o texto do botão
+  updateNextButtonText.call(this);
+}
+
+// Função para avançar no tutorial
+function advanceTutorial() {
+  tutorialStep++;
+  
+  // Se chegou ao fim do tutorial
+  if (tutorialStep >= tutorialMessages.length) {
+    hideTutorial.call(this);
+    return;
+  }
+  
+  // Atualizar o texto com a mensagem atual
+  const currentText = tutorialContainer.tutorialText;
+  const textBox = tutorialContainer.textBox;
+  const npcOnRight = tutorialStep % 2 === 0; // Alterna posição baseado no passo
+  
+  // Efeito de fade out/in ao trocar o texto e mover o NPC
+  this.tweens.add({
+    targets: [currentText, textBox, tutorialContainer.zeladorImage, tutorialContainer.zeladorBorder],
+    alpha: 0,
+    duration: 300,
+    ease: 'Power2',
+    onComplete: () => {
+      currentText.setText(tutorialMessages[tutorialStep]);
+      
+      // Mover o NPC para o lado alternado
+      updateNPCPosition.call(this, npcOnRight);
+      
+      this.tweens.add({
+        targets: [currentText, textBox, tutorialContainer.zeladorImage, tutorialContainer.zeladorBorder],
+        alpha: 1,
+        y: { from: npcOnRight ? 30 : -30, to: 0 },
+        duration: 500,
+        ease: 'Back.out'
+      });
+      
+      // Atualizar o texto do botão se necessário
+      updateNextButtonText.call(this);
+    }
+  });
+}
+
+// Função para atualizar a posição do NPC
+function updateNPCPosition(onRight) {
+  const zeladorImage = tutorialContainer.zeladorImage;
+  const zeladorBorder = tutorialContainer.zeladorBorder;
+  const panelWidth = tutorialContainer.panelWidth;
+  const tutorialText = tutorialContainer.tutorialText;
+  const textBox = tutorialContainer.textBox;
+  
+  if (onRight) {
+    // NPC na direita, texto na esquerda
+    zeladorImage.setPosition(panelWidth * 0.25, 0);
+    zeladorBorder.setPosition(panelWidth * 0.25, 0);
+    zeladorImage.setFlipX(false);
+    tutorialText.setPosition(-panelWidth * 0.25, 0);
+    textBox.setPosition(-panelWidth * 0.25, 0);
+  } else {
+    // NPC na esquerda, texto na direita
+    zeladorImage.setPosition(-panelWidth * 0.25, 8);
+    zeladorBorder.setPosition(-panelWidth * 0.25, 0);
+    zeladorImage.setFlipX(true);
+    tutorialText.setPosition(panelWidth * 0.25, 0);
+    textBox.setPosition(panelWidth * 0.25, 0);
+  }
+}
+
+// Função para esconder o tutorial
+function hideTutorial() {
+  // Efeito de saída para elementos
+  this.tweens.add({
+    targets: [tutorialContainer.nextBtn, tutorialContainer.nextText],
+    y: '+=20',
+    alpha: 0,
+    duration: 300,
+    ease: 'Power2'
+  });
+  
+  // Fade out principal
+  this.tweens.add({
+    targets: tutorialContainer,
+    alpha: 0,
+    scale: 0.95,
+    duration: 500,
+    ease: 'Power2',
+    onComplete: () => {
+      tutorialContainer.setVisible(false);
+      tutorialContainer.setScale(1);
+      tutorialActive = false;
+      
+      // Reativar movimento do jogador
+      if (player && player.body) {
+        player.body.moves = true;
+      }
+      
+      // Reativar movimento de todos os robôs
+      robots.forEach(robot => {
+        if (robot && robot.body) {
+          robot.body.enable = true;
+        }
+      });
+    }
+  });
+}
+
+// Função para atualizar o texto do botão
+function updateNextButtonText() {
+  if (tutorialStep === tutorialMessages.length - 1) {
+    tutorialContainer.nextText.setText('COMEÇAR');
+    
+    // Destacar o botão final
+    this.tweens.add({
+      targets: tutorialContainer.nextBtn,
+      fillColor: 0x3a7a38,
+      ease: 'Linear',
+      duration: 300
+    });
+  } else {
+    tutorialContainer.nextText.setText('PRÓXIMO');
+    
+    // Restaurar cor do botão normal
+    this.tweens.add({
+      targets: tutorialContainer.nextBtn,
+      fillColor: 0x3854a8,
+      ease: 'Linear',
+      duration: 300
+    });
+  }
+}
+
 // Inicializar a configuração quando o Phaser estiver carregado
 initializaConfig();
-
