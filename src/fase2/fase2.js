@@ -2,6 +2,56 @@ window.addEventListener("load", () => {
   document.body.classList.add("fade-in");
 });
 
+// Criando o contêiner da HUD
+const keyPassContainer = document.createElement("div");
+keyPassContainer.id = "keypass-container";
+document.body.appendChild(keyPassContainer);
+
+// Criando o ícone do keyPass
+const keyPassIcon = document.createElement("img");
+keyPassIcon.id = "keypass-icon";
+keyPassIcon.src = "../../assets/fase2/sprites/spriteChave.png";
+keyPassIcon.alt = "KeyPass";
+keyPassContainer.appendChild(keyPassIcon);
+
+// Criando o contador de keyPass
+const keyPassCounter = document.createElement("span");
+keyPassCounter.id = "keypass-counter";
+keyPassCounter.textContent = "0/4";
+keyPassContainer.appendChild(keyPassCounter);
+
+// Adicionando estilos via JavaScript
+const style = document.createElement("style");
+style.textContent = `
+  #keypass-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid white;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    gap: 10px;
+    z-index: 1000;
+  }
+  
+  #keypass-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  #keypass-counter {
+    font-weight: bold;
+    font-size: 22px;
+  }
+`;
+document.head.appendChild(style);
+
 // Definir config só quando Phaser estiver carregado
 let config;
 
@@ -39,6 +89,9 @@ function initializaConfig() {
   new Phaser.Game(config);
 }
 
+// Variável para contar as chaves coletadas
+let keysCollected = 0;
+
 let player = {};
 player.x = 100;
 let map2;
@@ -60,6 +113,9 @@ let darkness;
 let lightMask;
 let spotlight;
 let lightRadius = 100; // Raio da luz ao redor do jogador tem que ser 100
+
+// Variáveis para as chaves
+let key1, key2, key3, key4;
 
 // Add at the top with other variable declarations
 let isPlayingMinigame = false;
@@ -88,7 +144,7 @@ let questions = [
     feedback: "De acordo com a LGPD, informações sobre religião e orientação política são dados sensíveis, ou seja, exigem um nível maior de proteção e só podem ser coletados em situações extremamente específicas e justificadas por lei. No contexto de uma entrevista de emprego, essa solicitação não é relevante para a contratação e pode ser considerada uma violação da privacidade do candidato."
   },
   {
-    question: "📲 Você baixou um novo aplicativo de rede social e, ao criar sua conta, ele solicita acesso à sua lista de contatos para 'ajudar a encontrar amigos'. Isso está certo ou errado?",
+    question: "📲 Você baixou um novo aplicativo de rede social e, ao criar sua conta, ele solicita obrigatoriamente o acesso à sua lista de contatos para 'ajudar a encontrar amigos'. Isso está certo ou errado?",
     answer: false,
     feedback: "Embora a funcionalidade possa ser útil, a LGPD exige que o aplicativo informe de forma clara para que os contatos serão usados, se serão armazenados e com quem serão compartilhados. Além disso, o usuário deve ter a opção de negar o acesso e ainda assim usar o aplicativo normalmente. Se o app exigir essa permissão sem alternativa, pode estar infringindo a lei."
   },
@@ -140,6 +196,33 @@ let tutorialMessages = [
 ];
 let tutorialShown = false; // Controlar se o tutorial já foi mostrado
 
+// Função para coletar chave
+function collectKey(player, key) {
+  // Desativar a chave (remover do mapa)
+  key.disableBody(true, true);
+  
+  // Incrementar contador
+  keysCollected++;
+  
+  // Atualizar o HUD
+  keyPassCounter.textContent = `${keysCollected}/4`;
+  
+  // Efeito visual de coleta (opcional)
+  this.tweens.add({
+    targets: key,
+    alpha: 0,
+    y: key.y - 20,
+    duration: 300,
+    ease: 'Power2',
+    onComplete: () => key.destroy()
+  });
+  
+  // Som de coleta (opcional)
+  // if (this.sound) this.sound.play('key_collect');
+  
+  console.log(`Chave coletada! Total: ${keysCollected}/4`);
+}
+
 function preloadMain() {
   // Load all possible player sprites
   this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", {
@@ -190,7 +273,7 @@ function preloadMain() {
   this.load.image("5_Classroom_and_library_32x32", "../../assets/fase2/5_Classroom_and_library_32x32.png");
   this.load.image("19_Hospital_32x32", "../../assets/fase2/19_Hospital_32x32.png");
   this.load.image("Room_Builder_32x32", "../../assets/fase2/Room_Builder_32x32.png");
-
+  this.load.image("Key", "../../assets/fase2/sprites/spriteChave.png");
 }
 
 function createMain() {
@@ -349,7 +432,46 @@ function createMain() {
  
     // Adiciona o sprite do personagem no mapa - posição inicial
     player = this.physics.add.sprite(670, 1000, selectedCharacter);
-    player.setScale(0.8 );
+    player.setScale(0.8);
+
+    // Adicionar chaves com física
+    key1 = this.physics.add.sprite(1150, 890, "Key");
+    key2 = this.physics.add.sprite(555, 900, "Key");
+    key3 = this.physics.add.sprite(1150, 750, "Key");
+    key4 = this.physics.add.sprite(150, 260, "Key");
+    
+    // Configurar as chaves com efeito de flutuação
+    [key1, key2, key3, key4].forEach(key => {
+      key.setScale(0.7);
+      key.body.setAllowGravity(false);
+      key.setDepth(1);
+      
+      // Adicionar efeito de flutuação
+      this.tweens.add({
+        targets: key,
+        y: key.y - 5,
+        duration: 1500,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut'
+      });
+      
+      // Adicionar brilho leve
+      this.tweens.add({
+        targets: key,
+        alpha: 0.8,
+        duration: 2000,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut'
+      });
+    });
+    
+    // Configurar colisões entre o jogador e as chaves
+    this.physics.add.overlap(player, key1, collectKey, null, this);
+    this.physics.add.overlap(player, key2, collectKey, null, this);
+    this.physics.add.overlap(player, key3, collectKey, null, this);
+    this.physics.add.overlap(player, key4, collectKey, null, this);
 
     // Ajusta o tamanho da hitbox do player
     player.body.setSize(27, 8);
@@ -366,7 +488,7 @@ function createMain() {
     createVerticalRobot.call(this, 345, 500, 730, 500); // robo vertical
 
      // Ativa o modo de debug para visualizar a hitbox
-    this.physics.world.drawDebug = true;
+    this.physics.world.drawDebug = false;
     this.physics.world.debugGraphic = this.add.graphics();
 
       // After creating all layers and the player, set up the camera correctly
@@ -408,7 +530,7 @@ function createMain() {
           return rect;
         }
 
-  const debugCollisions = true;
+  const debugCollisions = false;
 
    // Função modificada para adicionar retângulos de colisão com suporte a debug
    function addCollisionRect(scene, x, y, width, height, color = 0xff0000) {
@@ -420,7 +542,7 @@ function createMain() {
     if (debugCollisions) {
       rect.setStrokeStyle(2, color);
       rect.setFillStyle(color, 0.2);
-      rect.setVisible(true); // Visível no modo debug
+      rect.setVisible(false); // Visível no modo debug
     } else {
       rect.setVisible(false); // Invisível em produção
     }
@@ -636,7 +758,7 @@ function createLightingSystem() {
     map2.widthInPixels * 2, 
     map2.heightInPixels * 2, 
     0x000000, 
-    0.95
+    0.92
   );
   darkness.setOrigin(0, 0);
   darkness.setDepth(1000); // Garantir que fique acima de todas as camadas do jogo
