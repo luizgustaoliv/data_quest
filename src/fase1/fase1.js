@@ -1787,21 +1787,33 @@ if (window.fase1Initialized) {
       // Adiciona colisão entre o jogador e o elevador
       this.physics.add.collider(player, elevator, enterElevator, null, this);
 
-      // Função para entrar no elevador
       function enterElevator(player, elevator) {
-        // Verificar se o jogador coletou a chave
         if (keyCollected) {
-          console.log("Entrando no elevador...");
-          localStorage.setItem("selectedCharacter", selectedCharacter);
-          document.body.classList.add("fade-out");
-          setTimeout(() => {
-            window.location.replace("src/fase2/fase2.html");
-          }, 1200);
+          // Carregar fase2.js dinamicamente
+          const script = document.createElement('script');
+          script.src = 'src/fase2/fase2.js';
+          script.onload = function() {
+            console.log("fase2.js carregado com sucesso");
+            if (typeof window.initFase2 === 'function') {
+              // Limpar a fase atual
+              if (window.game) {
+                window.game.destroy(true);
+              }
+              // Iniciar fase 2
+              window.initFase2();
+            } else {
+              console.error("initFase2 não encontrado após carregar o script");
+            }
+          };
+          script.onerror = function() {
+            console.error("Erro ao carregar fase2.js");
+          };
+          document.head.appendChild(script);
         } else {
-          // Mostrar mensagem informando que precisa da chave
           showElevatorMessage(this);
         }
       }
+      
 
       // Adicione esta nova função para mostrar a mensagem do elevador
       function showElevatorMessage(scene) {
@@ -5496,9 +5508,9 @@ function createEmergencyMissionsButton() {
       panel.style.display = "block";
       panel.style.position = "fixed";
       panel.style.zIndex = "100000";
-      panel.style.top = "50%";
-      panel.style.left = "50%";
-      panel.style.transform = "translate(-50%, -50%)";
+      panel.style.top = "50% !important";
+      panel.style.left = "50% !important";
+      panel.style.transform = "translate(-50%, -50%) !important";
 
       overlay.style.display = "block";
       overlay.style.position = "fixed";

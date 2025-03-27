@@ -1,6 +1,206 @@
+// Adicionar no início do arquivo, antes de qualquer outro código
+(function removePhase1HUDs() {
+    // Remover os elementos do DOM imediatamente
+    const elementsToRemove = [
+        'keycard-container',
+        'key-container',
+        'missions-button',
+        'missions-panel',
+        'missions-overlay'
+    ];
+
+    elementsToRemove.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.remove();
+        }
+    });
+
+    // Adicionar CSS que força os elementos a ficarem ocultos caso sejam recriados
+    const forceHideStyle = document.createElement('style');
+    forceHideStyle.textContent = `
+        #keycard-container, #key-container, #missions-button, #missions-panel, #missions-overlay {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            position: absolute !important;
+            z-index: -9999 !important;
+        }
+    `;
+    document.head.appendChild(forceHideStyle);
+
+    // Criar um observer para remover elementos se forem recriados
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.id && elementsToRemove.includes(node.id)) {
+                    node.remove();
+                }
+            });
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+})();
+
 window.addEventListener("load", () => {
   document.body.classList.add("fade-in");
+  removePhase1HUDs();
 });
+
+// Remover HUDs da fase 1 antes de iniciar a fase 2
+function removePhase1HUDs() {
+  // Array com os IDs dos elementos da fase 1 que precisam ser removidos
+  const phase1Elements = [
+    'keycard-container',
+    'keyIcon',
+    'key-container',
+    'missions-button',
+    'missions-panel',
+    'missions-overlay'
+  ];
+
+  // Remover cada elemento se existir
+  phase1Elements.forEach(elementId => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.remove();
+    }
+  });
+
+  // Remover também qualquer estilo da fase 1
+  const oldStyles = document.querySelectorAll('style');
+  oldStyles.forEach(style => {
+    if (style.textContent.includes('keycard-container') || 
+        style.textContent.includes('key-container') || 
+        style.textContent.includes('missions-button')) {
+      style.remove();
+    }
+  });
+}
+
+// Variáveis para os elementos da HUD
+let keyPass2Container;
+let keyPass2Icon;
+let keyPass2Counter;
+let hudCreated = false;
+
+// Add after other variable declarations, around line 60-70
+let key2Collected = false; // Flag to track if key was collected
+
+// Adicionar estilos via JavaScript
+const style2 = document.createElement("style");
+style2.textContent = `
+  #keypass2-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid white;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    gap: 10px;
+    z-index: 1000;
+  }
+  
+  #keypass2-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  #keypass2-counter {
+    font-weight: bold;
+    font-size: 22px;
+  }
+`;
+document.head.appendChild(style2);
+
+// Remover qualquer elemento da fase1 que possa ter sido criado
+document.addEventListener('DOMContentLoaded', () => {
+  removePhase1HUDs();
+
+  // Criar elementos da fase2
+  createHUDElements();
+});
+
+// Inicialização principal da fase 2 - chamada explícita quando o script é carregado
+function initializeFase2() {
+  console.log("Inicializando fase 2...");
+  
+  // Criar elementos da HUD
+  createHUDElements();
+  
+  // Chamar a inicialização da configuração do Phaser
+  initializaConfig2();
+  
+  console.log("Fase 2 inicializada com sucesso!");
+}
+
+// Função para criar elementos da HUD
+function createHUDElements() {
+  // Remover HUD existente se houver
+  const existingHUD = document.getElementById('keypass-container');
+  if (existingHUD) {
+    existingHUD.remove();
+  }
+
+  // Criar novo container
+  keyPass2Container = document.createElement("div");
+  keyPass2Container.id = "keypass2-container";
+  document.body.appendChild(keyPass2Container);
+
+  // Criar ícone
+  keyPass2Icon = document.createElement("img");
+  keyPass2Icon.id = "keypass2-icon";
+  keyPass2Icon.src = "../../assets/fase2/sprites/spriteChave.png";
+  keyPass2Icon.alt = "KeyPass";
+  keyPass2Container.appendChild(keyPass2Icon);
+
+  // Criar contador
+  keyPass2Counter = document.createElement("span");
+  keyPass2Counter.id = "keypass2-counter";
+  keyPass2Counter.textContent = "0/4";
+  keyPass2Container.appendChild(keyPass2Counter);
+
+  hudCreated = true;
+}
+
+// Atualizar a função de coleta de chaves
+function collectKey2(player2, key) {
+  // Check if this specific key was already collected
+  if (key.collected) return;
+  
+  // Mark this key as collected
+  key.collected = true;
+  keys2Collected++;
+  
+  // Update the HUD counter
+  if (!keyPass2Counter) {
+    // If counter reference is missing, try to get it
+    keyPass2Counter = document.getElementById('keypass2-counter');
+  }
+  
+  if (keyPass2Counter) {
+    keyPass2Counter.textContent = `${keys2Collected}/4`;
+    console.log("HUD updated:", keyPass2Counter.textContent);
+  } else {
+    console.warn("HUD counter element not found!");
+  }
+
+  // Update key visual
+  key.disableBody(true, true);
+  
+  console.log("Key collected! Total:", keys2Collected);
+}
 
 // Criando o contêiner da HUD
 const keyPassContainer = document.createElement("div");
@@ -50,18 +250,18 @@ style.textContent = `
     font-size: 22px;
   }
 `;
-document.head.appendChild(style);
+document.head.appendChild(style)
 
 // Definir config só quando Phaser estiver carregado
-let config;
+let config2;
 
-function initializaConfig() {
+function initializaConfig2() {
   if (!window.Phaser) {
     console.error("Phaser não está disponível para inicializar config");
     return;
   }
 
-  config = {
+  config2 = {
     type: Phaser.AUTO,
     width: window.innerWidth,
     height: window.innerHeight,
@@ -78,51 +278,51 @@ function initializaConfig() {
       },
     },
     scene: {
-      key: "main",
-      preload: preloadMain,
-      create: createMain,
-      update: updateMain,
+      key: "main2",
+      preload: preloadMain2,
+      create: createMain2,
+      update: updateMain2,
     },
   };
 
   // Inicializar Phaser com a configuração
-  new Phaser.Game(config);
+  new Phaser.Game(config2);
 }
 
 // Variável para contar as chaves coletadas
-let keysCollected = 0;
+let keys2Collected = 0;
 
-let player = {};
-player.x = 100;
+let player2 = {};
+player2.x = 100;
 let map2;
-let podeIniciarDialogo = false;
-let dialogoIniciado = false;
-let avisoTexto;
-let textoDialogo;
-let caixaDialogo, sombra, personagem, npc1Image;
-let chaoLayer;
-let paredeLayer;
-let objSemColisaoLayer;
-let colisaoLayer;
-let obj2ColisaoLayer;
-let cursors;
-let elevator;
+let podeIniciarDialogo2 = false;
+let dialogoIniciado2 = false;
+let avisoTexto2;
+let textoDialogo2;
+let caixaDialogo2, sombra2, personagem2, npc1Image2;
+let chaoLayer2;
+let paredeLayer2;
+let objSemColisaoLayer2;
+let colisaoLayer2;
+let obj2ColisaoLayer2;
+let cursors2;
+let elevator2;
 let estantes1Layer, estantes2Layer, estantes3Layer, estantes4Layer;
 // Adicionar variáveis para o sistema de iluminação
-let darkness;
-let lightMask;
-let spotlight;
-let lightRadius = 100; // Raio da luz ao redor do jogador tem que ser 100
+let darkness2;
+let lightMask2;
+let spotlight2;
+let lightRadius2 = 100; // Raio da luz ao redor do jogador tem que ser 100
 
 // Variáveis para as chaves
 let key1, key2, key3, key4;
 
 // Add at the top with other variable declarations
-let isPlayingMinigame = false;
-let lastPlayerPosition = {};
-let warningText;
-let minigameContainer;
-let questions = [
+let isPlayingMinigame2 = false;
+let lastPlayerPosition2 = {};
+let warningText2;
+let minigameContainer2;
+let questions2 = [
   {
     question: "📱Você finalmente decidiu comprar aquele celular dos seus sonhos e encontrou um bom preço em uma loja virtual. Na hora de se cadastrar, a loja solicita seu CPF para finalizar a compra. Isso está certo ou errado?",
     answer: true,
@@ -176,17 +376,17 @@ let questions = [
 ];
 
 // Add a variable at the top with other variable declarations
-let lastRobotPosition = {};
+let lastRobotPosition2 = {};
 
 // Add these variables at the top
-let robots = []; // Array to store all robot instances
-let currentCollisionRobot = null; // Track which robot triggered the collision
+let robots2 = []; // Array to store all robot instances
+let currentCollisionRobot2 = null; // Track which robot triggered the collision
 
 // Adicionar variáveis para o tutorial
-let tutorialContainer;
-let tutorialActive = false;
-let tutorialStep = 0;
-let tutorialMessages = [
+let tutorialContainer2;
+let tutorialActive2 = false;
+let tutorialStep2 = 0;
+let tutorialMessages2 = [
   "Parabéns por salvar as professoras-robôs! Você foi muito bem",
   "Sua missão aqui é navegar pela biblioteca enquanto evita os robôs. Se um robô te pegar, você terá que responder a uma pergunta sobre LGPD.",
   "Acerte a pergunta para continuar de onde parou. Se errar, voltará ao início da fase :(",
@@ -194,36 +394,9 @@ let tutorialMessages = [
   "Você deve achar o caminho certo até o próximo elevador.",
   "Boa sorte em sua missão para proteger os dados pessoais!"
 ];
-let tutorialShown = false; // Controlar se o tutorial já foi mostrado
+let tutorialShown2 = false; // Controlar se o tutorial já foi mostrado
 
-// Função para coletar chave
-function collectKey(player, key) {
-  // Desativar a chave (remover do mapa)
-  key.disableBody(true, true);
-  
-  // Incrementar contador
-  keysCollected++;
-  
-  // Atualizar o HUD
-  keyPassCounter.textContent = `${keysCollected}/4`;
-  
-  // Efeito visual de coleta (opcional)
-  this.tweens.add({
-    targets: key,
-    alpha: 0,
-    y: key.y - 20,
-    duration: 300,
-    ease: 'Power2',
-    onComplete: () => key.destroy()
-  });
-  
-  // Som de coleta (opcional)
-  // if (this.sound) this.sound.play('key_collect');
-  
-  console.log(`Chave coletada! Total: ${keysCollected}/4`);
-}
-
-function preloadMain() {
+function preloadMain2() {
   // Load all possible player sprites
   this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", {
     frameWidth: 64,
@@ -263,8 +436,13 @@ function preloadMain() {
     frameWidth: 64,
     frameHeight: 64,
   });
-  
-  this.load.tilemapTiledJSON("Zelador", "../../assets/dialogos/faxineiro.png");
+
+  // Carregar o spritesheet (substitua os valores de frameWidth e frameHeight)
+this.load.spritesheet("TvErro", "../../assets/fase2/sprites/tvanimada.png", {
+  frameWidth: 64,  // largura de um frame
+  frameHeight: 64, // altura de um frame
+});
+
   // Carregar apenas a imagem do zelador para o tutorial
   this.load.image("zelador", "../../assets/dialogos/faxineiro.png");
   
@@ -276,8 +454,13 @@ function preloadMain() {
   this.load.image("Key", "../../assets/fase2/sprites/spriteChave.png");
 }
 
-function createMain() {
+function createMain2() {
   try {
+    // Criar HUD antes de qualquer outra inicialização
+    if (!hudCreated) {
+      createHUDElements();
+    }
+
     // Pegar o personagem selecionado do LocalStorage
     const selectedCharacter = localStorage.getItem("currentCharacter") || "player1";
     console.log("Character loaded from fase1:", selectedCharacter);
@@ -296,7 +479,7 @@ function createMain() {
 
       // We'll create the name tag after player is created
       this.events.on('create', () => {
-        if (player) {
+        if (player2) {
         // Create name tag display
         const nameTag = this.add.text(0, -32, playerName, {
           fontFamily: "Arial",
@@ -309,23 +492,23 @@ function createMain() {
         nameTag.setOrigin(0.5, 0.5);
         
         // Create container for player and name tag
-        const playerContainer = this.add.container(player.x, player.y);
+        const playerContainer = this.add.container(player2.x, player2.y);
         playerContainer.add([nameTag]);
         playerContainer.setDepth(1005);
         
         // Assign container to player for easy access
-        player.nameContainer = playerContainer;
+        player2.nameContainer = playerContainer;
         
         // Add a reference to update the name if it changes
-        player.updateName = function(newName) {
+        player2.updateName = function(newName) {
           nameTag.setText(newName);
           localStorage.setItem("playerName", newName);
         };
         
         // Update container position in update function
         this.events.on('update', () => {
-          if (player && player.nameContainer) {
-          player.nameContainer.setPosition(player.x, player.y);
+          if (player2 && player2.nameContainer) {
+          player2.nameContainer.setPosition(player2.x, player2.y);
           }
         });
         }
@@ -368,27 +551,27 @@ function createMain() {
 
           // Criação das camadas do mapa com verificação
           try {
-            chaoLayer = map2.createLayer("chao", tilesets);
+            chaoLayer2 = map2.createLayer("chao", tilesets);
             console.log("chaoLayer created successfully");
           } catch (e) {
             console.warn("Couldn't create 'chão' layer:", e);
-            chaoLayer = null;
+            chaoLayer2 = null;
           }
     
           try {
-            paredeLayer = map2.createLayer("parede", tilesets);
+            paredeLayer2 = map2.createLayer("parede", tilesets);
             console.log("paredeLayer created successfully");
           } catch (e) {
             console.warn("Couldn't create 'parede' layer:", e);
-            paredeLayer = null;
+            paredeLayer2 = null;
           }
     
           try {
-            objSemColisaoLayer = map2.createLayer("obj_semcolisao", tilesets);
+            objSemColisaoLayer2 = map2.createLayer("obj_semcolisao", tilesets);
             console.log("objSemColisaoLayer created successfully");
           } catch (e) {
             console.warn("Couldn't create 'obj_semcolisao' layer:", e);
-            objSemColisaoLayer = null;
+            objSemColisaoLayer2 = null;
           }
           try {
             estantes1Layer = map2.createLayer("estantes1", tilesets);
@@ -422,17 +605,17 @@ function createMain() {
             estantes4Layer = null;
           }
 
-          if (chaoLayer) chaoLayer.setScale(1.0);
-          if (paredeLayer) paredeLayer.setScale(1.0);
-          if (objSemColisaoLayer) objSemColisaoLayer.setScale(1.0);
+          if (chaoLayer2) chaoLayer2.setScale(1.0);
+          if (paredeLayer2) paredeLayer2.setScale(1.0);
+          if (objSemColisaoLayer2) objSemColisaoLayer2.setScale(1.0);
           if (estantes1Layer) estantes1Layer.setScale(1.0);
           if (estantes2Layer) estantes2Layer.setScale(1.0); 
           if (estantes3Layer) estantes3Layer.setScale(1.0);
           if (estantes4Layer) estantes4Layer.setScale(1.0);   
  
     // Adiciona o sprite do personagem no mapa - posição inicial
-    player = this.physics.add.sprite(670, 1000, selectedCharacter);
-    player.setScale(0.8);
+    player2 = this.physics.add.sprite(670, 1000, selectedCharacter);
+    player2.setScale(0.8);
 
     // Adicionar chaves com física
     key1 = this.physics.add.sprite(1150, 890, "Key");
@@ -468,43 +651,43 @@ function createMain() {
     });
     
     // Configurar colisões entre o jogador e as chaves
-    this.physics.add.overlap(player, key1, collectKey, null, this);
-    this.physics.add.overlap(player, key2, collectKey, null, this);
-    this.physics.add.overlap(player, key3, collectKey, null, this);
-    this.physics.add.overlap(player, key4, collectKey, null, this);
+    this.physics.add.overlap(player2, key1, collectKey2, null, this);
+    this.physics.add.overlap(player2, key2, collectKey2, null, this);
+    this.physics.add.overlap(player2, key3, collectKey2, null, this);
+    this.physics.add.overlap(player2, key4, collectKey2, null, this);
 
     // Ajusta o tamanho da hitbox do player
-    player.body.setSize(27, 8);
-    player.body.setOffset(19, 55.4);
-    player.setDepth(2);
+    player2.body.setSize(27, 8);
+    player2.body.setOffset(19, 55.4);
+    player2.setDepth(2);
 
     // Create multiple robots at different positions
-    createRobot.call(this, 143, 390, 560, 143); // Original robo1
-    createRobot.call(this, 800, 880, 1000, 800); // Robo2
-    createRobot.call(this, 750, 550, 1100, 750); // robo 3
+    createRobot2.call(this, 143, 390, 560, 143); // Original robo1
+    createRobot2.call(this, 800, 880, 1000, 800); // Robo2
+    createRobot2.call(this, 750, 550, 1100, 750); // robo 3
     
-    createVerticalRobot.call(this, 1195, 300, 730, 300); // robo vertical
+    createVerticalRobot2.call(this, 1195, 300, 730, 300); // robo vertical
 
-    createVerticalRobot.call(this, 345, 500, 730, 500); // robo vertical
+    createVerticalRobot2.call(this, 345, 500, 730, 500); // robo vertical
 
      // Ativa o modo de debug para visualizar a hitbox
     this.physics.world.drawDebug = false;
     this.physics.world.debugGraphic = this.add.graphics();
 
       // After creating all layers and the player, set up the camera correctly
-      if (map2 && player) {
+      if (map2 && player2) {
         // Configure camera to follow player
         this.cameras.main.setBounds(0, 0, map2.widthInPixels, map2.heightInPixels);
         this.physics.world.setBounds(0, 0, map2.widthInPixels, map2.heightInPixels);
-        this.cameras.main.startFollow(player);
+        this.cameras.main.startFollow(player2);
         this.cameras.main.setZoom(1.5);
       }
 
       // Criar sistema de iluminação após configurar a câmera
-      createLightingSystem.call(this);
+      createLightingSystem2.call(this);
 
       if (map2 && map2.layers && map2.layers.length > 0) {
-        startGame.call(this);
+        startGame2.call(this);
       }
   } catch (error) {
     console.error("Erro ao carregar o mapa:", error);
@@ -607,107 +790,107 @@ function createMain() {
         console.log("Debug: pressione F9 para mostrar/ocultar colisões");
 
       // Adiciona colisões entre o jogador e as camadas de colisão COM VERIFICAÇÃO
-      const layers = [paredeLayer].filter((layer) => layer !== null);
+      const layers = [paredeLayer2].filter((layer) => layer !== null);
 
       layers.forEach((layer) => {
         if (layer) {
           layer.setCollisionByProperty({ collider: true });
-          this.physics.add.collider(player, layer);
+          this.physics.add.collider(player2, layer);
         }
       });
 
       // Adicionar colisão com os retângulos manuais
-      this.physics.add.collider(player, manualColliders);
-
-      // Criar elementos do minigame antes de configurar colisões
-      const minigameElements = createMinigameElements.call(this);
+      this.physics.add.collider(player2, manualColliders);
+      
+      // Inicializar elementos do minigame antes de configurar as colisões com robôs
+      minigameContainer2 = createMinigameElements2.call(this);
     
       // Configure overlap for all robots
-      robots.forEach(robot => {
-        this.physics.add.overlap(player, robot, () => {
-          currentCollisionRobot = robot; // Track which robot triggered the collision
-          handleRobotCollision.call(this);
+      robots2.forEach(robot => {
+        this.physics.add.overlap(player2, robot, () => {
+          currentCollisionRobot2 = robot; // Track which robot triggered the collision
+          handleRobotCollision2.call(this);
         }, null, this);
       });
 
       // Criar elementos do tutorial após configurar câmera e interface
-      createTutorialElements.call(this);
+      createTutorialElements2.call(this);
     
       // Mostrar tutorial após um pequeno delay para dar tempo de carregar tudo
       this.time.delayedCall(500, () => {
-        if (!tutorialShown) {
-          showTutorial.call(this);
-          tutorialShown = true;
+        if (!tutorialShown2) {
+          showTutorial2.call(this);
+          tutorialShown2 = true;
         }
       });
 }
 
-function updateMain() {
+function updateMain2() {
   // Se o tutorial estiver ativo, não permitir movimento
-  if (tutorialActive || !this.cursors || !player || !player.body || isPlayingMinigame) return;
+  if (tutorialActive2 || !this.cursors2 || !player2 || !player2.body || isPlayingMinigame2) return;
   const speed = 160;
 
   const leftPressed =
-    this.cursors.left.isDown ||
+    this.cursors2.left.isDown ||
     this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A).isDown;
   const rightPressed =
-    this.cursors.right.isDown ||
+    this.cursors2.right.isDown ||
     this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D).isDown;
   const upPressed =
-    this.cursors.up.isDown ||
+    this.cursors2.up.isDown ||
     this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W).isDown;
   const downPressed =
-    this.cursors.down.isDown ||
+    this.cursors2.down.isDown ||
     this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S).isDown;
 
   // Reset velocity
-  player.setVelocity(0);
+  player2.setVelocity(0);
   
   // Apply velocity based on input
   if (leftPressed) {
-    player.setVelocityX(-speed);
-    player.setFlipX(true);
-    player.anims.play('walk_side', true);
+    player2.setVelocityX(-speed);
+    player2.setFlipX(true);
+    player2.anims.play('walk_side', true);
   } else if (rightPressed) {
-    player.setVelocityX(speed);
-    player.setFlipX(false);
-    player.anims.play('walk_side', true);
+    player2.setVelocityX(speed);
+    player2.setFlipX(false);
+    player2.anims.play('walk_side', true);
   } else if (upPressed) {
-    player.setVelocityY(-speed);
-    player.anims.play('walk_up', true);
+    player2.setVelocityY(-speed);
+    player2.anims.play('walk_up', true);
   } else if (downPressed) {
-    player.setVelocityY(speed);
-    player.anims.play('walk_down', true);
+    player2.setVelocityY(speed);
+    player2.anims.play('walk_down', true);
   } else {
     // Set idle animation based on the last direction
-    if (player.anims.currentAnim) {
-      const currentAnim = player.anims.currentAnim.key;
+    if (player2.anims.currentAnim) {
+      const currentAnim = player2.anims.currentAnim.key;
       if (currentAnim === 'walk_side') {
-        player.anims.play('idle_side', true);
+        player2.anims.play('idle_side', true);
       } else if (currentAnim === 'walk_up') {
-        player.anims.play('idle_back', true);
+        player2.anims.play('idle_back', true);
       } else if (currentAnim === 'walk_down') {
-        player.anims.play('idle_front', true);
+        player2.anims.play('idle_front', true);
       }
     } else {
-      player.anims.play('idle_front', true);
+      player2.anims.play('idle_front', true);
     }
   }
 
   // Allow diagonal movement with normalized speed
   if ((leftPressed || rightPressed) && (upPressed || downPressed)) {
     // Normalize the velocity to prevent faster diagonal movement
-    player.body.velocity.normalize().scale(speed);
+    player2.body.velocity.normalize().scale(speed);
   }
 
   // Atualizar posição da luz para seguir o jogador
-  if (lightMask && spotlight) {
-    lightMask.setPosition(player.x, player.y);
-    spotlight.setPosition(player.x, player.y);
+  if (lightMask2 && spotlight2) {
+    lightMask2.setPosition(player2.x, player2.y);
+    spotlight2.setPosition(player2.x, player2.y);
   }
 
   // Update all robots with better boundary checking
-  robots.forEach(robot => {
+  robots2.forEach(robot => {
     if (robot.visible && robot.body.enable) {
       const robotSpeed = 100;
       
@@ -750,9 +933,9 @@ function updateMain() {
 }
 
 // Função para criar o sistema de iluminação
-function createLightingSystem() {
+function createLightingSystem2() {
   // Criar camada de escuridão que cobre toda a área do jogo
-  darkness = this.add.rectangle(
+  darkness2 = this.add.rectangle(
     0, 
     0, 
     map2.widthInPixels * 2, 
@@ -760,25 +943,25 @@ function createLightingSystem() {
     0x000000, 
     0.92
   );
-  darkness.setOrigin(0, 0);
-  darkness.setDepth(1000); // Garantir que fique acima de todas as camadas do jogo
+  darkness2.setOrigin(0, 0);
+  darkness2.setDepth(1000); // Garantir que fique acima de todas as camadas do jogo
   
   // Criar máscara de luz circular
-  lightMask = this.add.circle(player.x, player.y, lightRadius, 0xffffff);
-  lightMask.setVisible(false); // A máscara não precisa ser visível
+  lightMask2 = this.add.circle(player2.x, player2.y, lightRadius2, 0xffffff);
+  lightMask2.setVisible(false); // A máscara não precisa ser visível
   
   // Criar spotlight visual (opcional - para dar um efeito de brilho)
-  spotlight = this.add.circle(player.x, player.y, lightRadius, 0xffffff, 0.0);
-  spotlight.setDepth(999); // Abaixo da escuridão
+  spotlight2 = this.add.circle(player2.x, player2.y, lightRadius2, 0xffffff, 0.0);
+  spotlight2.setDepth(999); // Abaixo da escuridão
   
   // Aplicar máscara à camada de escuridão
-  const mask = new Phaser.Display.Masks.GeometryMask(this, lightMask);
+  const mask = new Phaser.Display.Masks.GeometryMask(this, lightMask2);
   mask.invertAlpha = true; // Inverte a máscara para que ela "corte" a escuridão
-  darkness.setMask(mask);
+  darkness2.setMask(mask);
 }
 
 // Inicializa o jogo após configuração
-function startGame() {
+function startGame2() {
   // Get the selected character from localStorage
   const selectedCharacter = localStorage.getItem("currentCharacter") || "player1";
   
@@ -878,99 +1061,235 @@ function startGame() {
     repeat: -1
   });
 
-  // Play animation for all robots
-  robots.forEach(robot => {
-    if (robot.isVertical) {
-      robot.play(robot.movingDown ? "robo_walk_down" : "robo_walk_up");
-    } else {
-      robot.play("robo_walk");
+    // Play animation for all robots
+    robots2.forEach(robot => {
+      if (robot.isVertical) {
+        robot.play(robot.movingDown ? "robo_walk_down" : "robo_walk_up");
+      } else {
+        robot.play("robo_walk");
+      }
+    });
+
+  this.anims.create({
+    key: "tvLigando",
+    frames: this.anims.generateFrameNumbers("TvErro", { start: 0, end: 3 }), // Ajuste conforme o número de quadros
+    frameRate: 3, // Velocidade da animação
+    repeat: -1 // -1 para repetir infinitamente
+});
+
+  // Keep existing TV sprite code
+  let tv = this.add.sprite(730, 200, "TvErro");
+  tv.play("tvLigando");
+  tv.setScale(0.8);
+  let canInteractWithTV = false; // Add flag to track if player is in range
+
+  // Add physics to TV for overlap detection
+  this.physics.add.existing(tv);
+  tv.body.setSize(80, 80); // Adjust hitbox size for better collision
+  tv.body.setImmovable(true);
+
+  // Create warning text for insufficient keys
+  const keyWarningText = this.add.text(
+    this.cameras.main.width / 2,
+    this.cameras.main.height / 2,
+    "Você precisa coletar todas as 4 chaves para continuar!",
+    {
+      fontFamily: 'Arial',
+      fontSize: '22px',
+      color: '#ffffff',
+      backgroundColor: '#000000',
+      padding: { x: 15, y: 10 },
+      align: 'center',
+      strokeThickness: 2,
+      stroke: '#ff0000'
+    }
+  ).setOrigin(0.5);
+  keyWarningText.setScrollFactor(0);
+  keyWarningText.setDepth(3000);
+  keyWarningText.setVisible(false);
+
+  // Create interaction prompt
+  const interactPrompt = this.add.text(
+    this.cameras.main.width / 2,
+    this.cameras.main.height / 2 - 50,
+    "Pressione ESPAÇO para interagir",
+    {
+      fontFamily: 'Arial',
+      fontSize: '18px',
+      color: '#ffffff',
+      backgroundColor: '#000000',
+      padding: { x: 10, y: 5 },
+      align: 'center'
+    }
+  ).setOrigin(0.5);
+  interactPrompt.setScrollFactor(0);
+  interactPrompt.setDepth(3000);
+  interactPrompt.setVisible(false);
+
+  // Add spacebar input for interaction
+  const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+  
+  // Add overlap detection between player and TV - only sets the flag
+  this.physics.add.overlap(player2, tv, () => {
+    canInteractWithTV = true;
+    interactPrompt.setVisible(true);
+  }, null, this);
+
+  // Check when player leaves TV area
+  this.events.on('update', () => {
+    if (canInteractWithTV) {
+      // Check if player is still overlapping with TV
+      const stillOverlapping = Phaser.Geom.Rectangle.Overlaps(
+        player2.getBounds(),
+        tv.getBounds()
+      );
+      
+      if (!stillOverlapping) {
+        canInteractWithTV = false;
+        interactPrompt.setVisible(false);
+      }
+    }
+    
+    // Check for spacebar press when in range
+    if (canInteractWithTV && Phaser.Input.Keyboard.JustDown(spaceKey)) {
+      handleTVInteraction.call(this);
     }
   });
 
+  // Function to handle TV interaction
+  function handleTVInteraction() {
+    // Prevent rapid-fire triggering
+    if (tv.lastInteracted && (this.time.now - tv.lastInteracted < 1000)) {
+      return;
+    }
+    
+    // Set last interaction time
+    tv.lastInteracted = this.time.now;
+    
+    if (keys2Collected >= 4) {
+      // Player has all keys, proceed to next level
+      console.log("Todas as 4 chaves coletadas! Avançando para a próxima fase.");
+      // Load the projetil.js script dynamically
+      const script = document.createElement('script');
+      script.src = "../../src/fase2/projetil.js";
+      document.head.appendChild(script);
+      
+      // Hide the current game elements
+      this.scene.setVisible(false);
+        } else {
+      // Player doesn't have enough keys - show warning
+      keyWarningText.setVisible(true);
+      
+      // Make the warning text pulse for attention
+      this.tweens.add({
+        targets: keyWarningText,
+        scaleX: 1.1,
+        scaleY: 1.1,
+        duration: 200,
+        yoyo: true,
+        repeat: 2
+      });
+      
+      // Hide message after delay
+      this.time.delayedCall(3000, () => {
+        this.tweens.add({
+          targets: keyWarningText,
+          alpha: 0,
+          duration: 300,
+          onComplete: () => {
+            keyWarningText.setVisible(false);
+            keyWarningText.setAlpha(1);
+          }
+        });
+      });
+    }
+  }
+
+
   // Inicializa controles
-  this.cursors = this.input.keyboard.createCursorKeys();
+  this.cursors2 = this.input.keyboard.createCursorKeys();
 }
 
 // Add these new functions
-function handleRobotCollision() {
+function handleRobotCollision2() {
   console.log("Colisão com robô detectada!"); // Debug
-  if (isPlayingMinigame) return;
+  if (isPlayingMinigame2) return;
   
-  isPlayingMinigame = true;
-  lastPlayerPosition = { x: player.x, y: player.y };
+  isPlayingMinigame2 = true;
+  lastPlayerPosition2 = { x: player2.x, y: player2.y };
   
   // Save position of ONLY the robot that caused the collision
-  lastRobotPosition = { 
-    x: currentCollisionRobot.x, 
-    y: currentCollisionRobot.y,
-    movingRight: currentCollisionRobot.movingRight,
-    robot: currentCollisionRobot // Store reference to the actual robot
+  lastRobotPosition2 = { 
+    x: currentCollisionRobot2.x, 
+    y: currentCollisionRobot2.y,
+    movingRight: currentCollisionRobot2.movingRight,
+    robot: currentCollisionRobot2 // Store reference to the actual robot
   };
   
   // Freeze ALL robots (disable physics) but only hide the one that caused collision
-  robots.forEach(robot => {
+  robots2.forEach(robot => {
     // Stop all robots by disabling physics
     robot.body.enable = false;
     robot.setVelocity(0, 0);
     
     // But only hide the one that collided with player
-    if (robot === currentCollisionRobot) {
+    if (robot === currentCollisionRobot2) {
       robot.setVisible(false);
     }
   });
   
   // Completely disable player movement
-  player.setVelocity(0, 0);
-  player.body.moves = false; // This prevents any physics movement
+  player2.setVelocity(0, 0);
+  player2.body.moves = false; // This prevents any physics movement
   
   // Mostrar aviso
-  if (warningText) {
-    warningText.setVisible(true);
+  if (warningText2) {
+    warningText2.setVisible(true);
     
     // Esconder aviso e mostrar minigame após 5 segundos
     this.time.delayedCall(5000, () => {
-      warningText.setVisible(false);
-      showMinigame.call(this);
+      warningText2.setVisible(false);
+      showMinigame2.call(this);
     });
   } else {
-    console.error("warningText não foi inicializado!");
+    console.error("warningText2 não foi inicializado!");
   }
 }
 
-function showMinigame() {
-  const randomQuestion = Phaser.Math.RND.pick(questions);
+function showMinigame2() {
+  const randomQuestion = Phaser.Math.RND.pick(questions2);
   
   // Update question text
-  minigameContainer.questionText.setText(randomQuestion.question);
+  minigameContainer2.questionText.setText(randomQuestion.question);
   
   // Clear previous listeners to prevent duplicate handling
-  minigameContainer.trueBtn.removeAllListeners('pointerdown');
-  minigameContainer.trueBtn.removeAllListeners('pointerdown');
+  minigameContainer2.trueBtn.removeAllListeners('pointerdown');
+  minigameContainer2.trueBtn.removeAllListeners('pointerdown');
   
   // Add new click handlers
-  minigameContainer.trueBtn.on('pointerdown', () => {
+  minigameContainer2.trueBtn.on('pointerdown', () => {
     console.log('TRUE button clicked');
-    handleAnswer.call(this, true, randomQuestion.answer, randomQuestion);
+    handleAnswer2.call(this, true, randomQuestion.answer, randomQuestion);
   });
   
-  minigameContainer.falseBtn.on('pointerdown', () => {
+  minigameContainer2.falseBtn.on('pointerdown', () => {
     console.log('FALSE button clicked');
-    handleAnswer.call(this, false, randomQuestion.answer, randomQuestion);
+    handleAnswer2.call(this, false, randomQuestion.answer, randomQuestion);
   });
   
   // Show the minigame
-  minigameContainer.setVisible(true);
+  minigameContainer2.setVisible(true);
 }
 
-function handleAnswer(playerAnswer, correctAnswer, questionObj) {
+function handleAnswer2(playerAnswer, correctAnswer, questionObj) {
   console.log(`Button clicked: ${playerAnswer}, correct answer: ${correctAnswer}`);
   
   // Prevent multiple clicks
-  minigameContainer.trueBtn.disableInteractive();
-  minigameContainer.falseBtn.disableInteractive();
+  minigameContainer2.trueBtn.disableInteractive();
+  minigameContainer2.falseBtn.disableInteractive();
   
   // Provide visual feedback
-  const button = playerAnswer ? minigameContainer.trueBtn : minigameContainer.falseBtn;
+  const button = playerAnswer ? minigameContainer2.trueBtn : minigameContainer2.falseBtn;
   const color = playerAnswer === correctAnswer ? 0x00ff00 : 0xff0000;
   
   button.setFillStyle(color);
@@ -978,58 +1297,58 @@ function handleAnswer(playerAnswer, correctAnswer, questionObj) {
   // Hide question and show feedback
   this.time.delayedCall(500, () => {
     // Hide question elements
-    minigameContainer.questionText.setVisible(false);
-    minigameContainer.trueBtn.setVisible(false);
-    minigameContainer.trueText.setVisible(false);
-    minigameContainer.falseBtn.setVisible(false);
-    minigameContainer.falseText.setVisible(false);
+    minigameContainer2.questionText.setVisible(false);
+    minigameContainer2.trueBtn.setVisible(false);
+    minigameContainer2.trueText.setVisible(false);
+    minigameContainer2.falseBtn.setVisible(false);
+    minigameContainer2.falseText.setVisible(false);
     
     // Set feedback color based on answer correctness
     const feedbackBoxColor = playerAnswer === correctAnswer ? 0x006600 : 0x660000;
-    minigameContainer.feedbackBox.setFillStyle(feedbackBoxColor);
+    minigameContainer2.feedbackBox.setFillStyle(feedbackBoxColor);
     
     // Show result text with appropriate message
-    minigameContainer.resultText.setText(playerAnswer === correctAnswer ? "VOCÊ ACERTOU!" : "VOCÊ ERROU!");
-    minigameContainer.resultText.setFill(playerAnswer === correctAnswer ? '#00ff00' : '#ff0000');
-    minigameContainer.resultText.setVisible(true);
+    minigameContainer2.resultText.setText(playerAnswer === correctAnswer ? "VOCÊ ACERTOU!" : "VOCÊ ERROU!");
+    minigameContainer2.resultText.setFill(playerAnswer === correctAnswer ? '#00ff00' : '#ff0000');
+    minigameContainer2.resultText.setVisible(true);
     
     // Show feedback elements
-    minigameContainer.feedbackBox.setVisible(true);
-    minigameContainer.feedbackText.setText(questionObj.feedback);
-    minigameContainer.feedbackText.setVisible(true);
-    minigameContainer.continueBtn.setVisible(true);
-    minigameContainer.continueText.setVisible(true);
+    minigameContainer2.feedbackBox.setVisible(true);
+    minigameContainer2.feedbackText.setText(questionObj.feedback);
+    minigameContainer2.feedbackText.setVisible(true);
+    minigameContainer2.continueBtn.setVisible(true);
+    minigameContainer2.continueText.setVisible(true);
     
     // Add click handler to continue button
-    minigameContainer.continueBtn.once('pointerdown', () => {
+    minigameContainer2.continueBtn.once('pointerdown', () => {
       // Hide feedback and minigame
-      minigameContainer.setVisible(false);
-      isPlayingMinigame = false;
+      minigameContainer2.setVisible(false);
+      isPlayingMinigame2 = false;
       
       // Re-enable player movement
-      player.body.moves = true;
+      player2.body.moves = true;
       
       // Reset visibility states for next time
-      minigameContainer.questionText.setVisible(true);
-      minigameContainer.trueBtn.setVisible(true);
-      minigameContainer.trueText.setVisible(true);
-      minigameContainer.falseBtn.setVisible(true);
-      minigameContainer.falseText.setVisible(true);
-      minigameContainer.feedbackBox.setVisible(false);
-      minigameContainer.feedbackText.setVisible(false);
-      minigameContainer.resultText.setVisible(false);
-      minigameContainer.continueBtn.setVisible(false);
-      minigameContainer.continueText.setVisible(false);
+      minigameContainer2.questionText.setVisible(true);
+      minigameContainer2.trueBtn.setVisible(true);
+      minigameContainer2.trueText.setVisible(true);
+      minigameContainer2.falseBtn.setVisible(true);
+      minigameContainer2.falseText.setVisible(true);
+      minigameContainer2.feedbackBox.setVisible(false);
+      minigameContainer2.feedbackText.setVisible(false);
+      minigameContainer2.resultText.setVisible(false);
+      minigameContainer2.continueBtn.setVisible(false);
+      minigameContainer2.continueText.setVisible(false);
       
       // Reset button colors
-      minigameContainer.trueBtn.setFillStyle(0x008000);
-      minigameContainer.falseBtn.setFillStyle(0x800000);
-      minigameContainer.trueBtn.setInteractive();
-      minigameContainer.falseBtn.setInteractive();
+      minigameContainer2.trueBtn.setFillStyle(0x008000);
+      minigameContainer2.falseBtn.setFillStyle(0x800000);
+      minigameContainer2.trueBtn.setInteractive();
+      minigameContainer2.falseBtn.setInteractive();
       
       // Handle player consequence
       if (playerAnswer !== correctAnswer) {
-        player.setPosition(670, 1000);
+        player2.setPosition(670, 1000);
         console.log('Wrong answer! Back to start.');
       } else {
         console.log('Correct answer! Continue playing.');
@@ -1037,14 +1356,14 @@ function handleAnswer(playerAnswer, correctAnswer, questionObj) {
       
       // Re-enable ALL robots after 5 seconds
       this.time.delayedCall(3000, () => {
-        robots.forEach(robot => {
+        robots2.forEach(robot => {
           // Re-enable physics for all robots
           robot.body.enable = true;
           
           // Only need to make the collision robot visible again
-          if (robot === lastRobotPosition.robot) {
-            robot.setPosition(lastRobotPosition.x, lastRobotPosition.y);
-            robot.movingRight = lastRobotPosition.movingRight;
+          if (robot === lastRobotPosition2.robot) {
+            robot.setPosition(lastRobotPosition2.x, lastRobotPosition2.y);
+            robot.movingRight = lastRobotPosition2.movingRight;
             robot.setVisible(true);
           }
         });
@@ -1055,9 +1374,9 @@ function handleAnswer(playerAnswer, correctAnswer, questionObj) {
 }
 
 // Add to createMain after physics setup
-function createMinigameElements() {
+function createMinigameElements2() {
   // Create fixed position elements that don't scroll with the camera
-  warningText = this.add.text(
+  warningText2 = this.add.text(
     this.cameras.main.width / 2,
     this.cameras.main.height / 2,
     "Oh Não, você foi pego pelo robô anti LGPD!\nResponda uma questão a seguir para continuar de onde está,\ncaso erre, vai voltar do inicio do mapa",
@@ -1069,15 +1388,15 @@ function createMinigameElements() {
       align: 'center'
     }
   ).setOrigin(0.5);
-  warningText.setScrollFactor(0);
-  warningText.setDepth(3000);
-  warningText.setVisible(false);
+  warningText2.setScrollFactor(0);
+  warningText2.setDepth(3000);
+  warningText2.setVisible(false);
 
   // Create simple minigame container
-  minigameContainer = this.add.container(0, 0);
-  minigameContainer.setScrollFactor(0);
-  minigameContainer.setDepth(3000);
-  minigameContainer.setVisible(false);
+  minigameContainer2 = this.add.container(0, 0);
+  minigameContainer2.setScrollFactor(0);
+  minigameContainer2.setDepth(3000);
+  minigameContainer2.setVisible(false);
 
   // Semi-transparent overlay background
   const overlay = this.add.rectangle(
@@ -1171,14 +1490,14 @@ function createMinigameElements() {
   });
 
   // Add all elements to container
-  minigameContainer.add([overlay, bg, questionText, trueBtn, trueText, falseBtn, falseText]);
+  minigameContainer2.add([overlay, bg, questionText, trueBtn, trueText, falseBtn, falseText]);
 
   // Store references
-  minigameContainer.questionText = questionText;
-  minigameContainer.trueBtn = trueBtn;
-  minigameContainer.trueText = trueText;
-  minigameContainer.falseBtn = falseBtn;
-  minigameContainer.falseText = falseText;
+  minigameContainer2.questionText = questionText;
+  minigameContainer2.trueBtn = trueBtn;
+  minigameContainer2.trueText = trueText;
+  minigameContainer2.falseBtn = falseBtn;
+  minigameContainer2.falseText = falseText;
 
   // Add feedback text element (initially hidden)
   const feedbackBox = this.add.rectangle(
@@ -1234,13 +1553,13 @@ function createMinigameElements() {
   });
 
   // Add feedback elements to the container
-  minigameContainer.add([feedbackBox, feedbackText, continueBtn, continueText]);
+  minigameContainer2.add([feedbackBox, feedbackText, continueBtn, continueText]);
 
   // Store references to feedback elements
-  minigameContainer.feedbackBox = feedbackBox;
-  minigameContainer.feedbackText = feedbackText;
-  minigameContainer.continueBtn = continueBtn;
-  minigameContainer.continueText = continueText;
+  minigameContainer2.feedbackBox = feedbackBox;
+  minigameContainer2.feedbackText = feedbackText;
+  minigameContainer2.continueBtn = continueBtn;
+  minigameContainer2.continueText = continueText;
 
   // Add result header text above feedback
   const resultText = this.add.text(
@@ -1260,14 +1579,14 @@ function createMinigameElements() {
   feedbackText.setY(this.cameras.main.height / 2 - 10);
 
   // Add result text to container and store reference
-  minigameContainer.add([resultText]);
-  minigameContainer.resultText = resultText;
+  minigameContainer2.add([resultText]);
+  minigameContainer2.resultText = resultText;
 
-  return minigameContainer;
+  return minigameContainer2;
 }
 
 // Create a robot with specified position and horizontal movement range
-function createRobot(startX, startY, rightBound, leftBound) {
+function createRobot2(startX, startY, rightBound, leftBound) {
   const robot = this.physics.add.sprite(startX, startY, "robo1");
   robot.setScale(1);
   robot.body.setSize(23, 60);
@@ -1282,13 +1601,13 @@ function createRobot(startX, startY, rightBound, leftBound) {
   robot.isVertical = false; // Flag to indicate this is a horizontal robot
   
   // Add to array of robots
-  robots.push(robot);
+  robots2.push(robot);
   
   return robot;
 }
 
 // Create a robot that moves vertically
-function createVerticalRobot(startX, startY, bottomBound, topBound) {
+function createVerticalRobot2(startX, startY, bottomBound, topBound) {
   const robot = this.physics.add.sprite(startX, startY, "robocima");
   robot.setScale(1);
   robot.body.setSize(37, 60);
@@ -1303,18 +1622,18 @@ function createVerticalRobot(startX, startY, bottomBound, topBound) {
   robot.isVertical = true; // Flag to indicate this is a vertical robot
   
   // Add to array of robots
-  robots.push(robot);
+  robots2.push(robot);
   
   return robot;
 }
 
 // Função para criar os elementos do tutorial
-function createTutorialElements() {
+function createTutorialElements2() {
   // Criar um container que ficará centralizado na tela
-  tutorialContainer = this.add.container(this.cameras.main.centerX, this.cameras.main.centerY);
-  tutorialContainer.setScrollFactor(0); 
-  tutorialContainer.setDepth(4000);
-  tutorialContainer.setVisible(false);
+  tutorialContainer2 = this.add.container(this.cameras.main.centerX, this.cameras.main.centerY);
+  tutorialContainer2.setScrollFactor(0); 
+  tutorialContainer2.setDepth(4000);
+  tutorialContainer2.setVisible(false);
   
   // Overlay escuro para dar destaque ao tutorial
   const overlay = this.add.rectangle(
@@ -1514,7 +1833,7 @@ function createTutorialElements() {
       nextBtn.setFillStyle(0x3854a8);
       nextBtn.setScale(1.0);
       nextText.setScale(1.0);
-      advanceTutorial.call(this);
+      advanceTutorial2.call(this);
     });
   });
   
@@ -1525,12 +1844,20 @@ function createTutorialElements() {
     skipText.setScale(0.95);
     
     this.time.delayedCall(100, () => {
-      hideTutorial.call(this);
+      hideTutorial2.call(this);
     });
   });
   
   // Adicionar elementos ao container na ordem correta para camadas
-  tutorialContainer.add([
+  tutorialContainer2.add([
+    overlay, 
+    panelShadow, 
+    tutorialPanel, 
+    titleBar,
+    tutorialTitle, 
+    zeladorBorder,
+    zeladorImage, 
+    textBox,
     overlay, 
     panelShadow, 
     tutorialPanel, 
@@ -1547,53 +1874,53 @@ function createTutorialElements() {
   ]);
   
   // Guardar referências para fácil acesso
-  tutorialContainer.tutorialText = tutorialText;
-  tutorialContainer.zeladorImage = zeladorImage;
-  tutorialContainer.zeladorBorder = zeladorBorder;
-  tutorialContainer.textBox = textBox;
-  tutorialContainer.nextBtn = nextBtn;
-  tutorialContainer.nextText = nextText;
-  tutorialContainer.skipBtn = skipBtn;
-  tutorialContainer.skipText = skipText;
-  tutorialContainer.panelWidth = panelWidth;
+  tutorialContainer2.tutorialText = tutorialText;
+  tutorialContainer2.zeladorImage = zeladorImage;
+  tutorialContainer2.zeladorBorder = zeladorBorder;
+  tutorialContainer2.textBox = textBox;
+  tutorialContainer2.nextBtn = nextBtn;
+  tutorialContainer2.nextText = nextText;
+  tutorialContainer2.skipBtn = skipBtn;
+  tutorialContainer2.skipText = skipText;
+  tutorialContainer2.panelWidth = panelWidth;
   
   // Ajustar o container para ficar sempre no centro da tela
   this.scale.on('resize', () => {
-    tutorialContainer.setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+    tutorialContainer2.setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
     overlay.width = this.cameras.main.width;
     overlay.height = this.cameras.main.height;
   });
 }
 
 // Função para mostrar o tutorial
-function showTutorial() {
+function showTutorial2() {
   // Desativar movimento do jogador durante o tutorial
-  if (player && player.body) {
-    player.body.moves = false;
+  if (player2 && player2.body) {
+    player2.body.moves = false;
   }
   
   // Desativar movimento de todos os robôs durante o tutorial
-  robots.forEach(robot => {
+  robots2.forEach(robot => {
     if (robot && robot.body) {
       robot.body.enable = false;
       robot.setVelocity(0, 0);
     }
   });
   
-  tutorialActive = true;
-  tutorialStep = 0;
+  tutorialActive2 = true;
+  tutorialStep2 = 0;
   
   // Atualizar o texto com a primeira mensagem
-  tutorialContainer.tutorialText.setText(tutorialMessages[tutorialStep]);
+  tutorialContainer2.tutorialText.setText(tutorialMessages2[tutorialStep2]);
   
   // Posicionar NPC e texto para o primeiro passo
-  updateNPCPosition.call(this, true);
+  updateNPCPosition2.call(this, true);
   
   // Mostrar o container do tutorial com efeito de fade
-  tutorialContainer.setVisible(true);
-  tutorialContainer.alpha = 0;
+  tutorialContainer2.setVisible(true);
+  tutorialContainer2.alpha = 0;
   this.tweens.add({
-    targets: tutorialContainer,
+    targets: tutorialContainer2,
     alpha: 1,
     duration: 800,
     ease: 'Power2'
@@ -1601,7 +1928,7 @@ function showTutorial() {
   
   // Entrada com efeito para elementos
   this.tweens.add({
-    targets: [tutorialContainer.tutorialText, tutorialContainer.textBox],
+    targets: [tutorialContainer2.tutorialText, tutorialContainer2.textBox],
     y: { from: 30, to: 0 },
     alpha: { from: 0, to: 1 },
     duration: 800,
@@ -1609,38 +1936,38 @@ function showTutorial() {
   });
   
   // Atualizar o texto do botão
-  updateNextButtonText.call(this);
+  updateNextButtonText2.call(this);
 }
 
 // Função para avançar no tutorial
-function advanceTutorial() {
-  tutorialStep++;
+function advanceTutorial2() {
+  tutorialStep2++;
   
   // Se chegou ao fim do tutorial
-  if (tutorialStep >= tutorialMessages.length) {
-    hideTutorial.call(this);
+  if (tutorialStep2 >= tutorialMessages2.length) {
+    hideTutorial2.call(this);
     return;
   }
   
   // Atualizar o texto com a mensagem atual
-  const currentText = tutorialContainer.tutorialText;
-  const textBox = tutorialContainer.textBox;
-  const npcOnRight = tutorialStep % 2 === 0; // Alterna posição baseado no passo
+  const currentText = tutorialContainer2.tutorialText;
+  const textBox = tutorialContainer2.textBox;
+  const npcOnRight = tutorialStep2 % 2 === 0; // Alterna posição baseado no passo
   
   // Efeito de fade out/in ao trocar o texto e mover o NPC
   this.tweens.add({
-    targets: [currentText, textBox, tutorialContainer.zeladorImage, tutorialContainer.zeladorBorder],
+    targets: [currentText, textBox, tutorialContainer2.zeladorImage, tutorialContainer2.zeladorBorder],
     alpha: 0,
     duration: 300,
     ease: 'Power2',
     onComplete: () => {
-      currentText.setText(tutorialMessages[tutorialStep]);
+      currentText.setText(tutorialMessages2[tutorialStep2]);
       
       // Mover o NPC para o lado alternado
-      updateNPCPosition.call(this, npcOnRight);
+      updateNPCPosition2.call(this, npcOnRight);
       
       this.tweens.add({
-        targets: [currentText, textBox, tutorialContainer.zeladorImage, tutorialContainer.zeladorBorder],
+        targets: [currentText, textBox, tutorialContainer2.zeladorImage, tutorialContainer2.zeladorBorder],
         alpha: 1,
         y: { from: npcOnRight ? 30 : -30, to: 0 },
         duration: 500,
@@ -1648,18 +1975,18 @@ function advanceTutorial() {
       });
       
       // Atualizar o texto do botão se necessário
-      updateNextButtonText.call(this);
+      updateNextButtonText2.call(this);
     }
   });
 }
 
 // Função para atualizar a posição do NPC
-function updateNPCPosition(onRight) {
-  const zeladorImage = tutorialContainer.zeladorImage;
-  const zeladorBorder = tutorialContainer.zeladorBorder;
-  const panelWidth = tutorialContainer.panelWidth;
-  const tutorialText = tutorialContainer.tutorialText;
-  const textBox = tutorialContainer.textBox;
+function updateNPCPosition2(onRight) {
+  const zeladorImage = tutorialContainer2.zeladorImage;
+  const zeladorBorder = tutorialContainer2.zeladorBorder;
+  const panelWidth = tutorialContainer2.panelWidth;
+  const tutorialText = tutorialContainer2.tutorialText;
+  const textBox = tutorialContainer2.textBox;
   
   if (onRight) {
     // NPC na direita, texto na esquerda
@@ -1679,10 +2006,10 @@ function updateNPCPosition(onRight) {
 }
 
 // Função para esconder o tutorial
-function hideTutorial() {
+function hideTutorial2() {
   // Efeito de saída para elementos
   this.tweens.add({
-    targets: [tutorialContainer.nextBtn, tutorialContainer.nextText],
+    targets: [tutorialContainer2.nextBtn, tutorialContainer2.nextText],
     y: '+=20',
     alpha: 0,
     duration: 300,
@@ -1691,23 +2018,23 @@ function hideTutorial() {
   
   // Fade out principal
   this.tweens.add({
-    targets: tutorialContainer,
+    targets: tutorialContainer2,
     alpha: 0,
     scale: 0.95,
     duration: 500,
     ease: 'Power2',
     onComplete: () => {
-      tutorialContainer.setVisible(false);
-      tutorialContainer.setScale(1);
-      tutorialActive = false;
+      tutorialContainer2.setVisible(false);
+      tutorialContainer2.setScale(1);
+      tutorialActive2 = false;
       
       // Reativar movimento do jogador
-      if (player && player.body) {
-        player.body.moves = true;
+      if (player2 && player2.body) {
+        player2.body.moves = true;
       }
       
       // Reativar movimento de todos os robôs
-      robots.forEach(robot => {
+      robots2.forEach(robot => {
         if (robot && robot.body) {
           robot.body.enable = true;
         }
@@ -1717,23 +2044,23 @@ function hideTutorial() {
 }
 
 // Função para atualizar o texto do botão
-function updateNextButtonText() {
-  if (tutorialStep === tutorialMessages.length - 1) {
-    tutorialContainer.nextText.setText('COMEÇAR');
+function updateNextButtonText2() {
+  if (tutorialStep2 === tutorialMessages2.length - 1) {
+    tutorialContainer2.nextText.setText('COMEÇAR');
     
     // Destacar o botão final
     this.tweens.add({
-      targets: tutorialContainer.nextBtn,
+      targets: tutorialContainer2.nextBtn,
       fillColor: 0x3a7a38,
       ease: 'Linear',
       duration: 300
     });
   } else {
-    tutorialContainer.nextText.setText('PRÓXIMO');
+    tutorialContainer2.nextText.setText('PRÓXIMO');
     
     // Restaurar cor do botão normal
     this.tweens.add({
-      targets: tutorialContainer.nextBtn,
+      targets: tutorialContainer2.nextBtn,
       fillColor: 0x3854a8,
       ease: 'Linear',
       duration: 300
@@ -1741,5 +2068,183 @@ function updateNextButtonText() {
   }
 }
 
-// Inicializar a configuração quando o Phaser estiver carregado
-initializaConfig();
+//nicializar a configuração quando o Phaser estiver carregado
+initializaConfig2();
+
+// Fase 2 - Estrutura básica para iniciar a fase 2
+(function() {
+  console.log("Arquivo fase2.js carregado");
+  
+  // Configurações iniciais
+  const config = {
+    type: Phaser.AUTO,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    parent: 'game-container',
+    scale: {
+      mode: Phaser.Scale.RESIZE,
+      autoCenter: Phaser.Scale.CENTER_BOTH
+    },
+    physics: {
+      default: 'arcade',
+      arcade: {
+        gravity: { y: 0 },
+        debug: false
+      }
+    },
+    scene: {
+      preload: preload,
+      create: create,
+      update: update
+    }
+  };
+  
+  // Variáveis globais
+  let player;
+  let cursors;
+  let playerName = localStorage.getItem('playerName') || 'Jogador';
+  let selectedCharacter = localStorage.getItem('selectedCharacter') || 'player1';
+  
+  // Função para pré-carregar os assets
+  function preload() {
+    this.load.image('background', 'assets/fase2/background.png');
+    
+    // Carregar os sprites do jogador (mesmos da fase 1)
+    this.load.spritesheet('player1', 'assets/fase1/players/player1.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player2', 'assets/fase1/players/player2.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player3', 'assets/fase1/players/player3.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player4', 'assets/fase1/players/player4.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player5', 'assets/fase1/players/player5.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player6', 'assets/fase1/players/player6.png', { frameWidth: 64, frameHeight: 64 });
+  }
+  
+  // Função para criar a cena
+  function create() {
+    // Adicionar fundo (placeholder)
+    this.add.rectangle(0, 0, window.innerWidth, window.innerHeight, 0x222222).setOrigin(0, 0);
+    this.add.text(window.innerWidth/2, 100, 'FASE 2', { 
+      fontSize: '32px', 
+      fill: '#fff',
+      fontFamily: 'Arial'
+    }).setOrigin(0.5);
+    
+    this.add.text(window.innerWidth/2, 150, 'Bem-vindo à segunda fase, ' + playerName, { 
+      fontSize: '24px', 
+      fill: '#fff',
+      fontFamily: 'Arial'
+    }).setOrigin(0.5);
+    
+    // Criar o jogador
+    player = this.physics.add.sprite(window.innerWidth/2, window.innerHeight/2, selectedCharacter, 0);
+    player.setScale(0.8);
+    player.setCollideWorldBounds(true);
+    
+    // Configurar animações do jogador
+    if (!this.anims.exists('walk_down')) {
+      this.anims.create({
+        key: 'walk_down',
+        frames: [
+          { key: selectedCharacter, frame: 0 },
+          { key: selectedCharacter, frame: 1 },
+          { key: selectedCharacter, frame: 0 },
+          { key: selectedCharacter, frame: 2 }
+        ],
+        frameRate: 7,
+        repeat: -1
+      });
+      
+      this.anims.create({
+        key: 'walk_side',
+        frames: [
+          { key: selectedCharacter, frame: 3 },
+          { key: selectedCharacter, frame: 4 }
+        ],
+        frameRate: 7,
+        repeat: -1
+      });
+      
+      this.anims.create({
+        key: 'walk_up',
+        frames: [
+          { key: selectedCharacter, frame: 5 },
+          { key: selectedCharacter, frame: 6 },
+          { key: selectedCharacter, frame: 5 },
+          { key: selectedCharacter, frame: 7 }
+        ],
+        frameRate: 7,
+        repeat: -1
+      });
+    }
+    
+    // Configurar controles
+    cursors = this.input.keyboard.createCursorKeys();
+    
+    // Adicionar texto de instrução
+    this.add.text(window.innerWidth/2, window.innerHeight - 100, 'Use as setas ou WASD para se mover', {
+      fontSize: '20px',
+      fill: '#ffffff',
+      fontFamily: 'Arial'
+    }).setOrigin(0.5);
+  }
+  
+  // Função de atualização
+  function update() {
+    // Movimento do jogador
+    player.setVelocity(0);
+    
+    const speed = 160;
+    
+    // Verificar teclas de setas e WASD
+    const leftPressed = cursors.left.isDown || this.input.keyboard.addKey('A').isDown;
+    const rightPressed = cursors.right.isDown || this.input.keyboard.addKey('D').isDown;
+    const upPressed = cursors.up.isDown || this.input.keyboard.addKey('W').isDown;
+    const downPressed = cursors.down.isDown || this.input.keyboard.addKey('S').isDown;
+    
+    // Aplicar movimento
+    if (leftPressed) {
+      player.setVelocityX(-speed);
+      player.anims.play('walk_side', true);
+      player.setFlipX(true);
+    } else if (rightPressed) {
+      player.setVelocityX(speed);
+      player.anims.play('walk_side', true);
+      player.setFlipX(false);
+    } else if (upPressed) {
+      player.setVelocityY(-speed);
+      player.anims.play('walk_up', true);
+    } else if (downPressed) {
+      player.setVelocityY(speed);
+      player.anims.play('walk_down', true);
+    } else {
+      player.anims.stop();
+      player.setFrame(0);
+    }
+  }
+  
+  // Função para iniciar a fase 2 (exposta globalmente)
+  window.initFase2 = function() {
+    console.log("Inicializando fase 2");
+    
+    // Criar o jogo
+    if (window.game) {
+      window.game.destroy(true);
+    }
+    
+    window.game = new Phaser.Game(config);
+    }
+  
+  // Se o script for carregado diretamente (sem ser chamado pela fase 1)
+  // também podemos iniciar a fase 2 aqui
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    // Verificar se estamos na página fase2.html diretamente
+    if (window.location.href.includes('fase2')) {
+      setTimeout(window.initFase2, 100);
+    }
+  } else {
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.location.href.includes('fase2')) {
+        setTimeout(window.initFase2, 100);
+      }
+    });
+  }
+})();

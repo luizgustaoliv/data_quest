@@ -1,5 +1,5 @@
 // Configuração do jogo
-const config = {
+const projetilConfig = {
     type: Phaser.AUTO,
     width: 1200,
     height: 800,
@@ -22,7 +22,7 @@ const config = {
 };
 
 // Variáveis globais do jogo
-const game = new Phaser.Game(config);
+const game = new Phaser.Game(projetilConfig);
 let projetilAtivo = null;
 
 function preload() {
