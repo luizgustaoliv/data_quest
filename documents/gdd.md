@@ -388,23 +388,22 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 ## 3.8. Implementação Matemática de Animação/Movimento (sprint 4)
 
-*Descreva aqui a função que implementa a movimentação/animação de personagens ou elementos gráficos no seu jogo. Sua função deve se basear em alguma formulação matemática (e.g. fórmula de aceleração). A explicação do funcionamento desta função deve conter notação matemática formal de fórmulas/equações. Se necessário, crie subseções para sua descrição.*
-
-Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma animação para instruir oque o jogador deve fazer para concluir o mini game final da fase 2, que consiste em lançar 4 chaves em cadeados espalhados pela tela desviando dos obstáculos
+Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma animação para instruir oque o jogador deve fazer para concluir o mini game final da fase 2, que consiste em lançar 4 chaves em cadeados espalhados pela tela.
 
 <img src="../assets/concepts&gdd/projetilgif.gif" width="300">
 
 Durante o desenvolvimento do código, testamos vários valores diferentes até que chegasse em uma interface do tutorial que tenha a capacidade de ensinar como será as regras do próximo mini game que o jogador deve jogar somente com a animação e um breve texto
 
-aplicação das fórmulas matemáticas
+Definição final dos valores de entrada e construção do código baseado nas fórmulas:
 
-<img src="../assets/concepts&gdd/projetilcódigo" width="500">
 <img src="../assets/concepts&gdd/formulas.jpg" width="500">
+<img src="../assets/concepts&gdd/projetilcódigo" width="500">
 
-Aplicação das fórmulas matemáticas para o código
+Como mostrado nas imagens, para o eixo X, seguimos a formula de movimento uniforme para demonstramos a velocidade inicial(constante), ja para o eixo Y, como queríamos simular uma gravidade atuando no projetil, utilizamos a fórmula do Movimento Uniformemente Variado com velocidade inicial nula para acharmos a aceleração de 200px/s².
 
-<img src="../assets/concepts&gdd/console.log.png" width="500">
-atualização das posições, velocidades e aceleração são geradas a cada frame carregado
+atualização das posições, velocidades e aceleração são geradas a cada frame carregado:
+
+<img src="../assets/concepts&gdd/console.log.png" width="500">(frame 5 da animação)
 
 # <a name="c4"></a>4. Desenvolvimento do Jogo
 
