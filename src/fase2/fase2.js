@@ -312,7 +312,7 @@ let estantes1Layer, estantes2Layer, estantes3Layer, estantes4Layer;
 let darkness2;
 let lightMask2;
 let spotlight2;
-let lightRadius2 = 100; // Raio da luz ao redor do jogador tem que ser 100
+let lightRadius2 = 70; // Raio da luz ao redor do jogador tem que ser 100
 
 // Variáveis para as chaves
 let key1, key2, key3, key4;
@@ -1167,16 +1167,72 @@ function startGame2() {
     tv.lastInteracted = this.time.now;
     
     if (keys2Collected >= 4) {
-      // Player has all keys, proceed to next level
-      console.log("Todas as 4 chaves coletadas! Avançando para a próxima fase.");
-      // Load the projetil.js script dynamically
-      const script = document.createElement('script');
-      script.src = "../../src/fase2/projetil.js";
-      document.head.appendChild(script);
+      // Player has all keys, proceed to minigame
+      console.log("Todas as 4 chaves coletadas! Iniciando minigame.");
       
-      // Hide the current game elements
-      this.scene.setVisible(false);
-        } else {
+      // Create a minigame container that covers the screen
+      const minigameContainer = document.createElement('div');
+      minigameContainer.id = 'projetil-minigame-container';
+      minigameContainer.style.position = 'fixed';
+      minigameContainer.style.top = '0';
+      minigameContainer.style.left = '0';
+      minigameContainer.style.width = '100%';
+      minigameContainer.style.height = '100%';
+      minigameContainer.style.zIndex = '5000';
+      minigameContainer.style.background = '#000';
+      document.body.appendChild(minigameContainer);
+      
+      // Create a loading message
+      const loadingMsg = document.createElement('div');
+      loadingMsg.textContent = 'Carregando minigame...';
+      loadingMsg.style.color = 'white';
+      loadingMsg.style.fontSize = '24px';
+      loadingMsg.style.position = 'absolute';
+      loadingMsg.style.top = '50%';
+      loadingMsg.style.left = '50%';
+      loadingMsg.style.transform = 'translate(-50%, -50%)';
+      minigameContainer.appendChild(loadingMsg);
+      
+      // Pause the current game scene
+      this.scene.pause();
+      
+      // Define a global function to exit the minigame
+      window.exitProjetilMinigame = () => {
+        // Remove the minigame container
+        if (document.getElementById('projetil-minigame-container')) {
+          document.getElementById('projetil-minigame-container').remove();
+        }
+        // Resume the game scene
+        this.scene.resume();
+        // Go to the next phase or level if needed
+        // this.scene.start('nextPhase'); // Uncomment if you want to go to next phase
+      };
+      
+      // Load the projetil.js script dynamically with a callback
+      const script = document.createElement('script');
+      script.src = "src/fase2/projetil.js";
+      script.onload = () => {
+        // Remove loading message once script is loaded
+        if (loadingMsg && loadingMsg.parentNode) {
+          loadingMsg.parentNode.removeChild(loadingMsg);
+        }
+        // The script will auto-initialize since it has self-initialization code
+      };
+      script.onerror = (error) => {
+        loadingMsg.textContent = 'Erro ao carregar o minigame. Tente novamente.';
+        console.error('Failed to load minigame script:', error);
+        
+        // Add a retry button
+        const retryBtn = document.createElement('button');
+        retryBtn.textContent = 'Tentar Novamente';
+        retryBtn.style.display = 'block';
+        retryBtn.style.margin = '20px auto';
+        retryBtn.style.padding = '10px 20px';
+        retryBtn.onclick = () => window.exitProjetilMinigame();
+        minigameContainer.appendChild(retryBtn);
+      };
+      document.head.appendChild(script);
+    } else {
       // Player doesn't have enough keys - show warning
       keyWarningText.setVisible(true);
       
@@ -1204,7 +1260,6 @@ function startGame2() {
       });
     }
   }
-
 
   // Inicializa controles
   this.cursors2 = this.input.keyboard.createCursorKeys();

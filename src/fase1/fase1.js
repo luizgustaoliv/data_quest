@@ -289,6 +289,12 @@ if (window.fase1Initialized) {
   keyIcon.alt = "Key";
   keyContainer.appendChild(keyIcon);
 
+  
+  const keyCounter = document.createElement("span");
+  keyCounter.id = "key-counter";
+  keyCounter.textContent = "0/1";
+  keyContainer.appendChild(keyCounter);
+
   document.body.appendChild(keyContainer);
 
   // Botão de missões
