@@ -392,7 +392,7 @@ Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma a
 
 <img src="../assets/concepts&gdd/projetilgif.gif" width="300">
 
-Durante o desenvolvimento do código, testamos vários valores diferentes até que chegasse em uma interface do tutorial que tenha a capacidade de ensinar como será as regras do próximo mini game que o jogador deve jogar somente com a animação e um breve texto
+Durante o desenvolvimento do código, testamos vários valores diferentes até que chegasse em uma interface do tutorial que tenha a capacidade de ensinar como será as regras do próximo mini game que o jogador deve jogar.
 
 Definição final dos valores de entrada e construção do código baseado nas fórmulas:
 
