@@ -161,7 +161,7 @@ function createHUDElements() {
   // Criar ícone
   keyPass2Icon = document.createElement("img");
   keyPass2Icon.id = "keypass2-icon";
-  keyPass2Icon.src = "assets/fase2/sprites/spriteChave.png";
+  keyPass2Icon.src = "/assets/fase2/sprites/spriteChave.png";
   keyPass2Icon.alt = "KeyPass";
   keyPass2Container.appendChild(keyPass2Icon);
 
@@ -2162,15 +2162,15 @@ initializaConfig2();
   
   // Função para pré-carregar os assets
   function preload() {
-    this.load.image('background', 'assets/fase2/background.png');
+    this.load.image('background', '/assets/fase2/background.png');
     
     // Carregar os sprites do jogador (mesmos da fase 1)
-    this.load.spritesheet('player1', 'assets/fase1/players/player1.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('player2', 'assets/fase1/players/player2.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('player3', 'assets/fase1/players/player3.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('player4', 'assets/fase1/players/player4.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('player5', 'assets/fase1/players/player5.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('player6', 'assets/fase1/players/player6.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player1', '/assets/fase1/players/player1.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player2', '/assets/fase1/players/player2.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player3', '/assets/fase1/players/player3.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player4', '/assets/fase1/players/player4.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player5', '/assets/fase1/players/player5.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player6', '/assets/fase1/players/player6.png', { frameWidth: 64, frameHeight: 64 });
   }
   
   // Função para criar a cena
