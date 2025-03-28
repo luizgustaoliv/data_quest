@@ -392,16 +392,18 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma animação para instruir oque o jogador deve fazer para concluir o mini game final da fase 2, que consiste em lançar 4 chaves em cadeados espalhados pela tela desviando dos obstáculos
 
-<img src="../assets/concepts&gdd/projetilcódigo" width="500">
-tutorial do minigame
+<img src="../assets/concepts&gdd/projetilgif.gif" width="300">
+
 Durante o desenvolvimento do código, testamos vários valores diferentes até que chegasse em uma interface do tutorial que tenha a capacidade de ensinar como será as regras do próximo mini game que o jogador deve jogar somente com a animação e um breve texto
 
-<img src="../assets/concepts&gdd/projetilgif.gif" width="200">
-<img src="../assets/concepts&gdd/formulas.jpg" width="200">
-aplicação no jogo
-funções matemáticas
+aplicação das fórmulas matemáticas
 
-<img src="../assets/concepts&gdd/console.log.png" width="200">
+<img src="../assets/concepts&gdd/projetilcódigo" width="500">
+<img src="../assets/concepts&gdd/formulas.jpg" width="500">
+
+Aplicação das fórmulas matemáticas para o código
+
+<img src="../assets/concepts&gdd/console.log.png" width="500">
 atualização das posições, velocidades e aceleração são geradas a cada frame carregado
 
 # <a name="c4"></a>4. Desenvolvimento do Jogo
