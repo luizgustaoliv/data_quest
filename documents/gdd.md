@@ -390,6 +390,20 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 *Descreva aqui a função que implementa a movimentação/animação de personagens ou elementos gráficos no seu jogo. Sua função deve se basear em alguma formulação matemática (e.g. fórmula de aceleração). A explicação do funcionamento desta função deve conter notação matemática formal de fórmulas/equações. Se necessário, crie subseções para sua descrição.*
 
+Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma animação para instruir oque o jogador deve fazer para concluir o mini game final da fase 2, que consiste em lançar 4 chaves em cadeados espalhados pela tela desviando dos obstáculos
+
+<img src="../assets/concepts&gdd/projetilcódigo" width="500">
+tutorial do minigame
+Durante o desenvolvimento do código, testamos vários valores diferentes até que chegasse em uma interface do tutorial que tenha a capacidade de ensinar como será as regras do próximo mini game que o jogador deve jogar somente com a animação e um breve texto
+
+<img src="../assets/concepts&gdd/projetilgif.gif" width="200">
+<img src="../assets/concepts&gdd/formulas.jpg" width="200">
+aplicação no jogo
+funções matemáticas
+
+<img src="../assets/concepts&gdd/console.log.png" width="200">
+atualização das posições, velocidades e aceleração são geradas a cada frame carregado
+
 # <a name="c4"></a>4. Desenvolvimento do Jogo
 
 ## 4.1. Desenvolvimento preliminar do jogo (sprint 1)
