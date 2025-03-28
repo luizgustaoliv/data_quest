@@ -309,8 +309,13 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 \# | titulo | ocorrência | autoria
 --- | --- | --- | ---
 1 | tema de abertura | tela de início | própria
-2 | tema de combate | cena de combate com inimigos comuns | Hans Zimmer
-3 | ... 
+2 | Fase 1 | Uma trilha sonora que constrói um clima de mistério ao começar a fase 1 | Própria
+3 | Diálogos | Efeito sonoro de diálogo ao iniciar algum diálogo | Própria
+4 | Portas | Som de porta abrindo quando o jogador abrir uma | Própria
+5 | Coleta de itens | Som de coleta de item ao pegar algum | Própria
+6 | Fase 2 | Uma trilha sonora para criar um clima de suspense no jogador enquanto ele explora o labirinto da fase 2 desviando dos robôs, com um piano e sintetizador. A música alterna entre momentos calmos e de tensão para manter o jogador em alerta. | Própria
+7 | Botão menu | Som de clique ao apertar algum botão | Própria
+8 | Andar | Som de passos ao mover o personagem | Própria
 
 ## 3.4. Inventário e Bestiário (sprint 3)
 
@@ -327,7 +332,7 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 \# | inimigo |  | ocorrências | função | impacto | efeito sonoro
 --- | --- | --- | --- | --- | --- | ---
 1 | professora-robô | <img src="../assets/fase1/sprite_prof.png" width="1000"> |  a partir da fase 1 | aparece e bloqueia o caminho do jogador, soltando ameaças sobre vazar dados da escola. Após alguns segundos de diálogo, o jogador recebe um questionário sobre a LGPD para "desbloqueá-la" e restaurar seu sistema para que ela volte ao normal | se o jogador acerta todas as perguntas, a professora volta ao normal e o jogador aprende mais sobre a LGPD; se o jogador erra, ele precisa refazer até acertar | sons de sistema corrompido (bipes, estática, glitch)
-2 | ...
+2 | Robôs | <img src="../assets/concepts&gdd/robo.png" width="1000"> | A partir da fase 2 | Sob controle do hacker, os robôs vigiam a escola, andando de um lado para o outro | Caso o jogador encoste no robô, ele deverá responder uma questão sobre a LGPD. Se acertar, poderá continuar de onde parou; se errar, terá que voltar ao início da fase 2. |Sons de sistema corrompido (bipes, estática, glitch)
 
 ## 3.5. Gameflow (Diagrama de cenas) (sprint 2)
 
