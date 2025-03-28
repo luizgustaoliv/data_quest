@@ -394,16 +394,19 @@ Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma a
 
 Durante o desenvolvimento do código, testamos vários valores diferentes até que chegasse em uma interface do tutorial que tenha a capacidade de ensinar como será as regras do próximo mini game que o jogador deve jogar.
 
-Definição final dos valores de entrada e construção do código baseado nas fórmulas:
+### Definição final dos valores de entrada e construção do código baseado nas fórmulas:
 
 <img src="../assets/concepts&gdd/formulas.jpg" width="500">
 <img src="../assets/concepts&gdd/projetilcódigo" width="500">
 
 Como mostrado nas imagens, para o eixo X, seguimos a formula de movimento uniforme para demonstramos a velocidade inicial(constante), ja para o eixo Y, como queríamos simular uma gravidade atuando no projetil, utilizamos a fórmula do Movimento Uniformemente Variado com velocidade inicial nula para acharmos a aceleração de 200px/s².
 
-atualização das posições, velocidades e aceleração são geradas a cada frame carregado:
+### atualização das posições, velocidades e aceleração são geradas a cada frame carregado:
 
 <img src="../assets/concepts&gdd/console.log.png" width="500">(frame 5 da animação)
+
+O diretório do arquivo pode ser acessado em: /src/fase2
+/projetiltutorial.js
 
 # <a name="c4"></a>4. Desenvolvimento do Jogo
 
