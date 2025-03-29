@@ -764,28 +764,28 @@ Para a próxima sprint, até o momento, a ideia é focar no desenvolvimento de u
 
 Na Sprint 4, o desenvolvimento do MVP do jogo foi concluído, com a entrega das funcionalidades principais que garantem a experiência central do jogo. O objetivo principal foi criar uma versão funcional e divertida que permitisse ao jogador interagir com a temática de segurança digital, especialmente com foco na LGPD.
 
-## Entregas do MVP
+### Entregas do MVP
 Fase 2 - Labirinto no Escuro: A segunda fase do jogo foi implementada, onde o jogador deve navegar por um labirinto sem luz, com o desafio de encontrar e pegar 4 chaves escondidas no mapa. Ao longo do caminho, o jogador encontra mini-robôs que fazem perguntas sobre a LGPD. A interação com esses robôs é uma forma de aprendizado, incentivando o jogador a refletir sobre temas importantes enquanto avança no jogo.
 
 <img src="../assets/#" width="500"> <img src="../assets/#" width="500">
 
-## Mini-game de Lançamento de Chave
+### Mini-game de Lançamento de Chave
 Após pegar as 4 chaves e encontrar a saída, o jogador realiza um mini-game de lançamento de chaves para desbloquear um cadeado e avançar para o próximo nível, que levará ao elevador que conduzirá à terceira fase.
 
-## Dificuldades
+### Dificuldades
 Um dos desafios foi a implementação da mecânica do labirinto sem iluminação, que exigiu ajustes nos controles de movimento do personagem para garantir uma navegação fluida, sem prejudicar a jogabilidade. Além disso, a criação das interações com os mini-robôs exigiu um equilíbrio entre o desafio das perguntas e a fluidez do jogo.
 
-## Plano futuro
+### Plano futuro
 A terceira fase está em desenvolvimento, e a melhoria na iluminação do labirinto está prevista para a próxima sprint, com foco em tornar a navegação mais intuitiva.
 
 <img src="../assets/#" width="500">
 
-## Diversidade e Protagonistas
+### Diversidade e Protagonistas
 A equipe trabalhou na atualização dos personagens jogáveis, incluindo a adição de dois novos personagens e uma reformulação dos existentes, garantindo que houvesse mais opções e representatividade no jogo. Esses personagens agora possuem características únicas que ajudam o jogador a se identificar melhor com o protagonista e a história do jogo. A principal dificuldade foi garantir que os novos personagens se encaixassem na narrativa e no estilo visual do jogo, sem comprometer a coesão do ambiente e da história. Além disso, a adição de novos diálogos e personalidades exigiu mais tempo de revisão e testes para garantir que a interação com o jogador fosse natural.
 
 <img src="../assets/#" width="500"> <img src="../assets/#" width="500">
 
-## Proposta de Valor e Canvas
+### Proposta de Valor e Canvas
 O Canvas da proposta de valor foi finalizado, solidificando a missão do jogo de educar os jogadores sobre a LGPD de forma divertida, utilizando o contexto de um ambiente escolar invadido por um hacker. A proposta de valor também foi revisada para garantir que a experiência de aprendizado fosse clara e engajante. A principal dificuldade aqui foi integrar as mecânicas de jogo e a narrativa de maneira que a mensagem sobre LGPD fosse transmitida de forma eficaz, sem que isso interrompesse a diversão e a fluidez da jogabilidade.
 
 <img src="../assets/#" width="250"> <img src="../assets/#" width="500">
