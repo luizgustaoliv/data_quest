@@ -28,7 +28,7 @@ Júnior</a>
 - <a href="https://www.linkedin.com/in/cristiano-benites-ph-d-687647a8/">Prof. Cristiano da Silva Benites</a> 
 - <a href="https://www.linkedin.com/in/filipe-gonçalves-08a55015b/">Prof. Filipe Gonçalves</a>
 - <a href="https://www.linkedin.com/in/geraldo-magela-severino-vasconcelos-22b1b220/">Prof. Geraldo Vasconcelos</a>
-- <a href="https://www.linkedin.com/in/#/">Prof. Pedro Marins Freire Teberga</a>
+- <a href="https://www.linkedin.com/in/pedroteberga/">Prof. Pedro Marins Freire Teberga</a>
 
 ## 📜 Descrição
 
