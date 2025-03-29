@@ -767,7 +767,7 @@ Na Sprint 4, o desenvolvimento do MVP do jogo foi concluído, com a entrega das 
 ### Entregas do MVP
 Fase 2 - Labirinto no Escuro: A segunda fase do jogo foi implementada, onde o jogador deve navegar por um labirinto sem luz, com o desafio de encontrar e pegar 4 chaves escondidas no mapa. Ao longo do caminho, o jogador encontra mini-robôs que fazem perguntas sobre a LGPD. A interação com esses robôs é uma forma de aprendizado, incentivando o jogador a refletir sobre temas importantes enquanto avança no jogo.
 
-<img src="../assets/#" width="500">
+<img src="../assets/concepts&gdd/fase2.png" width="500">
 
 ### Mini-game de Lançamento de Chave
 Após pegar as 4 chaves e encontrar a saída, o jogador realiza um mini-game de lançamento de chaves com lógica matematica para desbloquear 4 cadeados e avançar para o próximo nível, que levará ao elevador que conduzirá à terceira fase.
