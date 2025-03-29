@@ -802,13 +802,29 @@ A tabela abaixo apresenta os casos de teste comuns que podem ser executados a qu
 
 \# | Pré-condição | Descrição do Teste | Pós-condição
 --- | --- | --- | ---
-1 | Posicionar o jogo na tela de abertura | Iniciar o jogo desde seu início | O jogo deve iniciar da fase 1.
-2 | Posicionar o personagem próximo a um item coletável | Movimentar o personagem para coletar o item | O item deve ser removido do cenário e o efeito de coleta deverá aplicado.
-3 | Estar na fase e pegar a chave | Aproxime-se do elevador com a chave que ficará flutuando ao lado do personagem | O jogo deve acionar a transição e avançar para a próxima fase.
-4 | Posicionar o personagem próximo a um NPC interativo | Iniciar diálogo com o NPC | O diálogo deve ser exibido dentro da caixa de diálogo, com a opção de avançar a conversa usando a tecla "E".
-5 | Carregar um jogo salvo anteriormente | Iniciar a jogabilidade a partir do ponto salvo | O jogo deve carregar o progresso salvo corretamente, restaurando posição do personagem, itens coletados e status das fases sem falhas ou perda de dados."
-6 | Carregar missões | Salvar as missões para progresso | O jogo deve ficar atualizando se as missões foram concluídas."
-7 | Jogar minigames | Caso erre, pode jogar novamente | O jogo vai da opção de jogar o minigame novamente até conseguir"
+## Casos de Teste Positivos  
+
+1 | Posicionar o jogo na tela de abertura | Iniciar o jogo desde seu início | O jogo deve iniciar da fase 1.  
+2 | Posicionar o personagem próximo a um item coletável | Movimentar o personagem para coletar o item | O item deve ser removido do cenário e o efeito de coleta deverá ser aplicado.  
+3 | Estar na fase e pegar a chave | Aproxime-se do elevador com a chave que ficará flutuando ao lado do personagem | O jogo deve acionar a transição e avançar para a próxima fase.  
+4 | Posicionar o personagem próximo a um NPC interativo | Iniciar diálogo com o NPC | O diálogo deve ser exibido dentro da caixa de diálogo, com a opção de avançar a conversa usando a tecla "E".  
+5 | Carregar um jogo salvo anteriormente | Iniciar a jogabilidade a partir do ponto salvo | O jogo deve carregar o progresso salvo corretamente, restaurando posição do personagem, itens coletados e status das fases sem falhas ou perda de dados.  
+6 | Carregar missões | Salvar as missões para progresso | O jogo deve ficar atualizando se as missões foram concluídas.  
+7 | Jogar minigames | Caso erre, pode jogar novamente | O jogo vai dar a opção de jogar o minigame novamente até conseguir.  
+8 | Testar a obtenção dos quatro keycards | Coletar os quatro keycards na fase 1 | A porta deve se abrir, revelando a chave para o elevador.  
+9 | Testar a progressão para a fase 2 | Usar a chave no elevador | O jogo deve carregar a fase 2 corretamente, mantendo o progresso.  
+10 | Testar mecânica de stealth na fase 2 | Passar próximo aos robôs sem encostar neles | O jogador não é detectado e pode continuar explorando o mapa.  
+11 | Testar mecânica de perguntas da LGPD | Encostar em um robô e responder corretamente | O jogador continua do ponto onde estava.  
+12 | Testar a coleta das quatro chaves na fase 2 | Coletar as quatro chaves e se aproximar da saída | A saída deve ser liberada, permitindo o avanço no jogo.  
+
+## Casos de Teste Negativos  
+
+13 | Testar tentativa de abrir a porta sem todos os keycards | Tentar abrir a porta com menos de quatro keycards | A porta não deve abrir, e o jogador deve ser avisado da necessidade de mais keycards.  
+14 | Testar tentativa de usar o elevador sem a chave | Tentar interagir com o elevador sem ter coletado a chave | O elevador não deve funcionar e deve exibir uma mensagem informando que falta a chave.  
+15 | Testar erro em resposta à pergunta da LGPD | Encostar em um robô e errar a resposta | O jogador deve ser enviado de volta ao início do mapa.  
+16 | Testar coleta de chave em local inacessível | Tentar coletar uma chave fora do alcance do jogador | O jogador não deve conseguir coletá-la, indicando um possível erro de design no nível.  
+17 | Testar falha no salvamento do jogo | Salvar o jogo, fechar e tentar carregar o progresso salvo | Se houver falha, o progresso não será restaurado corretamente.  
+18 | Testar erro ao reiniciar o minigame após falha | Falhar em um minigame e tentar reiniciar | Se houver falha, o minigame pode travar ou não reiniciar corretamente.  
 
 Esses testes garantem que as principais mecânicas do jogo estejam funcionando corretamente ao longo do desenvolvimento e das iterações nas sprints 2 a 4.
 
