@@ -390,20 +390,26 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma animação para instruir oque o jogador deve fazer para concluir o mini game final da fase 2, que consiste em lançar 4 chaves em cadeados espalhados pela tela.
 
+<div align="center">
 <img src="../assets/concepts&gdd/projetilgif.gif" width="300">
+</div>
 
 Durante o desenvolvimento do código, testamos vários valores diferentes até que chegasse em uma interface do tutorial que tenha a capacidade de ensinar como será as regras do próximo mini game que o jogador deve jogar.
 
 ### Definição final dos valores de entrada e construção do código baseado nas fórmulas:
 
+<div align="center">
 <img src="../assets/concepts&gdd/formulas.jpg" width="500">
 <img src="../assets/concepts&gdd/projetilcódigo" width="500">
+</div>
 
 Como mostrado nas imagens, para o eixo X, seguimos a formula de movimento uniforme para demonstramos a velocidade inicial(constante), ja para o eixo Y, como queríamos simular uma gravidade atuando no projetil, utilizamos a fórmula do Movimento Uniformemente Variado com velocidade inicial nula para acharmos a aceleração de 200px/s².
 
 ### atualização das posições, velocidades e aceleração são geradas a cada frame carregado:
 
-<img src="../assets/concepts&gdd/console.log.png" width="500">(frame 5 da animação)
+<div align="center">
+<img src="../assets/concepts&gdd/console.log.png" width="500"> (frame 5 da animação)
+</div>
 
 O diretório do arquivo pode ser acessado em: /src/fase2
 /projetiltutorial.js
