@@ -832,33 +832,35 @@ Em suma, A Sprint 4 foi crucial para finalizar o MVP do jogo. Embora tenha havid
 
 ## 5.1. Casos de Teste (sprints 2 a 4)
 
-A tabela abaixo apresenta os casos de teste comuns que podem ser executados a qualquer momento para testar o funcionamento e a integração das partes do jogo.
+As tabelas abaixo apresentam os casos de teste comuns que podem ser executados a qualquer momento para testar o funcionamento e a integração das partes do jogo. A tabela de casos positivos vai verificar se o jogo funciona a partir de entradas válidas, enquanto a tabela de casos negativos testa se o programa funciona a partir de entradas inválidas.
 
-\# | Pré-condição | Descrição do Teste | Pós-condição
---- | --- | --- | ---
-## Casos de Teste Positivos  
+## Casos de Teste Positivos
 
-1 | Posicionar o jogo na tela de abertura | Iniciar o jogo desde seu início | O jogo deve iniciar da fase 1.  
-2 | Posicionar o personagem próximo a um item coletável | Movimentar o personagem para coletar o item | O item deve ser removido do cenário e o efeito de coleta deverá ser aplicado.  
-3 | Estar na fase e pegar a chave | Aproxime-se do elevador com a chave que ficará flutuando ao lado do personagem | O jogo deve acionar a transição e avançar para a próxima fase.  
-4 | Posicionar o personagem próximo a um NPC interativo | Iniciar diálogo com o NPC | O diálogo deve ser exibido dentro da caixa de diálogo, com a opção de avançar a conversa usando a tecla "E".  
-5 | Carregar um jogo salvo anteriormente | Iniciar a jogabilidade a partir do ponto salvo | O jogo deve carregar o progresso salvo corretamente, restaurando posição do personagem, itens coletados e status das fases sem falhas ou perda de dados.  
-6 | Carregar missões | Salvar as missões para progresso | O jogo deve ficar atualizando se as missões foram concluídas.  
-7 | Jogar minigames | Caso erre, pode jogar novamente | O jogo vai dar a opção de jogar o minigame novamente até conseguir.  
-8 | Testar a obtenção dos quatro keycards | Coletar os quatro keycards na fase 1 | A porta deve se abrir, revelando a chave para o elevador.  
-9 | Testar a progressão para a fase 2 | Usar a chave no elevador | O jogo deve carregar a fase 2 corretamente, mantendo o progresso.  
-10 | Testar mecânica de stealth na fase 2 | Passar próximo aos robôs sem encostar neles | O jogador não é detectado e pode continuar explorando o mapa.  
-11 | Testar mecânica de perguntas da LGPD | Encostar em um robô e responder corretamente | O jogador continua do ponto onde estava.  
-12 | Testar a coleta das quatro chaves na fase 2 | Coletar as quatro chaves e se aproximar da saída | A saída deve ser liberada, permitindo o avanço no jogo.  
+\# | Título | Pré-condição | Descrição do Teste | Pós-condição
+--- | --- | --- | --- | ---
+1 | Verificar a inicialização correta do jogo | O jogador deve estar posicionado na tela de abertura do jogo | Executar o jogo a partir do seu início, sem realizar nenhuma ação adicional antes da primeira interação possível | O jogo deve ser iniciado corretamente, carregando a Fase 1 como ponto inicial da experiência do usuário
+2 | Verificar a interação intencional entre o personagem e um item coletável | Na primeira fase, após completar os minigames, posicionar o personagem próximo a chave coletável, localizada em uma sala de aula no canto direito superior do mapa | Movimentar o personagem para fazer a coleta do item | O item deve ser removido do cenário e o efeito de coleta deverá ser aplicado no HUD, mostrando "1/1"
+3 | Validar se a transição correta entre a fase 1 e a fase 2 | Após interagir com os NPCs da professora, completar os minigames da primeira fase para depois pegar a chave que está na sala trancada, no canto direito superior do mapa | Se aproximar do elevador, no centro do mapa, com a chave que ficará flutuando ao lado do personagem | Quando houver contato entre o personagem e o elevador, o jogo deve acionar a transição e avançar para a próxima fase
+4 | Testar se a inicialização correta do diálogo | Posicionar o personagem próximo a um NPC interativo, mais fácil se for o faxineiro na fase 1 | Se estiver aparecendo um texto que diz ">E<", o jogador pode iniciar diálogo com o NPC pressionando a tecla "E" | Devem ser exibidos uma caixa de diálogo com o texto do diálogo dentro e do lado da caixa um render do personagem que estiver falando. O jogador deve ter a opção de avançar a conversa usando a tecla "E"
+5 | Validar se o jogo corretamente salva o progresso do jogador | Carregar um jogo salvo anteriormente | Iniciar a jogabilidade a partir do ponto salvo | O jogo deve carregar o progresso salvo corretamente, restaurando posição do personagem, itens coletados e status das fases sem falhas ou perda de dados.
+6 | Teste da atualização correta da tela de missões | Tentar completar uma missão, mais fácil se for a interação com o faxineiro | Abrir a tela de missões clicando no botão "missões" no canto direito da tela | Se a missão for concluída, o texto "Interagir com o faxineiro" deve trocar de branco para verde
+7 | Teste da condição de falha dos minigames da fase 1 | Interação de diálogo com o NPC da professora na fase 1 para acessar o minigame | Jogar o minigame até acabar, tentando falhar (condição de erro vai depender do minigame) | Caso falhar o minigame, o jogo vai mostrar uma caixa de texto que indica que vai dar a opção de jogar o minigame novamente até conseguir. Após isso, o jogador deve clicar de novo na caixa que diz "Ajudar a professora"
+8 | Testar a obtenção intencional dos quatro keycards na fase 1 | Depois de interagir com o faxineiro, o jogador deve explorar o mapa e interagir com as 4 professoras | Coletar os quatro keycards após completar os minigames das 4 professoras | A porta da sala no canto direito superior do mapa deve ser aberta, possibilitando a coleta da chave que dá aceeso ao elevador
+9 | Avaliar o funcionamento da mecânica de furtividade (stealth) na Fase 2 | Iniciar a segunda fase do jogo | Navegar pelo ambiente passando próximo aos robôs inimigos sem estabelecer contato físico direto | O jogador não deve ser detectado pelos robôs e deve conseguir continuar a exploração do mapa normalmente
+10 | Testar condição de vitória do minigame da fase 2 | Ter contato físico com um robô na fase 2 | Responder a pergunta que aparece na tela | Se jogador responder corretamente, deve continuar a fase na mesma posição onde estava
+11 | Testar o minigame final da fase 2 a partir da coleta de 4 chaves | Iniciar a fase 2 do jogo e explorar o mapa para coletar as 4 chaves que estão espalhadas pelo ambiente | Se aproximar da saída que fica no topo do mapa | Completar o minigame que permite avanço para a terceira fase
 
 ## Casos de Teste Negativos  
 
-13 | Testar tentativa de abrir a porta sem todos os keycards | Tentar abrir a porta com menos de quatro keycards | A porta não deve abrir, e o jogador deve ser avisado da necessidade de mais keycards.  
-14 | Testar tentativa de usar o elevador sem a chave | Tentar interagir com o elevador sem ter coletado a chave | O elevador não deve funcionar e deve exibir uma mensagem informando que falta a chave.  
-15 | Testar erro em resposta à pergunta da LGPD | Encostar em um robô e errar a resposta | O jogador deve ser enviado de volta ao início do mapa.  
-16 | Testar coleta de chave em local inacessível | Tentar coletar uma chave fora do alcance do jogador | O jogador não deve conseguir coletá-la, indicando um possível erro de design no nível.  
-17 | Testar falha no salvamento do jogo | Salvar o jogo, fechar e tentar carregar o progresso salvo | Se houver falha, o progresso não será restaurado corretamente.  
-18 | Testar erro ao reiniciar o minigame após falha | Falhar em um minigame e tentar reiniciar | Se houver falha, o minigame pode travar ou não reiniciar corretamente.  
+\# | Pré-condição | Descrição do Teste | Pós-condição
+--- | --- | --- | ---
+13 | Testar tentativa de abrir a porta sem todos os keycards | Tentar abrir a porta com menos de quatro keycards | A porta não deve abrir, e o jogador deve ser avisado da necessidade de mais keycards.
+14 | Interação com o NPC da professora para acessar o minigame | Jogar o minigame até acabar, tentando falhar | Caso falhar o minigame, o jogo vai dar a opção de jogar o minigame novamente até conseguir.
+15 | Testar tentativa de usar o elevador sem a chave | Tentar interagir com o elevador sem ter coletado a chave | O elevador não deve funcionar e deve exibir uma mensagem informando que falta a chave.  
+16 | Testar erro em resposta à pergunta da LGPD | Encostar em um robô e errar a resposta | O jogador deve ser enviado de volta ao início do mapa.  
+17 | Testar coleta de chave em local inacessível | Tentar coletar uma chave fora do alcance do jogador | O jogador não deve conseguir coletá-la, indicando um possível erro de design no nível.  
+18 | Testar falha no salvamento do jogo | Salvar o jogo, fechar e tentar carregar o progresso salvo | Se houver falha, o progresso não será restaurado corretamente.  
+19 | Testar erro ao reiniciar o minigame após falha | Falhar em um minigame e tentar reiniciar | Se houver falha, o minigame pode travar ou não reiniciar corretamente.  
 
 Esses testes garantem que as principais mecânicas do jogo estejam funcionando corretamente ao longo do desenvolvimento e das iterações nas sprints 2 a 4.
 
