@@ -214,9 +214,9 @@ O desenvolvimento de Data Quest foi inspirado em títulos específicos que servi
 
 Em um dia comum de aula na escola Bitshine, um hacker com um plano bem elaborado invade a instituição e toma controle dos sistemas internos, trancando as portas de entrada e as salas de aula com alunos dentro. Superando esses obstáculos, ele avança até o quinto e último andar, onde se encontra o Data Center que abriga os servidores com informações sensíveis sobre alunos, professores e a própria escola. O hacker assume o controle dos professores robôs, programados para ensinar os alunos.
 
-Nosso protagonista, estudante da Bitshine, perde a hora e é acordado apressadamente para se dirigir à escola. Chegando lá, não encontra opções de entrada, mas percebe uma janela que está aberta que leva até a sala do faxineiro da escola. Dentro da sala, o protagonista e o faxineiro tem uma conversa que contextualiza o conflito da Bitshine e ensina os básicos da LGPD para o jogador.
+Nosso protagonista, estudante da Bitshine, perde a hora e é acordado apressadamente para se dirigir à escola. Chegando lá, não encontra opções de entrada, mas percebe uma janela que está aberta que leva até a sala do faxineiro da escola. Dentro da sala, o protagonista e o faxineiro têm uma conversa que contextualiza o conflito da Bitshine e ensina os básicos da LGPD para o jogador.
 
-Desse ponto, o jogador, controlando o protagonista, vai progredir por cada andar coletando itens que lhe dará acesso aos diferentes andares da instituição. Ao longo do enredo, o jogador vai encontrar novos desafios que testarão seus conhecimentos sobre a LGPD. O objetivo final do protagonista é impedir o sucesso dos planos do hacker e libertar os alunos e professores das salas trancadas, enquanto o jogador aprende sobre a LGPD e a importância da proteção de dados pessoais.
+Desse ponto, o jogador, controlando o protagonista, vai progredir por cada andar coletando itens que lhe darão acesso aos diferentes andares da instituição. Ao longo do enredo, o jogador vai encontrar novos desafios que testarão seus conhecimentos sobre a LGPD. O objetivo final do protagonista é impedir o sucesso dos planos do hacker e libertar os alunos e professores das salas trancadas, enquanto o jogador aprende sobre a LGPD e a importância da proteção de dados pessoais.
 
 ## 3.2. Personagens (sprints 2 e 3)
 
