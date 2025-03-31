@@ -71,7 +71,7 @@ A missão deste projeto é educar alunos e professores de forma divertida e envo
 
 ### 1.1.5. Descrição da Solução Desenvolvida (sprint 4)
 
-Pensando na dor do parceiro, foi desenvolvido um jogo 2D do gênero RPG, visando educar alunos e professores de escolas públicas sobre o que é a LGPD e sua importância. Tendo em mente que parte do nosso público nunca teve contato com esse tema, buscamos alinhar uma solução didática, divertida e imersiva, pois sabemos que o tema da LGPD é algo denso, então precisávamos buscar uma forma de educar as crianças com um jogo que as entretessem ao mesmo tempo que as educassem. O projeto foi construído buscando estar alinhado com os valores do nosso parceiro Google for Education, valorizando a interatividade, a diversidade e o ambiente escolar. O nosso produto gera seu valor no mercado ao combinar uma proposta didática eficiente com diversão, pois todas as fases do jogo foram elaboradas visando a imersão e conscientização do aluno ou do professor com elementos comuns em video-games. Por exemplo: na primeira fase do jogo, diálogos com NPCs apresentarão conceitos básicos da LGPD ao jogador e os conhecimentos adquiridos serão testados através de minigames, buscando a fixação do conteúdo. No decorrer do jogo, as informações serão mais profundas e serão sempre "testadas" através de minigames para que o aluno não só aprenda, mas também bote em prática os conceitos aprendidos.
+Pensando na dor do parceiro, foi desenvolvido um jogo 2D do gênero RPG, visando educar alunos e professores de escolas públicas sobre o que é a LGPD e sua importância. Tendo em mente que parte do nosso público nunca teve contato com esse tema, buscamos alinhar uma solução didática, divertida e imersiva, pois sabemos que o tema da LGPD é algo denso, então precisávamos buscar uma forma de educar as crianças com um jogo que as entretessem ao mesmo tempo que as educassem. O projeto foi construído buscando estar alinhado com os valores do nosso parceiro Google for Education, valorizando a interatividade, a diversidade e o ambiente escolar. O nosso produto gera seu valor no mercado ao combinar uma proposta didática eficiente com diversão, pois todas as fases do jogo foram elaboradas visando a imersão e conscientização do aluno ou do professor com elementos comuns em video-games. Por exemplo: na primeira fase do jogo, diálogos com NPCs apresentarão conceitos básicos da LGPD ao jogador e os conhecimentos adquiridos serão testados através de minigames, buscando a fixação do conteúdo. No decorrer do jogo, as informações serão mais profundas e serão sempre "testadas" através de minigames para que o aluno não só aprenda, mas também coloque em prática os conceitos aprendidos.
 
 ### 1.1.6. Matriz de Riscos (sprint 4)
 
@@ -870,6 +870,11 @@ Governo Brasileiro. Etnias e miscigenação. Disponível em: [Art](https://www.g
 
 INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
 SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
+
+Seção 1.1.5
+
+Futuro da Sala de Aula: O Google for Education destaca tendências como responsabilidade digital, competências para a vida e aprendizagem centrada no aluno, que podem orientar o desenvolvimento do seu jogo. 
+https://edu.google.com/intl/ALL_br/future-of-the-classroom/
 
 # <a name="c8"></a>Anexos
 
