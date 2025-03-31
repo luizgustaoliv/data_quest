@@ -222,7 +222,7 @@ Desse ponto, o jogador, controlando o protagonista, vai progredir por cada andar
 
 ### 3.2.1. Controláveis
 
-Os jogadores poderão escolher entre seis personagens disponíveis, que representará aluno desajeitado que enfrenta dificuldades com horários e costuma não prestar atenção nas aulas. No entanto, ao longo do jogo, essa falta de atenção se transforma em uma vantagem, pois os personagens se encontram em uma situação onde esses conhecimentos aparentemente negligenciados se tornam suas armas mais poderosas.
+Os jogadores poderão escolher entre seis personagens disponíveis, que representarão alunos desajeitados que enfrenta dificuldades com horários e costuma não prestar atenção nas aulas. No entanto, ao longo do jogo, essa falta de atenção se transforma em uma vantagem, pois os personagens se encontram em uma situação em que esses conhecimentos aparentemente negligenciados se tornam suas armas mais poderosas.
 
 Conceitos iniciais da face do personagem:
 <br>
