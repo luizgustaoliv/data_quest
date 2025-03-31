@@ -874,7 +874,12 @@ SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia M
 Seção 1.1.5
 
 Futuro da Sala de Aula: O Google for Education destaca tendências como responsabilidade digital, competências para a vida e aprendizagem centrada no aluno, que podem orientar o desenvolvimento do seu jogo. 
-https://edu.google.com/intl/ALL_br/future-of-the-classroom/
+(https://edu.google.com/intl/ALL_br/future-of-the-classroom)
+
+Seção 1.1.6
+
+Matriz de Riscos (Matriz de Probabilidade e Impacto)": Este artigo explora a construção e aplicação da matriz de riscos, destacando sua importância na priorização de ameaças e oportunidades em projetos.
+(https://ferramentasdaqualidade.org/matriz-de-riscos-matriz-de-probabilidade-e-impacto)
 
 # <a name="c8"></a>Anexos
 
