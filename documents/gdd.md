@@ -340,16 +340,16 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 *Descreva a trilha sonora do jogo, indicando quais músicas serão utilizadas no mundo e nas fases. Utilize listas ou tabelas para organizar esta seção. Caso utilize material de terceiros em licença Creative Commons, não deixe de citar os autores/fontes.*
 
 *Exemplo de tabela*
-\# | titulo | ocorrência | autoria
+\# | Título | Ocorrência | Autoria
 --- | --- | --- | ---
-1 | tema de abertura | tela de início | própria
-2 | Fase 1 | Uma trilha sonora que constrói um clima de mistério ao começar a fase 1 | Própria
-3 | Diálogos | Efeito sonoro de diálogo ao iniciar algum diálogo | Própria
-4 | Portas | Som de porta abrindo quando o jogador abrir uma | Própria
-5 | Coleta de itens | Som de coleta de item ao pegar algum | Própria
+1 | Tema de abertura | Tela de início. | Própria
+2 | Fase 1 | Uma trilha sonora que constrói um clima de mistério ao começar a fase 1. | Própria
+3 | Diálogos | Efeito sonoro de diálogo ao iniciar algum diálogo. | Própria
+4 | Portas | Som de porta abrindo quando o jogador abrir uma porta. | Própria
+5 | Coleta de itens | Som de coleta de item ao pegar algum colecionável. | Própria
 6 | Fase 2 | Uma trilha sonora para criar um clima de suspense no jogador enquanto ele explora o labirinto da fase 2 desviando dos robôs, com um piano e sintetizador. A música alterna entre momentos calmos e de tensão para manter o jogador em alerta. | Própria
-7 | Botão menu | Som de clique ao apertar algum botão | Própria
-8 | Andar | Som de passos ao mover o personagem | Própria
+7 | Botão menu | Som de clique ao apertar algum botão. | Própria
+8 | Andar | Som de passos ao mover o personagem. | Própria
 
 ## 3.4. Inventário e Bestiário (sprint 3)
 
