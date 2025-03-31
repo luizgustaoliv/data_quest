@@ -1,4 +1,5 @@
 // Adicionar no início do arquivo, antes de qualquer outro código
+//Fase 2
 (function removePhase1HUDs() {
     // Remover os elementos do DOM imediatamente
     const elementsToRemove = [
