@@ -101,7 +101,41 @@ Pensando na dor do parceiro, foi desenvolvido um jogo 2D do gênero RPG, visando
 ### 1.1.7. Objetivos, Metas e Indicadores (sprint 4)
 
 ### Uma meta S.M.A.R.T para nosso projeto: 
-Desenvolver o MVP de um jogo educativo 2D que ensine sobre a LGPD, voltado para alunos e professores de escolas públicas, contendo no mínimo três fases interativas com minigames e segmentos de diálogos que transmitem o conteúdo de forma atrativa e didática, com prazo até o dia 11 de abril de 2025, e alcançando uma nota média mínima de 8,5 nos artefatos que compõem este projeto.
+Meta 1 - Finalizar o MVP do jogo educativo
+
+Específica: Desenvolver um jogo 2D educativo sobre LGPD para alunos e professores de escolas públicas.
+
+Mensurável: O jogo deve conter no mínimo três fases interativas com minigames e diálogos educativos.
+
+Alcançável: O escopo do jogo está planejado considerando o tempo e os recursos disponíveis.
+
+Relevante: Ensinar LGPD de forma lúdica e acessível, alinhado aos valores do Google for Education.
+
+Temporal: Entrega final até 11 de abril de 2025.
+
+Meta 2 - Garantir qualidade e avaliação positiva
+
+Específica: Alcançar uma nota média mínima de 8,5 nos artefatos do projeto.
+
+Mensurável: Acompanhar avaliações dos professores e feedbacks ao longo do desenvolvimento.
+
+Alcançável: Melhorar iterativamente o jogo com base nos feedbacks recebidos.
+
+Relevante: A nota reflete a qualidade e a didática do jogo, validando seu impacto educacional.
+
+Temporal: Monitoramento contínuo até a entrega final em abril de 2025.
+
+Meta 3 - Criar uma experiência interativa e envolvente
+
+Específica: Implementar elementos de gamificação (diálogos, desafios e minigames) para reforçar o aprendizado.
+
+Mensurável: Cada fase deve conter pelo menos um minigame que teste conhecimentos adquiridos.
+
+Alcançável: Desenvolver mecânicas simples, porém eficazes, dentro do tempo disponível.
+
+Relevante: O engajamento dos alunos e professores será essencial para a efetividade do jogo.
+
+Temporal: Implementação ao longo das sprints, com testes antes da entrega final.
 
 ## 1.2. Requisitos do Projeto (sprints 1 e 2)
 
@@ -880,6 +914,12 @@ Seção 1.1.6
 
 Matriz de Riscos (Matriz de Probabilidade e Impacto)": Este artigo explora a construção e aplicação da matriz de riscos, destacando sua importância na priorização de ameaças e oportunidades em projetos.
 (https://ferramentasdaqualidade.org/matriz-de-riscos-matriz-de-probabilidade-e-impacto)
+
+Seção 1.1.7
+
+O que é meta SMART e como definir em sua empresa:
+
+(https://sebrae.com.br/sites/PortalSebrae/artigos/o-que-e-meta-smart-e-como-definir-em-sua-empresa%2Cfd5cd6387eab5810VgnVCM1000001b00320aRCRD)
 
 # <a name="c8"></a>Anexos
 
