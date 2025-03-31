@@ -365,7 +365,7 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 \# | Inimigo |  | Ocorrências | Função | Impacto | Efeito Sonoro
 --- | --- | --- | --- | --- | --- | ---
-1 | Professora-robô | <img src="../assets/fase1/sprite_prof.png" width="1000"> | A partir da fase 1 | Aparece e bloqueia o caminho do jogador, soltando ameaças sobre vazar dados da escola. Após alguns segundos de diálogo, o jogador recebe um questionário sobre a LGPD para "desbloqueá-la" e restaurar seu sistema para que ela volte ao normal | se o jogador acerta todas as perguntas, a professora volta ao normal e o jogador aprende mais sobre a LGPD; se o jogador erra, ele precisa refazer até acertar | Sons de sistema corrompido (bipes, estática, glitch)
+1 | Professora-robô | <img src="../assets/fase1/sprite_prof.png" width="1000"> | A partir da fase 1 | Aparece e bloqueia o caminho do jogador, soltando ameaças sobre vazar dados da escola. Após alguns segundos de diálogo, o jogador recebe um questionário sobre a LGPD para "desbloqueá-la" e restaurar seu sistema para que ela volte ao normal. | Se o jogador acerta todas as perguntas, a professora volta ao normal e o jogador aprende mais sobre a LGPD; se o jogador erra, ele precisa refazer até acertar. | Sons de sistema corrompido (bipes, estática, glitch)
 2 | Robôs | <img src="../assets/concepts&gdd/robo.png" width="1000"> | A partir da fase 2 | Sob controle do hacker, os robôs vigiam a escola, andando de um lado para o outro | Caso o jogador encoste no robô, ele deverá responder uma questão sobre a LGPD. Se acertar, poderá continuar de onde parou; se errar, terá que voltar ao início da fase 2. | Sons de sistema corrompido (bipes, estática, glitch)
 
 ## 3.5. Gameflow (Diagrama de cenas) (sprint 2)
@@ -382,16 +382,16 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
  - O jogador precisa superar cada fase completando as tarefas específicas para progredir na história. Seu objetivo final é libertar a escola da invasão hacker.
 
 #### Regras gerais do jogo:
- - O jogador precisa concluir os minigames de uma fase para ganhar itens colecionáveis que lhe dará acesso a fase seguinte.
+ - O jogador precisa concluir os minigames de uma fase para ganhar itens colecionáveis que lhe darão acesso à fase seguinte.
  - Caso o jogador fracasse ao concluir um minigame, ele terá a chance de fazê-lo novamente até acertar.
- - O jogo só vai ser finalizado caso todas as fases e objetivos forem concluídos.
- - Ao decorrer das fases o jogador terá contato com novos conceitos e conhecimentos sobre a LGPD.
+ - O jogo só vai ser finalizado caso todas as fases e objetivos sejam concluídos.
+ - No decorrer das fases o jogador terá contato com novos conceitos e conhecimentos sobre a LGPD.
 
 #### Regras da **Fase 1**:
  - O jogador deverá interagir com os professores e conquistar desafios na forma de minigames com base nos conhecimentos adquiridos anteriormente ao interagir com o faxineiro no início da fase. Para cada minigame concluído, ele receberá uma parte de um key-card.
  - Ao coletar quatro partes, uma sala especial será desbloqueada, onde encontrará uma chave. Essa chave será utilizada para desbloquear o elevador que dá acesso à próxima fase.
  - O jogador só conseguirá uma parte de keycard caso ele conclua um minigame, respeitando as regras de cada um. Por exemplo, se o jogador acertar a maioria das perguntas em um quiz, ganhará uma parte de keycard.
- - Para acessar a próxima fase o jogador deve se aproximar da chave e após isso ir até o elevador, onde a transição entre fases ocorrerá automaticamente.
+ - Para acessar a próxima fase, o jogador deve se aproximar da chave e após isso ir até o elevador, onde a transição entre fases ocorrerá automaticamente.
 
 ## 3.7. Mecânicas do jogo (sprint 3)
 
@@ -402,12 +402,12 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
  - **D** ou **Seta para direita**: Movimentação para direita.
 
 #### Tecla de interação com o cenário (portas e objetos): **"Espaço"**: 
- - Use a tecla **"Espaço"** para abrir portas, coletar itens e para demais interações com o cenário.
+ - Usar a tecla **"Espaço"** para abrir portas, coletar itens e para demais interações com o cenário.
  - Na primeira fase você deverá user a tecla "espaço" para abrir a porta da sala de faxina após ter falado com o faxineiro, para poder ter acesso ao restante do mapa.
 
 #### Tecla de interação com NPCs: **"E"**:
  - Use a tecla **"E"** para interagir com os NPCs.
- - Na primeira fase você poderá interagir com o NPC do faxineiro, que dará um contexto geral da situação da fase ao personagem e com os NPCs dos professores robôs, que deverão ter seus sistemas reiniciados através de um minigame de perguntas e respostas. 
+ - Na primeira fase você poderá interagir com o NPC do faxineiro, que dará um contexto geral da situação da fase ao personagem e com os NPCs dos professores robôs, que precisarão ter seus sistemas reiniciados através de um minigame de perguntas e respostas. 
 
 #### Botão de "Missões":
  - Durante todas as fases, o jogador terá acesso a um botão "Missões", localizado no canto superior direito da tela. Ao clicar nele, poderá visualizar os objetivos específicos da fase atual, garantindo que saiba quais tarefas precisa concluir para avançar no jogo. Isso ajudará na organização das ações e no acompanhamento do progresso rumo à libertação da escola da invasão hacker.
@@ -417,18 +417,18 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
  - Após a interação, deverá abrir a porta da sala (pressionando "Espaço") e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
  - Ao encontrar os professores, o jogador deverá interagir com eles (pressionando "E") e participar de um minigame, que pode variar entre um perguntas e respostas ou um que é jogo da forca, para que o professor possa "reiniciar seus sistemas". Caso o minigame seja feito com sucesso, o jogador ganhará 1 pedaço de um keycard.
  - O jogador deverá ajudar os 4 professores para ganhar o total de 4 pedaços de um keycard, para que ele possa acessar uma sala que vai conter uma chave.
- - Ao acessar a sala com a chave, o jogador deve se aproximar dela para coletá-la e depois andar em direção até o elevador, que lhe dará acesso a fase 2.
+ - Ao acessar a sala com a chave, o jogador deve se aproximar dela para coletá-la e depois andar em direção ao elevador, que lhe dará acesso à fase 2.
 
 
 ## 3.8. Implementação Matemática de Animação/Movimento (sprint 4)
 
-Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma animação para instruir oque o jogador deve fazer para concluir o mini game final da fase 2, que consiste em lançar 4 chaves em cadeados espalhados pela tela.
+Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma animação para instruir oque o jogador deve fazer para concluir o minigame final da fase 2, que consiste em lançar 4 chaves em cadeados espalhados pela tela.
 
 <div align="center">
 <img src="../assets/concepts&gdd/projetilgif.gif" width="300">
 </div>
 
-Durante o desenvolvimento do código, testamos vários valores diferentes até que chegasse em uma interface do tutorial que tenha a capacidade de ensinar como será as regras do próximo mini game que o jogador deve jogar.
+Durante o desenvolvimento do código, testamos vários valores diferentes até que chegássemos em uma interface do tutorial que tenha a capacidade de ensinar como serão as regras do próximo minigame que o jogador deve jogar.
 
 ### Definição final dos valores de entrada e construção do código baseado nas fórmulas:
 
@@ -437,9 +437,9 @@ Durante o desenvolvimento do código, testamos vários valores diferentes até q
 <img src="../assets/concepts&gdd/projetilcódigo" width="500">
 </div>
 
-Como mostrado nas imagens, para o eixo X, seguimos a formula de movimento uniforme para demonstramos a velocidade inicial(constante), ja para o eixo Y, como queríamos simular uma gravidade atuando no projetil, utilizamos a fórmula do Movimento Uniformemente Variado com velocidade inicial nula para acharmos a aceleração de 200px/s².
+Como mostrado nas imagens, para o eixo X, seguimos a fórmula de movimento uniforme para demonstramos a velocidade inicial (constante), já para o eixo Y, como queríamos simular uma gravidade atuando no projétil, utilizamos a fórmula do Movimento Uniformemente Variado com velocidade inicial nula para acharmos a aceleração de 200px/s².
 
-### atualização das posições, velocidades e aceleração são geradas a cada frame carregado:
+### Atualização das posições, velocidades e aceleração são geradas a cada frame carregado:
 
 <div align="center">
 <img src="../assets/concepts&gdd/console.log.png" width="500"> (frame 5 da animação)
