@@ -71,7 +71,7 @@ A missão deste projeto é educar alunos e professores de forma divertida e envo
 
 ### 1.1.5. Descrição da Solução Desenvolvida (sprint 4)
 
-Pensando na dor do parceiro, foi desenvolvido um jogo 2D do gênero RPG, visando educar alunos e professores de escolas públicas sobre o que é a LGPD e sua importância. Tendo em mente que parte do nosso público nunca teve contato com esse tema, buscamos alinhar uma solução didática, divertida e imersiva, pois sabemos que o tema da LGPD é algo denso, então precisávamos buscar uma forma de educar as crianças com um jogo que as entretessem ao mesmo tempo que as educassem. O projeto foi construído buscando estar alinhado com os valores do nosso parceiro Google for Education, valorizando a interatividade, a diversidade e o ambiente escolar. O nosso produto gera seu valor no mercado ao combinar uma proposta didática eficiente com diversão, pois todas as fases do jogo foram elaboradas visando a imersão e conscientização do aluno ou do professor com elementos comuns em video-games. Por exemplo: na primeira fase do jogo, diálogos com NPCs apresentarão conceitos básicos da LGPD ao jogador e os conhecimentos adquiridos serão testados através de minigames, buscando a fixação do conteúdo. No decorrer do jogo, as informações serão mais profundas e serão sempre "testadas" através de minigames para que o aluno não só aprenda, mas também bote em prática os conceitos aprendidos.
+Pensando na dor do parceiro, foi desenvolvido um jogo 2D do gênero RPG, visando educar alunos e professores de escolas públicas sobre o que é a LGPD e sua importância. Tendo em mente que parte do nosso público nunca teve contato com esse tema, buscamos alinhar uma solução didática, divertida e imersiva, pois sabemos que o tema da LGPD é algo denso, então precisávamos buscar uma forma de educar as crianças com um jogo que as entretessem ao mesmo tempo que as educassem. O projeto foi construído buscando estar alinhado com os valores do nosso parceiro Google for Education, valorizando a interatividade, a diversidade e o ambiente escolar. O nosso produto gera seu valor no mercado ao combinar uma proposta didática eficiente com diversão, pois todas as fases do jogo foram elaboradas visando a imersão e conscientização do aluno ou do professor com elementos comuns em video-games. Por exemplo: na primeira fase do jogo, diálogos com NPCs apresentarão conceitos básicos da LGPD ao jogador e os conhecimentos adquiridos serão testados através de minigames, buscando a fixação do conteúdo. No decorrer do jogo, as informações serão mais profundas e serão sempre "testadas" através de minigames para que o aluno não só aprenda, mas também coloque em prática os conceitos aprendidos.
 
 ### 1.1.6. Matriz de Riscos (sprint 4)
 
@@ -101,7 +101,41 @@ Pensando na dor do parceiro, foi desenvolvido um jogo 2D do gênero RPG, visando
 ### 1.1.7. Objetivos, Metas e Indicadores (sprint 4)
 
 ### Uma meta S.M.A.R.T para nosso projeto: 
-Desenvolver o MVP de um jogo educativo 2D que ensine sobre a LGPD, voltado para alunos e professores de escolas públicas, contendo no mínimo três fases interativas com minigames e segmentos de diálogos que transmitem o conteúdo de forma atrativa e didática, com prazo até o dia 11 de abril de 2025, e alcançando uma nota média mínima de 8,5 nos artefatos que compõem este projeto.
+Meta 1 - Finalizar o MVP do jogo educativo
+
+Específica: Desenvolver um jogo 2D educativo sobre LGPD para alunos e professores de escolas públicas.
+
+Mensurável: O jogo deve conter no mínimo três fases interativas com minigames e diálogos educativos.
+
+Alcançável: O escopo do jogo está planejado considerando o tempo e os recursos disponíveis.
+
+Relevante: Ensinar LGPD de forma lúdica e acessível, alinhado aos valores do Google for Education.
+
+Temporal: Entrega final até 11 de abril de 2025.
+
+Meta 2 - Garantir qualidade e avaliação positiva
+
+Específica: Alcançar uma nota média mínima de 8,5 nos artefatos do projeto.
+
+Mensurável: Acompanhar avaliações dos professores e feedbacks ao longo do desenvolvimento.
+
+Alcançável: Melhorar iterativamente o jogo com base nos feedbacks recebidos.
+
+Relevante: A nota reflete a qualidade e a didática do jogo, validando seu impacto educacional.
+
+Temporal: Monitoramento contínuo até a entrega final em abril de 2025.
+
+Meta 3 - Criar uma experiência interativa e envolvente
+
+Específica: Implementar elementos de gamificação (diálogos, desafios e minigames) para reforçar o aprendizado.
+
+Mensurável: Cada fase deve conter pelo menos um minigame que teste conhecimentos adquiridos.
+
+Alcançável: Desenvolver mecânicas simples, porém eficazes, dentro do tempo disponível.
+
+Relevante: O engajamento dos alunos e professores será essencial para a efetividade do jogo.
+
+Temporal: Implementação ao longo das sprints, com testes antes da entrega final.
 
 ## 1.2. Requisitos do Projeto (sprints 1 e 2)
 
@@ -388,7 +422,31 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 ## 3.8. Implementação Matemática de Animação/Movimento (sprint 4)
 
-*Descreva aqui a função que implementa a movimentação/animação de personagens ou elementos gráficos no seu jogo. Sua função deve se basear em alguma formulação matemática (e.g. fórmula de aceleração). A explicação do funcionamento desta função deve conter notação matemática formal de fórmulas/equações. Se necessário, crie subseções para sua descrição.*
+Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma animação para instruir oque o jogador deve fazer para concluir o mini game final da fase 2, que consiste em lançar 4 chaves em cadeados espalhados pela tela.
+
+<div align="center">
+<img src="../assets/concepts&gdd/projetilgif.gif" width="300">
+</div>
+
+Durante o desenvolvimento do código, testamos vários valores diferentes até que chegasse em uma interface do tutorial que tenha a capacidade de ensinar como será as regras do próximo mini game que o jogador deve jogar.
+
+### Definição final dos valores de entrada e construção do código baseado nas fórmulas:
+
+<div align="center">
+<img src="../assets/concepts&gdd/formulas.jpg" width="500">
+<img src="../assets/concepts&gdd/projetilcódigo" width="500">
+</div>
+
+Como mostrado nas imagens, para o eixo X, seguimos a formula de movimento uniforme para demonstramos a velocidade inicial(constante), ja para o eixo Y, como queríamos simular uma gravidade atuando no projetil, utilizamos a fórmula do Movimento Uniformemente Variado com velocidade inicial nula para acharmos a aceleração de 200px/s².
+
+### atualização das posições, velocidades e aceleração são geradas a cada frame carregado:
+
+<div align="center">
+<img src="../assets/concepts&gdd/console.log.png" width="500"> (frame 5 da animação)
+</div>
+
+O diretório do arquivo pode ser acessado em: /src/fase2
+/projetiltutorial.js
 
 # <a name="c4"></a>4. Desenvolvimento do Jogo
 
@@ -738,7 +796,33 @@ Para a próxima sprint, até o momento, a ideia é focar no desenvolvimento de u
 
 ## 4.4. Desenvolvimento final do MVP (sprint 4)
 
-*Descreva e ilustre aqui o desenvolvimento da versão final do jogo, explicando brevemente o que foi entregue em termos de MVP. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e planos futuros.*
+Na Sprint 4, o desenvolvimento do MVP do jogo foi concluído, com a entrega das funcionalidades principais que garantem a experiência central do jogo. O objetivo principal foi criar uma versão funcional e divertida que permitisse ao jogador interagir com a temática de segurança digital, especialmente com foco na LGPD.
+
+### Entregas do MVP
+Fase 2 - Labirinto no Escuro: A segunda fase do jogo foi implementada, onde o jogador deve navegar por um labirinto sem luz, com o desafio de encontrar e pegar 4 chaves escondidas no mapa. Ao longo do caminho, o jogador encontra mini-robôs que fazem perguntas sobre a LGPD. A interação com esses robôs é uma forma de aprendizado, incentivando o jogador a refletir sobre temas importantes enquanto avança no jogo.
+
+<img src="../assets/concepts&gdd/fase2.png" width="500">
+
+### Mini-game de Lançamento de Chave
+Após pegar as 4 chaves e encontrar a saída, o jogador realiza um mini-game de lançamento de chaves com lógica matematica para desbloquear 4 cadeados e avançar para o próximo nível, que levará ao elevador que conduzirá à terceira fase.
+
+### Dificuldades
+Um dos desafios foi a implementação da mecânica do labirinto sem iluminação, que exigiu ajustes nos controles de movimento do personagem para garantir uma navegação fluida, sem prejudicar a jogabilidade. Além disso, a criação das interações com os mini-robôs exigiu um equilíbrio entre o desafio das perguntas e a fluidez do jogo.
+
+### Plano futuro
+A terceira fase está em desenvolvimento, e a melhoria na iluminação do labirinto está prevista para a próxima sprint, com foco em tornar a navegação mais intuitiva.
+
+### Diversidade e Protagonistas
+A equipe trabalhou na atualização dos personagens jogáveis, incluindo a adição de dois novos personagens e uma reformulação dos existentes, garantindo que houvesse mais opções e representatividade no jogo. Esses personagens agora possuem características únicas que ajudam o jogador a se identificar melhor com o protagonista e a história do jogo. A principal dificuldade foi garantir que os novos personagens se encaixassem na narrativa e no estilo visual do jogo, sem comprometer a coesão do ambiente e da história. Além disso, a adição de novos diálogos e personalidades exigiu mais tempo de revisão e testes para garantir que a interação com o jogador fosse natural.
+
+<img src="../assets/concepts&gdd/diversidade.png" width="500">
+
+### Proposta de Valor e Canvas
+O Canvas da proposta de valor foi finalizado, solidificando a missão do jogo de educar os jogadores sobre a LGPD de forma divertida, utilizando o contexto de um ambiente escolar invadido por um hacker. A proposta de valor também foi revisada para garantir que a experiência de aprendizado fosse clara e engajante. A principal dificuldade aqui foi integrar as mecânicas de jogo e a narrativa de maneira que a mensagem sobre LGPD fosse transmitida de forma eficaz, sem que isso interrompesse a diversão e a fluidez da jogabilidade.
+
+<img src="../assets/concepts&gdd/canva.png" width="1000">
+
+Em suma, A Sprint 4 foi crucial para finalizar o MVP do jogo. Embora tenha havido desafios técnicos relacionados à navegação no labirinto e ao equilíbrio entre as mecânicas de aprendizado e diversão, o jogo agora apresenta uma versão funcional com a maioria das interações essenciais e com um enredo que introduz o tema de segurança digital e LGPD de maneira divertida. Os planos para as próximas fases incluem o refinamento das mecânicas de jogo e a implementação da terceira fase.
 
 ## 4.5. Revisão do MVP (sprint 5)
 
@@ -752,13 +836,29 @@ A tabela abaixo apresenta os casos de teste comuns que podem ser executados a qu
 
 \# | Pré-condição | Descrição do Teste | Pós-condição
 --- | --- | --- | ---
-1 | Posicionar o jogo na tela de abertura | Iniciar o jogo desde seu início | O jogo deve iniciar da fase 1.
-2 | Posicionar o personagem próximo a um item coletável | Movimentar o personagem para coletar o item | O item deve ser removido do cenário e o efeito de coleta deverá aplicado.
-3 | Estar na fase e pegar a chave | Aproxime-se do elevador com a chave que ficará flutuando ao lado do personagem | O jogo deve acionar a transição e avançar para a próxima fase.
-4 | Posicionar o personagem próximo a um NPC interativo | Iniciar diálogo com o NPC | O diálogo deve ser exibido dentro da caixa de diálogo, com a opção de avançar a conversa usando a tecla "E".
-5 | Carregar um jogo salvo anteriormente | Iniciar a jogabilidade a partir do ponto salvo | O jogo deve carregar o progresso salvo corretamente, restaurando posição do personagem, itens coletados e status das fases sem falhas ou perda de dados."
-6 | Carregar missões | Salvar as missões para progresso | O jogo deve ficar atualizando se as missões foram concluídas."
-7 | Jogar minigames | Caso erre, pode jogar novamente | O jogo vai da opção de jogar o minigame novamente até conseguir"
+## Casos de Teste Positivos  
+
+1 | Posicionar o jogo na tela de abertura | Iniciar o jogo desde seu início | O jogo deve iniciar da fase 1.  
+2 | Posicionar o personagem próximo a um item coletável | Movimentar o personagem para coletar o item | O item deve ser removido do cenário e o efeito de coleta deverá ser aplicado.  
+3 | Estar na fase e pegar a chave | Aproxime-se do elevador com a chave que ficará flutuando ao lado do personagem | O jogo deve acionar a transição e avançar para a próxima fase.  
+4 | Posicionar o personagem próximo a um NPC interativo | Iniciar diálogo com o NPC | O diálogo deve ser exibido dentro da caixa de diálogo, com a opção de avançar a conversa usando a tecla "E".  
+5 | Carregar um jogo salvo anteriormente | Iniciar a jogabilidade a partir do ponto salvo | O jogo deve carregar o progresso salvo corretamente, restaurando posição do personagem, itens coletados e status das fases sem falhas ou perda de dados.  
+6 | Carregar missões | Salvar as missões para progresso | O jogo deve ficar atualizando se as missões foram concluídas.  
+7 | Jogar minigames | Caso erre, pode jogar novamente | O jogo vai dar a opção de jogar o minigame novamente até conseguir.  
+8 | Testar a obtenção dos quatro keycards | Coletar os quatro keycards na fase 1 | A porta deve se abrir, revelando a chave para o elevador.  
+9 | Testar a progressão para a fase 2 | Usar a chave no elevador | O jogo deve carregar a fase 2 corretamente, mantendo o progresso.  
+10 | Testar mecânica de stealth na fase 2 | Passar próximo aos robôs sem encostar neles | O jogador não é detectado e pode continuar explorando o mapa.  
+11 | Testar mecânica de perguntas da LGPD | Encostar em um robô e responder corretamente | O jogador continua do ponto onde estava.  
+12 | Testar a coleta das quatro chaves na fase 2 | Coletar as quatro chaves e se aproximar da saída | A saída deve ser liberada, permitindo o avanço no jogo.  
+
+## Casos de Teste Negativos  
+
+13 | Testar tentativa de abrir a porta sem todos os keycards | Tentar abrir a porta com menos de quatro keycards | A porta não deve abrir, e o jogador deve ser avisado da necessidade de mais keycards.  
+14 | Testar tentativa de usar o elevador sem a chave | Tentar interagir com o elevador sem ter coletado a chave | O elevador não deve funcionar e deve exibir uma mensagem informando que falta a chave.  
+15 | Testar erro em resposta à pergunta da LGPD | Encostar em um robô e errar a resposta | O jogador deve ser enviado de volta ao início do mapa.  
+16 | Testar coleta de chave em local inacessível | Tentar coletar uma chave fora do alcance do jogador | O jogador não deve conseguir coletá-la, indicando um possível erro de design no nível.  
+17 | Testar falha no salvamento do jogo | Salvar o jogo, fechar e tentar carregar o progresso salvo | Se houver falha, o progresso não será restaurado corretamente.  
+18 | Testar erro ao reiniciar o minigame após falha | Falhar em um minigame e tentar reiniciar | Se houver falha, o minigame pode travar ou não reiniciar corretamente.  
 
 Esses testes garantem que as principais mecânicas do jogo estejam funcionando corretamente ao longo do desenvolvimento e das iterações nas sprints 2 a 4.
 
@@ -804,6 +904,22 @@ Governo Brasileiro. Etnias e miscigenação. Disponível em: [Art](https://www.g
 
 INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
 SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
+
+Seção 1.1.5
+
+Futuro da Sala de Aula: O Google for Education destaca tendências como responsabilidade digital, competências para a vida e aprendizagem centrada no aluno, que podem orientar o desenvolvimento do seu jogo. 
+(https://edu.google.com/intl/ALL_br/future-of-the-classroom)
+
+Seção 1.1.6
+
+Matriz de Riscos (Matriz de Probabilidade e Impacto)": Este artigo explora a construção e aplicação da matriz de riscos, destacando sua importância na priorização de ameaças e oportunidades em projetos.
+(https://ferramentasdaqualidade.org/matriz-de-riscos-matriz-de-probabilidade-e-impacto)
+
+Seção 1.1.7
+
+O que é meta SMART e como definir em sua empresa:
+
+(https://sebrae.com.br/sites/PortalSebrae/artigos/o-que-e-meta-smart-e-como-definir-em-sua-empresa%2Cfd5cd6387eab5810VgnVCM1000001b00320aRCRD)
 
 # <a name="c8"></a>Anexos
 
