@@ -1797,7 +1797,7 @@ if (window.fase1Initialized) {
         if (keyCollected) {
           // Carregar fase2.js dinamicamente
           const script = document.createElement('script');
-          script.src = '/src/fase2/fase2.js';
+          script.src = 'src/fase2/fase2.js';
           script.onload = function() {
             console.log("fase2.js carregado com sucesso");
             if (typeof window.initFase2 === 'function') {
