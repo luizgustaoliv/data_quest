@@ -1925,7 +1925,7 @@ if (window.fase1Initialized) {
       professorNpc4.body.setImmovable(true);
 
       // Criação da chave
-      key = this.physics.add.sprite(1000, 420, "key", 0);
+      key = this.physics.add.sprite(1000, 300, "key", 0);
       key.setCollideWorldBounds(true);
       key.setScale(0.8);
       key.setOrigin(0.2, 1);
@@ -2095,7 +2095,7 @@ if (window.fase1Initialized) {
         if (debugCollisions) {
           rect.setStrokeStyle(2, color);
           rect.setFillStyle(color, 0.2);
-          rect.setVisible(true); // Visível no modo debug
+          rect.setVisible(false); // Visível no modo debug
         } else {
           rect.setVisible(false); // Invisível em produção
         }

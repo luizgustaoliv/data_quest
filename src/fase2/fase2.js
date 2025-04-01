@@ -313,7 +313,7 @@ let estantes1Layer, estantes2Layer, estantes3Layer, estantes4Layer;
 let darkness2;
 let lightMask2;
 let spotlight2;
-let lightRadius2 = 10000; // Raio da luz ao redor do jogador tem que ser 100
+let lightRadius2 = 100; // Raio da luz ao redor do jogador tem que ser 100
 
 // Variáveis para as chaves
 let key1, key2, key3, key4;
