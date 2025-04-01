@@ -505,7 +505,15 @@ Em termos de código, os principais pontos do desenvolvimento foram:
 
 ### Minigames
 
-O jogo ja se encontra com 4 mini games na fase 1, buscamos realizar com jogos clássicos para que seja mais intuitivo de joga_los, os 4 mini games são: perguntas sobre conceitos gerais da LGPD, jogo da forca com termos da LGPD, jogo da memória em que o jogador deve relacionar dois pares de palavras com um sendo um termo e o outro o conceito e um jogo de classificação de conteudo pessoal ou conteúdo sensível dada as informações do mini game.
+O jogo já conta com quatro minigames na fase 1. Buscamos utilizar jogos clássicos para que a jogabilidade fosse mais intuitiva. Os quatro minigames são:
+
+1. Perguntas sobre conceitos gerais da LGPD – Um quiz no qual o jogador deve responder corretamente para avançar.
+
+2. Jogo da forca com termos da LGPD – O jogador precisa adivinhar palavras relacionadas à Lei Geral de Proteção de Dados.
+
+3. Jogo da memória – O jogador deve relacionar pares de cartas, onde uma contém um termo e a outra seu respectivo conceito.
+
+4. Jogo de classificação de conteúdo – O jogador deve classificar informações como "dado pessoal" ou "dado sensível", conforme os conceitos da LGPD.
 
 <img src="../assets/concepts&gdd/minigame.png" width="500">
 Código de implementação dos mini games:
