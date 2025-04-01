@@ -162,7 +162,7 @@ function createHUDElements() {
   // Criar ícone
   keyPass2Icon = document.createElement("img");
   keyPass2Icon.id = "keypass2-icon";
-  keyPass2Icon.src = "/assets/fase2/sprites/spriteChave.png";
+  keyPass2Icon.src = "assets/fase2/sprites/spriteChave.png";
   keyPass2Icon.alt = "KeyPass";
   keyPass2Container.appendChild(keyPass2Icon);
 
