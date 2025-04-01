@@ -313,7 +313,7 @@ let estantes1Layer, estantes2Layer, estantes3Layer, estantes4Layer;
 let darkness2;
 let lightMask2;
 let spotlight2;
-let lightRadius2 = 70; // Raio da luz ao redor do jogador tem que ser 100
+let lightRadius2 = 10000; // Raio da luz ao redor do jogador tem que ser 100
 
 // Variáveis para as chaves
 let key1, key2, key3, key4;
@@ -422,6 +422,10 @@ function preloadMain2() {
   this.load.spritesheet("player6", "/assets/fase1/players/player6.png", {
     frameWidth: 64,
     frameHeight: 64,
+  });
+  this.load.spritesheet("elevator", "/assets/fase2/elevator.png", {
+    frameWidth: 32,
+    frameHeight: 32,
   });
   this.load.spritesheet("robo1", "/assets/fase2/sprites/robolado.png", {
     frameWidth: 64,
@@ -1022,7 +1026,7 @@ function startGame2() {
       frameRate: 7,
       repeat: -1,
     });
-  }
+ ; }
 
   // Add robo1 animation
   this.anims.create({
