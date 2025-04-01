@@ -211,7 +211,7 @@ document.body.appendChild(keyPassContainer);
 // Criando o ícone do keyPass
 const keyPassIcon = document.createElement("img");
 keyPassIcon.id = "keypass-icon";
-keyPassIcon.src = "/assets/fase2/sprites/spriteChave.png";
+keyPassIcon.src = "assets/fase2/sprites/spriteChave.png";
 keyPassIcon.alt = "KeyPass";
 keyPassContainer.appendChild(keyPassIcon);
 
@@ -1215,7 +1215,7 @@ function startGame2() {
       
       // Load the projetil.js script dynamically with a callback
       const script = document.createElement('script');
-      script.src = "/src/fase2/projetil.js";
+      script.src = "src/fase2/projetil.js";
       script.onload = () => {
         // Remove loading message once script is loaded
         if (loadingMsg && loadingMsg.parentNode) {
