@@ -62,7 +62,7 @@ async function initGame() {
                 window.exitProjetilMinigame();
             } else {
                 // Fallback if the global function isn't available
-                if (game) game.destroy(true);
+                if (window.game) window.game.destroy(true);
                 if (minigameContainer) minigameContainer.remove();
             }
         };
@@ -526,7 +526,7 @@ async function initGame() {
         window.game = game; // Store reference for cleanup
 
     } catch (error) {
-        console.error('Erro ao carregar o Phaser:', error);
+        console.error('Erro ao carregar o minigame:', error);
         // Show error message in container
         const errorMsg = document.createElement('div');
         errorMsg.style.position = 'absolute';
@@ -546,5 +546,45 @@ async function initGame() {
     }
 }
 
-// Auto-inicialização quando o script é carregado
-initGame();
+// Define exit function to handle cleanup properly
+window.exitProjetilMinigame = function() {
+    console.log("Exiting minigame...");
+    
+    // Clean up Phaser game instance
+    if (window.game) {
+        try {
+            window.game.destroy(true);
+            window.game = null;
+        } catch (e) {
+            console.error("Error destroying game:", e);
+        }
+    }
+    
+    // Remove the minigame container
+    const container = document.getElementById('projetil-minigame-container');
+    if (container) {
+        container.remove();
+    }
+    
+    // Try to resume the parent game scene if the function exists
+    if (window.resumeMainGame && typeof window.resumeMainGame === 'function') {
+        window.resumeMainGame();
+    }
+};
+
+// Auto-initialize when script is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if the container exists before initializing
+    if (document.getElementById('projetil-minigame-container')) {
+        initGame();
+    } else {
+        console.warn('Minigame container not found, delaying initialization...');
+        // Add a small delay to ensure container is ready
+        setTimeout(initGame, 100);
+    }
+});
+
+// Initialize immediately if document is already loaded
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(initGame, 100);
+}

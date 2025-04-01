@@ -313,7 +313,7 @@ let estantes1Layer, estantes2Layer, estantes3Layer, estantes4Layer;
 let darkness2;
 let lightMask2;
 let spotlight2;
-let lightRadius2 = 100; // Raio da luz ao redor do jogador tem que ser 100
+let lightRadius2 = 10000; // Raio da luz ao redor do jogador tem que ser 100
 
 // Variáveis para as chaves
 let key1, key2, key3, key4;
@@ -424,8 +424,8 @@ function preloadMain2() {
     frameHeight: 64,
   });
   this.load.spritesheet("elevator", "assets/fase2/elevator.png", {
-    frameWidth: 32,
-    frameHeight: 32,
+    frameWidth: 64,
+    frameHeight: 64,
   });
   this.load.spritesheet("robo1", "assets/fase2/sprites/robolado.png", {
     frameWidth: 64,
@@ -627,6 +627,9 @@ function createMain2() {
     key2 = this.physics.add.sprite(555, 900, "Key");
     key3 = this.physics.add.sprite(1150, 750, "Key");
     key4 = this.physics.add.sprite(150, 260, "Key");
+
+    elevator = this.physics.add.sprite(672, 196, "elevator", 0);
+    elevator.setImmovable(true);
     
     // Configurar as chaves com efeito de flutuação
     [key1, key2, key3, key4].forEach(key => {
@@ -805,6 +808,7 @@ function createMain2() {
       });
 
       // Adicionar colisão com os retângulos manuais
+      this.physics.add.collider(player2, elevator); // Add collision between player and elevator
       this.physics.add.collider(player2, manualColliders);
       
       // Inicializar elementos do minigame antes de configurar as colisões com robôs
@@ -1209,23 +1213,22 @@ function startGame2() {
         }
         // Resume the game scene
         this.scene.resume();
-        // Go to the next phase or level if needed
-        // this.scene.start('nextPhase'); // Uncomment if you want to go to next phase
+        // Progress to next phase - optional based on game design
+        // this.scene.start('nextPhase');
       };
       
       // Load the projetil.js script dynamically with a callback
       const script = document.createElement('script');
       script.src = "src/fase2/projetil.js";
       script.onload = () => {
-        // Remove loading message once script is loaded
+        // Script loaded successfully - minigame will auto-initialize
         if (loadingMsg && loadingMsg.parentNode) {
           loadingMsg.parentNode.removeChild(loadingMsg);
         }
-        // The script will auto-initialize since it has self-initialization code
       };
       script.onerror = (error) => {
-        loadingMsg.textContent = 'Erro ao carregar o minigame. Tente novamente.';
         console.error('Failed to load minigame script:', error);
+        loadingMsg.textContent = 'Erro ao carregar o minigame. Tente novamente.';
         
         // Add a retry button
         const retryBtn = document.createElement('button');
