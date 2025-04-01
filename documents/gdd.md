@@ -214,15 +214,15 @@ O desenvolvimento de Data Quest foi inspirado em títulos específicos que servi
 
 Em um dia comum de aula na escola Bitshine, um hacker com um plano bem elaborado invade a instituição e toma controle dos sistemas internos, trancando as portas de entrada e as salas de aula com alunos dentro. Superando esses obstáculos, ele avança até o quinto e último andar, onde se encontra o Data Center que abriga os servidores com informações sensíveis sobre alunos, professores e a própria escola. O hacker assume o controle dos professores robôs, programados para ensinar os alunos.
 
-Nosso protagonista, estudante da Bitshine, perde a hora e é acordado apressadamente para se dirigir à escola. Chegando lá, não encontra opções de entrada, mas percebe uma janela que está aberta que leva até a sala do faxineiro da escola. Dentro da sala, o protagonista e o faxineiro tem uma conversa que contextualiza o conflito da Bitshine e ensina os básicos da LGPD para o jogador.
+Nosso protagonista, estudante da Bitshine, perde a hora e é acordado apressadamente para se dirigir à escola. Chegando lá, não encontra opções de entrada, mas percebe uma janela que está aberta que leva até a sala do faxineiro da escola. Dentro da sala, o protagonista e o faxineiro têm uma conversa que contextualiza o conflito da Bitshine e ensina os básicos da LGPD para o jogador.
 
-Desse ponto, o jogador, controlando o protagonista, vai progredir por cada andar coletando itens que lhe dará acesso aos diferentes andares da instituição. Ao longo do enredo, o jogador vai encontrar novos desafios que testarão seus conhecimentos sobre a LGPD. O objetivo final do protagonista é impedir o sucesso dos planos do hacker e libertar os alunos e professores das salas trancadas, enquanto o jogador aprende sobre a LGPD e a importância da proteção de dados pessoais.
+Desse ponto, o jogador, controlando o protagonista, vai progredir por cada andar coletando itens que lhe darão acesso aos diferentes andares da instituição. Ao longo do enredo, o jogador vai encontrar novos desafios que testarão seus conhecimentos sobre a LGPD. O objetivo final do protagonista é impedir o sucesso dos planos do hacker e libertar os alunos e professores das salas trancadas, enquanto o jogador aprende sobre a LGPD e a importância da proteção de dados pessoais.
 
 ## 3.2. Personagens (sprints 2 e 3)
 
 ### 3.2.1. Controláveis
 
-Os jogadores poderão escolher entre seis personagens disponíveis, que representará aluno desajeitado que enfrenta dificuldades com horários e costuma não prestar atenção nas aulas. No entanto, ao longo do jogo, essa falta de atenção se transforma em uma vantagem, pois os personagens se encontram em uma situação onde esses conhecimentos aparentemente negligenciados se tornam suas armas mais poderosas.
+Os jogadores poderão escolher entre seis personagens disponíveis, que representarão alunos desajeitados que enfrenta dificuldades com horários e costuma não prestar atenção nas aulas. No entanto, ao longo do jogo, essa falta de atenção se transforma em uma vantagem, pois os personagens se encontram em uma situação em que esses conhecimentos aparentemente negligenciados se tornam suas armas mais poderosas.
 
 Conceitos iniciais da face do personagem:
 <br>
@@ -259,7 +259,7 @@ Professora Rôbo: Segundo NPC da primeira fase do jogo. Ela será outra fonte de
 
 Alinhamento com o público-alvo: Quando o cenário e o enredo do jogo foram concebidos, pensamos em um mundo ficcional que tem uma sociedade tecnologicamente mais avançada e que pode englobar qualquer cultura. O ambiente escolar da escola Bitshine tem uma arquitetura futurista que aborda a Lei Geral de Proteção de Dados (LGPD), que é uma matéria essencial para estudantes que crescem nesse mundo mais digital. Assim, o mundo do jogo é um pouco desconectado da realidade do Brasil, mas todos os personagens enfrentam desafios comuns, como atrasos e desatenção nas aulas, o que facilita a identificação do público jovem com eles.
 
-Diversidade dentro da realidade do Brasil e impacto esperado: Os estudantes da escola Bitshine são um reflexo da diversidade presente na realidade do Brasil, com personagens que representam diferentes etnias e gêneros. O jogo, em seu estado atual, oferece aos jogadores a possibilidade de escolher entre seis personagens distintos e nomeá-lo da maneira que quiserem, permitindo que se identifiquem com aquele que mais se aproxima de sua própria realidade. Quanto ao estilo visual dos personagens, há um elemento de humor na criação dos personagens porque o estilo escolhido se aproxima daquele de um desenho animado, tanto para a aparência e para as roupas. As escolhas feitas na criação dos personagens foi feito com o intuito de respeitar a diversidade do Brasil, já que uma pesquisa foi feita sobre os grupos étnicos mais presentes no país. Pensando em um MVP e na nossa capacidade de produzir assets, pegamos 3 dos grupos mais presentes, que são os brancos, negros e amarelos. O impacto esperado é reforçar a importância da inclusão tanto na educação quanto no setor da tecnologia.
+Diversidade dentro da realidade do Brasil e impacto esperado: Os estudantes da escola Bitshine são um reflexo da diversidade presente na realidade do Brasil, com personagens que representam diferentes etnias e gêneros. O jogo, em seu estado atual, oferece aos jogadores a possibilidade de escolher entre seis personagens distintos e nomeá-lo da maneira que quiserem, permitindo que se identifiquem com aquele que mais se aproxima de sua própria realidade. Quanto ao estilo visual dos personagens, há um elemento de humor na criação dos personagens porque o estilo escolhido se aproxima daquele de um desenho animado, tanto para a aparência quanto para as roupas. As escolhas feitas na criação dos personagens foram feitas com o intuito de respeitar a diversidade do Brasil, já que uma pesquisa foi feita sobre os grupos étnicos mais presentes no país. Pensando em um MVP e na nossa capacidade de produzir assets, pegamos 3 dos grupos mais presentes, que são os brancos, negros e amarelos. O impacto esperado é reforçar a importância da inclusão tanto na educação quanto no setor da tecnologia.
 
 ## 3.3. Mundo do jogo (sprints 2 e 3)
 
@@ -340,16 +340,16 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 *Descreva a trilha sonora do jogo, indicando quais músicas serão utilizadas no mundo e nas fases. Utilize listas ou tabelas para organizar esta seção. Caso utilize material de terceiros em licença Creative Commons, não deixe de citar os autores/fontes.*
 
 *Exemplo de tabela*
-\# | titulo | ocorrência | autoria
+\# | Título | Ocorrência | Autoria
 --- | --- | --- | ---
-1 | tema de abertura | tela de início | própria
-2 | Fase 1 | Uma trilha sonora que constrói um clima de mistério ao começar a fase 1 | Própria
-3 | Diálogos | Efeito sonoro de diálogo ao iniciar algum diálogo | Própria
-4 | Portas | Som de porta abrindo quando o jogador abrir uma | Própria
-5 | Coleta de itens | Som de coleta de item ao pegar algum | Própria
+1 | Tema de abertura | Tela de início. | Própria
+2 | Fase 1 | Uma trilha sonora que constrói um clima de mistério ao começar a fase 1. | Própria
+3 | Diálogos | Efeito sonoro de diálogo ao iniciar algum diálogo. | Própria
+4 | Portas | Som de porta abrindo quando o jogador abrir uma porta. | Própria
+5 | Coleta de itens | Som de coleta de item ao pegar algum colecionável. | Própria
 6 | Fase 2 | Uma trilha sonora para criar um clima de suspense no jogador enquanto ele explora o labirinto da fase 2 desviando dos robôs, com um piano e sintetizador. A música alterna entre momentos calmos e de tensão para manter o jogador em alerta. | Própria
-7 | Botão menu | Som de clique ao apertar algum botão | Própria
-8 | Andar | Som de passos ao mover o personagem | Própria
+7 | Botão menu | Som de clique ao apertar algum botão. | Própria
+8 | Andar | Som de passos ao mover o personagem. | Própria
 
 ## 3.4. Inventário e Bestiário (sprint 3)
 
@@ -357,16 +357,16 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 \# | item |  | como obter | função | efeito sonoro
 --- | --- | --- | --- | --- | ---
-1 | Cartão de Identificação (KeyCard) | <img src="../assets/concepts&gdd/keycard.png" width="200"> | você o obtém após ajudar cada professor-robô a recuperar o controle de sua consciência | Com o acúmulo de quatro deles, dá acesso a áreas restritas dentro da escola e permite o acesso à ultima sala da fase 1 | Som de leitura de cartão
-2 | Chave | <img src="../assets/fase1/chavesprite.png" width="170"> | Ela fica disponível na última sala da fase 1 após todos os 4 keycards serem coletados | É utilizada para entrar no elevador para acessar a fase 2 | Som de chave
+1 | Cartão de Identificação (KeyCard) | <img src="../assets/concepts&gdd/keycard.png" width="200"> | Você o obtém após ajudar cada professor-robô a recuperar o controle de sua consciência. | Com o acúmulo de quatro deles, dá acesso a áreas restritas dentro da escola e permite o acesso à ultima sala da fase 1 | Som de leitura de cartão
+2 | Chave | <img src="../assets/fase1/chavesprite.png" width="170"> | Ela fica disponível na última sala da fase 1 após todos os 4 keycards serem coletados. | É utilizada para entrar no elevador para acessar a fase 2 | Som de chave
 3 | ... 
 
 ### 3.4.2. Bestiário
 
-\# | inimigo |  | ocorrências | função | impacto | efeito sonoro
+\# | Inimigo |  | Ocorrências | Função | Impacto | Efeito Sonoro
 --- | --- | --- | --- | --- | --- | ---
-1 | professora-robô | <img src="../assets/fase1/sprite_prof.png" width="1000"> |  a partir da fase 1 | aparece e bloqueia o caminho do jogador, soltando ameaças sobre vazar dados da escola. Após alguns segundos de diálogo, o jogador recebe um questionário sobre a LGPD para "desbloqueá-la" e restaurar seu sistema para que ela volte ao normal | se o jogador acerta todas as perguntas, a professora volta ao normal e o jogador aprende mais sobre a LGPD; se o jogador erra, ele precisa refazer até acertar | sons de sistema corrompido (bipes, estática, glitch)
-2 | Robôs | <img src="../assets/concepts&gdd/robo.png" width="1000"> | A partir da fase 2 | Sob controle do hacker, os robôs vigiam a escola, andando de um lado para o outro | Caso o jogador encoste no robô, ele deverá responder uma questão sobre a LGPD. Se acertar, poderá continuar de onde parou; se errar, terá que voltar ao início da fase 2. |Sons de sistema corrompido (bipes, estática, glitch)
+1 | Professora-robô | <img src="../assets/fase1/sprite_prof.png" width="1000"> | A partir da fase 1 | Aparece e bloqueia o caminho do jogador, soltando ameaças sobre vazar dados da escola. Após alguns segundos de diálogo, o jogador recebe um questionário sobre a LGPD para "desbloqueá-la" e restaurar seu sistema para que ela volte ao normal. | Se o jogador acerta todas as perguntas, a professora volta ao normal e o jogador aprende mais sobre a LGPD; se o jogador erra, ele precisa refazer até acertar. | Sons de sistema corrompido (bipes, estática, glitch)
+2 | Robôs | <img src="../assets/concepts&gdd/robo.png" width="1000"> | A partir da fase 2 | Sob controle do hacker, os robôs vigiam a escola, andando de um lado para o outro | Caso o jogador encoste no robô, ele deverá responder uma questão sobre a LGPD. Se acertar, poderá continuar de onde parou; se errar, terá que voltar ao início da fase 2. | Sons de sistema corrompido (bipes, estática, glitch)
 
 ## 3.5. Gameflow (Diagrama de cenas) (sprint 2)
 
@@ -382,16 +382,16 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
  - O jogador precisa superar cada fase completando as tarefas específicas para progredir na história. Seu objetivo final é libertar a escola da invasão hacker.
 
 #### Regras gerais do jogo:
- - O jogador precisa concluir os minigames de uma fase para ganhar itens colecionáveis que lhe dará acesso a fase seguinte.
+ - O jogador precisa concluir os minigames de uma fase para ganhar itens colecionáveis que lhe darão acesso à fase seguinte.
  - Caso o jogador fracasse ao concluir um minigame, ele terá a chance de fazê-lo novamente até acertar.
- - O jogo só vai ser finalizado caso todas as fases e objetivos forem concluídos.
- - Ao decorrer das fases o jogador terá contato com novos conceitos e conhecimentos sobre a LGPD.
+ - O jogo só vai ser finalizado caso todas as fases e objetivos sejam concluídos.
+ - No decorrer das fases o jogador terá contato com novos conceitos e conhecimentos sobre a LGPD.
 
 #### Regras da **Fase 1**:
  - O jogador deverá interagir com os professores e conquistar desafios na forma de minigames com base nos conhecimentos adquiridos anteriormente ao interagir com o faxineiro no início da fase. Para cada minigame concluído, ele receberá uma parte de um key-card.
  - Ao coletar quatro partes, uma sala especial será desbloqueada, onde encontrará uma chave. Essa chave será utilizada para desbloquear o elevador que dá acesso à próxima fase.
  - O jogador só conseguirá uma parte de keycard caso ele conclua um minigame, respeitando as regras de cada um. Por exemplo, se o jogador acertar a maioria das perguntas em um quiz, ganhará uma parte de keycard.
- - Para acessar a próxima fase o jogador deve se aproximar da chave e após isso ir até o elevador, onde a transição entre fases ocorrerá automaticamente.
+ - Para acessar a próxima fase, o jogador deve se aproximar da chave e após isso ir até o elevador, onde a transição entre fases ocorrerá automaticamente.
 
 ## 3.7. Mecânicas do jogo (sprint 3)
 
@@ -402,12 +402,12 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
  - **D** ou **Seta para direita**: Movimentação para direita.
 
 #### Tecla de interação com o cenário (portas e objetos): **"Espaço"**: 
- - Use a tecla **"Espaço"** para abrir portas, coletar itens e para demais interações com o cenário.
+ - Usar a tecla **"Espaço"** para abrir portas, coletar itens e para demais interações com o cenário.
  - Na primeira fase você deverá user a tecla "espaço" para abrir a porta da sala de faxina após ter falado com o faxineiro, para poder ter acesso ao restante do mapa.
 
 #### Tecla de interação com NPCs: **"E"**:
  - Use a tecla **"E"** para interagir com os NPCs.
- - Na primeira fase você poderá interagir com o NPC do faxineiro, que dará um contexto geral da situação da fase ao personagem e com os NPCs dos professores robôs, que deverão ter seus sistemas reiniciados através de um minigame de perguntas e respostas. 
+ - Na primeira fase você poderá interagir com o NPC do faxineiro, que dará um contexto geral da situação da fase ao personagem e com os NPCs dos professores robôs, que precisarão ter seus sistemas reiniciados através de um minigame de perguntas e respostas. 
 
 #### Botão de "Missões":
  - Durante todas as fases, o jogador terá acesso a um botão "Missões", localizado no canto superior direito da tela. Ao clicar nele, poderá visualizar os objetivos específicos da fase atual, garantindo que saiba quais tarefas precisa concluir para avançar no jogo. Isso ajudará na organização das ações e no acompanhamento do progresso rumo à libertação da escola da invasão hacker.
@@ -417,18 +417,18 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
  - Após a interação, deverá abrir a porta da sala (pressionando "Espaço") e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
  - Ao encontrar os professores, o jogador deverá interagir com eles (pressionando "E") e participar de um minigame, que pode variar entre um perguntas e respostas ou um que é jogo da forca, para que o professor possa "reiniciar seus sistemas". Caso o minigame seja feito com sucesso, o jogador ganhará 1 pedaço de um keycard.
  - O jogador deverá ajudar os 4 professores para ganhar o total de 4 pedaços de um keycard, para que ele possa acessar uma sala que vai conter uma chave.
- - Ao acessar a sala com a chave, o jogador deve se aproximar dela para coletá-la e depois andar em direção até o elevador, que lhe dará acesso a fase 2.
+ - Ao acessar a sala com a chave, o jogador deve se aproximar dela para coletá-la e depois andar em direção ao elevador, que lhe dará acesso à fase 2.
 
 
 ## 3.8. Implementação Matemática de Animação/Movimento (sprint 4)
 
-Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma animação para instruir oque o jogador deve fazer para concluir o mini game final da fase 2, que consiste em lançar 4 chaves em cadeados espalhados pela tela.
+Para a aplicação da lógica matematica no nosso jogo, nós desenvolvemos uma animação para instruir oque o jogador deve fazer para concluir o minigame final da fase 2, que consiste em lançar 4 chaves em cadeados espalhados pela tela.
 
 <div align="center">
 <img src="../assets/concepts&gdd/projetilgif.gif" width="300">
 </div>
 
-Durante o desenvolvimento do código, testamos vários valores diferentes até que chegasse em uma interface do tutorial que tenha a capacidade de ensinar como será as regras do próximo mini game que o jogador deve jogar.
+Durante o desenvolvimento do código, testamos vários valores diferentes até que chegássemos em uma interface do tutorial que tenha a capacidade de ensinar como serão as regras do próximo minigame que o jogador deve jogar.
 
 ### Definição final dos valores de entrada e construção do código baseado nas fórmulas:
 
@@ -437,9 +437,9 @@ Durante o desenvolvimento do código, testamos vários valores diferentes até q
 <img src="../assets/concepts&gdd/projetilcódigo" width="500">
 </div>
 
-Como mostrado nas imagens, para o eixo X, seguimos a formula de movimento uniforme para demonstramos a velocidade inicial(constante), ja para o eixo Y, como queríamos simular uma gravidade atuando no projetil, utilizamos a fórmula do Movimento Uniformemente Variado com velocidade inicial nula para acharmos a aceleração de 200px/s².
+Como mostrado nas imagens, para o eixo X, seguimos a fórmula de movimento uniforme para demonstramos a velocidade inicial (constante), já para o eixo Y, como queríamos simular uma gravidade atuando no projétil, utilizamos a fórmula do Movimento Uniformemente Variado com velocidade inicial nula para acharmos a aceleração de 200px/s².
 
-### atualização das posições, velocidades e aceleração são geradas a cada frame carregado:
+### Atualização das posições, velocidades e aceleração são geradas a cada frame carregado:
 
 <div align="center">
 <img src="../assets/concepts&gdd/console.log.png" width="500"> (frame 5 da animação)
@@ -832,33 +832,35 @@ Em suma, A Sprint 4 foi crucial para finalizar o MVP do jogo. Embora tenha havid
 
 ## 5.1. Casos de Teste (sprints 2 a 4)
 
-A tabela abaixo apresenta os casos de teste comuns que podem ser executados a qualquer momento para testar o funcionamento e a integração das partes do jogo.
+As tabelas abaixo apresentam os casos de teste comuns que podem ser executados a qualquer momento para testar o funcionamento e a integração das partes do jogo. A tabela de casos positivos vai verificar se o jogo funciona a partir de entradas válidas, enquanto a tabela de casos negativos testa se o programa funciona a partir de entradas inválidas.
 
-\# | Pré-condição | Descrição do Teste | Pós-condição
---- | --- | --- | ---
-## Casos de Teste Positivos  
+## Casos de Teste Positivos
 
-1 | Posicionar o jogo na tela de abertura | Iniciar o jogo desde seu início | O jogo deve iniciar da fase 1.  
-2 | Posicionar o personagem próximo a um item coletável | Movimentar o personagem para coletar o item | O item deve ser removido do cenário e o efeito de coleta deverá ser aplicado.  
-3 | Estar na fase e pegar a chave | Aproxime-se do elevador com a chave que ficará flutuando ao lado do personagem | O jogo deve acionar a transição e avançar para a próxima fase.  
-4 | Posicionar o personagem próximo a um NPC interativo | Iniciar diálogo com o NPC | O diálogo deve ser exibido dentro da caixa de diálogo, com a opção de avançar a conversa usando a tecla "E".  
-5 | Carregar um jogo salvo anteriormente | Iniciar a jogabilidade a partir do ponto salvo | O jogo deve carregar o progresso salvo corretamente, restaurando posição do personagem, itens coletados e status das fases sem falhas ou perda de dados.  
-6 | Carregar missões | Salvar as missões para progresso | O jogo deve ficar atualizando se as missões foram concluídas.  
-7 | Jogar minigames | Caso erre, pode jogar novamente | O jogo vai dar a opção de jogar o minigame novamente até conseguir.  
-8 | Testar a obtenção dos quatro keycards | Coletar os quatro keycards na fase 1 | A porta deve se abrir, revelando a chave para o elevador.  
-9 | Testar a progressão para a fase 2 | Usar a chave no elevador | O jogo deve carregar a fase 2 corretamente, mantendo o progresso.  
-10 | Testar mecânica de stealth na fase 2 | Passar próximo aos robôs sem encostar neles | O jogador não é detectado e pode continuar explorando o mapa.  
-11 | Testar mecânica de perguntas da LGPD | Encostar em um robô e responder corretamente | O jogador continua do ponto onde estava.  
-12 | Testar a coleta das quatro chaves na fase 2 | Coletar as quatro chaves e se aproximar da saída | A saída deve ser liberada, permitindo o avanço no jogo.  
+\# | Título | Pré-condição | Descrição do Teste | Pós-condição
+--- | --- | --- | --- | ---
+1 | Verificar a inicialização correta do jogo | O jogador deve estar posicionado na tela de abertura do jogo | Executar o jogo a partir do seu início, sem realizar nenhuma ação adicional antes da primeira interação possível | O jogo deve ser iniciado corretamente, carregando a Fase 1 como ponto inicial da experiência do usuário
+2 | Verificar a interação intencional entre o personagem e um item coletável | Na primeira fase, após completar os minigames, posicionar o personagem próximo a chave coletável, localizada em uma sala de aula no canto direito superior do mapa | Movimentar o personagem para fazer a coleta do item | O item deve ser removido do cenário e o efeito de coleta deverá ser aplicado no HUD, mostrando "1/1"
+3 | Validar se a transição correta entre a fase 1 e a fase 2 | Após interagir com os NPCs da professora, completar os minigames da primeira fase para depois pegar a chave que está na sala trancada, no canto direito superior do mapa | Se aproximar do elevador, no centro do mapa, com a chave que ficará flutuando ao lado do personagem | Quando houver contato entre o personagem e o elevador, o jogo deve acionar a transição e avançar para a próxima fase
+4 | Testar se a inicialização correta do diálogo | Posicionar o personagem próximo a um NPC interativo, mais fácil se for o faxineiro na fase 1 | Se estiver aparecendo um texto que diz ">E<", o jogador pode iniciar diálogo com o NPC pressionando a tecla "E" | Devem ser exibidos uma caixa de diálogo com o texto do diálogo dentro e do lado da caixa um render do personagem que estiver falando. O jogador deve ter a opção de avançar a conversa usando a tecla "E"
+5 | Validar se o jogo corretamente salva o progresso do jogador | Carregar um jogo salvo anteriormente | Iniciar a jogabilidade a partir do ponto salvo | O jogo deve carregar o progresso salvo corretamente, restaurando posição do personagem, itens coletados e status das fases sem falhas ou perda de dados.
+6 | Teste da atualização correta da tela de missões | Tentar completar uma missão, mais fácil se for a interação com o faxineiro | Abrir a tela de missões clicando no botão "missões" no canto direito da tela | Se a missão for concluída, o texto "Interagir com o faxineiro" deve trocar de branco para verde
+7 | Teste da condição de falha dos minigames da fase 1 | Interação de diálogo com o NPC da professora na fase 1 para acessar o minigame | Jogar o minigame até acabar, tentando falhar (condição de erro vai depender do minigame) | Caso falhar o minigame, o jogo vai mostrar uma caixa de texto que indica que vai dar a opção de jogar o minigame novamente até conseguir. Após isso, o jogador deve clicar de novo na caixa que diz "Ajudar a professora"
+8 | Testar a obtenção intencional dos quatro keycards na fase 1 | Depois de interagir com o faxineiro, o jogador deve explorar o mapa e interagir com as 4 professoras | Coletar os quatro keycards após completar os minigames das 4 professoras | A porta da sala no canto direito superior do mapa deve ser aberta, possibilitando a coleta da chave que dá aceeso ao elevador
+9 | Avaliar o funcionamento da mecânica de furtividade (stealth) na Fase 2 | Iniciar a segunda fase do jogo | Navegar pelo ambiente passando próximo aos robôs inimigos sem estabelecer contato físico direto | O jogador não deve ser detectado pelos robôs e deve conseguir continuar a exploração do mapa normalmente
+10 | Testar condição de vitória do minigame da fase 2 | Ter contato físico com um robô na fase 2 | Responder a pergunta que aparece na tela | Se jogador responder corretamente, deve continuar a fase na mesma posição onde estava
+11 | Testar o minigame final da fase 2 a partir da coleta de 4 chaves | Iniciar a fase 2 do jogo e explorar o mapa para coletar as 4 chaves que estão espalhadas pelo ambiente | Se aproximar da saída que fica no topo do mapa | Completar o minigame que permite avanço para a terceira fase
 
 ## Casos de Teste Negativos  
 
-13 | Testar tentativa de abrir a porta sem todos os keycards | Tentar abrir a porta com menos de quatro keycards | A porta não deve abrir, e o jogador deve ser avisado da necessidade de mais keycards.  
-14 | Testar tentativa de usar o elevador sem a chave | Tentar interagir com o elevador sem ter coletado a chave | O elevador não deve funcionar e deve exibir uma mensagem informando que falta a chave.  
-15 | Testar erro em resposta à pergunta da LGPD | Encostar em um robô e errar a resposta | O jogador deve ser enviado de volta ao início do mapa.  
-16 | Testar coleta de chave em local inacessível | Tentar coletar uma chave fora do alcance do jogador | O jogador não deve conseguir coletá-la, indicando um possível erro de design no nível.  
-17 | Testar falha no salvamento do jogo | Salvar o jogo, fechar e tentar carregar o progresso salvo | Se houver falha, o progresso não será restaurado corretamente.  
-18 | Testar erro ao reiniciar o minigame após falha | Falhar em um minigame e tentar reiniciar | Se houver falha, o minigame pode travar ou não reiniciar corretamente.  
+\# | Pré-condição | Descrição do Teste | Pós-condição
+--- | --- | --- | ---
+13 | Testar tentativa de abrir a porta sem todos os keycards | Tentar abrir a porta com menos de quatro keycards | A porta não deve abrir, e o jogador deve ser avisado da necessidade de mais keycards.
+14 | Interação com o NPC da professora para acessar o minigame | Jogar o minigame até acabar, tentando falhar | Caso falhar o minigame, o jogo vai dar a opção de jogar o minigame novamente até conseguir.
+15 | Testar tentativa de usar o elevador sem a chave | Tentar interagir com o elevador sem ter coletado a chave | O elevador não deve funcionar e deve exibir uma mensagem informando que falta a chave.  
+16 | Testar erro em resposta à pergunta da LGPD | Encostar em um robô e errar a resposta | O jogador deve ser enviado de volta ao início do mapa.  
+17 | Testar coleta de chave em local inacessível | Tentar coletar uma chave fora do alcance do jogador | O jogador não deve conseguir coletá-la, indicando um possível erro de design no nível.  
+18 | Testar falha no salvamento do jogo | Salvar o jogo, fechar e tentar carregar o progresso salvo | Se houver falha, o progresso não será restaurado corretamente.  
+19 | Testar erro ao reiniciar o minigame após falha | Falhar em um minigame e tentar reiniciar | Se houver falha, o minigame pode travar ou não reiniciar corretamente.  
 
 Esses testes garantem que as principais mecânicas do jogo estejam funcionando corretamente ao longo do desenvolvimento e das iterações nas sprints 2 a 4.
 
