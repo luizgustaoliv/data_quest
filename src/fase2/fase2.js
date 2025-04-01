@@ -162,7 +162,7 @@ function createHUDElements() {
   // Criar ícone
   keyPass2Icon = document.createElement("img");
   keyPass2Icon.id = "keypass2-icon";
-  keyPass2Icon.src = "/assets/fase2/sprites/spriteChave.png";
+  keyPass2Icon.src = "../../assets/fase2/sprites/spriteChave.png";
   keyPass2Icon.alt = "KeyPass";
   keyPass2Container.appendChild(keyPass2Icon);
 
@@ -211,7 +211,7 @@ document.body.appendChild(keyPassContainer);
 // Criando o ícone do keyPass
 const keyPassIcon = document.createElement("img");
 keyPassIcon.id = "keypass-icon";
-keyPassIcon.src = "/assets/fase2/sprites/spriteChave.png";
+keyPassIcon.src = "../../assets/fase2/sprites/spriteChave.png";
 keyPassIcon.alt = "KeyPass";
 keyPassContainer.appendChild(keyPassIcon);
 
@@ -399,64 +399,64 @@ let tutorialShown2 = false; // Controlar se o tutorial já foi mostrado
 
 function preloadMain2() {
   // Load all possible player sprites
-  this.load.spritesheet("player1", "/assets/fase1/players/player1.png", {
+  this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
-  this.load.spritesheet("player2", "/assets/fase1/players/player2.png", {
+  this.load.spritesheet("player2", "../../assets/fase1/players/player2.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
-  this.load.spritesheet("player3", "/assets/fase1/players/player3.png", {
+  this.load.spritesheet("player3", "../../assets/fase1/players/player3.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
-  this.load.spritesheet("player4", "/assets/fase1/players/player4.png", {
+  this.load.spritesheet("player4", "../../assets/fase1/players/player4.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
-  this.load.spritesheet("player5", "/assets/fase1/players/player5.png", {
+  this.load.spritesheet("player5", "../../assets/fase1/players/player5.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
-  this.load.spritesheet("player6", "/assets/fase1/players/player6.png", {
+  this.load.spritesheet("player6", "../../assets/fase1/players/player6.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
-  this.load.spritesheet("elevator", "/assets/fase2/elevator.png", {
+  this.load.spritesheet("elevator", "../../assets/fase2/elevator.png", {
     frameWidth: 32,
     frameHeight: 32,
   });
-  this.load.spritesheet("robo1", "/assets/fase2/sprites/robolado.png", {
+  this.load.spritesheet("robo1", "../../assets/fase2/sprites/robolado.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
-  this.load.spritesheet("robocima", "/assets/fase2/sprites/robocima.png", {
+  this.load.spritesheet("robocima", "../../assets/fase2/sprites/robocima.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
   
   // Keep default player as fallback
-  this.load.spritesheet("player", "/assets/fase1/players/player1.png", {
+  this.load.spritesheet("player", "../../assets/fase1/players/player1.png", {
     frameWidth: 64,
     frameHeight: 64,
   });
 
   // Carregar o spritesheet (substitua os valores de frameWidth e frameHeight)
-this.load.spritesheet("TvErro", "/assets/fase2/sprites/tvanimada.png", {
+this.load.spritesheet("TvErro", "../../assets/fase2/sprites/tvanimada.png", {
   frameWidth: 64,  // largura de um frame
   frameHeight: 64, // altura de um frame
 });
 
   // Carregar apenas a imagem do zelador para o tutorial
-  this.load.image("zelador", "/assets/dialogos/faxineiro.png");
+  this.load.image("zelador", "../../assets/dialogos/faxineiro.png");
   
-  this.load.tilemapTiledJSON("map2json", "/assets/fase2/fase2.json");
-  this.load.image("fase2", "/assets/fase2/fase2.png");
-  this.load.image("5_Classroom_and_library_32x32", "/assets/fase2/5_Classroom_and_library_32x32.png");
-  this.load.image("19_Hospital_32x32", "/assets/fase2/19_Hospital_32x32.png");
-  this.load.image("Room_Builder_32x32", "/assets/fase2/Room_Builder_32x32.png");
-  this.load.image("Key", "/assets/fase2/sprites/spriteChave.png");
+  this.load.tilemapTiledJSON("map2json", "../../assets/fase2/fase2.json");
+  this.load.image("fase2", "../../assets/fase2/fase2.png");
+  this.load.image("5_Classroom_and_library_32x32", "../../assets/fase2/5_Classroom_and_library_32x32.png");
+  this.load.image("19_Hospital_32x32", "../../assets/fase2/19_Hospital_32x32.png");
+  this.load.image("Room_Builder_32x32", "../../assets/fase2/Room_Builder_32x32.png");
+  this.load.image("Key", "../../assets/fase2/sprites/spriteChave.png");
 }
 
 function createMain2() {
