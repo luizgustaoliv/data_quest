@@ -3503,18 +3503,18 @@ if (window.fase1Initialized) {
           this.cameras.main.height / 2 + 50,
           "★ Ajudar Professora ★",
           {
-            fontFamily: "Arial",
-            fontSize: "18px",
-            color: "#FFFFFF",
-            backgroundColor: "#2C3E50",
-            padding: { left: 30, right: 30, top: 20, bottom: 20 },
-            align: "center",
-            shadow: {
-              offsetX: 3,
-              offsetY: 3,
-              color: "rgba(0,0,0,0.5)",
-              blur: 5,
-            },
+        fontFamily: "Arial",
+        fontSize: "18px",
+        color: "#FFFFFF",
+        backgroundColor: "#2C3E50",
+        padding: { left: 30, right: 30, top: 20, bottom: 20 },
+        align: "center",
+        shadow: {
+          offsetX: 3,
+          offsetY: 3,
+          color: "rgba(0,0,0,0.5)",
+          blur: 5,
+        },
           }
         )
         .setOrigin(0.5)
@@ -3523,22 +3523,22 @@ if (window.fase1Initialized) {
         .setInteractive({ useHandCursor: true })
         .on("pointerover", () => {
           helpButton.setStyle({
-            backgroundColor: "#34495E",
-            color: "#FFD700",
+        backgroundColor: "#34495E",
+        color: "#FFD700",
           });
           helpButton.setScale(1.05);
         })
         .on("pointerout", () => {
           helpButton.setStyle({
-            backgroundColor: "#2C3E50",
-            color: "#FFFFFF",
+        backgroundColor: "#2C3E50",
+        color: "#FFFFFF",
           });
           helpButton.setScale(1);
         })
         .on("pointerdown", () => {
           helpButton.setStyle({
-            backgroundColor: "#1A2530",
-            color: "#FFFFFF",
+        backgroundColor: "#1A2530",
+        color: "#FFFFFF",
           });
           helpButton.setScale(0.95);
           console.log("Botão de ajuda clicado - comportamento padrão");
@@ -3546,12 +3546,78 @@ if (window.fase1Initialized) {
         })
         .on("pointerup", () => {
           helpButton.setStyle({
-            backgroundColor: "#34495E",
-            color: "#FFD700",
+        backgroundColor: "#34495E",
+        color: "#FFD700",
           });
           helpButton.setScale(1.05);
         })
         .setVisible(false);
+      
+      // Criar a seta apontando para o botão
+      const arrowX = this.cameras.main.width / 2 - 100;
+      const arrowY = this.cameras.main.height / 2 + 30;
+      
+      // Criar gráfico para a seta
+      const arrow = this.add.graphics();
+      arrow.fillStyle(0xFFD700, 1); // Cor dourada para destaque
+      
+      // Desenhar a seta
+      arrow.beginPath();
+      arrow.moveTo(arrowX, arrowY);
+      arrow.lineTo(arrowX - 30, arrowY - 15);
+      arrow.lineTo(arrowX - 30, arrowY - 5);
+      arrow.lineTo(arrowX - 80, arrowY - 5);
+      arrow.lineTo(arrowX - 80, arrowY + 5);
+      arrow.lineTo(arrowX - 30, arrowY + 5);
+      arrow.lineTo(arrowX - 30, arrowY + 15);
+      arrow.closePath();
+      arrow.fill();
+      
+      // Adicionar texto "Clique aqui"
+      const clickText = this.add.text(
+          arrowX - 60, 
+          arrowY - 25, 
+          "Clique aqui!", 
+          {
+          fontFamily: "Arial",
+          fontSize: "16px",
+          fontStyle: "bold",
+          color: "#FFD700",
+          stroke: "#000000",
+          strokeThickness: 3
+          }
+      );
+      clickText.setOrigin(0.5);
+      
+      // Configurar propriedades da seta e texto
+      arrow.setScrollFactor(0);
+      arrow.setDepth(9999);
+      arrow.setVisible(false);
+      
+      clickText.setScrollFactor(0);
+      clickText.setDepth(9999);
+      clickText.setVisible(false);
+      
+      // Animar a seta e o texto
+      this.tweens.add({
+          targets: [arrow, clickText],
+          alpha: { from: 0.6, to: 1 },
+          scaleX: { from: 0.95, to: 1.05 },
+          scaleY: { from: 0.95, to: 1.05 },
+          duration: 800,
+          yoyo: true,
+          repeat: -1,
+          ease: 'Sine.easeInOut'
+      });
+      
+      // Modificar o método setVisible do botão para mostrar/esconder a seta e o texto também
+      const originalSetVisible = helpButton.setVisible;
+      helpButton.setVisible = function(visible) {
+          originalSetVisible.call(helpButton, visible);
+          arrow.setVisible(visible);
+          clickText.setVisible(visible);
+          return helpButton;
+      };
 
       // Adicionar um método de debug para testar se o botão está funcionando
       window.showHelpButton = function () {

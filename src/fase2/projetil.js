@@ -419,10 +419,10 @@ async function initGame() {
                     continueBtn.style.margin = '10px auto';
                     continueBtn.style.display = 'block';
                     continueBtn.onclick = () => {
-                        // Return to main game or go to next phase
+                        // Clean up and redirect to fase3.html
                         if (typeof window.exitProjetilMinigame === 'function') {
                             window.exitProjetilMinigame();
-                            // Here you could add code to progress to the next phase
+                            window.location.href = '../fase3/fase3.html';
                         }
                     };
                     victoryMsg.appendChild(continueBtn);
