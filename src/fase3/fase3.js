@@ -191,7 +191,7 @@ function createMain3() {
     if (camada4Layer6) camada4Layer6.setScale(1.0);
 
     // Adiciona o sprite do personagem no mapa - posição inicial
-    player2 = this.physics.add.sprite(670, 1000, selectedCharacter);
+    player2 = this.physics.add.sprite(490, 950, selectedCharacter);
     player2.setScale(0.8);
 
     // Create animations
@@ -237,6 +237,7 @@ function createMain3() {
     // Configuração da câmera
     this.cameras.main.setBounds(0, 0, map3.widthInPixels, map3.heightInPixels);
     this.cameras.main.startFollow(player2);
+    this.cameras.main.setZoom(1.5);
 
     // Update colliders to use correct layers
     if (paredeLayer5) {
