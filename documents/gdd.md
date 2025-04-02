@@ -860,18 +860,15 @@ As tabelas abaixo apresentam os casos de teste comuns que podem ser executados a
 
 ## Casos de Teste Negativos  
 
-\# | Pré-condição | Descrição do Teste | Pós-condição
---- | --- | --- | ---
-13 | Testar tentativa de abrir a porta sem todos os keycards | Tentar abrir a porta com menos de quatro keycards | A porta não deve abrir, e o jogador deve ser avisado da necessidade de mais keycards.
-14 | Interação com o NPC da professora para acessar o minigame | Jogar o minigame até acabar, tentando falhar | Caso falhar o minigame, o jogo vai dar a opção de jogar o minigame novamente até conseguir.
-15 | Testar tentativa de usar o elevador sem a chave | Tentar interagir com o elevador sem ter coletado a chave | O elevador não deve funcionar e deve exibir uma mensagem informando que falta a chave.  
-16 | Testar erro em resposta à pergunta da LGPD | Encostar em um robô e errar a resposta | O jogador deve ser enviado de volta ao início do mapa.  
-17 | Testar coleta de chave em local inacessível | Tentar coletar uma chave fora do alcance do jogador | O jogador não deve conseguir coletá-la, indicando um possível erro de design no nível.  
-18 | Testar falha no salvamento do jogo | Salvar o jogo, fechar e tentar carregar o progresso salvo | Se houver falha, o progresso não será restaurado corretamente.  
-19 | Testar erro ao reiniciar o minigame após falha | Falhar em um minigame e tentar reiniciar | Se houver falha, o minigame pode travar ou não reiniciar corretamente.  
+\# | Título | Pré-condição | Descrição do Teste | Pós-condição
+--- | --- | --- | --- | ---
+13 | Tentar abrir a porta da sala no canto direito superior do mapa sem ter coletado todos os keycards | Iniciar a fase 1, sair da sala do faxineiro depois de dialogar com ele e andar em direção a sala | Tentar abrir a porta com menos de quatro keycards pressionando a tecla espaço | A porta não deve abrir, e o jogador deve ser avisado da necessidade de mais keycards através de uma caixa de texto
+14 | Teste da condição de falha de minigames da fase 1 | Interagir com qualquer NPC da professora para acessar seu minigame | Jogar o minigame até acabar, tentando falhar (fazendo as escolhas erradas) | Caso falhar o minigame, o jogo deve dar a opção de jogar o minigame novamente até conseguir
+15 | Testar tentativa de usar o elevador sem a chave | Iniciar a fase 1, sair da sala do faxineiro depois de dialogar com ele e se direcionar até o elevador | Aproximar do elevador sem ter coletado a chave | O elevador não deve funcionar e deve exibir uma mensagem informando que falta a chave
+16 | Testar condição de erro do minigame do robô da fase 2 | Iniciar a fase 2 e se aproximar de um robô que está andando pela biblioteca | Iniciar o minigame e errar a pergunta | O jogador deve ser enviado de volta ao início do mapa, mas sem perder seu progresso
+17 | Testar falha no salvamento do jogo | Salvar o jogo e fechar a aba | Tentar carregar o progresso salvo abrindo o jogo novamente | Se houver falha, o progresso não será restaurado corretamente
 
 Esses testes garantem que as principais mecânicas do jogo estejam funcionando corretamente ao longo do desenvolvimento e das iterações nas sprints 2 a 4.
-
 
 ## 5.2. Testes de jogabilidade (playtests) (sprint 4)
 
