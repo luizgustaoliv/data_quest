@@ -478,10 +478,7 @@ function createMain2() {
     if (!localStorage.getItem("playerName")) {
     localStorage.setItem("playerName", playerName);
     }
-
-
-      // More animations will be created in startGame function
-
+    
       // We'll create the name tag after player is created
       this.events.on('create', () => {
         if (player2) {

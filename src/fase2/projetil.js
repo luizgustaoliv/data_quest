@@ -422,7 +422,7 @@ async function initGame() {
                         // Clean up and redirect to fase3.html
                         if (typeof window.exitProjetilMinigame === 'function') {
                             window.exitProjetilMinigame();
-                            window.location.href = '../fase3/fase3.html';
+                            window.location.href = '../../src/fase3/fase3.html';
                         }
                     };
                     victoryMsg.appendChild(continueBtn);
