@@ -834,6 +834,7 @@ Em suma, A Sprint 4 foi crucial para finalizar o MVP do jogo. Embora tenha havid
 
 *Descreva e ilustre aqui o desenvolvimento dos refinamentos e revisões da versão final do jogo, explicando brevemente o que foi entregue em termos de MVP. Utilize prints de tela para ilustrar.*
 
+
 # <a name="c5"></a>5. Testes
 
 ## 5.1. Casos de Teste (sprints 2 a 4)
@@ -868,34 +869,101 @@ As tabelas abaixo apresentam os casos de teste comuns que podem ser executados a
 
 Esses testes garantem que as principais mecânicas do jogo estejam funcionando corretamente ao longo do desenvolvimento e das iterações nas sprints 2 a 4.
 
-## 5.2. Testes de jogabilidade (playtests) (sprint 4)
+## 5.2. Testes de jogabilidade (playtests) (sprint 5)
 
 ### 5.2.1 Registros de testes
 
-*Descreva nesta seção as sessões de teste/entrevista com diferentes jogadores. Registre cada teste conforme o template a seguir.*
+#### Teste 1 - João Jonas
+| Nome | João Jonas (nome fictício) |
+|---|---|
+| Já possuía experiência prévia com games? | Sim, é um jogador casual |
+| Conseguiu iniciar o jogo? | Sim |
+| Entendeu as regras e mecânicas do jogo? | Entendeu as regras, mas sobre as mecânicas, apenas as essenciais, não explorou os comandos complexos |
+| Conseguiu progredir no jogo? | Sim, sem dificuldades |
+| Apresentou dificuldades? | Não, conseguiu jogar com facilidade e afirmou ser fácil |
+| Que nota deu ao jogo? | Muito boa |
+| O que gostou no jogo? | Gostou de como o jogo vai ficando mais difícil ao longo do tempo sem deixar de ser divertido |
+| O que poderia melhorar no jogo? | A responsividade do personagem aos controles, disse que havia um pouco de atraso desde o momento do comando até a resposta do personagem |
 
-Nome | João Jonas (use nomes fictícios)
---- | ---
-Já possuía experiência prévia com games? | sim, é um jogador casual
-Conseguiu iniciar o jogo? | sim
-Entendeu as regras e mecânicas do jogo? | entendeu as regras, mas sobre as mecânicas, apenas as essenciais, não explorou os comandos complexos
-Conseguiu progredir no jogo? | sim, sem dificuldades  
-Apresentou dificuldades? | Não, conseguiu jogar com facilidade e afirmou ser fácil
-Que nota deu ao jogo? | 9.0
-O que gostou no jogo? | Gostou  de como o jogo vai ficando mais difícil ao longo do tempo sem deixar de ser divertido
-O que poderia melhorar no jogo? | A responsividade do personagem aos controles, disse que havia um pouco de atraso desde o momento do comando até a resposta do personagem
+---
+
+#### Teste 2 - Marcia Meirelles
+| Nome | Marcia Meirelles |
+|---|---|
+| Melhor momento do jogo | Labirinto |
+| Pior momento do jogo | Não saber o que fazer |
+
+| Pergunta | Resposta |
+|---|---|
+| O jogo foi muito frustrante | Neutro |
+| O jogo foi muito irritante | Discordo totalmente |
+| O jogo foi muito entediante | Discordo totalmente |
+| O jogo foi muito divertido | Concordo |
+| O jogo foi muito confuso | Neutro |
+| As regras do jogo são confusas | Discordo totalmente |
+| Achou o objetivo do jogo claro | Concordo |
+| Os controles do jogo são muito confusos | Discordo totalmente |
+| Os controles do jogo são muito desconfortáveis | Discordo totalmente |
+| Os controles do jogo são muito fáceis de aprender | Concordo totalmente |
+| Os controles do jogo atrapalham muito ao jogar | Discordo totalmente |
+
+---
+
+#### Teste 3 - Gabriel Fernandes
+| Nome | Gabriel Fernandes |
+|---|---|
+| Melhor momento do jogo | Labirinto |
+| Pior momento do jogo | Não saber o que fazer |
+
+| Pergunta | Resposta |
+|---|---|
+| O jogo foi muito frustrante | Discordo totalmente |
+| O jogo foi muito irritante | Discordo totalmente |
+| O jogo foi muito entediante | Discordo |
+| O jogo foi muito divertido | Concordo |
+| O jogo foi muito confuso | Neutro |
+| As regras do jogo são confusas | Discordo totalmente |
+| Achou o objetivo do jogo claro | Concordo totalmente |
+| Os controles do jogo são muito confusos | Discordo totalmente |
+| Os controles do jogo são muito desconfortáveis | Discordo totalmente |
+| Os controles do jogo são muito fáceis de aprender | Concordo totalmente |
+| Os controles do jogo atrapalham muito ao jogar | Discordo totalmente |
+
+---
 
 ### 5.2.2 Melhorias
 
-*Descreva nesta seção um plano de melhorias sobre o jogo, com base nos resultados dos testes de jogabilidade*
+Com base nos testes de jogabilidade realizados, foram identificadas as seguintes oportunidades de melhoria:
 
-# <a name="c6"></a>6. Conclusões e trabalhos futuros (sprint 5)
+- **Melhoria na responsividade dos controles**: Ajustar o tempo de resposta do personagem aos comandos para evitar atrasos percebidos pelos jogadores.
+- **Maior clareza nos objetivos do jogo**: Implementar tutoriais mais claros ou dicas visuais para ajudar os jogadores a entenderem melhor o que fazer.
+- **Melhor feedback ao jogador**: Adicionar mensagens ou indicações mais visíveis para guiar o jogador durante o progresso do jogo.
+- **Aprimoramento na progressão de dificuldade**: Manter o equilíbrio entre desafio e diversão, garantindo que o jogo continue envolvente sem ser frustrante.
 
-*Escreva de que formas a solução do jogo atingiu os objetivos descritos na seção 1 deste documento. Indique pontos fortes e pontos a melhorar de maneira geral.*
+Essas melhorias serão implementadas nas próximas versões do jogo para proporcionar uma experiência mais fluida e agradável aos jogadores.
 
-*Relacione os pontos de melhorias evidenciados nos testes com plano de ações para serem implementadas no jogo. O grupo não precisa implementá-las, pode deixar registrado aqui o plano para futuros desenvolvimentos.*
+### <a name="c6"></a>6. Conclusões e trabalhos futuros (sprint 5)
 
-*Relacione também quaisquer ideias que o grupo tenha para melhorias futuras*
+A solução do jogo atendeu aos objetivos estabelecidos na seção 1 deste documento ao proporcionar uma experiência educativa e interativa sobre LGPD, utilizando diálogos e minigames para engajar os jogadores.
+
+**Pontos fortes:**
+- O jogo consegue equilibrar aprendizado e diversão de maneira satisfatória.
+- Os jogadores perceberam uma progressão natural na dificuldade, tornando a experiência envolvente.
+- Os controles foram bem avaliados quanto à facilidade de aprendizado.
+
+**Pontos de melhoria:**
+- Algumas mecânicas mais complexas não foram exploradas por todos os jogadores, indicando a necessidade de um tutorial mais detalhado.
+- Alguns jogadores relataram dificuldades em compreender os objetivos iniciais do jogo.
+- Houve relatos de atrasos na resposta dos comandos, o que impacta a jogabilidade.
+
+**Plano para melhorias futuras:**
+- Refinar o sistema de controles para torná-los mais responsivos e ágeis.
+- Adicionar tutoriais mais interativos e visuais para esclarecer as mecânicas do jogo.
+- Implementar um sistema de dicas progressivas para auxiliar jogadores que tenham dificuldades.
+- Continuar ajustando a curva de dificuldade para garantir que o jogo se mantenha acessível e desafiador.
+
+Além dessas melhorias, o grupo também considera a possibilidade de expandir o jogo com novas fases, desafios e conteúdos que aprofundem ainda mais o aprendizado sobre LGPD.
+
 
 # <a name="c7"></a>7. Referências (sprint 5)
 
