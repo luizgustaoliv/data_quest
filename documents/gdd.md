@@ -356,8 +356,8 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 \# | item |  | como obter | função | efeito sonoro
 --- | --- | --- | --- | --- | ---
 1 | Cartão de Identificação (KeyCard) | <img src="../assets/concepts&gdd/keycard.png" width="200"> | Você o obtém após ajudar cada professor-robô a recuperar o controle de sua consciência. | Com o acúmulo de quatro deles, dá acesso a áreas restritas dentro da escola e permite o acesso à ultima sala da fase 1 | Som de leitura de cartão
-2 | Chave | <img src="../assets/fase1/chavesprite.png" width="170"> | Ela fica disponível na última sala da fase 1 após todos os 4 keycards serem coletados. | É utilizada para entrar no elevador para acessar a fase 2 | Som de chave
-3 | ... 
+2 | Chave | <img src="../assets/fase1/chavesprite.png" width="170" align="center"> | Ela fica disponível na última sala da fase 1 após todos os 4 keycards serem coletados. | É utilizada para entrar no elevador para acessar a fase 2 | Som de chave
+3 | Chave Azul | <img src="../assets/fase2/sprites/spriteChave.png" width="55" align="center"> | Está espalhado pelo mapa da fase 2 | Após coletar as 4 chaves, é utilizada para desbloquear o elevador para o acesso à fase 3 | Som de chave
 
 ### 3.4.2. Bestiário
 
