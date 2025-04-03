@@ -1,12 +1,12 @@
 // Update global variables to match valid layers
 let cursors2;
 let player2;
-let chaoLayer4
-let paredeLayer5
-let objetos1Layer7
-let objetos2Layer8
-let objetos3Layer9
-let camada4Layer6
+let chaoLayer4;
+let paredeLayer5;
+let objetos1Layer7;
+let objetos2Layer8;
+let objetos3Layer9;
+let camada4Layer6;
 const speed = 160;
 
 function preloadMain3() {
@@ -163,7 +163,7 @@ function createMain3() {
         console.log("paredeLayer created successfully");
     } catch (e) {
         console.warn("Couldn't create 'parede' layer:", e);
-        objetos2Layer7 = null;
+        objetos2Layer8 = null;
     }
 
     try {
@@ -193,6 +193,7 @@ function createMain3() {
     // Adiciona o sprite do personagem no mapa - posição inicial
     player2 = this.physics.add.sprite(490, 950, selectedCharacter);
     player2.setScale(0.8);
+    player2.body.setOffset(19, 55.4);
 
     // Create animations
     this.anims.create({
@@ -246,6 +247,93 @@ function createMain3() {
             this.physics.add.collider(this.enemy, paredeLayer5);
         }
     }
+
+    // Criar grupo de colisões manuais
+    const manualColliders = this.physics.add.staticGroup();
+
+    // Função para adicionar retângulos de colisão
+    function addCollisionRect(scene, x, y, width, height) {
+        const rect = scene.add.rectangle(x, y, width, height);
+        scene.physics.add.existing(rect, true); // true para estático
+        rect.body.immovable = true;
+
+        // Adicionar debugging visual se necessário
+        if (scene.physics.config.debug) {
+            rect.setStrokeStyle(2, 0xff0000);
+        } else {
+            rect.setVisible(false); // Invisível em produção
+        }
+
+        manualColliders.add(rect);
+        return rect;
+    }
+
+    // Adicionar colisões manuais - ajuste estas coordenadas conforme necessário
+    // Debug flag - Set to true to see collision rectangles
+    const debugCollisions = true;
+
+    // Função modificada para adicionar retângulos de colisão com suporte a debug
+    function addCollisionRect(scene, x, y, width, height, color = 0xff0000) {
+        const rect = scene.add.rectangle(x, y, width, height);
+        scene.physics.add.existing(rect, true); // true para estático
+        rect.body.immovable = true;
+
+        // Configuração de debug visual
+        if (debugCollisions) {
+            rect.setStrokeStyle(2, color);
+            rect.setFillStyle(color, 0.2);
+            rect.setVisible(false); // Visível no modo debug
+        } else {
+            rect.setVisible(false); // Invisível em produção
+        }
+
+        manualColliders.add(rect);
+        return rect;
+    }
+
+    // Adicionar tecla para alternar o modo debug (F9)
+    const debugKey = this.input.keyboard.addKey(
+        Phaser.Input.Keyboard.KeyCodes.F9
+    );
+    debugKey.on("down", () => {
+        // Alternar visibilidade de todos os colisores
+        manualColliders.getChildren().forEach((rect) => {
+            rect.setVisible(!rect.visible);
+        });
+        console.log(
+            "Debug collision mode:",
+            !manualColliders.getChildren()[0].visible
+        );
+    });
+
+    addCollisionRect(this, 230, 155, 350, 70, 0x00ff00); // mesa
+    addCollisionRect(this, 400, 195, 28, 184, 0x00ff00); // mesa
+    addCollisionRect(this, 320, 125, 70, 70, 0x00ff00); // mesa
+    addCollisionRect(this, 200, 15, 3, 70, 0x00ff00); // mesa
+    // Adicionar colisões para as bordas do mapa se necessário - Azul para bordas
+    // Instrução de debug no console
+    console.log("Debug: pressione F9 para mostrar/ocultar colisões");
+
+    // Define array com todas as camadas válidas
+    const validLayers = [
+        chaoLayer4,
+        paredeLayer5,
+        objetos1Layer7,
+        objetos2Layer8,
+        objetos3Layer9,
+        camada4Layer6
+    ];
+
+    // Adiciona colisões para cada camada válida
+    validLayers.forEach((layer) => {
+        if (layer) {
+            layer.setCollisionByProperty({ collider: true });
+            this.physics.add.collider(player2, layer);
+        }
+    });
+
+    // Adicionar colisão com os retângulos manuais
+    this.physics.add.collider(player2, manualColliders);
 }
 
 function updateMain3() {

@@ -705,17 +705,12 @@ function createMain2() {
         function addCollisionRect(scene, x, y, width, height) {
           const rect = scene.add.rectangle(x, y, width, height);
           scene.physics.add.existing(rect, true); // true para estático
-          rect.body.immovable = true;
-  
-          // Adicionar debugging visual se necessário
+                // Adicionar debugging visual se necessário
           if (scene.physics.config.debug) {
             rect.setStrokeStyle(2, 0xff0000);
           } else {
             rect.setVisible(false); // Invisível em produção
-          }
-  
-          manualColliders.add(rect);
-          return rect;
+          } rect.body.immovable = true;
         }
 
   const debugCollisions = false;
