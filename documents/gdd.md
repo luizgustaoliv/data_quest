@@ -253,8 +253,6 @@ Professora Rôbo: Segundo NPC da primeira fase do jogo. Ela será outra fonte de
 <img src ="../assets/concepts&gdd/teacher_concept.png" width="400">
 <img src ="../assets/fase1/sprite_prof.png" width="300">
 
-(Terão outros personagens coadjuvantes que são aunos e professores da escola, mas esses não foram definidos ainda)
-
 ### 3.2.3. Diversidade e Representatividade dos Personagens
 
 Alinhamento com o público-alvo: Quando o cenário e o enredo do jogo foram concebidos, pensamos em um mundo ficcional que tem uma sociedade tecnologicamente mais avançada e que pode englobar qualquer cultura. O ambiente escolar da escola Bitshine tem uma arquitetura futurista que aborda a Lei Geral de Proteção de Dados (LGPD), que é uma matéria essencial para estudantes que crescem nesse mundo mais digital. Assim, o mundo do jogo é um pouco desconectado da realidade do Brasil, mas todos os personagens enfrentam desafios comuns, como atrasos e desatenção nas aulas, o que facilita a identificação do público jovem com eles.
