@@ -35,7 +35,6 @@ window.minigameActive = false;
   document.head.appendChild(style);
 })();
 
-
 // Constantes de estilo base para minigames - servirá como padrão
 const MINIGAME_STYLES = {
   colors: {
@@ -114,11 +113,11 @@ const MEMORY_STYLES = {
     panel: 0x2d3a4a, // Fundo mais escuro para jogo da memória
     card: 0x3366cc, // Cor dos cartões
     cardRevealed: 0x5588ee, // Cor quando cartão é revelado
-    correct: 0x30503A, // Verde para correspondências corretas
+    correct: 0x30503a, // Verde para correspondências corretas
   },
   sizes: {
     ...MINIGAME_STYLES.sizes,
-    panelWidth: 0.70, // Reduzido para 70% da largura da tela
+    panelWidth: 0.7, // Reduzido para 70% da largura da tela
     panelHeight: 0.65, // Reduzido para 70% da altura da tela
     cardWidth: 120, // Cartões menores para caber melhor na tela
     cardHeight: 40, // Altura reduzida para melhor visualização
@@ -237,7 +236,7 @@ function createImprovedQuizMinigame(scene, data, callback) {
   // Variáveis de controle
   let currentQuestionIndex = 0;
   let correctAnswers = 0;
-  
+
   // Atualizar com as novas perguntas
   data.questions = [
     {
@@ -302,18 +301,14 @@ function createImprovedQuizMinigame(scene, data, callback) {
     },
     {
       question: "Qual a idade mínima para consentimento válido na LGPD?",
-      options: [
-        "12 anos",
-        "16 anos",
-        "18 anos",
-        "21 anos",
-      ],
+      options: ["12 anos", "16 anos", "18 anos", "21 anos"],
       correct: 2,
       feedback:
         "Segundo a LGPD, o tratamento de dados pessoais de crianças e adolescentes menores de 18 anos deve ser realizado com o consentimento específico de pelo menos um dos pais ou responsável legal. Menores de 18 anos não podem fornecer consentimento válido por si próprios.",
     },
     {
-      question: "Quais são as penalidades previstas em caso de violação da LGPD?",
+      question:
+        "Quais são as penalidades previstas em caso de violação da LGPD?",
       options: [
         "Apenas advertência",
         "Apenas multa simples de 2% do faturamento",
@@ -337,7 +332,7 @@ function createImprovedQuizMinigame(scene, data, callback) {
         "A ANPD (Autoridade Nacional de Proteção de Dados) é o órgão da administração pública responsável por zelar, implementar e fiscalizar o cumprimento da LGPD em todo o território nacional. É o principal órgão regulador da proteção de dados no Brasil.",
     },
   ];
-  
+
   const totalQuestions = data.questions.length;
 
   // Mostrar contador de perguntas
@@ -428,14 +423,13 @@ function createImprovedQuizMinigame(scene, data, callback) {
           progressText.destroy();
           titleText.destroy(); // Garantir que o título é destruído ao final do quiz
 
-         // Garantir que 60% é suficiente para passar
-         const success = correctAnswers >= Math.ceil(totalQuestions * 0.6);
-         
-         // Definir mensagem apropriada baseada no resultado
-         const resultMessage = success 
-           ? `Você acertou ${correctAnswers} de ${totalQuestions} questões e liberou a professora!` 
-           : `Você acertou ${correctAnswers} de ${totalQuestions} questões. Tente novamente!`;
+          // Garantir que 60% é suficiente para passar
+          const success = correctAnswers >= Math.ceil(totalQuestions * 0.6);
 
+          // Definir mensagem apropriada baseada no resultado
+          const resultMessage = success
+            ? `Você acertou ${correctAnswers} de ${totalQuestions} questões e liberou a professora!`
+            : `Você acertou ${correctAnswers} de ${totalQuestions} questões. Tente novamente!`;
 
           console.log(
             `Quiz completed - Score: ${correctAnswers}/${totalQuestions}, Success: ${success}`
@@ -490,34 +484,70 @@ function startMemoryGame(scene, callback) {
   const totalLevels = 3;
   let totalAttempts = 0;
   let totalMatchesFound = 0;
-  
+
   // Dados relacionados à LGPD - três conjuntos diferentes
   const allLevelsData = [
     // Nível 1 - Conceitos básicos
     [
-      { term: "DADOS PESSOAIS", description: "INFORMAÇÕES QUE IDENTIFICAM UMA PESSOA" },
+      {
+        term: "DADOS PESSOAIS",
+        description: "INFORMAÇÕES QUE IDENTIFICAM UMA PESSOA",
+      },
       { term: "LGPD", description: "LEI GERAL DE PROTEÇÃO DE DADOS PESSOAIS" },
       { term: "CONSENTIMENTO", description: "PERMISSÃO PARA USO DE DADOS" },
-      { term: "SEGURANÇA", description: "PROTEÇÃO CONTRA ACESSO NÃO AUTORIZADO" },
-      { term: "PRIVACIDADE", description: "DIREITO DE MANTER INFORMAÇÕES PESSOAIS" },
+      {
+        term: "SEGURANÇA",
+        description: "PROTEÇÃO CONTRA ACESSO NÃO AUTORIZADO",
+      },
+      {
+        term: "PRIVACIDADE",
+        description: "DIREITO DE MANTER INFORMAÇÕES PESSOAIS",
+      },
     ],
     // Nível 2 - Conceitos intermediários
     [
-      { term: "CONTROLADOR", description: "QUEM TOMA DECISÕES SOBRE TRATAMENTO DE DADOS" },
+      {
+        term: "CONTROLADOR",
+        description: "QUEM TOMA DECISÕES SOBRE TRATAMENTO DE DADOS",
+      },
       { term: "OPERADOR", description: "QUEM REALIZA O TRATAMENTO DE DADOS" },
-      { term: "ANONIMIZAÇÃO", description: "TORNAR IMPOSSÍVEL IDENTIFICAR O TITULAR" },
+      {
+        term: "ANONIMIZAÇÃO",
+        description: "TORNAR IMPOSSÍVEL IDENTIFICAR O TITULAR",
+      },
       { term: "TITULAR", description: "PESSOA A QUEM OS DADOS SE REFEREM" },
-      { term: "TRATAMENTO", description: "OPERAÇÃO REALIZADA COM DADOS PESSOAIS" },
+      {
+        term: "TRATAMENTO",
+        description: "OPERAÇÃO REALIZADA COM DADOS PESSOAIS",
+      },
     ],
     // Nível 3 - Conceitos avançados
     [
-      { term: "ENCARREGADO", description: "DPO - RESPONSÁVEL PELA CONFORMIDADE" },
-      { term: "BANCO DE DADOS", description: "CONJUNTO ESTRUTURADO DE DADOS PESSOAIS" },
-      { term: "RELATÓRIO DE IMPACTO", description: "DOCUMENTAÇÃO DE RISCOS À PRIVACIDADE" },
-      { term: "PSEUDONIMIZAÇÃO", description: "PROCESSAMENTO QUE IMPEDE IDENTIFICAÇÃO DIRETA" },
-      { term: "TRANSFERÊNCIA INTERNACIONAL", description: "ENVIO DE DADOS PARA OUTRO PAÍS" },
-      { term: "AUTORIDADE NACIONAL", description: "ANPD - ÓRGÃO FISCALIZADOR DA LGPD" },
-    ]
+      {
+        term: "ENCARREGADO",
+        description: "DPO - RESPONSÁVEL PELA CONFORMIDADE",
+      },
+      {
+        term: "BANCO DE DADOS",
+        description: "CONJUNTO ESTRUTURADO DE DADOS PESSOAIS",
+      },
+      {
+        term: "RELATÓRIO DE IMPACTO",
+        description: "DOCUMENTAÇÃO DE RISCOS À PRIVACIDADE",
+      },
+      {
+        term: "PSEUDONIMIZAÇÃO",
+        description: "PROCESSAMENTO QUE IMPEDE IDENTIFICAÇÃO DIRETA",
+      },
+      {
+        term: "TRANSFERÊNCIA INTERNACIONAL",
+        description: "ENVIO DE DADOS PARA OUTRO PAÍS",
+      },
+      {
+        term: "AUTORIDADE NACIONAL",
+        description: "ANPD - ÓRGÃO FISCALIZADOR DA LGPD",
+      },
+    ],
   ];
 
   // Guardar elementos do level
@@ -535,7 +565,9 @@ function startMemoryGame(scene, callback) {
     if (levelText) levelText.destroy();
 
     // Atualizar título para mostrar o nível atual
-    titleText.setText(`Correspondência de Termos - Nível ${level + 1}/${totalLevels}`);
+    titleText.setText(
+      `Correspondência de Termos - Nível ${level + 1}/${totalLevels}`
+    );
 
     // Variáveis de controle para este nível
     const lgpdPairs = allLevelsData[level];
@@ -555,43 +587,44 @@ function startMemoryGame(scene, callback) {
     // Configuração adaptativa para o layout dos cards
     const cardWidth = MEMORY_STYLES.sizes.cardWidth;
     const cardHeight = MEMORY_STYLES.sizes.cardHeight;
-    
+
     // Calcular o espaço disponível dentro do painel
-    const availableWidth = panel.width * 0.85;  // Usar 85% da largura do painel
+    const availableWidth = panel.width * 0.85; // Usar 85% da largura do painel
     const availableHeight = panel.height * 0.7; // Usar 70% da altura do painel
-    
+
     // Definir a quantidade de pares e verificar se precisamos ajustar o tamanho dos cards
     const numPairs = lgpdPairs.length;
-    
+
     // Espaçamento inicial entre colunas
     let columnSpacing = cardWidth * 1.5;
-    
+
     // Verificar se a largura total ficará dentro do espaço disponível
     if (columnSpacing > availableWidth * 0.8) {
       // Reduzir o espaçamento se for muito grande
       columnSpacing = availableWidth * 0.7;
     }
-    
+
     // Calcular posições horizontais das colunas garantindo que caibam no painel
     const leftColumnX = -columnSpacing / 2;
     const rightColumnX = columnSpacing / 2;
-    
+
     // Calcular o espaçamento vertical adequado
     const maxCardsTotalHeight = numPairs * cardHeight; // Altura total que os cards ocupariam sem espaçamento
-    
+
     // Verificar se os cards cabem na altura disponível
     const isOverflowing = maxCardsTotalHeight > availableHeight;
-    
+
     // Ajustar o espaçamento ou tamanho dos cards, se necessário
     let adjustedSpacing;
     let scaleFactor = 1;
-    
+
     if (isOverflowing) {
       // Se não couberem todos os cards, ajustar o espaçamento ao mínimo
       adjustedSpacing = 4; // Mínimo de 4px entre cards
-      
+
       // Se mesmo com espaçamento mínimo ainda não couber, reduzir o tamanho dos cards
-      const availableSpaceWithMinSpacing = availableHeight - ((numPairs - 1) * adjustedSpacing);
+      const availableSpaceWithMinSpacing =
+        availableHeight - (numPairs - 1) * adjustedSpacing;
       if (maxCardsTotalHeight > availableSpaceWithMinSpacing) {
         scaleFactor = availableSpaceWithMinSpacing / maxCardsTotalHeight;
         // Limitar a redução para não ficar muito pequeno
@@ -601,18 +634,18 @@ function startMemoryGame(scene, callback) {
       // Se couber, distribuir o espaço restante como espaçamento
       const remainingSpace = availableHeight - maxCardsTotalHeight;
       adjustedSpacing = remainingSpace / (numPairs - 1 || 1); // Evitar divisão por zero
-      
+
       // Limitar o espaçamento para não ficar muito grande
       adjustedSpacing = Math.min(20, adjustedSpacing);
     }
-    
+
     // Calcular a altura total que os cards ocuparão com o espaçamento ajustado
-    const totalContentHeight = (cardHeight * scaleFactor * numPairs) + 
-                              ((numPairs - 1) * adjustedSpacing);
-    
+    const totalContentHeight =
+      cardHeight * scaleFactor * numPairs + (numPairs - 1) * adjustedSpacing;
+
     // Calcular a posição Y inicial para centralizar verticalmente
-    const startY = -totalContentHeight / 2 + (cardHeight * scaleFactor / 2);
-    
+    const startY = -totalContentHeight / 2 + (cardHeight * scaleFactor) / 2;
+
     // Definir uma cor para cards selecionados
     const selectedCardColor = 0x5599ff;
 
@@ -628,7 +661,13 @@ function startMemoryGame(scene, callback) {
 
       // Card de termo (esquerda)
       const card = scene.add
-        .rectangle(leftColumnX, y, cardWidth * scaleFactor, cardHeight * scaleFactor, MEMORY_STYLES.colors.card)
+        .rectangle(
+          leftColumnX,
+          y,
+          cardWidth * scaleFactor,
+          cardHeight * scaleFactor,
+          MEMORY_STYLES.colors.card
+        )
         .setStrokeStyle(2, 0xffffff)
         .setInteractive({ useHandCursor: true })
         .setOrigin(0.5)
@@ -636,7 +675,7 @@ function startMemoryGame(scene, callback) {
 
       // Ajustar fonte de acordo com o scaleFactor
       const fontSize = Math.max(8 * scaleFactor, 7); // Mínimo de 7px
-      
+
       const cardText = scene.add
         .text(leftColumnX, y, shuffledPairs[i].term, {
           fontFamily: "Arial",
@@ -656,11 +695,21 @@ function startMemoryGame(scene, callback) {
       card.cardText = cardText;
 
       gameContainer.add([card, cardText]);
-      leftCards.push({ card, text: cardText, value: shuffledPairs[i].term, matched: false });
-      cards.push({ card, text: cardText, value: shuffledPairs[i].term, matched: false });
+      leftCards.push({
+        card,
+        text: cardText,
+        value: shuffledPairs[i].term,
+        matched: false,
+      });
+      cards.push({
+        card,
+        text: cardText,
+        value: shuffledPairs[i].term,
+        matched: false,
+      });
 
       // Evento de clique nos cards
-      card.on('pointerdown', function() {
+      card.on("pointerdown", function () {
         handleCardClick(card);
       });
     }
@@ -675,7 +724,13 @@ function startMemoryGame(scene, callback) {
       const y = startY + i * (cardHeight * scaleFactor + adjustedSpacing);
 
       const card = scene.add
-        .rectangle(rightColumnX, y, cardWidth * scaleFactor, cardHeight * scaleFactor, MEMORY_STYLES.colors.card)
+        .rectangle(
+          rightColumnX,
+          y,
+          cardWidth * scaleFactor,
+          cardHeight * scaleFactor,
+          MEMORY_STYLES.colors.card
+        )
         .setStrokeStyle(2, 0xffffff)
         .setInteractive({ useHandCursor: true })
         .setDepth(9004)
@@ -684,7 +739,7 @@ function startMemoryGame(scene, callback) {
 
       // Ajustar fonte de acordo com o scaleFactor
       const fontSize = Math.max(8 * scaleFactor, 7); // Mínimo de 7px
-      
+
       const cardText = scene.add
         .text(rightColumnX, y, shuffledDescriptions[i].description, {
           fontFamily: "Arial",
@@ -700,10 +755,12 @@ function startMemoryGame(scene, callback) {
 
       card.value = shuffledDescriptions[i].description;
       card.cardText = cardText;
-      
+
       // Encontrar o índice correto do par
       for (let j = 0; j < shuffledPairs.length; j++) {
-        if (shuffledPairs[j].description === shuffledDescriptions[i].description) {
+        if (
+          shuffledPairs[j].description === shuffledDescriptions[i].description
+        ) {
           card.pairIndex = j;
           break;
         }
@@ -712,11 +769,21 @@ function startMemoryGame(scene, callback) {
       card.matched = false;
 
       gameContainer.add([card, cardText]);
-      rightCards.push({ card, text: cardText, value: shuffledDescriptions[i].description, matched: false });
-      cards.push({ card, text: cardText, value: shuffledDescriptions[i].description, matched: false });
+      rightCards.push({
+        card,
+        text: cardText,
+        value: shuffledDescriptions[i].description,
+        matched: false,
+      });
+      cards.push({
+        card,
+        text: cardText,
+        value: shuffledDescriptions[i].description,
+        matched: false,
+      });
 
       // Evento de clique nos cards
-      card.on('pointerdown', function() {
+      card.on("pointerdown", function () {
         handleCardClick(card);
       });
     }
@@ -725,14 +792,14 @@ function startMemoryGame(scene, callback) {
     function highlightCard(card) {
       // Mudar a cor para uma bem mais destacada
       card.setFillStyle(selectedCardColor);
-      
+
       // Adicionar efeito de escala para destacar ainda mais
       scene.tweens.add({
         targets: [card, card.cardText],
         scaleX: 1.1,
         scaleY: 1.1,
         duration: 150,
-        ease: 'Power1'
+        ease: "Power1",
       });
     }
 
@@ -740,14 +807,14 @@ function startMemoryGame(scene, callback) {
     function unhighlightCard(card) {
       if (!card.matched) {
         card.setFillStyle(MEMORY_STYLES.colors.card);
-        
+
         // Retornar ao tamanho original
         scene.tweens.add({
           targets: [card, card.cardText],
           scaleX: 1,
           scaleY: 1,
           duration: 150,
-          ease: 'Power1'
+          ease: "Power1",
         });
       }
     }
@@ -756,7 +823,7 @@ function startMemoryGame(scene, callback) {
     function handleCardClick(card) {
       // Ignorar cliques em cartas já combinadas
       if (card.matched) return;
-      
+
       // Se nenhuma carta estiver selecionada
       if (!selectedCard) {
         // Selecionar esta carta
@@ -764,12 +831,12 @@ function startMemoryGame(scene, callback) {
         highlightCard(card);
         return;
       }
-      
+
       // Se uma carta já estiver selecionada
-      
+
       // Ignorar clique na mesma carta
       if (selectedCard === card) return;
-      
+
       // Ignorar se tentar selecionar duas cartas do mesmo lado
       if (selectedCard.isLeftCard === card.isLeftCard) {
         // Desseleciona a carta anterior
@@ -778,298 +845,301 @@ function startMemoryGame(scene, callback) {
         highlightCard(card);
         return;
       }
-      
+
       // Chegamos aqui, é uma seleção válida de cartas de lados diferentes
       attempts++;
       totalAttempts++;
-      
+
       // Destacar o segundo card selecionado
       highlightCard(card);
-      
+
       // Verificar se é um par correto
       const isMatch = selectedCard.pairIndex === card.pairIndex;
-      
+
       if (isMatch) {
         // Acertou o par!
         selectedCard.matched = true;
         card.matched = true;
-        
+
         // Mudar cor das cartas que formam par
         selectedCard.setFillStyle(MEMORY_STYLES.colors.correct);
         card.setFillStyle(MEMORY_STYLES.colors.correct);
-        
+
         // Retornar ao tamanho normal com animação
         scene.tweens.add({
           targets: [selectedCard, selectedCard.cardText, card, card.cardText],
           scaleX: 1,
           scaleY: 1,
           duration: 300,
-          ease: 'Power1'
+          ease: "Power1",
         });
-        
+
         matchesFound++;
         totalMatchesFound++;
-        
+
         // Limpar seleção atual
         selectedCard = null;
-        
+
         // Verificar se o nível terminou
         if (matchesFound === totalMatches) {
-          scene.time.delayedCall(800, function() {
-        // Avançar para o próximo nível ou finalizar o jogo
-        currentLevel++;
-        
-        if (currentLevel < totalLevels) {
-          // Limpar elementos atuais
-          gameContainer.destroy();
-          if (instructionsText) instructionsText.destroy();
-          if (levelText) levelText.destroy();
-            // Criar um painel de transição com animação
-            const transitionPanel = scene.add
-            .rectangle(
-            width / 2,
-            height / 2,
-            panel.width * 0.7,
-            panel.height * 0.5,
-            0x1a365d
-            )
-            .setScrollFactor(0)
-            .setDepth(9010)
-            .setStrokeStyle(3, 0xffffff)
-            .setOrigin(0.5)
-            .setAlpha(0)
-            .setScale(1);
-            
-            // Criar textura de estrela com forma corrigida
-            if (!scene.textures.exists('star')) {
-            const starGraphics = scene.make.graphics();
-            starGraphics.clear();
-            
-            // Definir aparência da estrela
-            starGraphics.lineStyle(2, 0xff9900, 1);
-            starGraphics.fillStyle(0xffcc00, 1);
-            
-            // Desenhar estrela com 5 pontas - com raios diferentes para forma correta
-            const outerRadius = 15;
-            const innerRadius = 7;  // Inner radius deve ser menor que outer
-            const cx = 20;  // Centro X da estrela
-            const cy = 20;  // Centro Y da estrela
-            
-            starGraphics.beginPath();
-            
-            // Desenhar os 10 pontos da estrela (5 externos, 5 internos)
-            for (let i = 0; i < 10; i++) {
-            // Alternar entre raio externo e interno
-            const radius = i % 2 === 0 ? outerRadius : innerRadius;
-            // Ângulo ajustado para 5 pontas
-            const angle = Math.PI * 2 * (i / 10) - Math.PI / 2;
-            
-            const x = cx + Math.cos(angle) * radius;
-            const y = cy + Math.sin(angle) * radius;
-            
-            if (i === 0) {
-            starGraphics.moveTo(x, y);
-            } else {
-            starGraphics.lineTo(x, y);
-            }
-            }
-            
-            starGraphics.closePath();
-            starGraphics.fillPath();
-            starGraphics.strokePath();
-            
-            // Gerar textura maior para melhor visualização
-            starGraphics.generateTexture('star', 40, 40);
-            }
-            
-            // Centralizar melhor as estrelas
-            const starCount = 5;
-            const starSpacing = 50; // Reduzido para estrelas mais próximas
-            const totalWidth = starCount * starSpacing;
-            const startX = width / 2.8 - (totalWidth / 2); // Removido offset extra
-            
-            // Adicionar estrelas
-            const stars = [];
-            for (let i = 0; i < starCount; i++) {
-            const star = scene.add.image(
-            startX + i * starSpacing,
-            height / 2 - 60,
-            'star'
-            ).setScale(0).setDepth(9011);
-            
-            stars.push(star);
-            }
+          scene.time.delayedCall(800, function () {
+            // Avançar para o próximo nível ou finalizar o jogo
+            currentLevel++;
+
+            if (currentLevel < totalLevels) {
+              // Limpar elementos atuais
+              gameContainer.destroy();
+              if (instructionsText) instructionsText.destroy();
+              if (levelText) levelText.destroy();
+              // Criar um painel de transição com animação
+              const transitionPanel = scene.add
+                .rectangle(
+                  width / 2,
+                  height / 2,
+                  panel.width * 0.7,
+                  panel.height * 0.5,
+                  0x1a365d
+                )
+                .setScrollFactor(0)
+                .setDepth(9010)
+                .setStrokeStyle(3, 0xffffff)
+                .setOrigin(0.5)
+                .setAlpha(0)
+                .setScale(1);
+
+              // Criar textura de estrela com forma corrigida
+              if (!scene.textures.exists("star")) {
+                const starGraphics = scene.make.graphics();
+                starGraphics.clear();
+
+                // Definir aparência da estrela
+                starGraphics.lineStyle(2, 0xff9900, 1);
+                starGraphics.fillStyle(0xffcc00, 1);
+
+                // Desenhar estrela com 5 pontas - com raios diferentes para forma correta
+                const outerRadius = 15;
+                const innerRadius = 7; // Inner radius deve ser menor que outer
+                const cx = 20; // Centro X da estrela
+                const cy = 20; // Centro Y da estrela
+
+                starGraphics.beginPath();
+
+                // Desenhar os 10 pontos da estrela (5 externos, 5 internos)
+                for (let i = 0; i < 10; i++) {
+                  // Alternar entre raio externo e interno
+                  const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                  // Ângulo ajustado para 5 pontas
+                  const angle = Math.PI * 2 * (i / 10) - Math.PI / 2;
+
+                  const x = cx + Math.cos(angle) * radius;
+                  const y = cy + Math.sin(angle) * radius;
+
+                  if (i === 0) {
+                    starGraphics.moveTo(x, y);
+                  } else {
+                    starGraphics.lineTo(x, y);
+                  }
+                }
+
+                starGraphics.closePath();
+                starGraphics.fillPath();
+                starGraphics.strokePath();
+
+                // Gerar textura maior para melhor visualização
+                starGraphics.generateTexture("star", 40, 40);
+              }
+
+              // Centralizar melhor as estrelas
+              const starCount = 5;
+              const starSpacing = 50; // Reduzido para estrelas mais próximas
+              const totalWidth = starCount * starSpacing;
+              const startX = width / 2.8 - totalWidth / 2; // Removido offset extra
+
+              // Adicionar estrelas
+              const stars = [];
+              for (let i = 0; i < starCount; i++) {
+                const star = scene.add
+                  .image(startX + i * starSpacing, height / 2 - 60, "star")
+                  .setScale(0)
+                  .setDepth(9011);
+
+                stars.push(star);
+              }
               // Texto de nível completo com sombra e estilo melhorado
               const levelCompleteText = scene.add
-              .text(
-                width / 2,
-                height / 2 - 20,
-                `Nível ${currentLevel} Completo!`,
-                {
-                fontFamily: "Arial",
-                fontSize: "28px",
-                color: "#ffffff",
-                align: "center",
-                fontWeight: "bold",
-                stroke: "#000000",
-                strokeThickness: 4
-                }
-              )
-              .setOrigin(0.5)
-              .setScrollFactor(0)
-              .setDepth(9011)
-              .setAlpha(0);
-              
+                .text(
+                  width / 2,
+                  height / 2 - 20,
+                  `Nível ${currentLevel} Completo!`,
+                  {
+                    fontFamily: "Arial",
+                    fontSize: "28px",
+                    color: "#ffffff",
+                    align: "center",
+                    fontWeight: "bold",
+                    stroke: "#000000",
+                    strokeThickness: 4,
+                  }
+                )
+                .setOrigin(0.5)
+                .setScrollFactor(0)
+                .setDepth(9011)
+                .setAlpha(0);
+
               // Texto secundário com descrição
               const subText = scene.add
-              .text(
-                width / 2,
-                height / 2 + 20,
-                `Prepare-se para o Nível ${currentLevel + 1}`,
-                {
-                fontFamily: "Arial",
-                fontSize: "18px",
-                color: "#bbffbb",
-                align: "center",
-                }
-              )
-              .setOrigin(0.5)
-              .setScrollFactor(0)
-              .setDepth(9011)
-              .setAlpha(0);
-              
+                .text(
+                  width / 2,
+                  height / 2 + 20,
+                  `Prepare-se para o Nível ${currentLevel + 1}`,
+                  {
+                    fontFamily: "Arial",
+                    fontSize: "18px",
+                    color: "#bbffbb",
+                    align: "center",
+                  }
+                )
+                .setOrigin(0.5)
+                .setScrollFactor(0)
+                .setDepth(9011)
+                .setAlpha(0);
+
               // Botão para continuar com efeito de brilho
               const continueButton = scene.add
-              .rectangle(
-                width / 2,
-                height / 2 + 70,
-                160,
-                45,
-                MEMORY_STYLES.colors.buttonPrimary
-              )
-              .setScrollFactor(0)
-              .setDepth(9011)
-              .setInteractive({ useHandCursor: true })
-              .setStrokeStyle(2, 0xffffff)
-              .setAlpha(0);
-              
+                .rectangle(
+                  width / 2,
+                  height / 2 + 70,
+                  160,
+                  45,
+                  MEMORY_STYLES.colors.buttonPrimary
+                )
+                .setScrollFactor(0)
+                .setDepth(9011)
+                .setInteractive({ useHandCursor: true })
+                .setStrokeStyle(2, 0xffffff)
+                .setAlpha(0);
+
               const continueText = scene.add
-              .text(
-                width / 2,
-                height / 2 + 70,
-                "Continuar",
-                {
-                fontFamily: "Arial",
-                fontSize: "18px",
-                color: "#ffffff",
-                fontWeight: "bold"
-                }
-              )
-              .setScrollFactor(0)
-              .setDepth(9012)
-              .setOrigin(0.5)
-              .setAlpha(0);
-              
+                .text(width / 2, height / 2 + 70, "Continuar", {
+                  fontFamily: "Arial",
+                  fontSize: "18px",
+                  color: "#ffffff",
+                  fontWeight: "bold",
+                })
+                .setScrollFactor(0)
+                .setDepth(9012)
+                .setOrigin(0.5)
+                .setAlpha(0);
+
               // Animação de entrada para o painel
               scene.tweens.add({
-              targets: transitionPanel,
-              alpha: 1,
-              scale: 1,
-              duration: 400,
-              ease: 'Back.easeOut'
+                targets: transitionPanel,
+                alpha: 1,
+                scale: 1,
+                duration: 400,
+                ease: "Back.easeOut",
               });
-              
+
               // Animação do texto principal
               scene.tweens.add({
-              targets: [levelCompleteText, subText],
-              alpha: 1,
-              y: '-=10',
-              duration: 500,
-              delay: 200,
-              ease: 'Power2'
+                targets: [levelCompleteText, subText],
+                alpha: 1,
+                y: "-=10",
+                duration: 500,
+                delay: 200,
+                ease: "Power2",
               });
-              
+
               // Animação das estrelas
               stars.forEach((star, i) => {
-              scene.tweens.add({
-                targets: star,
-                scale: 1,
-                y: height / 2 - 60,
-                duration: 400,
-                delay: 300 + i * 100,
-                ease: 'Back.easeOut'
+                scene.tweens.add({
+                  targets: star,
+                  scale: 1,
+                  y: height / 2 - 60,
+                  duration: 400,
+                  delay: 300 + i * 100,
+                  ease: "Back.easeOut",
+                });
+
+                // Efeito de girar
+                scene.tweens.add({
+                  targets: star,
+                  angle: 360,
+                  duration: 1500,
+                  delay: 300 + i * 100,
+                  ease: "Sine.easeInOut",
+                });
               });
-              
-              // Efeito de girar
-              scene.tweens.add({
-                targets: star,
-                angle: 360,
-                duration: 1500,
-                delay: 300 + i * 100,
-                ease: 'Sine.easeInOut'
-              });
-              });
-              
+
               // Animação do botão
               scene.tweens.add({
-              targets: [continueButton, continueText],
-              alpha: 1,
-              duration: 400,
-              delay: 600,
-              ease: 'Power2'
+                targets: [continueButton, continueText],
+                alpha: 1,
+                duration: 400,
+                delay: 600,
+                ease: "Power2",
               });
-              
+
               // Efeito de pulsar no botão
               scene.tweens.add({
-              targets: continueButton,
-              scaleX: 1.05,
-              scaleY: 1.05,
-              yoyo: true,
-              repeat: -1,
-              duration: 800,
-              ease: 'Sine.easeInOut'
+                targets: continueButton,
+                scaleX: 1.05,
+                scaleY: 1.05,
+                yoyo: true,
+                repeat: -1,
+                duration: 800,
+                ease: "Sine.easeInOut",
               });
-              
+
               // Efeito ao passar o mouse
-              continueButton.on('pointerover', function() {
-              continueButton.setFillStyle(MEMORY_STYLES.colors.buttonHover);
-              continueText.setScale(1.05);
+              continueButton.on("pointerover", function () {
+                continueButton.setFillStyle(MEMORY_STYLES.colors.buttonHover);
+                continueText.setScale(1.05);
               });
-              
-              continueButton.on('pointerout', function() {
-              continueButton.setFillStyle(MEMORY_STYLES.colors.buttonPrimary);
-              continueText.setScale(1);
+
+              continueButton.on("pointerout", function () {
+                continueButton.setFillStyle(MEMORY_STYLES.colors.buttonPrimary);
+                continueText.setScale(1);
               });
-              
+
               // Efeito ao clicar
-              continueButton.on('pointerdown', function() {
-              // Sons se disponíveis
-              if (scene.sound && scene.sound.add) {
-                try {
-                const clickSound = scene.sound.add('click', { volume: 0.5 });
-                clickSound.play();
-                } catch(e) {
-                console.log("Som não disponível");
+              continueButton.on("pointerdown", function () {
+                // Sons se disponíveis
+                if (scene.sound && scene.sound.add) {
+                  try {
+                    const clickSound = scene.sound.add("click", {
+                      volume: 0.5,
+                    });
+                    clickSound.play();
+                  } catch (e) {
+                    console.log("Som não disponível");
+                  }
                 }
-              }
-              
-              // Animação de saída
-              scene.tweens.add({
-                targets: [transitionPanel, levelCompleteText, subText, continueButton, continueText, ...stars],
-                alpha: 0,
-                scale: 0.8,
-                duration: 300,
-                ease: 'Power2',
-                onComplete: function() {
-                transitionPanel.destroy();
-                levelCompleteText.destroy();
-                subText.destroy();
-                continueButton.destroy();
-                continueText.destroy();
-                stars.forEach(star => star.destroy());
-                startLevel(currentLevel);
-                }
-              });
+
+                // Animação de saída
+                scene.tweens.add({
+                  targets: [
+                    transitionPanel,
+                    levelCompleteText,
+                    subText,
+                    continueButton,
+                    continueText,
+                    ...stars,
+                  ],
+                  alpha: 0,
+                  scale: 0.8,
+                  duration: 300,
+                  ease: "Power2",
+                  onComplete: function () {
+                    transitionPanel.destroy();
+                    levelCompleteText.destroy();
+                    subText.destroy();
+                    continueButton.destroy();
+                    continueText.destroy();
+                    stars.forEach((star) => star.destroy());
+                    startLevel(currentLevel);
+                  },
+                });
               });
             } else {
               // Jogo completo - mostrar resultado final
@@ -1086,7 +1156,8 @@ function startMemoryGame(scene, callback) {
               if (success) {
                 resultMessage = `Parabéns! Você completou todos os níveis em ${totalAttempts} tentativas e libertou a professora!`;
               } else {
-                resultMessage = "Você usou muitas tentativas. Tente praticar mais sobre LGPD!";
+                resultMessage =
+                  "Você usou muitas tentativas. Tente praticar mais sobre LGPD!";
               }
 
               cleanupAndShowResult(
@@ -1105,9 +1176,9 @@ function startMemoryGame(scene, callback) {
         // Errou o par
         // Flash vermelho temporário
         card.setFillStyle(MEMORY_STYLES.colors.incorrect);
-        
+
         // Desselecionar ambas as cartas após um breve intervalo
-        scene.time.delayedCall(800, function() {
+        scene.time.delayedCall(800, function () {
           if (selectedCard && !selectedCard.matched) {
             unhighlightCard(selectedCard);
           }
@@ -1147,7 +1218,7 @@ function startMemoryGame(scene, callback) {
           fontSize: "13px",
           color: "#ffcc00",
           align: "center",
-          fontWeight: "bold"
+          fontWeight: "bold",
         }
       )
       .setOrigin(0.5)
@@ -1181,7 +1252,16 @@ function startHangmanGame(scene, callback) {
   );
 
   // Lista de palavras sobre privacidade e proteção de dados
-  const words = ["PESSOAL", "SENSIVEL", "PRIVACIDADE", "LGPD", "DADOS", "SEGURANCA", "PROTECAO", "CONSENTIMENTO"];
+  const words = [
+    "PESSOAL",
+    "SENSIVEL",
+    "PRIVACIDADE",
+    "LGPD",
+    "DADOS",
+    "SEGURANCA",
+    "PROTECAO",
+    "CONSENTIMENTO",
+  ];
   // Adicionar timestamp para garantir uma seleção verdadeiramente aleatória
   const randomIndex = Math.floor(Math.random() * Date.now()) % words.length;
   const selectedWord = words[randomIndex];
@@ -1202,7 +1282,7 @@ function startHangmanGame(scene, callback) {
   // Elementos para exibir a palavra
   const wordDisplay = [];
   const letterSpacing = 23;
-  
+
   // Calcular startX para centralizar a palavra - ALTERADO: usar wordDisplayX do style
   const startX = HANGMAN_STYLES.positions.wordDisplayX;
 
@@ -1233,77 +1313,80 @@ function startHangmanGame(scene, callback) {
   }
 
   // Contador de tentativas - posição ajustada para ser visível
-  const attemptsContainer = scene.add.container(HANGMAN_STYLES.positions.wordDisplayX + -80, -50);
+  const attemptsContainer = scene.add.container(
+    HANGMAN_STYLES.positions.wordDisplayX + -80,
+    -50
+  );
   gameContainer.add(attemptsContainer);
-  
+
   // Contador de tentativas estilizado com design aprimorado
   // Container principal com gradiente de fundo
-  const attemptsBg = scene.add.circle(0, 0, 42, 0x333333)
+  const attemptsBg = scene.add
+    .circle(0, 0, 42, 0x333333)
     .setStrokeStyle(4, 0x4488cc, 1)
     .setAlpha(0.9);
-  
+
   // Adicionar gradiente ao fundo para mais profundidade visual
   const bgGradient = scene.add.graphics();
   bgGradient.fillGradientStyle(0x3a4963, 0x1a2432, 0x3a4963, 0x1a2432, 1);
   bgGradient.fillCircle(0, 0, 38);
   attemptsContainer.add([attemptsBg, bgGradient]);
-  
+
   // Contador de tentativas restantes com melhor contraste e sombra de texto
-  const remainingAttemptsText = scene.add.text(
-    0, -10, 
-    `${maxAttempts - attempts}`, 
-    {
-      fontFamily: "'Trebuchet MS', Arial, sans-serif", 
-      fontSize: "32px", 
-      color: "#ffffff", 
+  const remainingAttemptsText = scene.add
+    .text(0, -10, `${maxAttempts - attempts}`, {
+      fontFamily: "'Trebuchet MS', Arial, sans-serif",
+      fontSize: "32px",
+      color: "#ffffff",
       fontWeight: "bold",
-      stroke: '#000000',
-      strokeThickness: 2
-    }
-  ).setOrigin(0.5).setShadow(1, 1, '#000000', 3, true);
-  
+      stroke: "#000000",
+      strokeThickness: 2,
+    })
+    .setOrigin(0.5)
+    .setShadow(1, 1, "#000000", 3, true);
+
   // Label semântico para clareza ("tentativas restantes")
-  const attemptsLabel = scene.add.text(
-    0, 14, "restantes", 
-    { 
-      fontFamily: "'Trebuchet MS', Arial, sans-serif", 
-      fontSize: "11px", 
+  const attemptsLabel = scene.add
+    .text(0, 14, "restantes", {
+      fontFamily: "'Trebuchet MS', Arial, sans-serif",
+      fontSize: "11px",
       color: "#dddddd",
-      fontStyle: "italic"
-    }
-  ).setOrigin(0.5);
-  
+      fontStyle: "italic",
+    })
+    .setOrigin(0.5);
+
   attemptsContainer.add([remainingAttemptsText, attemptsLabel]);
-  
+
   // Indicadores visuais melhorados com animação sutil
   const indicators = [];
   const indicatorRadius = 56;
-  
+
   for (let i = 0; i < maxAttempts; i++) {
     // Distribuir indicadores em círculo com espaçamento uniforme
-    const angle = (i * (2 * Math.PI / maxAttempts)) - Math.PI/2;
+    const angle = i * ((2 * Math.PI) / maxAttempts) - Math.PI / 2;
     const x = Math.cos(angle) * indicatorRadius;
     const y = Math.sin(angle) * indicatorRadius;
-    
+
     // Criar indicador com gradiente e borda para parecer mais com "vidas"
-    const indicator = scene.add.circle(x, y, 6, 0x66aaff)
+    const indicator = scene.add
+      .circle(x, y, 6, 0x66aaff)
       .setStrokeStyle(1, 0xffffff, 0.7);
-    
+
     // Adicionar brilho pulsante sutil nos indicadores
     scene.tweens.add({
       targets: indicator,
       scaleX: 1.2,
       scaleY: 1.2,
-      duration: 1500 + (i * 150),
+      duration: 1500 + i * 150,
       yoyo: true,
       repeat: -1,
-      ease: 'Sine.easeInOut'
+      ease: "Sine.easeInOut",
     });
-    
+
     indicators.push(indicator);
     attemptsContainer.add(indicator);
   }
-  
+
   // Definir variável globalmente para referência
   attemptsNumber = remainingAttemptsText;
 
@@ -1321,7 +1404,9 @@ function startHangmanGame(scene, callback) {
 
     rowLetters.forEach((letter, letterIndex) => {
       const x = rowStartX + letterIndex * (keySize + keySpacing) + keySize / 2;
-      const y = HANGMAN_STYLES.positions.keyboardTopY + rowIndex * (keySize + keySpacing); // ALTERADO: usar keyboardTopY do style
+      const y =
+        HANGMAN_STYLES.positions.keyboardTopY +
+        rowIndex * (keySize + keySpacing); // ALTERADO: usar keyboardTopY do style
 
       const keyBg = scene.add
         .rectangle(x, y, keySize, keySize, HANGMAN_STYLES.colors.keyboardBg)
@@ -1331,8 +1416,10 @@ function startHangmanGame(scene, callback) {
 
       const keyText = scene.add
         .text(x, y, letter, {
-          fontFamily: "Arial", fontSize: "14px", 
-          color: "#ffffff", fontWeight: "bold",
+          fontFamily: "Arial",
+          fontSize: "14px",
+          color: "#ffffff",
+          fontWeight: "bold",
         })
         .setOrigin(0.5)
         .setScrollFactor(0);
@@ -1360,28 +1447,30 @@ function startHangmanGame(scene, callback) {
         if (!correctGuess) {
           attempts++;
           attemptsNumber.setText(`${maxAttempts - attempts}`);
-          
+
           // Desativar indicador
           if (attempts <= indicators.length) {
             scene.tweens.add({
               targets: indicators[indicators.length - attempts],
-              alpha: 0.3, scale: 0.8, duration: 300
+              alpha: 0.3,
+              scale: 0.8,
+              duration: 300,
             });
           }
-          
+
           // Efeito de shake e mudança de cor com base nas tentativas restantes
           scene.tweens.add({
             targets: attemptsContainer,
             x: { from: attemptsContainer.x - 5, to: attemptsContainer.x },
-            duration: 300
+            duration: 300,
           });
-          
+
           if (maxAttempts - attempts <= 2) {
             attemptsBg.setStrokeStyle(3, 0xff4444);
-            attemptsNumber.setColor('#ff6666');
+            attemptsNumber.setColor("#ff6666");
           } else if (maxAttempts - attempts <= 3) {
             attemptsBg.setStrokeStyle(3, 0xffaa44);
-            attemptsNumber.setColor('#ffcc66');
+            attemptsNumber.setColor("#ffcc66");
           }
 
           // Verificar se perdeu
@@ -1394,9 +1483,10 @@ function startHangmanGame(scene, callback) {
           scene.tweens.add({
             targets: attemptsBg,
             fillColor: 0x44aa44,
-            yoyo: true, duration: 200
+            yoyo: true,
+            duration: 200,
           });
-          
+
           // Verificar se ganhou
           let wordComplete = true;
           for (let i = 0; i < selectedWord.length; i++) {
@@ -1428,7 +1518,12 @@ function startHangmanGame(scene, callback) {
       0, // Centro do container
       HANGMAN_STYLES.positions.instructionsY, // ALTERADO: usar instructionsY do style
       `Adivinhe a palavra - Você tem ${maxAttempts} tentativas`,
-      { fontFamily: "Arial", fontSize: "14px", color: "#ffffff", align: "center" }
+      {
+        fontFamily: "Arial",
+        fontSize: "14px",
+        color: "#ffffff",
+        align: "center",
+      }
     )
     .setOrigin(0.5)
     .setScrollFactor(0);
@@ -1504,7 +1599,7 @@ const CATEGORIZATION_POSITIONS = {
 // 4. JOGO CUSTOMIZADO (Professor 4)
 function startCustomGame(scene, callback) {
   console.log("Iniciando jogo customizado...");
-  
+
   // Obter dimensões atuais da tela
   const width = scene.cameras.main.width;
   const height = scene.cameras.main.height;
@@ -1613,7 +1708,7 @@ function startCustomGame(scene, callback) {
 
   // Container para o jogo - centralizado na tela
   const gameContainer = scene.add
-    .container(width / 2, height / 2)  // Alterado para centralizar exatamente
+    .container(width / 2, height / 2) // Alterado para centralizar exatamente
     .setDepth(9002)
     .setScrollFactor(0); // Impedir movimento com zoom
 
@@ -2254,22 +2349,17 @@ function showQuestionUI(
   // Determinar se estamos usando o container (posições relativas) ou posições de tela absoluta
   const xPos = container ? 0 : width; // Se container existe, use 0 como centro
   const yPos = container ? -60 : height / 2 - 60; // Ajuste a posição Y relativamente
-  
+
   // Texto da pergunta - posicionado com ajuste para melhor visualização
   const questionText = scene.add
-    .text(
-      xPos,
-      yPos, 
-      questionData.question,
-      {
-        fontFamily: "Arial, Helvetica, sans-serif",
-        fontSize: "18px",
-        color: "#ffffff",
-        align: "center",
-        fontWeight: "bold",
-        wordWrap: { width: panel.width - 60 },
-      }
-    )
+    .text(xPos, yPos, questionData.question, {
+      fontFamily: "Arial, Helvetica, sans-serif",
+      fontSize: "18px",
+      color: "#ffffff",
+      align: "center",
+      fontWeight: "bold",
+      wordWrap: { width: panel.width - 60 },
+    })
     .setScrollFactor(0)
     .setDepth(9002)
     .setOrigin(0.5);
@@ -2413,7 +2503,7 @@ function showAnswerFeedback(
   // Determinar posições baseadas no container ou tela
   const xPos = container ? 0 : width / 2;
   const yBase = container ? 0 : height / 2;
-  
+
   // Container para o feedback - maior para acomodar textos longos
   const feedbackPanel = scene.add
     .rectangle(
@@ -2522,7 +2612,14 @@ function showAnswerFeedback(
   );
 
   // Adicionar ao container se fornecido
-  if (container) container.add([feedbackPanel, feedbackTitle, feedbackText, nextButton, nextButtonText]);
+  if (container)
+    container.add([
+      feedbackPanel,
+      feedbackTitle,
+      feedbackText,
+      nextButton,
+      nextButtonText,
+    ]);
 
   // Eventos do botão
   nextButton.on("pointerover", () =>
