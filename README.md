@@ -22,7 +22,7 @@ Júnior</a>
 
 ## 👩‍🏫 Professores:
 ### Orientador(a) 
-- <a href="https://www.linkedin.com/in/#/">Profa. Laíza Ribeiro Silva</a>
+- <a href="https://www.linkedin.com/in/laizaribeiro/">Profa. Laíza Ribeiro Silva</a>
 ### Instrutores
 - <a href="https://www.linkedin.com/in/juliastateri/">Profa. Júlia Stateri</a>
 - <a href="https://www.linkedin.com/in/cristiano-benites-ph-d-687647a8/">Prof. Cristiano da Silva Benites</a> 
