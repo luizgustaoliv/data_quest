@@ -349,8 +349,8 @@ canvas {
     border: 2px solid #6c8fd6;
     border-radius: 5px;
     color: white;
-    font-family: 'Arial', sans-serif;
-    font-size: 16px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
     text-align: center;
     transition: all 0.3s ease;
 }
@@ -391,8 +391,8 @@ canvas {
 
 #keycard-counter {
     color: #ffffff;
-    font-family: 'Arial Black', Arial, sans-serif;
-    font-size: 24px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 19px;
     font-weight: bold;
     text-shadow: 2px 2px 4px #000000;
 }
@@ -421,8 +421,8 @@ canvas {
 
 #key-counter {
     color: #ffffff;
-    font-family: 'Arial Black', Arial, sans-serif;
-    font-size: 24px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 19px;
     font-weight: bold;
     text-shadow: 2px 2px 4px #000000;
 }
@@ -441,8 +441,8 @@ canvas {
     border: 2px solid #6c8fd6;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     color: #ffffff;
-    font-family: 'Arial Black', Arial, sans-serif;
-    font-size: 16px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 13px;
     font-weight: bold;
     text-shadow: 1px 1px 2px #000000;
     cursor: pointer;
@@ -475,7 +475,7 @@ canvas {
     color: #4CAF50;
     text-align: center;
     margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 19px;
     text-shadow: 1px 1px 2px #000000;
     font-family: 'Press Start 2P', cursive;
 }
@@ -509,10 +509,10 @@ canvas {
 }
 
 .mission-text {
-    flex: 1;
+    flex: 0.9;
     color: #ffffff;
-    font-family: 'Arial', sans-serif;
-    font-size: 16px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
 }
 
 .mission-complete .mission-text {
@@ -579,7 +579,7 @@ canvas {
     border: 3px solid white !important;
     border-radius: 5px !important;
     padding: 10px 20px !important;
-    font-family: Arial, sans-serif !important;
+    font-family: 'Press Start 2P',cursive !important;
     font-size: 16px !important;
     font-weight: bold !important;
     cursor: pointer !important;
@@ -620,7 +620,7 @@ canvas {
     border-radius: 8px !important;
     padding: 20px !important;
     color: white !important;
-    font-family: Arial, sans-serif !important;
+    font-family: 'Press Start 2P', cursive !important;
     text-align: center !important;
     box-shadow: 0 0 30px black !important;
 }

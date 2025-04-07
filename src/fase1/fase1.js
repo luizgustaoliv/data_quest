@@ -174,7 +174,7 @@ if (window.fase1Initialized) {
     nameInput.type = "text";
     nameInput.className = "player-name-input";
     nameInput.placeholder = "Digite seu nome";
-    nameInput.maxLength = 15;
+    nameInput.maxLength = 10;
     nameContainer.appendChild(nameInput);
 
     card.appendChild(nameContainer);
@@ -1753,8 +1753,8 @@ if (window.fase1Initialized) {
 
       // Create name tag display
       const nameTag = this.add.text(0, -32, playerName, {
-        fontFamily: "Arial",
-        fontSize: "9px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "7px",
         color: "#ffffff",
         stroke: "#000000",
         strokeThickness: 2,
@@ -1839,8 +1839,8 @@ if (window.fase1Initialized) {
           boxY + boxHeight / 2, // Centralizar verticalmente na "caixa" invisível
           "Preciso encontrar a chave para usar o elevador!",
           {
-            fontFamily: "Arial",
-            fontSize: "20px", // Aumentei um pouco para melhor visibilidade
+             fontFamily: "'Press Start 2P', Arial, sans-serif",
+            fontSize: "16px", // Aumentei um pouco para melhor visibilidade
             color: "#FFFFFF",
             backgroundColor: "rgba(0, 0, 0, 0.7)",
             padding: { left: 20, right: 20, top: 15, bottom: 15 },
@@ -2256,8 +2256,8 @@ if (window.fase1Initialized) {
 
       avisoTexto = this.add
         .text(0, 0, ">E<", {
-          fontFamily: "Arial",
-          fontSize: "10px",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontSize: "7px",
           fontStyle: "bold",
           color: "#000000", // Preto
           stroke: "#FFFFFF", // Borda branca para simular o fundo
@@ -2321,8 +2321,8 @@ if (window.fase1Initialized) {
         0,
         "Pressione E para continuar",
         {
-          fontFamily: "Arial",
-          fontSize: "14px",
+           fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontSize: "10px",
           color: "#FFFFFF",
           backgroundColor: "#000000",
           padding: { x: 6, y: 3 },
@@ -2625,8 +2625,8 @@ if (window.fase1Initialized) {
       // Criação do texto do diálogo
       textoDialogo = this.add
         .text(400, 450, "", {
-          fontFamily: "arial",
-          fontSize: "22px",
+           fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontSize: "13px",
           color: "#FFF",
           wordWrap: { width: 400 }, // Reduzida para evitar sobreposição
           align: "center",
@@ -3261,8 +3261,8 @@ if (window.fase1Initialized) {
         0,
         "Preciso falar com o faxineiro primeiro!",
         {
-          fontFamily: "Arial",
-          fontSize: "16px",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontSize: "12px",
           color: "#FFFFFF",
           backgroundColor: "rgba(0, 0, 0, 0.7)",
           padding: { left: 10, right: 10, top: 5, bottom: 5 },
@@ -3508,8 +3508,8 @@ if (window.fase1Initialized) {
           this.cameras.main.height / 2 + 50,
           "★ Ajudar Professora ★",
           {
-            fontFamily: "Arial",
-            fontSize: "18px",
+            fontFamily: "'Press Start 2P', Arial, sans-serif",
+            fontSize: "13px",
             color: "#FFFFFF",
             backgroundColor: "#2C3E50",
             padding: { left: 30, right: 30, top: 20, bottom: 20 },
@@ -3580,9 +3580,9 @@ if (window.fase1Initialized) {
 
       // Adicionar texto "Clique aqui"
       const clickText = this.add.text(
-        arrowX - 60,
-        arrowY - 25,
-        "Clique aqui!",
+        arrowX - 60000,
+        arrowY - 25000,
+        " ",
         {
           fontFamily: "Arial",
           fontSize: "16px",
@@ -3619,8 +3619,8 @@ if (window.fase1Initialized) {
       const originalSetVisible = helpButton.setVisible;
       helpButton.setVisible = function (visible) {
         originalSetVisible.call(helpButton, visible);
-        arrow.setVisible(visible);
-        clickText.setVisible(visible);
+        arrow.setVisible(false);
+        clickText.setVisible(false);
         return helpButton;
       };
 
@@ -3634,6 +3634,7 @@ if (window.fase1Initialized) {
 
       // Certifique-se de que o botão tenha prioridade de exibição alta
       helpButton.setDepth(9999); // Maior que qualquer outra coisa na tela
+
 
       console.log("Botão de ajuda criado:", helpButton);
 
@@ -3650,8 +3651,8 @@ if (window.fase1Initialized) {
       // Criar o texto do contador
       keycardText = this.add
         .text(80, 45, "0/4", {
-          fontFamily: "Arial",
-          fontSize: "20px",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontSize: "16px",
           color: "#FFFFFF",
           stroke: "#000000",
           strokeThickness: 2,
@@ -3689,8 +3690,8 @@ if (window.fase1Initialized) {
       // Create counter text with absolute positioning and improved visibility
       keycardText = this.add
         .text(uiConfig.x + 40, uiConfig.y + 5, "0/4", {
-          fontFamily: "Arial Black",
-          fontSize: "24px",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontSize: "16px",
           color: "#ffffff",
           stroke: "#000000",
           strokeThickness: 4,
@@ -4466,28 +4467,28 @@ if (window.fase1Initialized) {
     const tutorialContent = [
       {
         title: "DATA QUEST - FASE 1",
-        text: "Neste jogo, você vai aprender sobre proteção de dados\ne ajudar a salvar sua escola de um ataque hacker.\nVamos começar com os controles básicos!",
+        text: "Neste jogo, você vai aprender sobre\n proteção de dados e ajudar\n a salvar sua escola de\n um ataque hacker.Vamos começar\n com os controles básicos!",
       },
       {
         title: "Como se Movimentar",
-        text: "Use as teclas W, A, S, D ou as setas direcionais\npara mover seu personagem pela escola.",
+        text: "Use as teclas W, A, S, D\n ou as setas direcionais\npara mover seu personagem pela escola.",
       },
       {
         title: "Interagindo com Personagens",
-        text: "Pressione a tecla 'E' quando estiver próximo de\num NPC para conversar com ele.",
+        text: "Pressione a tecla 'E'\n quando estiver próximo de\num NPC para conversar com ele.",
       },
       {
         title: "Portas e Objetos",
-        text: "Pressione a tecla 'ESPAÇO' para interagir\ncom portas e objetos no cenário.",
+        text: "Pressione a tecla 'ESPAÇO' para\n interagir com portas e objetos\n no cenário.",
         image: "tutorial_objects",
       },
       {
         title: "Sua Missão",
-        text: "Nesta fase os professores estão sendo controlados por um hacker\nque está tentando roubar dados dos alunos!\nAjude os professores-robôs a recuperar a consciência.\nA cada minigame concluído, você ganha um keycard.",
+        text: "Nesta fase os professores\n estão sendo controlados por um hacker\n que está tentando roubar dados dos\n alunos! Ajude os professores-robôs\n a recuperar a consciência. A cada\n minigame concluído, você ganha\n um keycard.",
       },
       {
         title: "Keycard e chave",
-        text: "Nessa fase seu objetivo é coletar os 4 keycard pra desbloquear\n a última sala que tem uma chave. Com essa chave,\n você pode entrar no elevador e ir pra próxima fase.",
+        text: "Nessa fase seu objetivo é\n coletar os 4 keycard pra desbloquear\n a última sala que tem uma chave.\n Com essa chave, você pode entrar\n no elevador e ir pra próxima fase.",
       },
     ];
 
@@ -4518,14 +4519,14 @@ if (window.fase1Initialized) {
     panel.setDepth(9001);
     tutorialElements.push(panel);
 
-    // Adicionar título do slide
+    // Adicionar título do slide com a nova fonte
     const titleText = scene.add.text(
       cameraWidth / 2,
       panelY + 40,
       tutorialContent[0].title,
       {
-        fontFamily: "Arial",
-        fontSize: "28px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "20px",
         color: "#ffffff",
         fontStyle: "bold",
         align: "center",
@@ -4536,14 +4537,14 @@ if (window.fase1Initialized) {
     titleText.setDepth(9002);
     tutorialElements.push(titleText);
 
-    // Adicionar conteúdo do slide
+    // Adicionar conteúdo do slide com a nova fonte
     const contentText = scene.add.text(
       cameraWidth / 2,
       cameraHeight / 2,
       tutorialContent[0].text,
       {
-        fontFamily: "Arial",
-        fontSize: "18px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "14px",
         color: "#ffffff",
         align: "center",
         lineSpacing: 10,
@@ -4567,13 +4568,13 @@ if (window.fase1Initialized) {
       tutorialElements.push(image);
     }
 
-    // Indicador de slides (exemplo: "1/5")
+    // Indicador de slides (exemplo: "1/6") com a nova fonte
     const slideIndicator = scene.add.text(
       cameraWidth / 2,
       panelY + panelHeight - 30,
       `1/${tutorialContent.length}`,
       {
-        fontFamily: "Arial",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
         fontSize: "16px",
         color: "#ffffff",
       }
@@ -4583,14 +4584,14 @@ if (window.fase1Initialized) {
     slideIndicator.setDepth(9002);
     tutorialElements.push(slideIndicator);
 
-    // Botão Anterior
+    // Botão Anterior com a nova fonte
     const prevButton = scene.add.text(
       panelX + 80,
       panelY + panelHeight - 50,
       "< Anterior",
       {
-        fontFamily: "Arial",
-        fontSize: "18px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "12px",
         color: "#ffffff",
         backgroundColor: "#4a6eb5",
         padding: { left: 15, right: 15, top: 8, bottom: 8 },
@@ -4612,14 +4613,14 @@ if (window.fase1Initialized) {
     prevButton.setVisible(false); // Inicialmente oculto no primeiro slide
     tutorialElements.push(prevButton);
 
-    // Botão Próximo
+    // Botão Próximo com a nova fonte
     const nextButton = scene.add.text(
       panelX + panelWidth - 80,
       panelY + panelHeight - 50,
       "Próximo >",
       {
-        fontFamily: "Arial",
-        fontSize: "18px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "12px",
         color: "#ffffff",
         backgroundColor: "#4a6eb5",
         padding: { left: 15, right: 15, top: 8, bottom: 8 },
@@ -4640,14 +4641,14 @@ if (window.fase1Initialized) {
     });
     tutorialElements.push(nextButton);
 
-    // Botão Pular/Fechar
+    // Botão Pular/Fechar com a nova fonte
     const closeButton = scene.add.text(
       panelX + panelWidth - 20,
       panelY + 20,
       "X",
       {
-        fontFamily: "Arial",
-        fontSize: "24px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "20px",
         color: "#ffffff",
         padding: { left: 10, right: 10, top: 5, bottom: 5 },
       }
@@ -5287,8 +5288,8 @@ function showDoor2OpenMessage(scene) {
     cameraHeight / 2 - 100,
     "A sala da chave foi desbloqueada!",
     {
-      fontFamily: "Arial",
-      fontSize: "20px",
+      fontFamily: "'Press Start 2P', Arial, sans-serif",
+      fontSize: "16px",
       color: "#FFFFFF",
       backgroundColor: "rgba(0, 0, 0, 0.7)",
       padding: { left: 20, right: 20, top: 15, bottom: 15 },
@@ -5351,7 +5352,7 @@ function addMissionStyles() {
         padding: 20px;
         z-index: 10001;
         color: white;
-        font-family: 'Arial', sans-serif;
+        font-family: "'Press Start 2P', Arial, sans-serif";
       }
       
       #missions-button {

@@ -48,24 +48,24 @@ const MINIGAME_STYLES = {
   },
   fonts: {
     title: {
-      fontFamily: "Arial, Helvetica, sans-serif",
-      fontSize: "24px",
+      fontFamily: "'Press Start 2P', Arial, sans-serif",
+      fontSize: "13px",
       color: "#ffffff",
       fontWeight: "bold",
     },
     subtitle: {
-      fontFamily: "Arial, Helvetica, sans-serif",
-      fontSize: "18px",
+      fontFamily: "'Press Start 2P', Arial, sans-serif",
+      fontSize: "13px",
       color: "#ffffff",
     },
     body: {
-      fontFamily: "Arial, Helvetica, sans-serif",
-      fontSize: "16px",
+      fontFamily: "'Press Start 2P', Arial, sans-serif",
+      fontSize: "13px",
       color: "#ffffff",
     },
     button: {
-      fontFamily: "Arial, Helvetica, sans-serif",
-      fontSize: "16px",
+      fontFamily: "'Press Start 2P', Arial, sans-serif",
+      fontSize: "13px",
       color: "#ffffff",
       align: "center",
     },
@@ -151,7 +151,7 @@ const HANGMAN_STYLES = {
   positions: {
     wordDisplayY: 0, // Palavra no topo
     wordDisplayX: -100, // Palavra deslocada para a direita
-    keyboardTopY: 100, // Teclado começando mais abaixo
+    keyboardTopY: 70, // Teclado começando mais abaixo
     keyboardX: 0, // Teclado deslocado para a direita
     instructionsY: -100, // Instruções mais para baixo
   },
@@ -674,11 +674,11 @@ function startMemoryGame(scene, callback) {
         .setScrollFactor(0); // Impede que o card se mova com o zoom
 
       // Ajustar fonte de acordo com o scaleFactor
-      const fontSize = Math.max(8 * scaleFactor, 7); // Mínimo de 7px
+      const fontSize = Math.max(8 * scaleFactor, 6); // Mínimo de 7px
 
       const cardText = scene.add
         .text(leftColumnX, y, shuffledPairs[i].term, {
-          fontFamily: "Arial",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
           fontSize: `${fontSize}px`,
           color: "#ffffff",
           fontWeight: "bold",
@@ -738,11 +738,11 @@ function startMemoryGame(scene, callback) {
         .setScrollFactor(0); // Impede que o card se mova com o zoom
 
       // Ajustar fonte de acordo com o scaleFactor
-      const fontSize = Math.max(8 * scaleFactor, 7); // Mínimo de 7px
+      const fontSize = Math.max(7 * scaleFactor, 6); // Mínimo de 7px
 
       const cardText = scene.add
         .text(rightColumnX, y, shuffledDescriptions[i].description, {
-          fontFamily: "Arial",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
           fontSize: `${fontSize}px`,
           color: "#ffffff",
           fontWeight: "bold",
@@ -972,8 +972,8 @@ function startMemoryGame(scene, callback) {
                   height / 2 - 20,
                   `Nível ${currentLevel} Completo!`,
                   {
-                    fontFamily: "Arial",
-                    fontSize: "28px",
+                    fontFamily: "'Press Start 2P', Arial, sans-serif",
+                    fontSize: "23px",
                     color: "#ffffff",
                     align: "center",
                     fontWeight: "bold",
@@ -993,8 +993,8 @@ function startMemoryGame(scene, callback) {
                   height / 2 + 20,
                   `Prepare-se para o Nível ${currentLevel + 1}`,
                   {
-                    fontFamily: "Arial",
-                    fontSize: "18px",
+                    fontFamily: "'Press Start 2P', Arial, sans-serif",
+                    fontSize: "13px",
                     color: "#bbffbb",
                     align: "center",
                   }
@@ -1021,8 +1021,8 @@ function startMemoryGame(scene, callback) {
 
               const continueText = scene.add
                 .text(width / 2, height / 2 + 70, "Continuar", {
-                  fontFamily: "Arial",
-                  fontSize: "18px",
+                  fontFamily: "'Press Start 2P', Arial, sans-serif",
+                  fontSize: "13px",
                   color: "#ffffff",
                   fontWeight: "bold",
                 })
@@ -1197,8 +1197,8 @@ function startMemoryGame(scene, callback) {
         height / 2 + panel.height / 2 - 40, // Garantir que fique na parte de baixo dentro do painel
         "Clique em um termo e depois na descrição correspondente",
         {
-          fontFamily: "Arial",
-          fontSize: "12px",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontSize: "9px",
           color: "#ffffff",
           align: "center",
         }
@@ -1214,8 +1214,8 @@ function startMemoryGame(scene, callback) {
         height / 2 + panel.height / 2 - 20, // Colocar abaixo das instruções
         `Nível ${currentLevel + 1} de ${totalLevels}`,
         {
-          fontFamily: "Arial",
-          fontSize: "13px",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontSize: "9px",
           color: "#ffcc00",
           align: "center",
           fontWeight: "bold",
@@ -1519,8 +1519,8 @@ function startHangmanGame(scene, callback) {
       HANGMAN_STYLES.positions.instructionsY, // ALTERADO: usar instructionsY do style
       `Adivinhe a palavra - Você tem ${maxAttempts} tentativas`,
       {
-        fontFamily: "Arial",
-        fontSize: "14px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "10px",
         color: "#ffffff",
         align: "center",
       }
@@ -1719,8 +1719,8 @@ function startCustomGame(scene, callback) {
       CATEGORIZATION_POSITIONS.instructions.y,
       "Classifique o tipo de dado conforme a LGPD:",
       {
-        fontFamily: "Arial",
-        fontSize: "18px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "13px",
         color: "#ffffff",
         align: "center",
         fontWeight: "bold",
@@ -1738,8 +1738,8 @@ function startCustomGame(scene, callback) {
       CATEGORIZATION_POSITIONS.dataText.y,
       gameItems[0].text,
       {
-        fontFamily: "Arial",
-        fontSize: "24px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "20px",
         color: "#ffffff",
         align: "center",
         fontWeight: "bold",
@@ -1755,10 +1755,10 @@ function startCustomGame(scene, callback) {
     .text(
       CATEGORIZATION_POSITIONS.progressText.x,
       CATEGORIZATION_POSITIONS.progressText.y,
-      `Item 1/${gameItems.length}`,
+      `${gameItems.length}`,
       {
-        fontFamily: "Arial",
-        fontSize: "16px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "12px",
         color: "#ffffff",
         align: "center",
       }
@@ -1787,8 +1787,8 @@ function startCustomGame(scene, callback) {
       CATEGORIZATION_POSITIONS.buttonPersonal.y,
       "Dado Pessoal",
       {
-        fontFamily: "Arial",
-        fontSize: "16px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "12px",
         color: "#ffffff",
         fontWeight: "bold",
       }
@@ -1814,8 +1814,8 @@ function startCustomGame(scene, callback) {
       CATEGORIZATION_POSITIONS.buttonSensitive.y,
       "Dado Sensível",
       {
-        fontFamily: "Arial",
-        fontSize: "16px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "12px",
         color: "#ffffff",
         fontWeight: "bold",
       }
@@ -1837,8 +1837,8 @@ function startCustomGame(scene, callback) {
       CATEGORIZATION_POSITIONS.explanationText.y,
       "Dados sensíveis incluem informações sobre: raça, religião, opinião política,\nsaúde, vida sexual, genética, biometria, filiação sindical, etc.",
       {
-        fontFamily: "Arial",
-        fontSize: "14px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "8px",
         color: "#bbbbbb",
         align: "center",
       }
@@ -1867,8 +1867,8 @@ function startCustomGame(scene, callback) {
       CATEGORIZATION_POSITIONS.feedbackText.y,
       "",
       {
-        fontFamily: "Arial",
-        fontSize: "14px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "10px",
         color: "#ffffff",
         align: "center",
         wordWrap: { width: 380 },
@@ -1898,8 +1898,8 @@ function startCustomGame(scene, callback) {
       CATEGORIZATION_POSITIONS.nextButtonText.y,
       "Próximo",
       {
-        fontFamily: "Arial",
-        fontSize: "14px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "10px",
         color: "#ffffff",
       }
     )
@@ -1991,7 +1991,7 @@ function startCustomGame(scene, callback) {
     if (currentItemIndex < gameItems.length) {
       // Próximo item
       dataText.setText(gameItems[currentItemIndex].text);
-      progressText.setText(`Item ${currentItemIndex + 1}/${gameItems.length}`);
+      progressText.setText(``);
     } else {
       // Fim do jogo
       gameEnded = true;
@@ -2281,8 +2281,8 @@ function cleanupAndShowResult(
       scene.cameras.main.height / 2,
       message,
       {
-        fontFamily: "Arial",
-        fontSize: "18px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "13px",
         color: "#ffffff",
         align: "center",
         padding: { x: 20, y: 15 }, // Aumentado o padding
@@ -2353,8 +2353,8 @@ function showQuestionUI(
   // Texto da pergunta - posicionado com ajuste para melhor visualização
   const questionText = scene.add
     .text(xPos, yPos, questionData.question, {
-      fontFamily: "Arial, Helvetica, sans-serif",
-      fontSize: "18px",
+      fontFamily: "'Press Start 2P', Arial, sans-serif",
+      fontSize: "14px",
       color: "#ffffff",
       align: "center",
       fontWeight: "bold",
@@ -2406,8 +2406,8 @@ function showQuestionUI(
         y,
         String.fromCharCode(65 + index),
         {
-          fontFamily: "Arial",
-          fontSize: "16px",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontSize: "13px",
           fontWeight: "bold",
           color: "#ffffff",
         }
@@ -2419,8 +2419,8 @@ function showQuestionUI(
     // Texto da opção - ajustado para posição relativa
     const text = scene.add
       .text(xPos - buttonWidth / 2 + 40, y, option, {
-        fontFamily: "Arial",
-        fontSize: "15px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "11px",
         color: "#ffffff",
         wordWrap: { width: buttonWidth - 60 },
       })
@@ -2526,8 +2526,8 @@ function showAnswerFeedback(
       yBase + 25, // Relativo ao container ou centro da tela
       isCorrect ? "Correto!" : "Incorreto!",
       {
-        fontFamily: "Arial",
-        fontSize: "18px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "14px",
         fontWeight: "bold",
         color: isCorrect ? "#8eff8e" : "#ff8e8e",
       }
@@ -2544,8 +2544,8 @@ function showAnswerFeedback(
       yBase + 85, // Relativo ao container ou centro da tela
       questionData.feedback || "Resposta registrada.",
       {
-        fontFamily: "Arial",
-        fontSize: "12px", // Reduzido de 14px para 13px
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "9px", // Reduzido de 14px para 13px
         color: "#ffffff",
         align: "center",
         wordWrap: { width: panel.width * 0.7 }, // Reduzido ainda mais para melhor quebra de linha
@@ -2577,8 +2577,8 @@ function showAnswerFeedback(
       yBase + 160, // Relativo ao container ou centro da tela
       "Próxima",
       {
-        fontFamily: "Arial",
-        fontSize: "16px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "12px",
         color: "#ffffff",
         fontWeight: "bold",
       }

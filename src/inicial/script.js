@@ -57,11 +57,12 @@ function createDataQuestLogo(parentElement) {
   dataText.style.cssText = `
     font-size: 80px;
     font-weight: bold;
-    color: #00f5f5;
+    color:rgb(15, 183, 255);
     text-shadow: 
       0 0 10px rgba(0, 245, 245, 0.8),
       0 0 20px rgba(0, 245, 245, 0.5);
     letter-spacing: 2px;
+    -webkit-text-stroke: 0.5px black;
   `;
   
   // Criar o texto "QUEST"
@@ -76,6 +77,7 @@ function createDataQuestLogo(parentElement) {
       0 0 10px rgba(255, 183, 0, 0.8),
       0 0 20px rgba(255, 183, 0, 0.5);
     letter-spacing: 2px;
+    -webkit-text-stroke: 0.5px black;
   `;
   
   // Montar a estrutura
@@ -93,12 +95,119 @@ function createDataQuestLogo(parentElement) {
 const logo = createDataQuestLogo();
 logo.className = "logo"; // Adicionar a classe "logo" ao container
 
+// Função para criar um botão estilizado
+function criarBotaoEstilizado(texto, id, className) {
+  // Container do botão
+  const buttonContainer = document.createElement("div");
+  buttonContainer.id = id;
+  buttonContainer.className = `game-button ${className}`;
+  
+  // Camada externa do botão
+  const buttonOuter = document.createElement("div");
+  buttonOuter.className = "button-outer";
+  
+  // Camada interna do botão
+  const buttonInner = document.createElement("div");
+  buttonInner.className = "button-inner";
+  
+  // Texto do botão
+  const buttonText = document.createElement("div");
+  buttonText.className = "button-text";
+  buttonText.textContent = texto;
+  
+  // Montar a estrutura
+  buttonInner.appendChild(buttonText);
+  buttonContainer.appendChild(buttonOuter);
+  buttonContainer.appendChild(buttonInner);
+  
+  return buttonContainer;
+}
+
 // Função para criar todos os elementos da interface
 function criarInterface() {
+  // Adiciona estilos CSS para os botões
+  const styleElement = document.createElement("style");
+  styleElement.textContent = `
+    .game-button {
+      position: relative;
+      width: 250px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .button-outer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #00979b;
+      border-radius: 15px;
+      z-index: 1;
+    }
+
+    .button-inner {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      right: 4px;
+      bottom: 4px;
+      background-color: #062b35;
+      border-radius: 12px;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #00bcbc;
+    }
+
+    .button-text {
+      font-family: 'Press Start 2P', cursive;
+      color: #00fff2;
+      font-size: 26px;
+      font-weight: bold;
+      text-shadow: 0 0 8px rgba(0, 255, 242, 0.7);
+      letter-spacing: 1px;
+      z-index: 3;
+    }
+
+     .game-button.botaocomojogar .button-text {
+      font-size: 20px;
+      }
+
+      font-size: 2px;
+    }
+
+    .game-button:hover .button-outer {
+      background-color: #00b8bd;
+    }
+
+    .game-button:hover .button-inner {
+      background-color: #073845;
+      border-color: #00dede;
+    }
+
+    .game-button:hover .button-text {
+      color: #00fffa;
+      text-shadow: 0 0 12px rgba(0, 255, 242, 0.9);
+    }
+
+    .game-button:active .button-inner {
+      transform: scale(0.98);
+    }
+  `;
+  document.head.appendChild(styleElement);
+
   // Container do título com a logo
   const title = document.createElement("div");
   title.className = "title";
 
+  // Assumindo que logo já foi definido em outro lugar do código
+  // Se não, precisaria adicionar a criação do logo aqui
   title.appendChild(logo);
   document.body.appendChild(title);
 
@@ -106,26 +215,14 @@ function criarInterface() {
   const botoes = document.createElement("div");
   botoes.className = "botoes";
 
-  // Botão Jogar
-  const botaoJogar = document.createElement("img");
-  botaoJogar.id = "botaoJogar";
-  botaoJogar.className = "botaojogar";
-  botaoJogar.src = "assets/telainicial/botoes/botaostart.png";
-  botaoJogar.alt = "Jogar";
+  // Botão Jogar - usando a nova função
+  const botaoJogar = criarBotaoEstilizado("START", "botaoJogar", "botaojogar");
 
-  // Botão Como Jogar
-  const botaoComoJogar = document.createElement("img");
-  botaoComoJogar.id = "botaocomojogar";
-  botaoComoJogar.className = "botaocomojogar";
-  botaoComoJogar.src = "assets/telainicial/botoes/comojogar.png";
-  botaoComoJogar.alt = "comojogar";
+  // Botão Como Jogar - usando a nova função
+  const botaoComoJogar = criarBotaoEstilizado("COMO JOGAR", "botaocomojogar", "botaocomojogar");
 
-  // Botão Sobre
-  const botaoSobre = document.createElement("img");
-  botaoSobre.id = "botaosobre";
-  botaoSobre.className = "botaosobre";
-  botaoSobre.src = "assets/telainicial/botoes/botaosobre.png";
-  botaoSobre.alt = "Sobre";
+  // Botão Sobre - usando a nova função
+  const botaoSobre = criarBotaoEstilizado("SOBRE", "botaosobre", "botaosobre");
 
   // Adiciona os botões ao container
   botoes.appendChild(botaoJogar);
@@ -137,6 +234,7 @@ function criarInterface() {
   const popupComoJogar = document.createElement("div");
   popupComoJogar.id = "popup-como-jogar";
   popupComoJogar.className = "popup";
+  popupComoJogar.style.zIndex = "2000";
 
   const popupContentComo = document.createElement("div");
   popupContentComo.className = "popup-content";
@@ -289,6 +387,7 @@ function criarInterface() {
   const popupSobre = document.createElement("div");
   popupSobre.id = "popup-sobre";
   popupSobre.className = "popup";
+  popupSobre.style.zIndex = "2000";
 
   const popupContentSobre = document.createElement("div");
   popupContentSobre.className = "popup-content";
@@ -320,6 +419,24 @@ function criarInterface() {
 
   popupSobre.appendChild(popupContentSobre);
   document.body.appendChild(popupSobre);
+  
+  // Adiciona os event listeners para os botões
+  botaoComoJogar.addEventListener('click', () => {
+    popupComoJogar.style.display = 'flex';
+  });
+  
+  botaoSobre.addEventListener('click', () => {
+    popupSobre.style.display = 'flex';
+  });
+  
+  // Event listeners para fechar os popups
+  closeSpanComo.addEventListener('click', () => {
+    popupComoJogar.style.display = 'none';
+  });
+  
+  closeSpanSobre.addEventListener('click', () => {
+    popupSobre.style.display = 'none';
+  });
 }
 
 // Função para carregar e reproduzir sons - versão melhorada
@@ -539,11 +656,9 @@ function mostrarTelaPermissaoAudio() {
   permissaoOverlay.style.color = "white";
   permissaoOverlay.style.fontFamily = "'Press Start 2P', cursive";
 
-  // Adicionar logo
-  const logo = document.createElement("img");
-  logo.src = "assets/loading/logo_data_quest.png";
-  logo.style.maxWidth = "300px";
-  logo.style.marginBottom = "30px";
+  // Criar uma logo específica para a tela de permissão
+  const permissionLogo = createDataQuestLogo();
+  permissionLogo.style.marginBottom = "30px";
 
   // Texto explicativo
   const texto = document.createElement("p");
@@ -576,7 +691,7 @@ function mostrarTelaPermissaoAudio() {
   botaoSemAudio.style.fontFamily = "'Press Start 2P', cursive";
 
   // Adicionar elementos ao overlay
-  permissaoOverlay.appendChild(logo);
+  permissaoOverlay.appendChild(permissionLogo);
   permissaoOverlay.appendChild(texto);
   permissaoOverlay.appendChild(botaoAtivar);
   permissaoOverlay.appendChild(botaoSemAudio);
@@ -643,8 +758,119 @@ function inicializarJogo() {
   animarTeclaInteracao();
 }
 
+// Função para criar botão estilizado (base)
+function createStyledButton(text, className) {
+  // Criar o container do botão
+  const buttonContainer = document.createElement("div");
+  buttonContainer.className = className;
+  buttonContainer.style.cssText = `
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin: 10px;
+  `;
+  
+  // Criar a borda externa do botão
+  const outerBorder = document.createElement("div");
+  outerBorder.className = "outer-border";
+  outerBorder.style.cssText = `
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: #00b3b3;
+    border-radius: 12px;
+    box-shadow: 0 0 8px #00ffff;
+  `;
+  
+  // Criar o botão principal
+  const button = document.createElement("div");
+  button.className = "styled-button";
+  button.style.cssText = `
+    position: relative;
+    padding: 15px 100px;
+    font-family: 'Press Start 2P', Arial, sans-serif;
+    background-color: #061a1f;
+    border: 2px solid #00c4c4;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5) inset;
+    z-index: 1;
+  `;
+  
+  // Criar o texto do botão
+  const buttonText = document.createElement("div");
+  buttonText.className = "button-text";
+  buttonText.textContent = text;
+  buttonText.style.cssText = `
+    font-family: 'Press Start 2P', Arial, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #00ffdd;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    letter-spacing: 2px;
+  `;
+  
+  // Adicionar efeito hover
+  buttonContainer.addEventListener('mouseenter', () => {
+    button.style.backgroundColor = '#082a30';
+    buttonText.style.color = '#00fff0';
+    buttonText.style.fontFamily = "'Press Start 2P', cursive";
+    buttonText.style.textShadow = '0 0 15px rgba(0, 255, 255, 1)';
+    outerBorder.style.boxShadow = '0 0 12px #00ffff';
+  });
+  
+  buttonContainer.addEventListener('mouseleave', () => {
+    button.style.backgroundColor = '#061a1f';
+    buttonText.style.color = '#00ffdd';
+    buttonText.style.fontFamily = "'Press Start 2P', cursive";
+    buttonText.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.8)';
+    outerBorder.style.boxShadow = '0 0 8px #00ffff';
+  });
+  
+  // Adicionar efeito de clique
+  buttonContainer.addEventListener('mousedown', () => {
+    button.style.transform = 'scale(0.98)';
+    button.style.boxShadow = '0 0 5px rgba(0, 255, 255, 0.5) inset';
+  });
+  
+  buttonContainer.addEventListener('mouseup', () => {
+    button.style.transform = 'scale(1)';
+    button.style.boxShadow = '0 0 10px rgba(0, 255, 255, 0.5) inset';
+  });
+  
+  // Montar a estrutura
+  button.appendChild(buttonText);
+  buttonContainer.appendChild(outerBorder);
+  buttonContainer.appendChild(button);
+  
+  return buttonContainer;
+}
+
+// Funções específicas para cada botão
+function createJogarButton() {
+  return createStyledButton("JOGAR", "jogar-button");
+}
+
+function createComoJogarButton() {
+  return createStyledButton("COMO JOGAR", "como-jogar-button");
+}
+
+function createSobreButton() {
+  return createStyledButton("SOBRE", "sobre-button");
+}
+
 // Configuração dos eventos
 function configurarEventos() {
+  // Nota: Você precisa modificar a função criarInterface() para usar os novos botões estilizados
+  // em vez das imagens. Exemplo:
+  // const botaoJogar = createJogarButton();
+  // botaoJogar.id = "botaoJogar";
+  // botoes.appendChild(botaoJogar);
+
   const botaoJogar = document.getElementById("botaoJogar");
   const botaoComoJogar = document.getElementById("botaocomojogar");
   const botaoSobre = document.getElementById("botaosobre");
@@ -666,14 +892,6 @@ function configurarEventos() {
         carregarScriptFases(); // Chama a função para carregar o script de fases
       }, 1800);
     });
-
-    botaoJogar.addEventListener("mousedown", function () {
-      this.src = "assets/telainicial/botoes/botaostartpress.png";
-    });
-
-    botaoJogar.addEventListener("mouseup", function () {
-      this.src = "assets/telainicial/botoes/botaostart.png";
-    });
   }
 
   if (botaoComoJogar) {
@@ -681,28 +899,12 @@ function configurarEventos() {
       if (audioInicializado && somClique) somClique.reproduzir();
       abrirPopup();
     });
-
-    botaoComoJogar.addEventListener("mousedown", function () {
-      this.src = "assets/telainicial/botoes/comojogarpress.png";
-    });
-
-    botaoComoJogar.addEventListener("mouseup", function () {
-      this.src = "assets/telainicial/botoes/comojogar.png";
-    });
   }
 
   if (botaoSobre) {
     botaoSobre.addEventListener("click", function () {
       if (audioInicializado && somClique) somClique.reproduzir();
       abrirPopupSobre();
-    });
-
-    botaoSobre.addEventListener("mousedown", function () {
-      this.src = "assets/telainicial/botoes/botaosobrepress.png";
-    });
-
-    botaoSobre.addEventListener("mouseup", function () {
-      this.src = "assets/telainicial/botoes/botaosobre.png";
     });
   }
 

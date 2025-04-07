@@ -124,7 +124,7 @@ class LoadingScreen {
     dataText.style.cssText = `
       font-size: 80px;
       font-weight: bold;
-      color: #00f5f5;
+      color:rgb(15, 183, 255);;
       text-shadow: 
         0 0 10px rgba(0, 245, 245, 0.8),
         0 0 20px rgba(0, 245, 245, 0.5);

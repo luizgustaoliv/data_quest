@@ -1,61 +1,86 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DATA QUEST Logo</title>
-    <style>
-        body {
-            background-color: #0a0a2a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .data {
-            font-size: 80px;
-            font-weight: bold;
-            color: #00f5f5; /* Tom ciano/azul turquesa brilhante */
-            text-shadow: 
-                0 0 10px rgba(0, 245, 245, 0.8),
-                0 0 20px rgba(0, 245, 245, 0.5);
-            letter-spacing: 2px;
-        }
-        
-        .quest {
-            font-size: 80px;
-            font-weight: bold;
-            color: #ffb700; /* Amarelo/dourado */
-            text-shadow: 
-                0 0 10px rgba(255, 183, 0, 0.8),
-                0 0 20px rgba(255, 183, 0, 0.5);
-            letter-spacing: 2px;
-        }
-        
-        .glow {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(0, 245, 245, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
-            border-radius: 50%;
-            z-index: -1;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Botão START</title>
+  <style>
+    body {
+      background-color: #061a1f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    
+    .start-button-container {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+    
+    .start-button-container:before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      background: #00b3b3;
+      border-radius: 12px;
+      box-shadow: 0 0 8px #00ffff;
+      z-index: 0;
+    }
+    
+    .start-button {
+      position: relative;
+      padding: 15px 100px;
+      background-color: #061a1f;
+      border: 2px solid #00c4c4;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5) inset;
+      z-index: 1;
+      transition: all 0.2s ease;
+    }
+    
+    .button-text {
+      font-size: 36px;
+      font-weight: bold;
+      color: #00ffdd;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+      letter-spacing: 2px;
+      transition: all 0.2s ease;
+    }
+    
+    .start-button-container:hover .start-button {
+      background-color: #082a30;
+    }
+    
+    .start-button-container:hover .button-text {
+      color: #00fff0;
+      text-shadow: 0 0 15px rgba(0, 255, 255, 1);
+    }
+    
+    .start-button-container:hover:before {
+      box-shadow: 0 0 12px #00ffff;
+    }
+    
+    .start-button-container:active .start-button {
+      transform: scale(0.98);
+      box-shadow: 0 0 5px rgba(0, 255, 255, 0.5) inset;
+    }
+  </style>
 </head>
 <body>
-    <div class="logo-container">
-        <div class="glow"></div>
-        <div class="data">DATA</div>
-        <div class="quest">QUEST</div>
+  <div class="start-button-container">
+    <div class="start-button">
+      <div class="button-text">START</div>
     </div>
+  </div>
 </body>
 </html>
