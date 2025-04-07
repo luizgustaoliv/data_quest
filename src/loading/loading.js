@@ -93,25 +93,63 @@ class LoadingScreen {
     introContainer.style.alignItems = "center";
     introContainer.style.zIndex = "10000";
 
-    // Create centered logo
+    // Create the logo using the new function
     const logoCentered = document.createElement("div");
-    logoCentered.style.width = "60%";
-    logoCentered.style.maxWidth = "500px";
-    logoCentered.style.animation =
-      "logoFadeIn 1.5s ease-out forwards, logoGlow 3s infinite 1.5s";
+    logoCentered.style.animation = "logoFadeIn 1.5s ease-out forwards, logoGlow 3s infinite 1.5s";
     logoCentered.style.opacity = "0"; // Start invisible
+    
+    // Create and add the logo
+    this.createDataQuestLogo(logoCentered);
 
-    const logoImg = document.createElement("img");
-    logoImg.src = "assets/loading/logo_data_quest.png";
-    logoImg.style.width = "100%";
-    logoImg.style.height = "auto";
-    logoImg.style.display = "block";
-
-    logoCentered.appendChild(logoImg);
     introContainer.appendChild(logoCentered);
     document.body.appendChild(introContainer);
 
     this.introContainer = introContainer;
+  }
+
+  createDataQuestLogo(parentElement) {
+    const logoContainer = document.createElement("div");
+    logoContainer.className = "logo-container";
+    logoContainer.style.cssText = `
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      font-family: Arial, sans-serif;
+    `;
+
+    const dataText = document.createElement("div");
+    dataText.className = "data";
+    dataText.textContent = "DATA";
+    dataText.style.cssText = `
+      font-size: 80px;
+      font-weight: bold;
+      color: #00f5f5;
+      text-shadow: 
+        0 0 10px rgba(0, 245, 245, 0.8),
+        0 0 20px rgba(0, 245, 245, 0.5);
+      letter-spacing: 2px;
+    `;
+    
+    const questText = document.createElement("div");
+    questText.className = "quest";
+    questText.textContent = "QUEST";
+    questText.style.cssText = `
+      font-size: 80px;
+      font-weight: bold;
+      color: #ffb700;
+      text-shadow: 
+        0 0 10px rgba(255, 183, 0, 0.8),
+        0 0 20px rgba(255, 183, 0, 0.5);
+      letter-spacing: 2px;
+    `;
+    
+    logoContainer.appendChild(dataText);
+    logoContainer.appendChild(questText);
+    
+    (parentElement || document.body).appendChild(logoContainer);
+    
+    return logoContainer;
   }
 
   loadResources() {

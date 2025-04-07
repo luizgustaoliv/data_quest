@@ -70,7 +70,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('assets/telafases/fundofases.png');
+      background-image: url('assets/telafases/fundofases.jpeg');
       background-size: cover;
       background-position: center;
       z-index: 0;
@@ -215,11 +215,11 @@ function construirPagina() {
     }
     window.bgLoaded = true;
   };
-  bgImage.src = "assets/telafases/fundofases.png";
+  bgImage.src = "assets/telafases/fundofases.jpeg";
 
   // Fallback de imagem se o background-image não funcionar
   const fallbackImg = document.createElement("img");
-  fallbackImg.src = "assets/telafases/fundofases.png";
+  fallbackImg.src = "assets/telafases/fundofases.jpeg";
   fallbackImg.alt = "Background";
   fallbackImg.className = "background-fallback";
   fallbackImg.style.display = "none"; // Oculto por padrão
@@ -273,7 +273,7 @@ function construirPagina() {
     {
       number: 1,
       title: "Escola Invadida",
-      image: "assets/telafases/fundofases.png",
+      image: "assets/telafases/fundofases.jpeg",
       description:
         "Ajude os professores a recuperar o controle e proteger os dados dos alunos.",
       status: "available",
@@ -702,7 +702,7 @@ function verificarRecursos() {
 
   // Lista de variações de caminhos para tentar
   const recursos = [
-    "assets/telafases/fundofases.png",
+    "assets/telafases/fundofases.jpeg",
     "assets/telafases/bibliotecalogo.png",
     "assets/telafases/datacenter.webp",
     "assets/telafases/cadeado.png",

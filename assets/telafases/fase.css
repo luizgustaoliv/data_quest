@@ -29,7 +29,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../../assets/telafases/fundofases.png');
+    background-image: url('../../assets/telafases/fundofases.jpeg');
     background-size: cover;
     background-position: center;
     filter: blur(2px) brightness(0.7);

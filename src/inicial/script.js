@@ -37,15 +37,67 @@ function carregarCSS() {
   }, 1000);
 }
 
+// Função para criar o logo DATA QUEST com JavaScript
+function createDataQuestLogo(parentElement) {
+  // Criar o container principal
+  const logoContainer = document.createElement("div");
+  logoContainer.className = "logo-container";
+  logoContainer.style.cssText = `
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    font-family: Arial, sans-serif;
+  `;
+
+  // Criar o texto "DATA"
+  const dataText = document.createElement("div");
+  dataText.className = "data";
+  dataText.textContent = "DATA";
+  dataText.style.cssText = `
+    font-size: 80px;
+    font-weight: bold;
+    color: #00f5f5;
+    text-shadow: 
+      0 0 10px rgba(0, 245, 245, 0.8),
+      0 0 20px rgba(0, 245, 245, 0.5);
+    letter-spacing: 2px;
+  `;
+  
+  // Criar o texto "QUEST"
+  const questText = document.createElement("div");
+  questText.className = "quest";
+  questText.textContent = "QUEST";
+  questText.style.cssText = `
+    font-size: 80px;
+    font-weight: bold;
+    color: #ffb700;
+    text-shadow: 
+      0 0 10px rgba(255, 183, 0, 0.8),
+      0 0 20px rgba(255, 183, 0, 0.5);
+    letter-spacing: 2px;
+  `;
+  
+  // Montar a estrutura
+  logoContainer.appendChild(dataText);
+  logoContainer.appendChild(questText);
+  
+  // Adicionar ao elemento pai fornecido ou ao body se nenhum for fornecido
+  (parentElement || document.body).appendChild(logoContainer);
+  
+  return logoContainer; // Retorna o elemento criado para possíveis manipulações futuras
+}
+
+
+// Com:
+const logo = createDataQuestLogo();
+logo.className = "logo"; // Adicionar a classe "logo" ao container
+
 // Função para criar todos os elementos da interface
 function criarInterface() {
   // Container do título com a logo
   const title = document.createElement("div");
   title.className = "title";
-
-  const logo = document.createElement("img");
-  logo.className = "logo";
-  logo.src = "assets/loading/logo_data_quest.png";
 
   title.appendChild(logo);
   document.body.appendChild(title);
