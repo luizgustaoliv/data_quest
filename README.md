@@ -11,7 +11,7 @@
 ## CyberTech
 
 ## 👨‍🎓 Integrantes:
-- <a href="#">André David Katz</a>
+- <a href="https://www.linkedin.com/in/andrekatz1/">André David Katz</a>
 - <a href="https://www.linkedin.com/in/celsojwnior/">Celso Rodrigues Rocha 
 Júnior</a>
 - <a href="https://www.linkedin.com/in/d-m-934942320/">Daniel Meiches</a>
@@ -22,7 +22,7 @@ Júnior</a>
 
 ## 👩‍🏫 Professores:
 ### Orientador(a) 
-- <a href="https://www.linkedin.com/in/#/">Profa. Laíza Ribeiro Silva</a>
+- <a href="https://www.linkedin.com/in/laizaribeiro/">Profa. Laíza Ribeiro Silva</a>
 ### Instrutores
 - <a href="https://www.linkedin.com/in/juliastateri/">Profa. Júlia Stateri</a>
 - <a href="https://www.linkedin.com/in/cristiano-benites-ph-d-687647a8/">Prof. Cristiano da Silva Benites</a> 
@@ -52,7 +52,7 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 - <b>assets</b>: aqui estão os arquivos relacionados a elementos não-estruturados deste repositório, como imagens.
 
-- <b>document</b>: aqui estão todos os documentos do projeto, como o Game Development Document (GDD) bem como documentos complementares, na pasta "other".
+- <b>document</b>: aqui estão todos os documentos do projeto, como o Game Development Document (GDD).
 
 - <b>src</b>: Todo o código fonte criado para o desenvolvimento do projeto do jogo.
 
@@ -78,6 +78,6 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 ## 📋 Licença/License
 
-<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/Intelihub/Template_M1">MODELO GIT INTELI</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/Intelihub/Template_M1">Inteli, CyberTech, André David Katz, Celso Rodrigues Rocha Júnior, Daniel Meiches, Kaian Santos Moura, Luiz Gustavo Borges Oliveira, Miguel Ferreira de Siqueira Almeida, Wendel Hebert Feitosa</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
+<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/Intelihub/Template_M1">MODELO GIT INTELI</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://www.inteli.edu.br/">Inteli</a>, <a href="https://www.linkedin.com/in/andrekatz1/">André David Katz</a>, <a href="https://www.linkedin.com/in/celsojwnior/">Celso Rodrigues Rocha Júnior</a>, <a href="https://www.linkedin.com/in/d-m-934942320/">Daniel Meiches</a>, <a href="https://www.linkedin.com/in/kaian-moura-56b8871b4/">Kaian Santos Moura</a>, <a href="https://www.linkedin.com/in/luiz-gustavo-0b33b62b7/">Luiz Gustavo Borges Oliveira</a>, <a href="https://www.linkedin.com/in/miguel-almeida-83175b350/">Miguel Ferreira de Siqueira Almeida</a>, <a href="https://www.linkedin.com/in/wendel-feitosa-975bb1346/">Wendel Hebert Feitosa</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
 
 
