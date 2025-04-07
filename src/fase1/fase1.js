@@ -289,7 +289,6 @@ if (window.fase1Initialized) {
   keyIcon.alt = "Key";
   keyContainer.appendChild(keyIcon);
 
-  
   const keyCounter = document.createElement("span");
   keyCounter.id = "key-counter";
   keyCounter.textContent = "0/1";
@@ -1743,15 +1742,15 @@ if (window.fase1Initialized) {
       player.setOrigin(0.5, 1);
       player.body.setSize(27, 10);
       player.body.setOffset(18, 55);
-      
+
       // Get player name from localStorage or use default
       const playerName = localStorage.getItem("playerName") || "Jogador";
-      
+
       // Make sure the name is saved in localStorage for persistence
       if (!localStorage.getItem("playerName")) {
         localStorage.setItem("playerName", playerName);
       }
-      
+
       // Create name tag display
       const nameTag = this.add.text(0, -32, playerName, {
         fontFamily: "Arial",
@@ -1774,7 +1773,7 @@ if (window.fase1Initialized) {
       playerContainer.setDepth(1005); // DEPTHS.PLAYER + 1
 
       // Add a reference to update the name if it changes
-      player.updateName = function(newName) {
+      player.updateName = function (newName) {
         nameTag.setText(newName);
         localStorage.setItem("playerName", newName);
       };
@@ -1796,11 +1795,11 @@ if (window.fase1Initialized) {
       function enterElevator(player, elevator) {
         if (keyCollected) {
           // Carregar fase2.js dinamicamente
-          const script = document.createElement('script');
-          script.src = 'src/fase2/fase2.js';
-          script.onload = function() {
+          const script = document.createElement("script");
+          script.src = "src/fase2/fase2.js";
+          script.onload = function () {
             console.log("fase2.js carregado com sucesso");
-            if (typeof window.initFase2 === 'function') {
+            if (typeof window.initFase2 === "function") {
               // Limpar a fase atual
               if (window.game) {
                 window.game.destroy(true);
@@ -1811,7 +1810,7 @@ if (window.fase1Initialized) {
               console.error("initFase2 não encontrado após carregar o script");
             }
           };
-          script.onerror = function() {
+          script.onerror = function () {
             console.error("Erro ao carregar fase2.js");
           };
           document.head.appendChild(script);
@@ -1819,7 +1818,6 @@ if (window.fase1Initialized) {
           showElevatorMessage(this);
         }
       }
-      
 
       // Adicione esta nova função para mostrar a mensagem do elevador
       function showElevatorMessage(scene) {
@@ -2119,7 +2117,6 @@ if (window.fase1Initialized) {
         );
       });
 
-      
       function mapX(x) {
         //427 = 385a + b
         //337 = 290a + b
@@ -2319,19 +2316,24 @@ if (window.fase1Initialized) {
       sombra.fillRect(0, 0, map.widthInPixels, map.heightInPixels);
 
       // Adicionar indicador para avançar o diálogo
-      const advanceIndicator = this.add.text(0, 0, "Pressione E para continuar", {
-        fontFamily: "Arial",
-        fontSize: "14px",
-        color: "#FFFFFF",
-        backgroundColor: "#000000",
-        padding: { x: 6, y: 3 },
-        align: "center"
-      });
+      const advanceIndicator = this.add.text(
+        0,
+        0,
+        "Pressione E para continuar",
+        {
+          fontFamily: "Arial",
+          fontSize: "14px",
+          color: "#FFFFFF",
+          backgroundColor: "#000000",
+          padding: { x: 6, y: 3 },
+          align: "center",
+        }
+      );
       advanceIndicator.setOrigin(1, 1);
       advanceIndicator.setScrollFactor(0);
       advanceIndicator.setDepth(101); // Acima do diálogo
       advanceIndicator.setVisible(false);
-      
+
       // Animação de pulsar para o indicador
       this.tweens.add({
         targets: advanceIndicator,
@@ -2339,7 +2341,7 @@ if (window.fase1Initialized) {
         duration: 800,
         yoyo: true,
         repeat: -1,
-        ease: 'Sine.easeInOut'
+        ease: "Sine.easeInOut",
       });
 
       // Substitua a imagem estática por um sprite sem animação, usando o dialogCharacterKey correto
@@ -2387,7 +2389,7 @@ if (window.fase1Initialized) {
       const dialogosPersonalizados = [
         {
           texto:
-        "Com licença senhor, o que aconteceu por aqui?... Por que a porta da escola está fechada?",
+            "Com licença senhor, o que aconteceu por aqui?... Por que a porta da escola está fechada?",
           autor: "player",
         },
         {
@@ -2397,31 +2399,31 @@ if (window.fase1Initialized) {
         { texto: "Quem são eles?", autor: "player" },
         {
           texto:
-        "Tem muita informação para explicar. É melhor você ir embora, as coisas estão muito perigosas aqui dentro.",
+            "Tem muita informação para explicar. É melhor você ir embora, as coisas estão muito perigosas aqui dentro.",
           autor: "npc",
         },
         { texto: "Não, eu quero saber o que aconteceu!", autor: "player" },
         {
           texto:
-        "(Jovem teimoso...) Ok, tudo bem... mas eu só consigo te explicar o que eu sei.",
+            "(Jovem teimoso...) Ok, tudo bem... mas eu só consigo te explicar o que eu sei.",
           autor: "npc",
         },
         { texto: "Tudo bem.", autor: "player" },
         {
           texto:
-        "Eu estava limpando as janelas perto da entrada... e percebi que a escola começou a ser invadida.",
+            "Eu estava limpando as janelas perto da entrada... e percebi que a escola começou a ser invadida.",
           autor: "npc",
         },
         {
           texto:
-        "Aparentemente alguém conseguiu acessar o sistema para controlar todos os professores da escola...",
+            "Aparentemente alguém conseguiu acessar o sistema para controlar todos os professores da escola...",
           autor: "npc",
         },
         { texto: "E ROUBAR DADOS DOS ALUNOS.", autor: "npc" },
         { texto: "O QUÊ?!", autor: "player" },
         {
           texto:
-        "UM HACKER CONTROLANDO OS PROFESSORES PARA ROUBAR DADOS PESSOAIS?!",
+            "UM HACKER CONTROLANDO OS PROFESSORES PARA ROUBAR DADOS PESSOAIS?!",
           autor: "player",
         },
         { texto: "…", autor: "npc" },
@@ -2445,7 +2447,7 @@ if (window.fase1Initialized) {
         { texto: "Tá, mas por que alguém faria isso?", autor: "player" },
         {
           texto:
-        "Hackers vendem dados ou aplicam golpes. Eles podem criar contas falsas em seu nome! Ou ainda coisas piores.",
+            "Hackers vendem dados ou aplicam golpes. Eles podem criar contas falsas em seu nome! Ou ainda coisas piores.",
           autor: "npc",
         },
         { texto: "Eita, sério mesmo?", autor: "player" },
@@ -2456,12 +2458,12 @@ if (window.fase1Initialized) {
         },
         {
           texto:
-        "Ela serve para proteger as informações pessoais das pessoas e garantir que ninguém as use sem permissão, além de outras coisas mais técnicas.",
+            "Ela serve para proteger as informações pessoais das pessoas e garantir que ninguém as use sem permissão, além de outras coisas mais técnicas.",
           autor: "npc",
         },
         {
           texto:
-        "Ah... acho que já ouvi esse nome em algum lugar, mas nunca tive tanto interesse.",
+            "Ah... acho que já ouvi esse nome em algum lugar, mas nunca tive tanto interesse.",
           autor: "player",
         },
         {
@@ -2470,12 +2472,12 @@ if (window.fase1Initialized) {
         },
         {
           texto:
-        "Se quiser ajudar a salvar os alunos, vai ter que aprender pelo menos o básico sobre isso.",
+            "Se quiser ajudar a salvar os alunos, vai ter que aprender pelo menos o básico sobre isso.",
           autor: "npc",
         },
         {
           texto:
-        "Deve ter algum jeito de tirar os professores do controle do hacker, eu sei algumas coisas sobre a IA deles.",
+            "Deve ter algum jeito de tirar os professores do controle do hacker, eu sei algumas coisas sobre a IA deles.",
           autor: "player",
         },
         {
@@ -2498,7 +2500,7 @@ if (window.fase1Initialized) {
         { texto: "Está acontecendo com você também?!", autor: "player" },
         {
           texto:
-        "Escuta, um hacker está controlando você para roubar nossos dados, resete seus dados imediatamente!!",
+            "Escuta, um hacker está controlando você para roubar nossos dados, resete seus dados imediatamente!!",
           autor: "player",
         },
         { texto: "*Transmissão de dados em andamento*", autor: "npc" },
@@ -2509,7 +2511,7 @@ if (window.fase1Initialized) {
         { texto: "LGPD… processando, conflito detectado…", autor: "npc" },
         {
           texto:
-        "Erro de busca, por favor, responda minhas perguntas para ampliar meu prompt de conhecimento antes de continuarmos",
+            "Erro de busca, por favor, responda minhas perguntas para ampliar meu prompt de conhecimento antes de continuarmos",
           autor: "npc",
         },
       ];
@@ -2519,7 +2521,7 @@ if (window.fase1Initialized) {
         { texto: "Olá, você parece perdido. Precisa de ajuda?", autor: "npc" },
         {
           texto:
-        "Sim, estou tentando entender o que está acontecendo na escola.",
+            "Sim, estou tentando entender o que está acontecendo na escola.",
           autor: "player",
         },
         { texto: "ERRO... SISTEMA... COMPROMETIDO...", autor: "npc" },
@@ -2539,7 +2541,7 @@ if (window.fase1Initialized) {
         },
         {
           texto:
-        "Responda algumas perguntas sobre segurança de dados para me auxiliar.",
+            "Responda algumas perguntas sobre segurança de dados para me auxiliar.",
           autor: "npc",
         },
         { texto: "Vou fazer o possível para ajudar.", autor: "player" },
@@ -2571,7 +2573,7 @@ if (window.fase1Initialized) {
         },
         {
           texto:
-        "Necessito de assistência para restaurar protocolo de proteção de dados.",
+            "Necessito de assistência para restaurar protocolo de proteção de dados.",
           autor: "npc",
         },
         {
@@ -2586,7 +2588,7 @@ if (window.fase1Initialized) {
         { texto: "Olá, aluno. O que faz aqui neste horário?", autor: "npc" },
         {
           texto:
-        "Professora, precisamos da sua ajuda! Um hacker está controlando os professores!",
+            "Professora, precisamos da sua ajuda! Um hacker está controlando os professores!",
           autor: "player",
         },
         {
@@ -2600,18 +2602,18 @@ if (window.fase1Initialized) {
         },
         {
           texto:
-        "Professora, isso é ilegal! Dados pessoais são protegidos pela LGPD!",
+            "Professora, isso é ilegal! Dados pessoais são protegidos pela LGPD!",
           autor: "player",
         },
         { texto: "REFERÊNCIA À LGPD DETECTADA... AVALIANDO...", autor: "npc" },
         {
           texto:
-        "Meu sistema precisa de ajuda para classificar dados pessoais corretamente",
+            "Meu sistema precisa de ajuda para classificar dados pessoais corretamente",
           autor: "npc",
         },
         {
           texto:
-        "Pode me ajudar a associar os dados às suas categorias de proteção?",
+            "Pode me ajudar a associar os dados às suas categorias de proteção?",
           autor: "npc",
         },
         {
@@ -2650,8 +2652,8 @@ if (window.fase1Initialized) {
         this.anims.create({
           key: "falaPersonagem",
           frames: [
-        { key: dialogCharacterKey, frame: 0 },
-        { key: dialogCharacterKey, frame: 1 },
+            { key: dialogCharacterKey, frame: 0 },
+            { key: dialogCharacterKey, frame: 1 },
           ],
           frameRate: 4, // Velocidade da animação - ajuste conforme necessário
           repeat: -1, // Loop infinito
@@ -2752,7 +2754,7 @@ if (window.fase1Initialized) {
           !dialogoProfessor4Iniciado
         ) {
           console.log(
-        "Não pode iniciar diálogo - não está perto de nenhum NPC ativo"
+            "Não pode iniciar diálogo - não está perto de nenhum NPC ativo"
           );
           return;
         }
@@ -2863,7 +2865,10 @@ if (window.fase1Initialized) {
         caixaDialogo.strokeRoundedRect(boxX, boxY, boxWidth, boxHeight, 10);
 
         // Posicionando o indicador "Pressione E para continuar" no canto inferior direito da caixa
-        advanceIndicator.setPosition(boxX + boxWidth - 10, boxY + boxHeight - 5);
+        advanceIndicator.setPosition(
+          boxX + boxWidth - 10,
+          boxY + boxHeight - 5
+        );
 
         // Atualizando posições dos sprites
         personagem.x = boxX + 0;
@@ -2911,14 +2916,14 @@ if (window.fase1Initialized) {
         // Verifica se ainda há diálogos a serem mostrados
         const dialogoIndex =
           tipo === "faxineiro"
-        ? scene.registry.get("dialogoFaxineiroIndex") || 0
-        : tipo === "professor"
-        ? scene.registry.get("dialogoProfessorIndex") || 0
-        : tipo === "professor2"
-        ? scene.registry.get("dialogoProfessor2Index") || 0
-        : tipo === "professor3"
-        ? scene.registry.get("dialogoProfessor3Index") || 0
-        : scene.registry.get("dialogoProfessor4Index") || 0;
+            ? scene.registry.get("dialogoFaxineiroIndex") || 0
+            : tipo === "professor"
+            ? scene.registry.get("dialogoProfessorIndex") || 0
+            : tipo === "professor2"
+            ? scene.registry.get("dialogoProfessor2Index") || 0
+            : tipo === "professor3"
+            ? scene.registry.get("dialogoProfessor3Index") || 0
+            : scene.registry.get("dialogoProfessor4Index") || 0;
 
         if (dialogoIndex < dialogos.length) {
           // Cancela timers existentes
@@ -2936,160 +2941,160 @@ if (window.fase1Initialized) {
 
           // Alterna visibilidade das imagens conforme o autor
           if (tipo === "faxineiro") {
-        if (dialogoAtual.autor === "npc") {
-          npc1Image.setVisible(true);
-          personagem.setVisible(false);
-          professorImage.setVisible(false);
-          professor2Image.setVisible(false);
-          professor3Image.setVisible(false);
-          professor4Image.setVisible(false);
-          npc1Image.play("falaFaxineiro");
-        } else {
-          npc1Image.setVisible(false);
-          professorImage.setVisible(false);
-          professor2Image.setVisible(false);
-          professor3Image.setVisible(false);
-          professor4Image.setVisible(false);
-          personagem.setVisible(true);
-          personagem.play("falaPersonagem");
-        }
+            if (dialogoAtual.autor === "npc") {
+              npc1Image.setVisible(true);
+              personagem.setVisible(false);
+              professorImage.setVisible(false);
+              professor2Image.setVisible(false);
+              professor3Image.setVisible(false);
+              professor4Image.setVisible(false);
+              npc1Image.play("falaFaxineiro");
+            } else {
+              npc1Image.setVisible(false);
+              professorImage.setVisible(false);
+              professor2Image.setVisible(false);
+              professor3Image.setVisible(false);
+              professor4Image.setVisible(false);
+              personagem.setVisible(true);
+              personagem.play("falaPersonagem");
+            }
           } else if (tipo === "professor") {
-        // professor
-        if (dialogoAtual.autor === "npc") {
-          professorImage.setVisible(true);
-          npc1Image.setVisible(false);
-          professor2Image.setVisible(false);
-          professor3Image.setVisible(false);
-          professor4Image.setVisible(false);
-          personagem.setVisible(false);
-        } else {
-          professorImage.setVisible(false);
-          npc1Image.setVisible(false);
-          professor2Image.setVisible(false);
-          professor3Image.setVisible(false);
-          professor4Image.setVisible(false);
-          personagem.setVisible(true);
-          personagem.play("falaPersonagem");
-        }
+            // professor
+            if (dialogoAtual.autor === "npc") {
+              professorImage.setVisible(true);
+              npc1Image.setVisible(false);
+              professor2Image.setVisible(false);
+              professor3Image.setVisible(false);
+              professor4Image.setVisible(false);
+              personagem.setVisible(false);
+            } else {
+              professorImage.setVisible(false);
+              npc1Image.setVisible(false);
+              professor2Image.setVisible(false);
+              professor3Image.setVisible(false);
+              professor4Image.setVisible(false);
+              personagem.setVisible(true);
+              personagem.play("falaPersonagem");
+            }
           } else if (tipo === "professor2") {
-        // professor2
-        if (dialogoAtual.autor === "npc") {
-          professor2Image.setVisible(true);
-          npc1Image.setVisible(false);
-          professorImage.setVisible(false);
-          professor3Image.setVisible(false);
-          professor4Image.setVisible(false);
-          personagem.setVisible(false);
-        } else {
-          professor2Image.setVisible(false);
-          npc1Image.setVisible(false);
-          professorImage.setVisible(false);
-          professor3Image.setVisible(false);
-          professor4Image.setVisible(false);
-          personagem.setVisible(true);
-          personagem.play("falaPersonagem");
-        }
+            // professor2
+            if (dialogoAtual.autor === "npc") {
+              professor2Image.setVisible(true);
+              npc1Image.setVisible(false);
+              professorImage.setVisible(false);
+              professor3Image.setVisible(false);
+              professor4Image.setVisible(false);
+              personagem.setVisible(false);
+            } else {
+              professor2Image.setVisible(false);
+              npc1Image.setVisible(false);
+              professorImage.setVisible(false);
+              professor3Image.setVisible(false);
+              professor4Image.setVisible(false);
+              personagem.setVisible(true);
+              personagem.play("falaPersonagem");
+            }
           } else if (tipo === "professor3") {
-        // professor3
-        if (dialogoAtual.autor === "npc") {
-          professor3Image.setVisible(true);
-          npc1Image.setVisible(false);
-          professorImage.setVisible(false);
-          professor2Image.setVisible(false);
-          professor4Image.setVisible(false);
-          personagem.setVisible(false);
-        } else {
-          professor3Image.setVisible(false);
-          npc1Image.setVisible(false);
-          professorImage.setVisible(false);
-          professor2Image.setVisible(false);
-          professor4Image.setVisible(false);
-          personagem.setVisible(true);
-          personagem.play("falaPersonagem");
-        }
+            // professor3
+            if (dialogoAtual.autor === "npc") {
+              professor3Image.setVisible(true);
+              npc1Image.setVisible(false);
+              professorImage.setVisible(false);
+              professor2Image.setVisible(false);
+              professor4Image.setVisible(false);
+              personagem.setVisible(false);
+            } else {
+              professor3Image.setVisible(false);
+              npc1Image.setVisible(false);
+              professorImage.setVisible(false);
+              professor2Image.setVisible(false);
+              professor4Image.setVisible(false);
+              personagem.setVisible(true);
+              personagem.play("falaPersonagem");
+            }
           } else {
-        // professor4
-        if (dialogoAtual.autor === "npc") {
-          professor4Image.setVisible(true);
-          professor3Image.setVisible(false);
-          professor2Image.setVisible(false);
-          npc1Image.setVisible(false);
-          professorImage.setVisible(false);
-          personagem.setVisible(false);
-        } else {
-          professor4Image.setVisible(false);
-          professor3Image.setVisible(false);
-          professor2Image.setVisible(false);
-          npc1Image.setVisible(false);
-          professorImage.setVisible(false);
-          personagem.setVisible(true);
-          personagem.play("falaPersonagem");
-        }
+            // professor4
+            if (dialogoAtual.autor === "npc") {
+              professor4Image.setVisible(true);
+              professor3Image.setVisible(false);
+              professor2Image.setVisible(false);
+              npc1Image.setVisible(false);
+              professorImage.setVisible(false);
+              personagem.setVisible(false);
+            } else {
+              professor4Image.setVisible(false);
+              professor3Image.setVisible(false);
+              professor2Image.setVisible(false);
+              npc1Image.setVisible(false);
+              professorImage.setVisible(false);
+              personagem.setVisible(true);
+              personagem.play("falaPersonagem");
+            }
           }
 
           // Digita o texto letra por letra
           const adicionarCaractere = () => {
-        if (charIndex < textoCompleto.length) {
-          textoAtual += textoCompleto[charIndex];
-          textoDialogo.setText(textoAtual);
+            if (charIndex < textoCompleto.length) {
+              textoAtual += textoCompleto[charIndex];
+              textoDialogo.setText(textoAtual);
 
-          // Verificar se o texto está saindo da área designada e ajustar se necessário
-          if (textoDialogo.width > textoDialogo.style.wordWrapWidth) {
-            textoDialogo.setWordWrapWidth(textoDialogo.style.wordWrapWidth);
-          }
+              // Verificar se o texto está saindo da área designada e ajustar se necessário
+              if (textoDialogo.width > textoDialogo.style.wordWrapWidth) {
+                textoDialogo.setWordWrapWidth(textoDialogo.style.wordWrapWidth);
+              }
 
-          charIndex++;
-          scene.typingTimer = scene.time.delayedCall(
-            30,
-            adicionarCaractere,
-            [],
-            scene
-          );
-        } else {
-          scene.falaTimer = scene.time.delayedCall(
-            1500,
-            () => {
-          if (dialogoAtual.autor === "player") {
-            personagem.stop();
-            personagem.setFrame(1);
-          } else {
-            if (tipo === "faxineiro") {
-              npc1Image.stop();
-              npc1Image.setFrame(0);
-            } else if (tipo === "professor") {
-              professorImage.stop();
-              professorImage.setFrame(0);
-            } else if (tipo === "professor2") {
-              professor2Image.stop();
-              professor2Image.setFrame(0);
-            } else if (tipo === "professor3") {
-              professor3Image.stop();
-              professor3Image.setFrame(0);
+              charIndex++;
+              scene.typingTimer = scene.time.delayedCall(
+                30,
+                adicionarCaractere,
+                [],
+                scene
+              );
             } else {
-              professor4Image.stop();
-              professor4Image.setFrame(0);
+              scene.falaTimer = scene.time.delayedCall(
+                1500,
+                () => {
+                  if (dialogoAtual.autor === "player") {
+                    personagem.stop();
+                    personagem.setFrame(1);
+                  } else {
+                    if (tipo === "faxineiro") {
+                      npc1Image.stop();
+                      npc1Image.setFrame(0);
+                    } else if (tipo === "professor") {
+                      professorImage.stop();
+                      professorImage.setFrame(0);
+                    } else if (tipo === "professor2") {
+                      professor2Image.stop();
+                      professor2Image.setFrame(0);
+                    } else if (tipo === "professor3") {
+                      professor3Image.stop();
+                      professor3Image.setFrame(0);
+                    } else {
+                      professor4Image.stop();
+                      professor4Image.setFrame(0);
+                    }
+                  }
+                },
+                [],
+                scene
+              );
             }
-          }
-            },
-            [],
-            scene
-          );
-        }
           };
 
           adicionarCaractere();
 
           // Salva o próximo índice no registro
           if (tipo === "faxineiro") {
-        scene.registry.set("dialogoFaxineiroIndex", dialogoIndex + 1);
+            scene.registry.set("dialogoFaxineiroIndex", dialogoIndex + 1);
           } else if (tipo === "professor") {
-        scene.registry.set("dialogoProfessorIndex", dialogoIndex + 1);
+            scene.registry.set("dialogoProfessorIndex", dialogoIndex + 1);
           } else if (tipo === "professor2") {
-        scene.registry.set("dialogoProfessor2Index", dialogoIndex + 1);
+            scene.registry.set("dialogoProfessor2Index", dialogoIndex + 1);
           } else if (tipo === "professor3") {
-        scene.registry.set("dialogoProfessor3Index", dialogoIndex + 1);
+            scene.registry.set("dialogoProfessor3Index", dialogoIndex + 1);
           } else {
-        scene.registry.set("dialogoProfessor4Index", dialogoIndex + 1);
+            scene.registry.set("dialogoProfessor4Index", dialogoIndex + 1);
           }
         } else {
           // Finaliza o diálogo
@@ -3105,20 +3110,20 @@ if (window.fase1Initialized) {
           advanceIndicator.setVisible(false);
 
           if (tipo === "faxineiro") {
-        dialogoIniciado = false;
-        dialogoNpc1Concluido = true;
-        scene.registry.set("dialogoNpc1Concluido", true);
-        window.dialogoNpc1Concluido = true; // Exposição explícita para o HTML
-        scene.registry.set("dialogoFaxineiroIndex", 0);
+            dialogoIniciado = false;
+            dialogoNpc1Concluido = true;
+            scene.registry.set("dialogoNpc1Concluido", true);
+            window.dialogoNpc1Concluido = true; // Exposição explícita para o HTML
+            scene.registry.set("dialogoFaxineiroIndex", 0);
 
-        // Atualizar missões ao concluir o diálogo com o faxineiro
-        if (typeof window.updateMissions === "function") {
-          window.updateMissions();
-        }
+            // Atualizar missões ao concluir o diálogo com o faxineiro
+            if (typeof window.updateMissions === "function") {
+              window.updateMissions();
+            }
           } else if (tipo === "professor") {
-        dialogoProfessorIniciado = false;
-        dialogoProfessorConcluido = true;
-        scene.registry.set("dialogoProfessorIndex", 0);
+            dialogoProfessorIniciado = false;
+            dialogoProfessorConcluido = true;
+            scene.registry.set("dialogoProfessorIndex", 0);
 
             // Mostrar botão de ajuda após o diálogo com a professora
             const gameWidth = scene.cameras.main.width;
@@ -3503,18 +3508,18 @@ if (window.fase1Initialized) {
           this.cameras.main.height / 2 + 50,
           "★ Ajudar Professora ★",
           {
-        fontFamily: "Arial",
-        fontSize: "18px",
-        color: "#FFFFFF",
-        backgroundColor: "#2C3E50",
-        padding: { left: 30, right: 30, top: 20, bottom: 20 },
-        align: "center",
-        shadow: {
-          offsetX: 3,
-          offsetY: 3,
-          color: "rgba(0,0,0,0.5)",
-          blur: 5,
-        },
+            fontFamily: "Arial",
+            fontSize: "18px",
+            color: "#FFFFFF",
+            backgroundColor: "#2C3E50",
+            padding: { left: 30, right: 30, top: 20, bottom: 20 },
+            align: "center",
+            shadow: {
+              offsetX: 3,
+              offsetY: 3,
+              color: "rgba(0,0,0,0.5)",
+              blur: 5,
+            },
           }
         )
         .setOrigin(0.5)
@@ -3523,22 +3528,22 @@ if (window.fase1Initialized) {
         .setInteractive({ useHandCursor: true })
         .on("pointerover", () => {
           helpButton.setStyle({
-        backgroundColor: "#34495E",
-        color: "#FFD700",
+            backgroundColor: "#34495E",
+            color: "#FFD700",
           });
           helpButton.setScale(1.05);
         })
         .on("pointerout", () => {
           helpButton.setStyle({
-        backgroundColor: "#2C3E50",
-        color: "#FFFFFF",
+            backgroundColor: "#2C3E50",
+            color: "#FFFFFF",
           });
           helpButton.setScale(1);
         })
         .on("pointerdown", () => {
           helpButton.setStyle({
-        backgroundColor: "#1A2530",
-        color: "#FFFFFF",
+            backgroundColor: "#1A2530",
+            color: "#FFFFFF",
           });
           helpButton.setScale(0.95);
           console.log("Botão de ajuda clicado - comportamento padrão");
@@ -3546,21 +3551,21 @@ if (window.fase1Initialized) {
         })
         .on("pointerup", () => {
           helpButton.setStyle({
-        backgroundColor: "#34495E",
-        color: "#FFD700",
+            backgroundColor: "#34495E",
+            color: "#FFD700",
           });
           helpButton.setScale(1.05);
         })
         .setVisible(false);
-      
+
       // Criar a seta apontando para o botão
       const arrowX = this.cameras.main.width / 2 - 100;
       const arrowY = this.cameras.main.height / 2 + 30;
-      
+
       // Criar gráfico para a seta
       const arrow = this.add.graphics();
-      arrow.fillStyle(0xFFD700, 1); // Cor dourada para destaque
-      
+      arrow.fillStyle(0xffd700, 1); // Cor dourada para destaque
+
       // Desenhar a seta
       arrow.beginPath();
       arrow.moveTo(arrowX, arrowY);
@@ -3572,51 +3577,51 @@ if (window.fase1Initialized) {
       arrow.lineTo(arrowX - 30, arrowY + 15);
       arrow.closePath();
       arrow.fill();
-      
+
       // Adicionar texto "Clique aqui"
       const clickText = this.add.text(
-          arrowX - 60, 
-          arrowY - 25, 
-          "Clique aqui!", 
-          {
+        arrowX - 60,
+        arrowY - 25,
+        "Clique aqui!",
+        {
           fontFamily: "Arial",
           fontSize: "16px",
           fontStyle: "bold",
           color: "#FFD700",
           stroke: "#000000",
-          strokeThickness: 3
-          }
+          strokeThickness: 3,
+        }
       );
       clickText.setOrigin(0.5);
-      
+
       // Configurar propriedades da seta e texto
       arrow.setScrollFactor(0);
       arrow.setDepth(9999);
       arrow.setVisible(false);
-      
+
       clickText.setScrollFactor(0);
       clickText.setDepth(9999);
       clickText.setVisible(false);
-      
+
       // Animar a seta e o texto
       this.tweens.add({
-          targets: [arrow, clickText],
-          alpha: { from: 0.6, to: 1 },
-          scaleX: { from: 0.95, to: 1.05 },
-          scaleY: { from: 0.95, to: 1.05 },
-          duration: 800,
-          yoyo: true,
-          repeat: -1,
-          ease: 'Sine.easeInOut'
+        targets: [arrow, clickText],
+        alpha: { from: 0.6, to: 1 },
+        scaleX: { from: 0.95, to: 1.05 },
+        scaleY: { from: 0.95, to: 1.05 },
+        duration: 800,
+        yoyo: true,
+        repeat: -1,
+        ease: "Sine.easeInOut",
       });
-      
+
       // Modificar o método setVisible do botão para mostrar/esconder a seta e o texto também
       const originalSetVisible = helpButton.setVisible;
-      helpButton.setVisible = function(visible) {
-          originalSetVisible.call(helpButton, visible);
-          arrow.setVisible(visible);
-          clickText.setVisible(visible);
-          return helpButton;
+      helpButton.setVisible = function (visible) {
+        originalSetVisible.call(helpButton, visible);
+        arrow.setVisible(visible);
+        clickText.setVisible(visible);
+        return helpButton;
       };
 
       // Adicionar um método de debug para testar se o botão está funcionando
