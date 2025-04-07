@@ -11,7 +11,7 @@
 ## CyberTech
 
 ## 👨‍🎓 Integrantes:
-- <a href="#">André David Katz</a>
+- <a href="https://www.linkedin.com/in/andrekatz1/">André David Katz</a>
 - <a href="https://www.linkedin.com/in/celsojwnior/">Celso Rodrigues Rocha 
 Júnior</a>
 - <a href="https://www.linkedin.com/in/d-m-934942320/">Daniel Meiches</a>
