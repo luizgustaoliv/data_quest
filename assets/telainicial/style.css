@@ -335,7 +335,7 @@ body.zoom-effect::before {
 
 /* Efeito de destaque para animação */
 .animate {
-    background: rgb(8, 147, 4) !important;
+    background: rgb(4, 106, 147) !important;
     color: black !important;
     box-shadow: 4px 4px 0px white !important;
 }
