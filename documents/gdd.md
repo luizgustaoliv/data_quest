@@ -392,6 +392,7 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 - Para acessar a próxima fase, o jogador deve se aproximar da chave e, após isso, ir até o elevador, onde a transição entre as fases ocorrerá automaticamente.
 
 ### Regras da **Fase 2**:
+- O jogadoor deverá caminhar em um labirinto escuro se desviando de robôs e encontrar 4 chaves.
 - Ao coletar as 4 chaves, o jogador pode destravar o elevador para a próxima fase ao completar um minigame de lançamento oblíquo.
 
 ### Regras da **Fase 3**:
@@ -422,16 +423,16 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 - O jogador deve interagir com o NPC do faxineiro para entender o contexto da fase.
 - Após a interação, deverá abrir a porta da sala (pressionando "Espaço") e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
 - Ao encontrar os professores, o jogador deverá interagir com eles (pressionando "E") e participar de um minigame, que pode variar entre perguntas e respostas ou um jogo da forca, para que o professor possa "reiniciar seus sistemas". Caso o minigame seja feito com sucesso, o jogador ganhará 1 pedaço de um keycard.
-- O jogador deverá ajudar os 4 professores para ganhar o total de 4 pedaços do keycard, para que ele possa acessar uma sala que conterá uma chave.
+- Mini games de lgpd: O jogador deverá ajudar os 4 professores para ganhar o total de 4 pedaços do keycard, para que ele possa acessar uma sala que conterá uma chave.
 - Ao acessar a sala com a chave, o jogador deve se aproximar dela para coletá-la e depois andar em direção ao elevador, que lhe dará acesso à fase 2.
 
 ### Mecânicas da segunda fase:
-- O jogador deve caminhar por um labirinto escuro e encontrar 4 chaves para abrir o elevador que leva à fase 3. Ao caminhar pelo labirinto, ele deve desviar de robôs que patrulham o local. Caso seja pego, deverá responder a uma pergunta de verdadeiro ou falso sobre LGPD, dada uma situação contextual.
-- Para desbloquear o elevador para a fase 3, o jogador deve realizar um minigame de lançamento oblíquo, arremessando chaves em cadeados espalhados aleatoriamente pela tela.
+- Chaves: O jogador deve caminhar por um labirinto escuro e encontrar 4 chaves para abrir o elevador que leva à fase 3. Ao caminhar pelo labirinto, ele deve desviar de robôs que patrulham o local. Caso seja pego, deverá responder a uma pergunta de verdadeiro ou falso sobre LGPD, dada uma situação contextual.
+- Mini game para desbloquer elevador: Para desbloquear o elevador para a fase 3, o jogador deve realizar um minigame de lançamento oblíquo, arremessando chaves em cadeados espalhados aleatoriamente pela tela.
 
 ### Mecânicas da terceira fase:
-- **Computadores infectados pelo hacker**: ao começar a fase 3, o jogador deve retomar o controle de 4 computadores para completar a fase. Para isso, deve correr contra o tempo e apagar de 3 a 4 abas que aparecem em cada um dos 4 computadores.
-- Essas abas podem conter anúncios aleatórios, e-mails e notificações com conteúdo de phishing. O jogador deverá saber qual o botão correto a apertar para apagá-las de forma apropriada.
+- Computadores infectados pelo hacker: ao começar a fase 3, o jogador deve retomar o controle de 4 computadores para completar a fase. Para isso, deve correr contra o tempo e apagar de 3 a 4 abas que aparecem em cada um dos 4 computadores.
+- Abas:Essas abas podem conter anúncios aleatórios, e-mails e notificações com conteúdo de phishing. O jogador deverá saber qual o botão correto a apertar para apagá-las de forma apropriada.
 
 ## 3.8. Implementação Matemática de Animação/Movimento (sprint 4)
 
