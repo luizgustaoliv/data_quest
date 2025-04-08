@@ -340,16 +340,23 @@ function createMain3() {
     manualColliders.getChildren().forEach((rect) => {
       rect.setVisible(!rect.visible);
     });
+    
+    // Toggle player debug visualization
+    if (player2 && player2.body) {
+      player2.body.debugShowBody = !player2.body.debugShowBody;
+      player2.body.debugShowVelocity = !player2.body.debugShowVelocity;
+    }
+    
     console.log(
       "Debug collision mode:",
       !manualColliders.getChildren()[0].visible
     );
   });
-
+  //Posição X(horizontal), posição Y(vertical), largura, altura, cor
   addCollisionRect(this, 230, 155, 350, 70, 0x00ff00); // mesa
   addCollisionRect(this, 400, 195, 28, 184, 0x00ff00); // mesa
   addCollisionRect(this, 320, 125, 70, 70, 0x00ff00); // mesa
-  addCollisionRect(this, 200, 15, 3, 70, 0x00ff00); // mesa
+  addCollisionRect(this, 379, 1005, 70, 200, 0x00ff00); // mesa
   // Adicionar colisões para as bordas do mapa se necessário - Azul para bordas
   // Instrução de debug no console
   console.log("Debug: pressione F9 para mostrar/ocultar colisões");

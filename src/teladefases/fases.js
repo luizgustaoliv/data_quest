@@ -509,11 +509,103 @@ function iniciarFase1() {
     document.getElementById("transition-overlay") || createTransitionOverlay();
   overlay.classList.add("active");
 
-  console.log("Iniciando Fase 1 - Carregando fase1.js");
+  console.log("Reproduzindo cutscene antes de iniciar a Fase 1");
 
-  // Tentativa de corrigir o carregamento do script fase1.js usando caminho absoluto e verificação préviao para garantir que o script seja encontrado
+  // Criar um container para o vídeo
+  const videoContainer = document.createElement("div");
+  videoContainer.id = "cutscene-container";
+  videoContainer.style.position = "fixed";
+  videoContainer.style.top = "0";
+  videoContainer.style.left = "0";
+  videoContainer.style.width = "100%";
+  videoContainer.style.height = "100%";
+  videoContainer.style.backgroundColor = "black";
+  videoContainer.style.zIndex = "9999";
+  videoContainer.style.display = "flex";
+  videoContainer.style.justifyContent = "center";
+  videoContainer.style.alignItems = "center";
+
+  // Criar o elemento de vídeo
+  const video = document.createElement("video");
+  video.id = "cutscene-video";
+  video.style.maxWidth = "100%";
+  video.style.maxHeight = "100%";
+  video.controls = false; // Sem controles por padrão
+  video.autoplay = true;
+  
+  // Adicionar botão para pular a cutscene
+  const skipButton = document.createElement("button");
+  skipButton.textContent = "Pular";
+  skipButton.style.position = "absolute";
+  skipButton.style.bottom = "20px";
+  skipButton.style.right = "20px";
+  skipButton.style.padding = "10px 20px";
+  skipButton.style.backgroundColor = "rgba(0, 0, 0, 0.6)";
+  skipButton.style.color = "white";
+  skipButton.style.border = "1px solid white";
+  skipButton.style.borderRadius = "5px";
+  skipButton.style.cursor = "pointer";
+  skipButton.style.zIndex = "10000";
+  
+  skipButton.addEventListener("click", () => {
+    video.pause();
+    videoContainer.remove();
+    carregarJogoFase1();
+  });
+
+  // Caminho para o vídeo da cutscene (ajuste o caminho conforme necessário)
+  video.src = "assets/telafases/cutscene/cutscene_inicial.mp4";
+  
+  // Adicionar fontes alternativas para garantir compatibilidade com diferentes navegadores
+  const sourceMP4 = document.createElement("source");
+  sourceMP4.src = "assets/telafases/cutscene/cutscene_inicial.mp4";
+  sourceMP4.type = "video/mp4";
+  
+  const sourceWebM = document.createElement("source");
+  sourceWebM.src = "assets/telafases/cutscene/cutscene_inicial.webm";
+  sourceWebM.type = "video/webm";
+  
+  video.appendChild(sourceMP4);
+  video.appendChild(sourceWebM);
+  
+  // Adicionar mensagem de fallback
+  video.innerHTML += "Seu navegador não suporta a reprodução de vídeos.";
+
+  // Quando o vídeo terminar, iniciar o jogo
+  video.addEventListener("ended", () => {
+    videoContainer.remove();
+    carregarJogoFase1();
+  });
+
+  // Adicionar tratamento para erro de carregamento do vídeo
+  video.addEventListener("error", () => {
+    console.error("Erro ao carregar o vídeo da cutscene");
+    videoContainer.remove();
+    carregarJogoFase1();
+  });
+
+  // Adicionar os elementos ao DOM
+  videoContainer.appendChild(video);
+  videoContainer.appendChild(skipButton);
+  document.body.appendChild(videoContainer);
+  
+  // Remover o overlay de transição quando o vídeo começar a ser reproduzido
+  video.addEventListener("playing", () => {
+    overlay.classList.remove("active");
+  });
+}
+
+// Nova função para carregar o jogo após a cutscene
+function carregarJogoFase1() {
+  console.log("Iniciando Fase 1 - Carregando fase1.js");
+  
+  // Adicionar overlay de transição
+  const overlay = document.getElementById("transition-overlay") || createTransitionOverlay();
+  overlay.classList.add("active");
+
+  // Tentativa de corrigir o carregamento do script fase1.js usando caminho absoluto e verificação prévia
   try {
-    // Tentar várias versões do caminho'; // Caminho absoluto em vez de relativo
+    // Tentar várias versões do caminho
     const possiblePaths = [
       "/src/fase1/fase1.js",
       "../fase1/fase1.js",
