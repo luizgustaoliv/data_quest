@@ -711,12 +711,3 @@ function carregarScriptFases() {
 
   document.head.appendChild(script);
 }
-
-// Modificar inicialização da página
-document.addEventListener("DOMContentLoaded", function () {
-  // Carregamos os sons primeiro (mas não reproduzimos ainda)
-  inicializarSons();
-
-  // Mostrar tela de permissão de áudio em vez de inicializar diretamente
-  mostrarTelaPermissaoAudio();
-});
