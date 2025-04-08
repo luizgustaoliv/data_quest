@@ -376,47 +376,62 @@ Figura 8: Esboços dos designs aprimorados do protagonista.
 
 ## 3.6. Regras do jogo (sprint 3)
 
-#### Objetivo geral do jogo:
- - O jogador precisa superar cada fase completando as tarefas específicas para progredir na história. Seu objetivo final é libertar a escola da invasão hacker.
+### Objetivo geral do jogo:
+- O jogador precisa superar cada fase completando as tarefas específicas para progredir na história. Seu objetivo final é libertar a escola da invasão hacker.
 
-#### Regras gerais do jogo:
- - O jogador precisa concluir os minigames de uma fase para ganhar itens colecionáveis que lhe darão acesso à fase seguinte.
- - Caso o jogador fracasse ao concluir um minigame, ele terá a chance de fazê-lo novamente até acertar.
- - O jogo só vai ser finalizado caso todas as fases e objetivos sejam concluídos.
- - No decorrer das fases o jogador terá contato com novos conceitos e conhecimentos sobre a LGPD.
+### Regras gerais do jogo:
+- O jogador precisa concluir os minigames de uma fase para ganhar itens colecionáveis que lhe darão acesso à fase seguinte.
+- Caso o jogador fracasse ao concluir um minigame, ele terá a chance de refazê-lo até acertar.
+- O jogo só será finalizado caso todas as fases e objetivos sejam concluídos.
+- No decorrer das fases, o jogador terá contato com novos conceitos e conhecimentos sobre a LGPD.
 
-#### Regras da **Fase 1**:
- - O jogador deverá interagir com os professores e conquistar desafios na forma de minigames com base nos conhecimentos adquiridos anteriormente ao interagir com o faxineiro no início da fase. Para cada minigame concluído, ele receberá uma parte de um key-card.
- - Ao coletar quatro partes, uma sala especial será desbloqueada, onde encontrará uma chave. Essa chave será utilizada para desbloquear o elevador que dá acesso à próxima fase.
- - O jogador só conseguirá uma parte de keycard caso ele conclua um minigame, respeitando as regras de cada um. Por exemplo, se o jogador acertar a maioria das perguntas em um quiz, ganhará uma parte de keycard.
- - Para acessar a próxima fase, o jogador deve se aproximar da chave e após isso ir até o elevador, onde a transição entre fases ocorrerá automaticamente.
+### Regras da **Fase 1**:
+- O jogador deverá interagir com os professores e conquistar desafios na forma de minigames, com base nos conhecimentos adquiridos anteriormente ao interagir com o faxineiro no início da fase. Para cada minigame concluído, ele receberá uma parte de um keycard.
+- Ao coletar quatro partes, uma sala especial será desbloqueada, onde encontrará uma chave. Essa chave será utilizada para desbloquear o elevador que dá acesso à próxima fase.
+- O jogador só conseguirá uma parte do keycard caso conclua um minigame, respeitando as regras de cada um. Por exemplo, se o jogador acertar a maioria das perguntas em um quiz, ganhará uma parte do keycard.
+- Para acessar a próxima fase, o jogador deve se aproximar da chave e, após isso, ir até o elevador, onde a transição entre as fases ocorrerá automaticamente.
+
+### Regras da **Fase 2**:
+- Ao coletar as 4 chaves, o jogador pode destravar o elevador para a próxima fase ao completar um minigame de lançamento oblíquo.
+
+### Regras da **Fase 3**:
+- Para completar a fase final do jogo, o jogador deve correr contra o tempo interagindo com 4 computadores contaminados pelo hacker, limpando os pop-ups de phishing. Caso ele erre algum botão dos pop-ups, a barra de tempo do hacker avança um pouco.
+- Se o tempo acabar, o hacker vaza os dados da escola, o jogador perde e a fase 3 é reiniciada.
+- Caso ele consiga tirar o controle do hacker dos 4 computadores, o jogador completa o jogo.
 
 ## 3.7. Mecânicas do jogo (sprint 3)
 
-#### Teclas de movimentação: **W A S D** ou **Setas do Teclado**:
- - **W** ou **Seta para cima**: Movimentação para cima
- - **S** ou **Seta para baixo**: Movimentação para baixo
- - **A** ou **Seta para esquerda**: Movimentação para esquerda
- - **D** ou **Seta para direita**: Movimentação para direita.
+### Teclas de movimentação: **W A S D** ou **Setas do Teclado**
+- **W** ou **Seta para cima**: Movimentação para cima  
+- **S** ou **Seta para baixo**: Movimentação para baixo  
+- **A** ou **Seta para a esquerda**: Movimentação para a esquerda  
+- **D** ou **Seta para a direita**: Movimentação para a direita
 
-#### Tecla de interação com o cenário (portas e objetos): **"Espaço"**: 
- - Usar a tecla **"Espaço"** para abrir portas, coletar itens e para demais interações com o cenário.
- - Na primeira fase você deverá user a tecla "espaço" para abrir a porta da sala de faxina após ter falado com o faxineiro, para poder ter acesso ao restante do mapa.
+### Tecla de interação com o cenário (portas e objetos): **"Espaço"**
+- Use a tecla **"Espaço"** para abrir portas, coletar itens e para demais interações com o cenário.
+- Na primeira fase, você deverá usar a tecla "Espaço" para abrir a porta da sala de faxina após ter falado com o faxineiro, para poder ter acesso ao restante do mapa.
 
-#### Tecla de interação com NPCs: **"E"**:
- - Use a tecla **"E"** para interagir com os NPCs.
- - Na primeira fase você poderá interagir com o NPC do faxineiro, que dará um contexto geral da situação da fase ao personagem e com os NPCs dos professores robôs, que precisarão ter seus sistemas reiniciados através de um minigame de perguntas e respostas. 
+### Tecla de interação com NPCs: **"E"**
+- Use a tecla **"E"** para interagir com os NPCs.
+- Na primeira fase, você poderá interagir com o NPC do faxineiro, que dará um contexto geral da situação da fase ao personagem, e com os NPCs dos professores robôs, que precisarão ter seus sistemas reiniciados através de um minigame de perguntas e respostas.
 
-#### Botão de "Missões":
- - Durante todas as fases, o jogador terá acesso a um botão "Missões", localizado no canto superior direito da tela. Ao clicar nele, poderá visualizar os objetivos específicos da fase atual, garantindo que saiba quais tarefas precisa concluir para avançar no jogo. Isso ajudará na organização das ações e no acompanhamento do progresso rumo à libertação da escola da invasão hacker.
+### Botão de "Missões":
+- Durante todas as fases, o jogador terá acesso a um botão "Missões", localizado no canto superior direito da tela. Ao clicar nele, poderá visualizar os objetivos específicos da fase atual, garantindo que saiba quais tarefas precisa concluir para avançar no jogo. Isso ajudará na organização das ações e no acompanhamento do progresso rumo à libertação da escola da invasão hacker.
 
-#### Mecânicas da primeira fase:
- - O jogador deve interagir com o NPC do faxineiro para entender o contexto da fase.
- - Após a interação, deverá abrir a porta da sala (pressionando "Espaço") e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
- - Ao encontrar os professores, o jogador deverá interagir com eles (pressionando "E") e participar de um minigame, que pode variar entre um perguntas e respostas ou um que é jogo da forca, para que o professor possa "reiniciar seus sistemas". Caso o minigame seja feito com sucesso, o jogador ganhará 1 pedaço de um keycard.
- - O jogador deverá ajudar os 4 professores para ganhar o total de 4 pedaços de um keycard, para que ele possa acessar uma sala que vai conter uma chave.
- - Ao acessar a sala com a chave, o jogador deve se aproximar dela para coletá-la e depois andar em direção ao elevador, que lhe dará acesso à fase 2.
+### Mecânicas da primeira fase:
+- O jogador deve interagir com o NPC do faxineiro para entender o contexto da fase.
+- Após a interação, deverá abrir a porta da sala (pressionando "Espaço") e acessar o restante do mapa, onde encontrará os NPCs dos professores robôs.
+- Ao encontrar os professores, o jogador deverá interagir com eles (pressionando "E") e participar de um minigame, que pode variar entre perguntas e respostas ou um jogo da forca, para que o professor possa "reiniciar seus sistemas". Caso o minigame seja feito com sucesso, o jogador ganhará 1 pedaço de um keycard.
+- O jogador deverá ajudar os 4 professores para ganhar o total de 4 pedaços do keycard, para que ele possa acessar uma sala que conterá uma chave.
+- Ao acessar a sala com a chave, o jogador deve se aproximar dela para coletá-la e depois andar em direção ao elevador, que lhe dará acesso à fase 2.
 
+### Mecânicas da segunda fase:
+- O jogador deve caminhar por um labirinto escuro e encontrar 4 chaves para abrir o elevador que leva à fase 3. Ao caminhar pelo labirinto, ele deve desviar de robôs que patrulham o local. Caso seja pego, deverá responder a uma pergunta de verdadeiro ou falso sobre LGPD, dada uma situação contextual.
+- Para desbloquear o elevador para a fase 3, o jogador deve realizar um minigame de lançamento oblíquo, arremessando chaves em cadeados espalhados aleatoriamente pela tela.
+
+### Mecânicas da terceira fase:
+- **Computadores infectados pelo hacker**: ao começar a fase 3, o jogador deve retomar o controle de 4 computadores para completar a fase. Para isso, deve correr contra o tempo e apagar de 3 a 4 abas que aparecem em cada um dos 4 computadores.
+- Essas abas podem conter anúncios aleatórios, e-mails e notificações com conteúdo de phishing. O jogador deverá saber qual o botão correto a apertar para apagá-las de forma apropriada.
 
 ## 3.8. Implementação Matemática de Animação/Movimento (sprint 4)
 
