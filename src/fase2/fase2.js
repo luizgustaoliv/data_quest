@@ -109,8 +109,8 @@ style2.textContent = `
     border-radius: 10px;
     border: 2px solid white;
     color: white;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
+    font-family: "'Press Start 2P', Arial, sans-serif";
+    font-size: 14px;
     gap: 10px;
     z-index: 1000;
   }
@@ -237,8 +237,8 @@ style.textContent = `
     border-radius: 10px;
     border: 2px solid white;
     color: white;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
+    font-family: "'Press Start 2P', Arial, sans-serif";
+    font-size: 14px;
     gap: 10px;
     z-index: 1000;
   }
@@ -510,8 +510,8 @@ function createMain2() {
       if (player2) {
         // Create name tag display
         const nameTag = this.add.text(0, -32, playerName, {
-          fontFamily: "Arial",
-          fontSize: "10px",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontSize: "7px",
           color: "#ffffff",
           stroke: "#000000",
           strokeThickness: 2,
@@ -1164,8 +1164,8 @@ function startGame2() {
       this.cameras.main.height / 2,
       "Você precisa coletar todas as 4 chaves para continuar!",
       {
-        fontFamily: "Arial",
-        fontSize: "22px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "14px",
         color: "#ffffff",
         backgroundColor: "#000000",
         padding: { x: 15, y: 10 },
@@ -1186,8 +1186,8 @@ function startGame2() {
       this.cameras.main.height / 2 - 50,
       "Pressione ESPAÇO para interagir",
       {
-        fontFamily: "Arial",
-        fontSize: "18px",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
+        fontSize: "14px",
         color: "#ffffff",
         backgroundColor: "#000000",
         padding: { x: 10, y: 5 },
@@ -1860,8 +1860,8 @@ function createTutorialElements2() {
     -panelHeight * 0.4,
     "TUTORIAL - FASE 2",
     {
-      fontFamily: "Arial",
-      fontSize: "26px",
+      fontFamily: "'Press Start 2P', Arial, sans-serif",
+      fontSize: "22px",
       color: "#ffffff",
       fontStyle: "bold",
       align: "center",
@@ -1883,8 +1883,8 @@ function createTutorialElements2() {
 
   // Texto do tutorial com fundo destacado
   const tutorialText = this.add.text(0, 0, "", {
-    fontFamily: "Arial",
-    fontSize: "18px",
+    fontFamily: "'Press Start 2P', Arial, sans-serif",
+    fontSize: "14px",
     color: "#ffffff",
     align: "left",
     wordWrap: { width: panelWidth * 0.36 },
@@ -1920,8 +1920,8 @@ function createTutorialElements2() {
 
   // Texto do botão com destaque
   const nextText = this.add.text(nextBtn.x, nextBtn.y, "PRÓXIMO", {
-    fontFamily: "Arial",
-    fontSize: "18px",
+    fontFamily: "'Press Start 2P', Arial, sans-serif",
+    fontSize: "14px",
     color: "#ffffff",
     fontStyle: "bold",
   });
@@ -1942,8 +1942,8 @@ function createTutorialElements2() {
 
   // Texto do botão pular com destaque
   const skipText = this.add.text(skipBtn.x, skipBtn.y, "PULAR TUTORIAL", {
-    fontFamily: "Arial",
-    fontSize: "14px",
+    fontFamily: "'Press Start 2P', Arial, sans-serif",
+    fontSize: "10px",
     color: "#ffffff",
   });
   skipText.setOrigin(0.5);
@@ -2311,9 +2311,9 @@ initializaConfig2();
       .setOrigin(0, 0);
     this.add
       .text(window.innerWidth / 2, 100, "FASE 2", {
-        fontSize: "32px",
+        fontSize: "28px",
         fill: "#fff",
-        fontFamily: "Arial",
+        fontFamily: "'Press Start 2P', Arial, sans-serif",
       })
       .setOrigin(0.5);
 
@@ -2323,9 +2323,9 @@ initializaConfig2();
         150,
         "Bem-vindo à segunda fase, " + playerName,
         {
-          fontSize: "24px",
+          fontSize: "20px",
           fill: "#fff",
-          fontFamily: "Arial",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
         }
       )
       .setOrigin(0.5);
@@ -2387,9 +2387,9 @@ initializaConfig2();
         window.innerHeight - 100,
         "Use as setas ou WASD para se mover",
         {
-          fontSize: "20px",
+          fontSize: "16px",
           fill: "#ffffff",
-          fontFamily: "Arial",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
         }
       )
       .setOrigin(0.5);

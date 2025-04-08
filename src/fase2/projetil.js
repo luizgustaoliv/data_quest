@@ -495,7 +495,7 @@ async function initGame() {
             // Clean up and redirect to fase3.html
             if (typeof window.exitProjetilMinigame === "function") {
               window.exitProjetilMinigame();
-              window.location.href = "../../src/fase3/fase3.html";
+              window.location.href = "../src/fase3/fase3.html";
             }
           };
           victoryMsg.appendChild(continueBtn);
@@ -593,7 +593,7 @@ async function initGame() {
     instructions.style.width = "100%";
     instructions.style.textAlign = "center";
     instructions.style.color = "white";
-    instructions.style.fontFamily = "Arial";
+    instructions.style.fontFamily = "'Press Start 2P', Arial, sans-serif";
     instructions.style.zIndex = "5001";
     instructions.innerHTML =
       "Clique para lançar o projetil e proteger os dados pessoais!";

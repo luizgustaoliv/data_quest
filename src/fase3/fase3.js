@@ -7,7 +7,6 @@ let objetos1Layer7;
 let objetos2Layer8;
 let objetos3Layer9;
 let camada4Layer6;
-const speed = 160;
 
 function preloadMain3() {
   // Load all possible player sprites
@@ -222,51 +221,58 @@ function createMain3() {
 
   // Create animations
   this.anims.create({
+    key: "idle_front",
+    frames: [{ key: selectedCharacter, frame: 0 }],
+    frameRate: 1,
+    repeat: -1,
+  });
+
+  this.anims.create({
+    key: "idle_back",
+    frames: [{ key: selectedCharacter, frame: 5 }],
+    frameRate: 1,
+    repeat: -1,
+  });
+
+  this.anims.create({
+    key: "idle_side",
+    frames: [{ key: selectedCharacter, frame: 3 }],
+    frameRate: 1,
+    repeat: -1,
+  });
+
+  this.anims.create({
     key: "walk_down",
-    frames: this.anims.generateFrameNumbers(selectedCharacter, {
-      start: 0,
-      end: 1,
-    }),
-    frameRate: 8,
+    frames: [
+      { key: selectedCharacter, frame: 0 },
+      { key: selectedCharacter, frame: 1 },
+      { key: selectedCharacter, frame: 0 },
+      { key: selectedCharacter, frame: 2 },
+    ],
+    frameRate: 7,
     repeat: -1,
   });
 
   this.anims.create({
     key: "walk_side",
-    frames: this.anims.generateFrameNumbers(selectedCharacter, {
-      start: 3,
-      end: 4,
-    }),
-    frameRate: 8,
+    frames: [
+      { key: selectedCharacter, frame: 3 },
+      { key: selectedCharacter, frame: 4 },
+    ],
+    frameRate: 7,
     repeat: -1,
   });
 
   this.anims.create({
     key: "walk_up",
-    frames: this.anims.generateFrameNumbers(selectedCharacter, {
-      start: 6,
-      end: 7,
-    }),
-    frameRate: 8,
+    frames: [
+      { key: selectedCharacter, frame: 5 },
+      { key: selectedCharacter, frame: 6 },
+      { key: selectedCharacter, frame: 5 },
+      { key: selectedCharacter, frame: 7 },
+    ],
+    frameRate: 7,
     repeat: -1,
-  });
-
-  this.anims.create({
-    key: "idle_front",
-    frames: [{ key: selectedCharacter, frame: 0 }],
-    frameRate: 1,
-  });
-
-  this.anims.create({
-    key: "idle_side",
-    frames: [{ key: selectedCharacter, frame: 4 }],
-    frameRate: 1,
-  });
-
-  this.anims.create({
-    key: "idle_back",
-    frames: [{ key: selectedCharacter, frame: 7 }],
-    frameRate: 1,
   });
 
   // Configuração da câmera
@@ -373,11 +379,12 @@ function createMain3() {
 function updateMain3() {
   // Add safety check for cursors2
   if (!cursors2 || !player2) return;
+  const speed = 160;
 
   const leftPressed =
     cursors2.left.isDown ||
     this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A).isDown;
-  const rightPressed =
+  const rightPressed =  
     cursors2.right.isDown ||
     this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D).isDown;
   const upPressed =
@@ -436,7 +443,6 @@ function startGame() {
     height: window.innerHeight,
     parent: "game-container",
     backgroundColor: "#000000",
-    pixelArt: true,
     scale: {
       mode: Phaser.Scale.RESIZE,
       autoCenter: Phaser.Scale.CENTER_BOTH,
