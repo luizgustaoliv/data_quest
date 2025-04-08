@@ -712,8 +712,6 @@ function carregarScriptFases() {
   document.head.appendChild(script);
 }
 
-// ========== ADICIONE ESTE CÓDIGO NO FINAL DO SEU ARQUIVO ==========
-
 // Sistema de música para a tela inicial
 let musicaTelaInicial = null;
 
