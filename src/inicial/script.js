@@ -408,7 +408,7 @@ function criarInterface() {
 
   const pDesenvolvedores = document.createElement("p");
   pDesenvolvedores.textContent =
-    "André Katz, Celso Rocha, Daniel Meiches, Kaian Santos, Luiz Fernando, Miguel Almeida, Wendel";
+    "André Katz, Celso Rocha, Daniel Meiches, Kaian Santos, Luiz Fernando, Miguel Almeida, Wendel Feitosa";
 
   // Montagem do popup Sobre
   popupContentSobre.appendChild(closeSpanSobre);
@@ -554,13 +554,13 @@ function inicializarSons() {
     }
 
     // Carrega o som de fundo com volume mais baixo e em loop
-    somDeFundo = carregarSom("assets/trilhasonora/telainicial.mp3", 0.3, true);
+    somDeFundo = carregarSom("assets/sons/musicas/telainicial.mp3", 0.3, true);
 
     // Carrega o som para cliques nos botões
-    somClique = carregarSom("assets/trilhasonora/buttonclick.mp3", 0.5);
+    somClique = carregarSom("assets/sons/efeitos/botaoMenu.mp3", 0.5);
 
     // Adicionamos uma verificação para arquivos específicos usando fetch
-    fetch("assets/trilhasonora/telainicial.mp3")
+    fetch("assets/sons/musicas/musicaTelaInicial.mp3")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
