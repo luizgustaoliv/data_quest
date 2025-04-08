@@ -711,3 +711,67 @@ function carregarScriptFases() {
 
   document.head.appendChild(script);
 }
+
+// ========== ADICIONE ESTE CÓDIGO NO FINAL DO SEU ARQUIVO ==========
+
+// Sistema de música para a tela inicial
+let musicaTelaInicial = null;
+
+// Função para tocar a música da tela inicial
+function tocarMusicaTelaInicial() {
+  if (!musicaTelaInicial) {
+    musicaTelaInicial = new Audio('assets/sons/musicas/musicaTelaInicial.mp3');
+    musicaTelaInicial.loop = true;
+    musicaTelaInicial.volume = 0.5;
+  }
+  
+  // Tentativa de tocar a música (pode precisar de interação do usuário primeiro)
+  const promise = musicaTelaInicial.play();
+  
+  if (promise !== undefined) {
+    promise.catch(error => {
+      // Se não conseguir tocar automaticamente, tocará na primeira interação
+      console.log("Música será tocada na primeira interação do usuário");
+      
+      // Adiciona evento para tocar no primeiro clique
+      document.addEventListener('click', () => {
+        if (musicaTelaInicial && musicaTelaInicial.paused) {
+          musicaTelaInicial.play();
+        }
+      }, { once: true });
+    });
+  }
+}
+
+// Modifica a função inicializarJogo original para incluir o áudio
+const inicializarJogoOriginal = inicializarJogo;
+inicializarJogo = function() {
+  inicializarJogoOriginal();
+  tocarMusicaTelaInicial();
+};
+
+// Modifica a função configurarEventos para parar a música quando o jogador iniciar o jogo
+const configurarEventosOriginal = configurarEventos;
+configurarEventos = function() {
+  configurarEventosOriginal();
+  
+  // Adiciona evento para parar a música quando o jogador clicar em JOGAR
+  const botaoJogar = document.getElementById("botaoJogar");
+  if (botaoJogar) {
+    botaoJogar.addEventListener("click", function() {
+      // Parar a música antes de mudar de tela
+      if (musicaTelaInicial) {
+        musicaTelaInicial.pause();
+        musicaTelaInicial.currentTime = 0;
+      }
+    }, { once: true }); // once: true garante que o evento só dispare uma vez
+  }
+};
+
+// Toca a música se a página já foi carregada
+if (document.readyState === "complete") {
+  tocarMusicaTelaInicial();
+} else {
+  // Caso a página ainda esteja carregando
+  window.addEventListener('load', tocarMusicaTelaInicial);
+}
