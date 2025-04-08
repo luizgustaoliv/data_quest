@@ -356,7 +356,20 @@ function createMain3() {
   addCollisionRect(this, 230, 155, 350, 70, 0x00ff00); // mesa
   addCollisionRect(this, 400, 195, 28, 184, 0x00ff00); // mesa
   addCollisionRect(this, 320, 125, 70, 70, 0x00ff00); // mesa
-  addCollisionRect(this, 379, 1005, 70, 200, 0x00ff00); // mesa
+  addCollisionRect(this, 410, 940, 2, 385, 0x00ff00); // mesa
+  addCollisionRect(this, 580, 980, 10, 465, 0x00ff00); // mesa
+  addCollisionRect(this, 580, 980, 10, 465, 0x00ff00); // mesa
+  addCollisionRect(this, 490, 1030, 130, 10, 0x00ff00); // mesa
+  addCollisionRect(this, 630, 780, 67, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 630, 810, 20, 17, 0x00ff00); // mesa
+  addCollisionRect(this, 740, 920, 260, 17, 0x00ff00); // mesa
+  addCollisionRect(this, 260, 920, 260, 17, 0x00ff00); // mesa
+  addCollisionRect(this, 720, 150, 260, 60, 0x00ff00); // mesa
+  addCollisionRect(this, 815, 330, 100, 30, 0x00ff00); // mesa
+  addCollisionRect(this, 557, 920, 20, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 437, 920, 20, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 875, 500, 20, 800, 0x00ff00); // mesa
+  addCollisionRect(this, 116, 500, 20, 800, 0x00ff00); // mesa
   // Adicionar colisões para as bordas do mapa se necessário - Azul para bordas
   // Instrução de debug no console
   console.log("Debug: pressione F9 para mostrar/ocultar colisões");
