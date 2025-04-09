@@ -8,6 +8,95 @@ let objetos2Layer8;
 let objetos3Layer9;
 let camada4Layer6;
 
+// Add these new global variables at the top
+let inMinigame = false;
+let minigameZones = [];
+let currentMinigame = null;
+let spaceKey;
+let minigameSceneLoaded = false;
+let gameInstance = null;
+let minigameIndicators = {}; // Store references to indicators
+let completedMinigames = {}; // Track which minigames are completed
+let hudContainer; // Container for HUD elements
+let minigameCounter; // Text object for minigame counter
+
+// Update the createDirectHUD function to position it on the right side and increase size
+function createDirectHUD() {
+  console.log('Creating or updating direct DOM HUD element');
+  
+  // First, remove any existing HUD element to prevent duplicates
+  if (window.gameHud) {
+    document.body.removeChild(window.gameHud);
+  }
+  
+  // Create a DOM element overlay that will always be visible
+  const hudElement = document.createElement('div');
+  hudElement.id = 'game-hud';
+  hudElement.style.position = 'absolute';
+  hudElement.style.top = '10px';
+  hudElement.style.right = '10px'; // Changed from left to right positioning
+  hudElement.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+  hudElement.style.color = 'white';
+  hudElement.style.padding = '13px'; // Increased from 10px to 13px (1.3x)
+  hudElement.style.border = '3px solid #3498db'; // Increased border from 2px to 3px
+  hudElement.style.borderRadius = '7px'; // Increased from 5px to 7px (rounded corners)
+  hudElement.style.fontFamily = 'Arial, sans-serif';
+  hudElement.style.fontSize = '31px'; // Increased from 24px to 31px (1.3x)
+  hudElement.style.zIndex = '10000';
+  hudElement.style.userSelect = 'none';
+  
+  // Count minigames
+  const totalMinigames = minigameZones ? minigameZones.length : 4;
+  const completedCount = Object.values(completedMinigames).filter(Boolean).length;
+  
+  // Set content with actual image instead of blue div - increased icon size by 1.3x
+  hudElement.innerHTML = `
+    <div style="display:flex; align-items:center;">
+      <img src="../../assets/fase3/computer-icon.png" style="width:39px; height:39px; margin-right:13px;">
+      <span>${completedCount}/${totalMinigames}</span>
+    </div>
+  `;
+  
+  // Store reference for updates
+  window.gameHud = hudElement;
+  window.hudCreated = true;
+  
+  // Add to document body
+  document.body.appendChild(hudElement);
+  
+  return hudElement;
+}
+
+// Update HUD counter - improved to always update the current DOM element
+function updateHudCounter() {
+  // Count minigames and get completion status
+  const totalMinigames = minigameZones ? minigameZones.length : 4;
+  const completedCount = Object.values(completedMinigames).filter(Boolean).length;
+  
+  // If HUD exists, update it
+  if (window.gameHud) {
+    const counter = window.gameHud.querySelector('span');
+    if (counter) {
+      counter.textContent = `${completedCount}/${totalMinigames}`;
+      console.log(`Updated HUD counter to ${completedCount}/${totalMinigames}`);
+    }
+  } else {
+    // If HUD doesn't exist, create it
+    createDirectHUD();
+  }
+}
+
+// Either add these functions or rename the existing ones to match the expected names
+function createHUD(scene) {
+  // Just call our new implementation
+  return createDirectHUD();
+}
+
+function updateHUDCounter() {
+  // Call our new implementation
+  updateHudCounter();
+}
+
 function preloadMain3() {
   // Load all possible player sprites
   this.load.spritesheet("player1", "../../assets/fase1/players/player1.png", {
@@ -58,14 +147,25 @@ function preloadMain3() {
     "Room_Builder_32x32",
     "../../assets/fase3/Room_Builder_32x32.png"
   );
+  
+  // Load indicator images
+  this.load.image("exclamation", "../../assets/fase3/exclamation.png");
+  this.load.image("checkmark", "../../assets/fase3/checkmark.png");
+  
+  // Load computer icon for HUD
+  this.load.image("computer-icon", "../../assets/fase3/computer-icon.png");
 }
 
 function createMain3() {
+
   // Criação do mapa (moved to top)
   const map3 = this.make.tilemap({ key: "map3json" });
 
   // Initialize cursor controls
   cursors2 = this.input.keyboard.createCursorKeys();
+
+  // Add space key for interaction
+  spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
   // Check if map loaded successfully
   if (!map3 || !map3.layers || map3.layers.length === 0) {
@@ -415,12 +515,341 @@ function createMain3() {
 
   // Adicionar colisão com os retângulos manuais
   this.physics.add.collider(player2, manualColliders);
+
+  // Load completed minigames from localStorage if available
+  try {
+    const savedProgress = localStorage.getItem('completedMinigames');
+    if (savedProgress) {
+      completedMinigames = JSON.parse(savedProgress);
+    }
+  } catch (e) {
+    console.error('Error loading minigame progress:', e);
+    completedMinigames = {};
+  }
+
+  // Update minigame zones array in createMain3()
+  minigameZones = [
+    {
+        x: 300,
+        y: 700,
+        width: 100,
+        height: 50,
+        minigameName: 'puzzle1',
+        color: 0xff0000,  // Red zone for popup defense minigame
+        description: 'Defenda o computador contra popups maliciosos!'
+    },
+    {
+        x: 782,
+        y: 736,
+        width: 100,
+        height: 50,
+        minigameName: 'puzzle2',
+        color: 0x00ff00,  // Green zone for second minigame
+        description: 'Minigame 2: Complete o desafio de segurança!'
+    },
+    {
+        x: 782,
+        y: 190,
+        width: 100,
+        height: 50,
+        minigameName: 'puzzle3',
+        color: 0x0000ff,  // Blue zone for third minigame  
+        description: 'Minigame 3: Proteja a rede de ataques!'
+    },  
+    {
+        x: 203,
+        y: 165,
+        width: 100,
+        height: 50,
+        minigameName: 'puzzle4',
+        color: 0xff00ff,  // Purple zone for fourth minigame
+        description: 'Minigame 4: Recupere os dados criptografados!'
+    } 
+  ];
+
+  // Create HUD with a slight delay to ensure scene is fully initialized
+  this.time.delayedCall(100, () => {
+    try {
+      console.log("Creating HUD with delay");
+      // This now calls our function createDirectHUD() through the wrapper
+      const hud = createHUD(this);
+      console.log("HUD created successfully:", hud);
+    } catch (e) {
+      console.error("HUD creation failed:", e);
+    }
+  });
+  
+  // Update the trigger zones creation to show description on hover
+  minigameZones.forEach(zone => {
+    const triggerZone = this.add.rectangle(zone.x, zone.y, zone.width, zone.height);
+    this.physics.add.existing(triggerZone, true);
+    
+    // Add indicator above the zone
+    createIndicator(this, zone);
+    
+    // Show description when player enters zone
+    let descriptionText = null;
+    
+    this.physics.add.overlap(player2, triggerZone, () => {
+      // Show description if not already showing
+      if (!descriptionText) {
+        descriptionText = this.add.text(zone.x, zone.y - 70, zone.description, {
+          fontSize: '16px',
+          fill: '#ffffff',
+          backgroundColor: '#000000',
+          padding: { x: 5, y: 3 },
+        }).setOrigin(0.5).setDepth(1000);
+      }
+      
+      // Handle minigame start on space key
+      if (Phaser.Input.Keyboard.JustDown(spaceKey) && !inMinigame) {
+        // Display "Loading..." message
+        const loadingText = this.add.text(400, 300, 'Carregando...', {
+          fontSize: '24px',
+          fill: '#ffffff'
+        }).setOrigin(0.5);
+        
+        startMinigame(this, zone.minigameName)
+          .then(() => loadingText.destroy())
+          .catch(error => {
+            console.error('Error starting minigame:', error);
+            loadingText.setText('Erro ao carregar minigame!');
+            
+            // Remove error message after 2 seconds
+            this.time.delayedCall(2000, () => {
+              loadingText.destroy();
+              inMinigame = false;
+            });
+          });
+      }
+    });
+    
+    // Remove description when player leaves zone
+    this.physics.add.overlap(player2, triggerZone, null, function() {
+      return true; // Always process this overlap
+    }, this, function() {
+      // This is called when overlap stops
+      if (descriptionText) {
+        descriptionText.destroy();
+        descriptionText = null;
+      }
+    });
+
+    // Always make zones visible now, with their specific colors
+    triggerZone.setStrokeStyle(2, zone.color);
+    triggerZone.setFillStyle(zone.color, 0.3);
+    triggerZone.setVisible(true);
+  });
 }
 
+// Create visual indicators for minigame zones
+function createIndicator(scene, zone) {
+  const isCompleted = completedMinigames[zone.minigameName] === true;
+  
+  // Check if we have the images loaded
+  let hasImages = scene.textures.exists('exclamation') && scene.textures.exists('checkmark');
+  
+  let indicator;
+  
+  if (hasImages) {
+    // Use loaded images
+    indicator = scene.add.image(zone.x, zone.y - 40, isCompleted ? 'checkmark' : 'exclamation');
+    indicator.setScale(0.5); // Adjust scale as needed
+  } else {
+    // Create graphics if images don't exist
+    indicator = scene.add.container(zone.x, zone.y - 40);
+    
+    // Create exclamation point with graphics
+    if (!isCompleted) {
+      // Red circle
+      const circle = scene.add.circle(0, 0, 15, 0xff0000);
+      // White exclamation mark
+      const excl1 = scene.add.rectangle(0, -3, 4, 15, 0xffffff);
+      const excl2 = scene.add.circle(0, 10, 2, 0xffffff);
+      indicator.add([circle, excl1, excl2]);
+    } else {
+      // Green circle
+      const circle = scene.add.circle(0, 0, 15, 0x00ff00);
+      // White checkmark
+      const graphics = scene.add.graphics();
+      graphics.lineStyle(3, 0xffffff);
+      graphics.beginPath();
+      graphics.moveTo(-7, 0);
+      graphics.lineTo(-2, 5);
+      graphics.lineTo(7, -5);
+      graphics.strokePath();
+      indicator.add([circle, graphics]);
+    }
+  }
+  
+  // Add pulsing animation for non-completed minigames
+  if (!isCompleted) {
+    scene.tweens.add({
+      targets: indicator,
+      scaleX: 1.2,
+      scaleY: 1.2,
+      duration: 600,
+      yoyo: true,
+      repeat: -1,
+      ease: 'Sine.easeInOut'
+    });
+  }
+  
+  // Store reference to indicator for future updates
+  minigameIndicators[zone.minigameName] = indicator;
+}
+
+// Update indicator after minigame completion
+function updateMinigameIndicator(minigameName, success) {
+  if (!success || !minigameIndicators[minigameName]) return;
+  
+  const indicator = minigameIndicators[minigameName];
+  const scene = indicator.scene;
+  
+  // Mark as completed
+  completedMinigames[minigameName] = true;
+  
+  // Save progress to localStorage
+  try {
+    localStorage.setItem('completedMinigames', JSON.stringify(completedMinigames));
+  } catch (e) {
+    console.error('Could not save minigame progress:', e);
+  }
+  
+  // Stop any running animations
+  scene.tweens.killTweensOf(indicator);
+  
+  // Replace with checkmark
+  if (scene.textures.exists('checkmark')) {
+    // If using image
+    indicator.setTexture('checkmark');
+    indicator.setScale(0.5);
+  } else {
+    // If using graphics
+    indicator.removeAll(true);
+    
+    // Green circle
+    const circle = scene.add.circle(0, 0, 15, 0x00ff00);
+    // White checkmark
+    const graphics = scene.add.graphics();
+    graphics.lineStyle(3, 0xffffff);
+    graphics.beginPath();
+    graphics.moveTo(-7, 0);
+    graphics.lineTo(-2, 5);
+    graphics.lineTo(7, -5);
+    graphics.strokePath();
+    
+    indicator.add([circle, graphics]);
+  }
+  
+  // Update HUD counter with our fixed function
+  updateHudCounter();
+}
+
+// Update the loadMinigameScript function to dynamically load different minigame files
+function loadMinigameScript(minigameName) {
+  return new Promise((resolve, reject) => {
+    // Determine which script file to load based on minigame name
+    let scriptFile;
+    let sceneKey;
+    
+    switch(minigameName) {
+      case 'puzzle1':
+        scriptFile = '../../src/fase3/minigame.js';
+        sceneKey = 'MinigameScene';
+        break;
+      case 'puzzle2':
+        scriptFile = '../../src/fase3/minigame2.js';
+        sceneKey = 'Minigame2Scene';
+        break;
+      case 'puzzle3':
+        scriptFile = '../../src/fase3/minigame3.js';
+        sceneKey = 'Minigame3Scene';
+        break;
+      case 'puzzle4':
+        scriptFile = '../../src/fase3/minigame4.js';
+        sceneKey = 'Minigame4Scene';
+        break;
+      default:
+        scriptFile = '../../src/fase3/minigame.js';
+        sceneKey = 'MinigameScene';
+    }
+    
+    // Check if the scene class is already loaded
+    const sceneExists = window[sceneKey];
+    if (sceneExists) {
+      resolve({ sceneKey });
+      return;
+    }
+
+    // Create a script element to load the appropriate minigame file
+    const script = document.createElement('script');
+    script.src = scriptFile;
+    script.onload = () => {
+      console.log(`${minigameName} script loaded successfully: ${scriptFile}`);
+      resolve({ sceneKey });
+    };
+    script.onerror = () => {
+      console.error(`Failed to load ${minigameName} script: ${scriptFile}`);
+      reject(new Error(`Failed to load ${minigameName} script`));
+    };
+    document.head.appendChild(script);
+  });
+}
+
+// Modify the startMinigame function to handle different minigames
+function startMinigame(scene, minigameName) {
+  inMinigame = true;
+  
+  // Return a promise that resolves when minigame is ready
+  return loadMinigameScript(minigameName)
+    .then(({ sceneKey }) => {
+      if (!gameInstance.scene.getScene(sceneKey)) {
+        // Get the scene class based on the scene key
+        const SceneClass = window[sceneKey];
+        if (!SceneClass) {
+          throw new Error(`Scene class ${sceneKey} not found`);
+        }
+        
+        // Add the scene dynamically if it doesn't exist
+        gameInstance.scene.add(sceneKey, SceneClass, false);
+      }
+      
+      // Start the minigame scene
+      scene.scene.launch(sceneKey);
+      
+      // Listen for game completion and update indicator
+      scene.scene.get(sceneKey).events.once('minigameComplete', (success) => {
+        console.log(`Minigame ${minigameName} completed: ${success ? 'win' : 'lose'}`);
+        
+        // Update indicator if successful
+        if (success) {
+          updateMinigameIndicator(minigameName, true);
+          // Make sure HUD is refreshed when returning from minigame
+          updateHudCounter();
+        }
+        
+        scene.time.delayedCall(500, () => {
+          scene.scene.stop(sceneKey);
+          inMinigame = false;
+        });
+      });
+      
+      return true;
+    });
+}
+
+// Update the update function to not create additional HUDs
 function updateMain3() {
   // Add safety check for cursors2
   if (!cursors2 || !player2) return;
   const speed = 160;
+
+  // Disable player movement during minigame
+  if (inMinigame) {
+    player2.setVelocity(0);
+    return;
+  }
 
   const leftPressed =
     cursors2.left.isDown ||
@@ -502,7 +931,8 @@ function startGame() {
     },
   };
 
-  const game = new Phaser.Game(config);
+  gameInstance = new Phaser.Game(config);
+  return gameInstance;
 }
 
 // Start the game after page loads

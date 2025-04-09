@@ -1,8 +1,10 @@
-// Check if MinigameScene already exists before defining it
-if (!window.MinigameScene) {
-    class MinigameScene extends Phaser.Scene {
+// Memory Match Game for Minigame 2 - Rename class from MinigameScene to Minigame2Scene
+
+// Check if Minigame2Scene already exists before defining it
+if (!window.Minigame2Scene) {
+    class Minigame2Scene extends Phaser.Scene {
         constructor() {
-            super('MinigameScene');
+            super('Minigame2Scene'); // Update scene key to match class name
             this.popupsHandled = 0;
             this.requiredPopups = 3;
             this.gameActive = false;
@@ -17,6 +19,15 @@ if (!window.MinigameScene) {
             };
             this.remainingPopups = [];
             this.debugGraphics = null;
+            this.cards = [];
+            this.selectedCards = [];
+            this.matchesFound = 0;
+            this.totalMatches = 8;
+            this.canSelect = true;
+            this.symbols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+            this.timeLimit = 60000; // 60 seconds
+            this.timer = null;
+            this.timeText = null; // Initialize timeText property
         }
 
         preload() {
@@ -38,6 +49,29 @@ if (!window.MinigameScene) {
             
             this.load.on('loaderror', (file) => {
                 console.error('Error loading file:', file.key);
+            });
+
+            // Load assets for memory match game
+            this.load.image("cardBack", "../../assets/fase3/minigame/card_back.png");
+            this.symbols.forEach(symbol => {
+                this.load.image(`card${symbol}`, `../../assets/fase3/minigame/card_${symbol.toLowerCase()}.png`);
+            });
+
+            // Load card images - use fallback image for all cards
+            this.load.image("cardBack", "../../assets/fase3/minigame/card_back.png");
+            
+            // Load a single card image to use as a fallback for all cards
+            this.load.image("cardA", "../../assets/fase3/minigame/card_a.png");
+            
+            // Define card references using the same image
+            this.symbols.forEach(symbol => {
+                // This ensures we don't try to load missing files
+                if (symbol !== 'A') {
+                    this.textures.addBase64(
+                        `card${symbol}`, 
+                        this.textures.getBase64('cardA') || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
+                    );
+                }
             });
         }
 
@@ -540,38 +574,165 @@ if (!window.MinigameScene) {
                 this.updateTimer();
             }
         }
-    }
-    
-    // Make the class globally accessible
-    window.MinigameScene = MinigameScene;
-}
 
-// Wrap config and game initialization in a function
-function startGame() {
-    const config = {
-      type: Phaser.WEBGL,
-      width: window.innerWidth,
-      height: window.innerHeight,
-      parent: "game-container",
-      backgroundColor: "#000000",
-      scale: {
-        mode: Phaser.Scale.RESIZE,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-      },
-      physics: {
-        default: "arcade",
-        arcade: {
-          gravity: { y: 0 },
-          debug: false,
-        },
-      },
-      scene: [MinigameScene]
-    };
-  
-    const game = new Phaser.Game(config);
+        createGame() {
+            // Create dark background
+            this.add.rectangle(0, 0, this.sys.game.config.width, this.sys.game.config.height, 0x000000, 0.8)
+                .setOrigin(0)
+                .setDepth(0);
+            
+            // Title text
+            this.add.text(this.sys.game.config.width/2, 50, 'MEMORY MATCH', {
+                fontFamily: '"Press Start 2P"',
+                fontSize: '32px',
+                color: '#ffffff'
+            }).setOrigin(0.5);
+            
+            // Instructions
+            this.add.text(this.sys.game.config.width/2, 100, 'Match all pairs to secure the system', {
+                fontFamily: '"Press Start 2P"',
+                fontSize: '16px',
+                color: '#ffffff'
+            }).setOrigin(0.5);
+            
+            // Create timer text - ensure this is created
+            this.timeText = this.add.text(this.sys.game.config.width/2, 140, '60', {
+                fontFamily: '"Press Start 2P"',
+                fontSize: '24px',
+                color: '#ffffff'
+            }).setOrigin(0.5);
+            
+            // Create cards
+            this.createCards();
+            
+            // Start timer
+            this.startTimer();
+        }
+
+        createCards() {
+            // Create an array of card symbols (2 of each)
+            const cardSymbols = this.symbols.concat(this.symbols);
+            
+            // Shuffle the array
+            Phaser.Utils.Array.Shuffle(cardSymbols);
+            
+            // Create card objects
+            const cardWidth = 70;  // Reduced from 100
+            const cardHeight = 100; // Reduced from 140
+            const cardSpacing = 15; // Reduced from 20
+            const startX = (this.sys.game.config.width - (cardWidth + cardSpacing) * 4) / 2;
+            const startY = 180; // Set explicit Y position instead of calculation
+            
+            for (let i = 0; i < cardSymbols.length; i++) {
+                const x = startX + (i % 4) * (cardWidth + cardSpacing);
+                const y = startY + Math.floor(i / 4) * (cardHeight + cardSpacing);
+                const card = this.add.image(x, y, 'cardBack')
+                    .setScale(0.5)
+                    .setInteractive();
+                card.symbol = cardSymbols[i];
+                card.flipped = false;
+                card.on('pointerdown', () => this.selectCard(card));
+                this.cards.push(card);
+            }
+        }
+
+        selectCard(card) {
+            if (!this.canSelect || card.flipped) return;
+            
+            card.setTexture(`card${card.symbol}`);
+            card.flipped = true;
+            this.selectedCards.push(card);
+            
+            if (this.selectedCards.length === 2) {
+                this.canSelect = false;
+                this.time.delayedCall(1000, () => {
+                    this.checkMatch();
+                });
+            }
+        }
+
+        checkMatch() {
+            const [card1, card2] = this.selectedCards;
+            
+            if (card1.symbol === card2.symbol) {
+                this.matchesFound++;
+                if (this.matchesFound === this.totalMatches) {
+                    this.gameWin();
+                }
+            } else {
+                this.flipCardBack(card1);
+                this.flipCardBack(card2);
+            }
+            
+            this.selectedCards = [];
+            this.canSelect = true;
+        }
+
+        flipCardBack(card) {
+            card.setTexture('cardBack');
+            card.flipped = false;
+        }
+
+        startTimer() {
+            this.timer = this.time.addEvent({
+                delay: this.timeLimit,
+                callback: () => {
+                    this.gameLose('Time is up!');
+                }
+            });
+        }
+
+        updateTimer() {
+            // First ensure timeText exists before trying to update it
+            if (!this.timeText || !this.timer) return;
+            
+            const remainingTime = Math.ceil((this.timeLimit - this.timer.getElapsed()) / 1000);
+            this.timeText.setText(remainingTime.toString());
+        }
+
+        gameWin() {
+            if (this.timer) this.timer.remove();
+            
+            this.add.rectangle(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                               400, 200, 0x00aa00, 0.8)
+                .setOrigin(0.5);
+                
+            this.add.text(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                          'ACCESS GRANTED!\nSystem Secured', {
+                fontFamily: '"Press Start 2P"',
+                fontSize: '24px',
+                color: '#ffffff',
+                align: 'center'
+            }).setOrigin(0.5);
+            
+            // Emit victory event
+            this.time.delayedCall(2000, () => {
+                this.events.emit('minigameComplete', true);
+            });
+        }
+        
+        gameLose(reason) {
+            if (this.timer) this.timer.remove();
+            
+            this.add.rectangle(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                               400, 200, 0xaa0000, 0.8)
+                .setOrigin(0.5);
+                
+            this.add.text(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                          `ACCESS DENIED!\n${reason}`, {
+                fontFamily: '"Press Start 2P"',
+                fontSize: '24px',
+                color: '#ffffff',
+                align: 'center'
+            }).setOrigin(0.5);
+            
+            // Emit failure event
+            this.time.delayedCall(2000, () => {
+                this.events.emit('minigameComplete', false);
+            });
+        }
+    }
+
+    // Make the class globally accessible
+    window.Minigame2Scene = Minigame2Scene;
 }
-  
-// Start the game after page loads
-window.onload = function () {
-    startGame();
-};

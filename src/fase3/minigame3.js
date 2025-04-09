@@ -1,8 +1,10 @@
-// Check if MinigameScene already exists before defining it
-if (!window.MinigameScene) {
-    class MinigameScene extends Phaser.Scene {
+// Network Defense Game for Minigame 3 - Rename class from MinigameScene to Minigame3Scene
+
+// Check if Minigame3Scene already exists before defining it
+if (!window.Minigame3Scene) {
+    class Minigame3Scene extends Phaser.Scene {
         constructor() {
-            super('MinigameScene');
+            super('Minigame3Scene'); // Update scene key to match class name
             this.popupsHandled = 0;
             this.requiredPopups = 3;
             this.gameActive = false;
@@ -17,6 +19,12 @@ if (!window.MinigameScene) {
             };
             this.remainingPopups = [];
             this.debugGraphics = null;
+            this.threats = [];
+            this.firewalls = [];
+            this.score = 0;
+            this.requiredScore = 10;
+            this.gameActive = true;
+            this.spawnTimer = null;
         }
 
         preload() {
@@ -39,6 +47,11 @@ if (!window.MinigameScene) {
             this.load.on('loaderror', (file) => {
                 console.error('Error loading file:', file.key);
             });
+
+            // Load additional assets
+            this.load.image('server', '../../assets/fase3/minigame/server.png');
+            this.load.image('threat', '../../assets/fase3/minigame/threat.png');
+            this.load.image('firewall', '../../assets/fase3/minigame/firewall.png');
         }
 
         create() {
@@ -484,6 +497,28 @@ if (!window.MinigameScene) {
             this.time.delayedCall(2000, () => {
                 this.scene.stop();
             });
+
+            // Stop all threats
+            this.threats.forEach(threat => {
+                threat.body.setVelocity(0, 0);
+            });
+            
+            this.add.rectangle(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                               400, 200, 0x00aa00, 0.8)
+                .setOrigin(0.5);
+                
+            this.add.text(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                          'NETWORK SECURED!\nAll threats neutralized', {
+                fontFamily: '"Press Start 2P"',
+                fontSize: '18px',
+                color: '#ffffff',
+                align: 'center'
+            }).setOrigin(0.5);
+            
+            // Emit victory event
+            this.time.delayedCall(2000, () => {
+                this.events.emit('minigameComplete', true);
+            });
         }
         
         gameLose(reason) {
@@ -532,6 +567,28 @@ if (!window.MinigameScene) {
             this.time.delayedCall(2000, () => {
                 this.scene.stop();
             });
+
+            // Stop all threats
+            this.threats.forEach(threat => {
+                threat.body.setVelocity(0, 0);
+            });
+            
+            this.add.rectangle(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                               400, 200, 0xaa0000, 0.8)
+                .setOrigin(0.5);
+                
+            this.add.text(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                          `BREACH DETECTED!\n${reason}`, {
+                fontFamily: '"Press Start 2P"',
+                fontSize: '18px',
+                color: '#ffffff',
+                align: 'center'
+            }).setOrigin(0.5);
+            
+            // Emit failure event
+            this.time.delayedCall(2000, () => {
+                this.events.emit('minigameComplete', false);
+            });
         }
 
         update() { 
@@ -541,37 +598,7 @@ if (!window.MinigameScene) {
             }
         }
     }
-    
-    // Make the class globally accessible
-    window.MinigameScene = MinigameScene;
-}
 
-// Wrap config and game initialization in a function
-function startGame() {
-    const config = {
-      type: Phaser.WEBGL,
-      width: window.innerWidth,
-      height: window.innerHeight,
-      parent: "game-container",
-      backgroundColor: "#000000",
-      scale: {
-        mode: Phaser.Scale.RESIZE,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-      },
-      physics: {
-        default: "arcade",
-        arcade: {
-          gravity: { y: 0 },
-          debug: false,
-        },
-      },
-      scene: [MinigameScene]
-    };
-  
-    const game = new Phaser.Game(config);
+    // Make the class globally accessible
+    window.Minigame3Scene = Minigame3Scene;
 }
-  
-// Start the game after page loads
-window.onload = function () {
-    startGame();
-};

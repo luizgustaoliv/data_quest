@@ -1,14 +1,16 @@
-// Check if MinigameScene already exists before defining it
-if (!window.MinigameScene) {
-    class MinigameScene extends Phaser.Scene {
+// Password Cracking Game for Minigame 4 - Rename class from MinigameScene to Minigame4Scene
+
+// Check if Minigame4Scene already exists before defining it
+if (!window.Minigame4Scene) {
+    class Minigame4Scene extends Phaser.Scene {
         constructor() {
-            super('MinigameScene');
+            super('Minigame4Scene'); // Update scene key to match class name
             this.popupsHandled = 0;
             this.requiredPopups = 3;
             this.gameActive = false;
             this.currentPopup = null;
             this.timer = null;
-            this.timeLimit = 5000; // 5 seconds to respond
+            this.timeLimit = 45000; // 45 seconds
             this.screenArea = {
                 x: 180,
                 y: 15,  // Changed from 100 to 50 to move up
@@ -17,6 +19,10 @@ if (!window.MinigameScene) {
             };
             this.remainingPopups = [];
             this.debugGraphics = null;
+            this.password = '';
+            this.attempts = 5;
+            this.guessedLetters = [];
+            this.letterButtons = [];
         }
 
         preload() {
@@ -484,6 +490,34 @@ if (!window.MinigameScene) {
             this.time.delayedCall(2000, () => {
                 this.scene.stop();
             });
+
+            this.add.rectangle(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                400, 200, 0x00aa00, 0.8)
+                .setOrigin(0.5)
+                .setDepth(100);
+                
+            this.add.text(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                'DATA RECOVERED!\nDecryption successful', {
+                fontFamily: '"Press Start 2P"',
+                fontSize: '18px',
+                color: '#ffffff',
+                align: 'center'
+            }).setOrigin(0.5)
+                .setDepth(101);
+            
+            // Show the full password
+            this.add.text(this.sys.game.config.width/2, this.sys.game.config.height/2 + 60, 
+                `Password: ${this.password}`, {
+                fontFamily: 'VT323',
+                fontSize: '24px',
+                color: '#ffffff'
+            }).setOrigin(0.5)
+                .setDepth(101);
+            
+            // Emit victory event
+            this.time.delayedCall(2000, () => {
+                this.events.emit('minigameComplete', true);
+            });
         }
         
         gameLose(reason) {
@@ -532,6 +566,34 @@ if (!window.MinigameScene) {
             this.time.delayedCall(2000, () => {
                 this.scene.stop();
             });
+
+            this.add.rectangle(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                400, 200, 0xaa0000, 0.8)
+                .setOrigin(0.5)
+                .setDepth(100);
+                
+            this.add.text(this.sys.game.config.width/2, this.sys.game.config.height/2, 
+                `DECRYPTION FAILED!\n${reason}`, {
+                fontFamily: '"Press Start 2P"',
+                fontSize: '18px',
+                color: '#ffffff',
+                align: 'center'
+            }).setOrigin(0.5)
+                .setDepth(101);
+            
+            // Show the password that was needed
+            this.add.text(this.sys.game.config.width/2, this.sys.game.config.height/2 + 60, 
+                `Password was: ${this.password}`, {
+                fontFamily: 'VT323',
+                fontSize: '24px',
+                color: '#ffffff'
+            }).setOrigin(0.5)
+                .setDepth(101);
+            
+            // Emit failure event
+            this.time.delayedCall(2000, () => {
+                this.events.emit('minigameComplete', false);
+            });
         }
 
         update() { 
@@ -541,37 +603,7 @@ if (!window.MinigameScene) {
             }
         }
     }
-    
-    // Make the class globally accessible
-    window.MinigameScene = MinigameScene;
-}
 
-// Wrap config and game initialization in a function
-function startGame() {
-    const config = {
-      type: Phaser.WEBGL,
-      width: window.innerWidth,
-      height: window.innerHeight,
-      parent: "game-container",
-      backgroundColor: "#000000",
-      scale: {
-        mode: Phaser.Scale.RESIZE,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-      },
-      physics: {
-        default: "arcade",
-        arcade: {
-          gravity: { y: 0 },
-          debug: false,
-        },
-      },
-      scene: [MinigameScene]
-    };
-  
-    const game = new Phaser.Game(config);
+    // Make the class globally accessible
+    window.Minigame4Scene = Minigame4Scene;
 }
-  
-// Start the game after page loads
-window.onload = function () {
-    startGame();
-};
