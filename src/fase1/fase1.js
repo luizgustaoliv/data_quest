@@ -1570,7 +1570,18 @@ if (window.fase1Initialized) {
       "Room_Builder_32x32",
       "assets/fase1/Room_Builder_32x32.png" // Added .png
     );
-    // Carregar sprite do professor para o diálogo
+    this.load.audio('musica', 'assets/sons/musicas/fase1.mp3');
+    this.load.audio('andar', 'assets/sons/efeitos/andar.mp3');
+    this.load.audio('botaomenu', 'assets/sons/efeitos/botaoMenu.mp3');
+    this.load.audio('coletavel', 'assets/sons/efeitos/coletavel.mp3');
+    this.load.audio('correto', 'assets/sons/efeitos/correto.mp3');
+    this.load.audio('dialogofaxineiro', 'assets/sons/efeitos/dialogoFaxineiro.mp3');
+    this.load.audio('dialogoprofessora', 'assets/sons/efeitos/dialogoProfessora.mp3');
+    this.load.audio('dialogoprotagonista', 'assets/sons/efeitos/dialogoProtagonista.mp3');
+    this.load.audio('errado', 'assets/sons/efeitos/errado.mp3');
+    this.load.audio('portaabrindo', 'assets/sons/efeitos/portaAbrindo.mp3');
+    this.load.audio('professoraconsciencia', 'assets/sons/efeitos/professoraConsciencia.mp3');
+
     // Se houver apenas 1 frame para o faxineiro, use um .image ao invés do .spritesheet
     this.load.image("faxineiroDialogo", "assets/dialogos/faxineiro.png");
   }
@@ -4357,6 +4368,7 @@ if (window.fase1Initialized) {
 
     // Resto do código continua igual...
     player.setVelocity(0);
+    
 
     const leftPressed =
       cursors.left.isDown ||
@@ -4390,6 +4402,21 @@ if (window.fase1Initialized) {
 
     // Aplicar movimento
     player.setVelocity(velocityX, velocityY);
+
+// Reproduzir som de andar se estiver se movendo
+if ((velocityX !== 0 || velocityY !== 0)) {
+  if (!this.somAndando || !this.somAndando.isPlaying) {
+    this.somAndando = this.sound.add('andar', { loop: true });
+    this.somAndando.play();
+  }
+} else {
+  if (this.somAndando && this.somAndando.isPlaying) {
+    this.somAndando.stop();
+    this.somAndando.destroy(); // evita sobrecarregar de instâncias
+    this.somAndando = null;
+  }
+}
+
 
     // Atualizar animação baseado no movimento
     let newAnimation = null;
@@ -6136,4 +6163,4 @@ window.addEventListener("DOMContentLoaded", function () {
     },
     true
   );
-})();
+});
