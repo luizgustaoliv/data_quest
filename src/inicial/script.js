@@ -728,7 +728,7 @@ function tocarMusicaTelaInicial() {
   
   if (promise !== undefined) {
     promise.catch(error => {
-      // Se não conseguir tocar automaticamente, tocará na primeira interação
+      // Se não conseguir tocar automaticamente, tocará na primeira interação 
       console.log("Música será tocada na primeira interação do usuário");
       
       // Adiciona evento para tocar no primeiro clique
