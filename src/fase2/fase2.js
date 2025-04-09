@@ -482,10 +482,21 @@ function preloadMain2() {
   this.load.image("19_Hospital_32x32", "assets/fase2/19_Hospital_32x32.png");
   this.load.image("Room_Builder_32x32", "assets/fase2/Room_Builder_32x32.png");
   this.load.image("Key", "assets/fase2/sprites/spriteChave.png");
+  this.load.audio('musicaFase2', 'assets/sons/musicas/fase2.mp3')
 }
 
 function createMain2() {
   try {
+
+    // Tocar música de fundo
+    if (!this.musicaFase2) {
+      this.musicaFase2 = this.sound.add('musicaFase2', {
+        loop: true,
+        volume: 0.8,
+      });
+      this.musicaFase2.play();
+    }
+
     // Criar HUD antes de qualquer outra inicialização
     if (!hudCreated) {
       createHUDElements();
