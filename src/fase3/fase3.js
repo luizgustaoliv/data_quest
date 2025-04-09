@@ -353,11 +353,30 @@ function createMain3() {
     );
   });
   //Posição X(horizontal), posição Y(vertical), largura, altura, cor
-  addCollisionRect(this, 230, 155, 350, 70, 0x00ff00); // mesa
-  addCollisionRect(this, 400, 195, 28, 184, 0x00ff00); // mesa
-  addCollisionRect(this, 320, 125, 70, 70, 0x00ff00); // mesa
+  addCollisionRect(this, 248, 155, 250, 70, 0x00ff00); // mesa
+  addCollisionRect(this, 248, 515, 250, 40, 0x00ff00); // mesa
+  addCollisionRect(this, 700, 515, 250, 40, 0x00ff00); // mesa
+  addCollisionRect(this, 738, 638, 60, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 226, 638, 60, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 226, 820, 60, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 320, 730, 60, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 800, 767, 60, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 850, 640, 20, 50, 0x00ff00); // mesa
+  addCollisionRect(this, 840, 560, 20, 50, 0x00ff00); // mesa
+  addCollisionRect(this, 820, 200, 100, 50, 0x00ff00); // mesa
+  addCollisionRect(this, 600, 574, 20, 50, 0x00ff00); // mesa
+  addCollisionRect(this, 410, 195, 10, 184, 0x00ff00); // mesa
+  addCollisionRect(this, 577, 195, 10, 184, 0x00ff00); // mesa
+  addCollisionRect(this, 350, 400, 70, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 638, 400, 70, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 628, 425, 20, 9, 0x00ff00); // mesa
+  addCollisionRect(this, 355, 430, 10, 9, 0x00ff00); // mesa
+  addCollisionRect(this, 795, 410, 4, 2, 0x00ff00); // mesa
+  addCollisionRect(this, 159, 407, 60, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 159, 307, 60, 20, 0x00ff00); // mesa
   addCollisionRect(this, 410, 940, 2, 385, 0x00ff00); // mesa
-  addCollisionRect(this, 580, 980, 10, 465, 0x00ff00); // mesa
+  addCollisionRect(this, 580, 520, 10, 240, 0x00ff00); // mesa
+  addCollisionRect(this, 410, 520, 10, 240, 0x00ff00); // mesa
   addCollisionRect(this, 580, 980, 10, 465, 0x00ff00); // mesa
   addCollisionRect(this, 490, 1030, 130, 10, 0x00ff00); // mesa
   addCollisionRect(this, 630, 780, 67, 20, 0x00ff00); // mesa
@@ -367,7 +386,9 @@ function createMain3() {
   addCollisionRect(this, 720, 150, 260, 60, 0x00ff00); // mesa
   addCollisionRect(this, 815, 330, 100, 30, 0x00ff00); // mesa
   addCollisionRect(this, 557, 920, 20, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 557, 150, 20, 20, 0x00ff00); // mesa
   addCollisionRect(this, 437, 920, 20, 20, 0x00ff00); // mesa
+  addCollisionRect(this, 437, 150, 20, 20, 0x00ff00); // mesa
   addCollisionRect(this, 875, 500, 20, 800, 0x00ff00); // mesa
   addCollisionRect(this, 116, 500, 20, 800, 0x00ff00); // mesa
   // Adicionar colisões para as bordas do mapa se necessário - Azul para bordas
