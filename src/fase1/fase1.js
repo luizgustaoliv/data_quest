@@ -1570,26 +1570,34 @@ if (window.fase1Initialized) {
       "Room_Builder_32x32",
       "assets/fase1/Room_Builder_32x32.png" // Added .png
     );
-    this.load.audio('musica', 'assets/sons/musicas/fase1.mp3');
-    this.load.audio('andar', 'assets/sons/efeitos/andar.mp3');
-    this.load.audio('botaomenu', 'assets/sons/efeitos/botaoMenu.mp3');
-    this.load.audio('coletavel', 'assets/sons/efeitos/coletavel.mp3');
-    this.load.audio('correto', 'assets/sons/efeitos/correto.mp3');
-    this.load.audio('dialogofaxineiro', 'assets/sons/efeitos/dialogoFaxineiro.mp3');
-    this.load.audio('dialogoprofessora', 'assets/sons/efeitos/dialogoProfessora.mp3');
-    this.load.audio('dialogoprotagonista', 'assets/sons/efeitos/dialogoProtagonista.mp3');
-    this.load.audio('errado', 'assets/sons/efeitos/errado.mp3');
-    this.load.audio('portaabrindo', 'assets/sons/efeitos/portaAbrindo.mp3');
-    this.load.audio('professoraconsciencia', 'assets/sons/efeitos/professoraConsciencia.mp3');
+    this.load.audio("musica", "assets/sons/musicas/fase1.mp3");
+    this.load.audio("andar", "assets/sons/efeitos/andar.mp3");
+    this.load.audio("botaomenu", "assets/sons/efeitos/botaoMenu.mp3");
+    this.load.audio("coletavel", "assets/sons/efeitos/coletavel.mp3");
+    this.load.audio("correto", "assets/sons/efeitos/correto.mp3");
+    this.load.audio(
+      "dialogofaxineiro",
+      "assets/sons/efeitos/dialogoFaxineiro.mp3"
+    );
+    this.load.audio(
+      "dialogoprofessora",
+      "assets/sons/efeitos/dialogoProfessora.mp3"
+    );
+    this.load.audio(
+      "dialogoprotagonista",
+      "assets/sons/efeitos/dialogoProtagonista.mp3"
+    );
+    this.load.audio("errado", "assets/sons/efeitos/errado.mp3");
+    this.load.audio("portaabrindo", "assets/sons/efeitos/portaAbrindo.mp3");
+    this.load.audio(
+      "professoraconsciencia",
+      "assets/sons/efeitos/professoraConsciencia.mp3"
+    );
 
     // Se houver apenas 1 frame para o faxineiro, use um .image ao invés do .spritesheet
     this.load.image("faxineiroDialogo", "assets/dialogos/faxineiro.png");
-  }
 
-  // Função para criar a cena principal do jogo
-  function create() {
-    // this.scene.remove("main");
-    // this.scene.add("main", { create: createMain, update: updateMain }, true);
+    this.load.audio("musicaFase1", "assets/sons/musicas/fase2.mp3");
   }
 
   // Função para criar a cena principal do jogo
@@ -1599,6 +1607,15 @@ if (window.fase1Initialized) {
 
     // Adicionar tratamento de erro para o mapa
     try {
+      // Tocar música de fundo
+      if (!this.musicaFase1) {
+        this.musicaFase1 = this.sound.add("musicaFase1", {
+          loop: true,
+          volume: 0.5,
+        });
+        this.musicaFase1.play();
+      }
+
       // Create map and basic setup first
       map = this.make.tilemap({ key: "map" });
 
@@ -1850,7 +1867,7 @@ if (window.fase1Initialized) {
           boxY + boxHeight / 2, // Centralizar verticalmente na "caixa" invisível
           "Preciso encontrar a chave para usar o elevador!",
           {
-             fontFamily: "'Press Start 2P', Arial, sans-serif",
+            fontFamily: "'Press Start 2P', Arial, sans-serif",
             fontSize: "16px", // Aumentei um pouco para melhor visibilidade
             color: "#FFFFFF",
             backgroundColor: "rgba(0, 0, 0, 0.7)",
@@ -2332,7 +2349,7 @@ if (window.fase1Initialized) {
         0,
         "Pressione E para continuar",
         {
-           fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
           fontSize: "10px",
           color: "#FFFFFF",
           backgroundColor: "#000000",
@@ -2636,7 +2653,7 @@ if (window.fase1Initialized) {
       // Criação do texto do diálogo
       textoDialogo = this.add
         .text(400, 450, "", {
-           fontFamily: "'Press Start 2P', Arial, sans-serif",
+          fontFamily: "'Press Start 2P', Arial, sans-serif",
           fontSize: "13px",
           color: "#FFF",
           wordWrap: { width: 400 }, // Reduzida para evitar sobreposição
@@ -3590,19 +3607,14 @@ if (window.fase1Initialized) {
       arrow.fill();
 
       // Adicionar texto "Clique aqui"
-      const clickText = this.add.text(
-        arrowX - 60000,
-        arrowY - 25000,
-        " ",
-        {
-          fontFamily: "Arial",
-          fontSize: "16px",
-          fontStyle: "bold",
-          color: "#FFD700",
-          stroke: "#000000",
-          strokeThickness: 3,
-        }
-      );
+      const clickText = this.add.text(arrowX - 60000, arrowY - 25000, " ", {
+        fontFamily: "Arial",
+        fontSize: "16px",
+        fontStyle: "bold",
+        color: "#FFD700",
+        stroke: "#000000",
+        strokeThickness: 3,
+      });
       clickText.setOrigin(0.5);
 
       // Configurar propriedades da seta e texto
@@ -3645,7 +3657,6 @@ if (window.fase1Initialized) {
 
       // Certifique-se de que o botão tenha prioridade de exibição alta
       helpButton.setDepth(9999); // Maior que qualquer outra coisa na tela
-
 
       console.log("Botão de ajuda criado:", helpButton);
 
@@ -4368,7 +4379,6 @@ if (window.fase1Initialized) {
 
     // Resto do código continua igual...
     player.setVelocity(0);
-    
 
     const leftPressed =
       cursors.left.isDown ||
@@ -4403,20 +4413,19 @@ if (window.fase1Initialized) {
     // Aplicar movimento
     player.setVelocity(velocityX, velocityY);
 
-// Reproduzir som de andar se estiver se movendo
-if ((velocityX !== 0 || velocityY !== 0)) {
-  if (!this.somAndando || !this.somAndando.isPlaying) {
-    this.somAndando = this.sound.add('andar', { loop: true });
-    this.somAndando.play();
-  }
-} else {
-  if (this.somAndando && this.somAndando.isPlaying) {
-    this.somAndando.stop();
-    this.somAndando.destroy(); // evita sobrecarregar de instâncias
-    this.somAndando = null;
-  }
-}
-
+    // Reproduzir som de andar se estiver se movendo
+    if (velocityX !== 0 || velocityY !== 0) {
+      if (!this.somAndando || !this.somAndando.isPlaying) {
+        this.somAndando = this.sound.add("andar", { loop: true });
+        this.somAndando.play();
+      }
+    } else {
+      if (this.somAndando && this.somAndando.isPlaying) {
+        this.somAndando.stop();
+        this.somAndando.destroy(); // evita sobrecarregar de instâncias
+        this.somAndando = null;
+      }
+    }
 
     // Atualizar animação baseado no movimento
     let newAnimation = null;
