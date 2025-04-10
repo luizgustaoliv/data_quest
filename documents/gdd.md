@@ -975,7 +975,7 @@ A solução desenvolvida atendeu aos objetivos estabelecidos na Seção 1 deste 
 - Refinar os elementos visuais dos mapas e dos personagens, aprimorando a estética geral do jogo.
 - Desenvolver mais animações para os NPCs, tornando a interação mais dinâmica e envolvente.
 
-**Plano para melhorias futuras:**
+**Plano para trabalhos futuros:**
 - Implementar novas fases e minigames, ampliando a abordagem sobre os temas da LGPD e tornando o aprendizado mais completo.
 - Criar formas mais divertidas e leves de instruir os conceitos mais complexos, utilizando recursos visuais, narrativas e desafios interativos.
 - Continuar ajustando a progressão da dificuldade ao longo do jogo, garantindo que o jogador se sinta constantemente desafiado, sem comprometer a acessibilidade.
