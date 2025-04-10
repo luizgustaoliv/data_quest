@@ -154,6 +154,8 @@ function preloadMain3() {
   
   // Load computer icon for HUD
   this.load.image("computer-icon", "../../assets/fase3/computer-icon.png");
+  
+  this.load.audio("musicaFase3", "assets/sons/musicas/fase2.mp3");
 }
 
 function createMain3() {
