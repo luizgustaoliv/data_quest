@@ -960,25 +960,28 @@ Essas melhorias serão implementadas nas próximas versões do jogo para proporc
 
 ### <a name="c6"></a>6. Conclusões e trabalhos futuros (sprint 5)
 
-A solução do jogo atendeu aos objetivos estabelecidos na seção 1 deste documento ao proporcionar uma experiência educativa e interativa sobre LGPD, utilizando diálogos e minigames para engajar os jogadores.
+A solução desenvolvida atendeu aos objetivos estabelecidos na Seção 1 deste documento, ao criar um jogo que funciona como ferramenta para educar alunos e professores de escolas públicas sobre a LGPD, de forma didática, lúdica e interativa. O conteúdo é apresentado por meio da interação com NPCs e, em seguida, reforçado por minigames baseados em situações cotidianas vivenciadas por usuários da internet. O jogo também foi concebido com o propósito de valorizar o ambiente escolar e a diversidade nele presente, utilizando mapas que representam espaços como a biblioteca e personagens que retratam alunos de diferentes etnias. Assim, proporciona uma experiência imersiva e transforma o ensino de um tema denso e complexo, como a LGPD, em uma vivência divertida e engajante.
 
 **Pontos fortes:**
-- O jogo consegue equilibrar aprendizado e diversão de maneira satisfatória.
-- Os jogadores perceberam uma progressão natural na dificuldade, tornando a experiência envolvente.
-- Os controles foram bem avaliados quanto à facilidade de aprendizado.
+- O jogo consegue ensinar conceitos da LGPD de maneira didática e envolvente, transformando o aprendizado em uma experiência atrativa.
+- O nível de complexidade dos conceitos apresentados aumenta conforme o progresso no jogo, proporcionando um ensino completo — desde os fundamentos básicos até os tópicos mais específicos.
+- As mecânicas propostas são simples e intuitivas, atendendo bem ao público que, em geral, tem pouco contato com ambientes digitais e ferramentas tecnológicas de ensino.
+- Apresenta uma taxa satisfatória de conclusão dos minigames, indicando bom engajamento e compreensão por parte dos jogadores.
 
 **Pontos de melhoria:**
-- Algumas mecânicas mais complexas não foram exploradas por todos os jogadores, indicando a necessidade de um tutorial mais detalhado.
-- Alguns jogadores relataram dificuldades em compreender os objetivos iniciais do jogo.
-- Houve relatos de atrasos na resposta dos comandos, o que impacta a jogabilidade.
+- Alguns jogadores apresentaram dificuldades na conclusão de minigames mais complexos, indicando a necessidade de aprimorar a instrução sobre determinados conteúdos.
+- Ampliar a trilha sonora com composições autorais, enriquecendo a ambientação do jogo.
+- Corrigir bugs que ocorrem durante o recarregamento do jogo, garantindo maior estabilidade.
+- Refinar os elementos visuais dos mapas e dos personagens, aprimorando a estética geral do jogo.
+- Desenvolver mais animações para os NPCs, tornando a interação mais dinâmica e envolvente.
 
 **Plano para melhorias futuras:**
-- Refinar o sistema de controles para torná-los mais responsivos e ágeis.
-- Adicionar tutoriais mais interativos e visuais para esclarecer as mecânicas do jogo.
-- Implementar um sistema de dicas progressivas para auxiliar jogadores que tenham dificuldades.
-- Continuar ajustando a curva de dificuldade para garantir que o jogo se mantenha acessível e desafiador.
-
-Além dessas melhorias, o grupo também considera a possibilidade de expandir o jogo com novas fases, desafios e conteúdos que aprofundem ainda mais o aprendizado sobre LGPD.
+- Implementar novas fases e minigames, ampliando a abordagem sobre os temas da LGPD e tornando o aprendizado mais completo.
+- Criar formas mais divertidas e leves de instruir os conceitos mais complexos, utilizando recursos visuais, narrativas e desafios interativos.
+- Continuar ajustando a progressão da dificuldade ao longo do jogo, garantindo que o jogador se sinta constantemente desafiado, sem comprometer a acessibilidade.
+- Desenvolver uma versão mobile do jogo, adaptando a interface e as mecânicas para dispositivos móveis, a fim de ampliar seu alcance.
+- Disponibilizar versões do jogo com recursos de acessibilidade para pessoas com deficiência, como opções de alto contraste, legendas e compatibilidade com leitores de tela.
+- Integrar o jogo com plataformas educacionais, como Google Sala de Aula ou Moodle, facilitando seu uso em ambiente escolar formal.
 
 
 # <a name="c7"></a>7. Referências (sprint 5)
@@ -1010,6 +1013,3 @@ O que é meta SMART e como definir em sua empresa:
 
 (https://sebrae.com.br/sites/PortalSebrae/artigos/o-que-e-meta-smart-e-como-definir-em-sua-empresa%2Cfd5cd6387eab5810VgnVCM1000001b00320aRCRD)
 
-# <a name="c8"></a>Anexos
-
-*Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)*
